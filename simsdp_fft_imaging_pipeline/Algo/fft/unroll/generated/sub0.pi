@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <key attr.name="parameters" for="graph" id="parameters"/>
+    <key attr.name="variables" for="graph" id="variables"/>
+    <key attr.name="arguments" for="node" id="arguments"/>
+    <key attr.name="name" attr.type="string" for="graph"/>
+    <key attr.name="graph_desc" attr.type="string" for="node"/>
+    <graph edgedefault="directed">
+        <data key="name">sub0</data>
+        <node expr="2458" id="GRID_SIZE" kind="param"/>
+        <node expr="2458" id="PSF_GRID_SIZE" kind="param"/>
+        <node expr="200" id="MAX_SOURCES" kind="param"/>
+        <node expr="17" id="NUM_KERNELS" kind="param"/>
+        <node expr="3924480" id="NUM_VISIBILITIES" kind="param"/>
+        <node expr="5" id="ITER" kind="param"/>
+        <node expr="0" id="START" kind="param"/>
+        <node id="setup_ri_pipeline_Broadcast_psf" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="6041764" kind="input" name="input"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="setup_clean_psf"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="output"/>
+        </node>
+        <node id="setter_in_source_list_d" kind="actor">
+            <data key="graph_desc">Code2/setter_in_source_list_d.h</data>
+            <loop name="setter_in_source_list_d">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="int"/>
+            </loop>
+            <init name="setter_in_source_list_d_init"/>
+            <port annotation="NONE" expr="200" kind="output" name="out"/>
+        </node>
+        <node id="delta_psi_1_psi_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="delta_psi_2_Broadcast_cycle" kind="broadcast">
+            <port annotation="READ_ONLY" expr="1" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="delta"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="psi"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="save"/>
+        </node>
+        <node id="delta_psi_2_psi_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="setup_ri_pipeline_psf" kind="roundbuffer">
+            <port annotation="NONE" expr="6041764" kind="input" name="if_psf"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="psf"/>
+        </node>
+        <node id="Fork_loop_delta_psi1" kind="fork">
+            <port annotation="NONE" expr="5" kind="input" name="in"/>
+            <port annotation="NONE" expr="1" kind="output" name="out_1"/>
+            <port annotation="NONE" expr="1" kind="output" name="out_2"/>
+            <port annotation="NONE" expr="1" kind="output" name="out_3"/>
+            <port annotation="NONE" expr="1" kind="output" name="out_4"/>
+            <port annotation="NONE" expr="1" kind="output" name="out_5"/>
+        </node>
+        <node id="delta_psi_4_psi_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="delta_psi_1_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="delta_psi_4_in_num_sources_d" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="in_num_sources_d"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_in_num_sources_d"/>
+        </node>
+        <node id="delta_psi_2_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="delta_psi_4_prolate" kind="broadcast">
+            <port annotation="NONE" expr="1229" kind="input" name="prolate"/>
+            <port annotation="NONE" expr="1229" kind="output" name="if_prolate"/>
+        </node>
+        <node id="delta_psi_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="delta_psi_4_delta_image_estimate" kind="broadcast">
+            <port annotation="NONE" expr="6041764" kind="input" name="image_estimate"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="if_image_estimate"/>
+        </node>
+        <node id="delta_psi_4_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="delta_psi_4_in_image_estimate_d" kind="broadcast">
+            <port annotation="NONE" expr="6041764" kind="input" name="in_image_estimate_d"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="if_in_image_estimate_d"/>
+        </node>
+        <node id="delta_psi_4_in_source_list_d" kind="broadcast">
+            <port annotation="NONE" expr="200" kind="input" name="in_source_list_d"/>
+            <port annotation="NONE" expr="200" kind="output" name="if_in_source_list_d"/>
+        </node>
+        <node id="delta_psi_Broadcast_cycle" kind="broadcast">
+            <port annotation="READ_ONLY" expr="1" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="delta"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="psi"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="save"/>
+        </node>
+        <node id="setup_ri_pipeline_psf_host_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="psf_host_set_up">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="PSF_GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="psf" type="PRECISION"/>
+                <param direction="OUT" isConfig="false"
+                    name="psf_max_value" type="double"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="PSF_GRID_SIZE"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="6041764"
+                kind="output" name="psf"/>
+            <port annotation="NONE" expr="1" kind="output" name="psf_max_value"/>
+        </node>
+        <node id="delta_psi_4_delta_source_list" kind="broadcast">
+            <port annotation="NONE" expr="200" kind="input" name="source_list"/>
+            <port annotation="NONE" expr="200" kind="output" name="if_source_list"/>
+        </node>
+        <node id="delta_psi_3_delta_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="setter_in_num_sources_d" kind="actor">
+            <data key="graph_desc">Code2/setter_in_num_sources_d.h</data>
+            <loop name="setter_in_num_sources_d">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="int"/>
+            </loop>
+            <init name="setter_in_num_sources_d_init"/>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="delta_psi_3_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="delta_psi_4_delta_source_list_sink" kind="actor">
+            <data key="graph_desc">Code/include/major_loop_iter.h</data>
+            <loop name="source_list_sink">
+                <param direction="IN" isConfig="true"
+                    name="MAX_SOURCES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="source_list" type="PRECISION3"/>
+                <param direction="IN" isConfig="false"
+                    name="num_sources" type="int"/>
+            </loop>
+            <port kind="cfg_input" name="MAX_SOURCES"/>
+            <port annotation="NONE" expr="200" kind="input" name="source_list"/>
+            <port annotation="NONE" expr="1" kind="input" name="num_sources"/>
+        </node>
+        <node id="delta_psi_1_delta_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="delta_psi_4_delta_num_sources_in" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="num_sources_in"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_num_sources_in"/>
+        </node>
+        <node id="delta_psi_1_prolate" kind="broadcast">
+            <port annotation="NONE" expr="1229" kind="input" name="prolate"/>
+            <port annotation="NONE" expr="1229" kind="output" name="if_prolate"/>
+        </node>
+        <node id="setup_ri_pipeline_Broadcast_config" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="input"/>
+            <port annotation="NONE" expr="1" kind="output" name="setup_clean_psf"/>
+            <port annotation="NONE" expr="1" kind="output" name="output"/>
+            <port annotation="NONE" expr="1" kind="output" name="setup_degridding_kernel"/>
+            <port annotation="NONE" expr="1" kind="output" name="setup_gains"/>
+            <port annotation="NONE" expr="1" kind="output" name="setup_vis"/>
+            <port annotation="NONE" expr="1" kind="output" name="setup_gridding_kernel"/>
+        </node>
+        <node id="setup_ri_pipeline_config_struct_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="config_struct_set_up">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="NUM_KERNELS" type="int"/>
+                <param direction="OUT" isConfig="false"
+                    name="config" type="Config"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_KERNELS"/>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="1" kind="output" name="config"/>
+        </node>
+        <node id="delta_psi_psi_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="delta_psi_2_delta_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="delta_psi_3_psi_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="delta_psi_1_Broadcast_cycle" kind="broadcast">
+            <port annotation="READ_ONLY" expr="1" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="delta"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="psi"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="save"/>
+        </node>
+        <node id="setup_ri_pipeline_visibility_host_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="visibility_host_set_up">
+                <param direction="IN" isConfig="true"
+                    name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="vis_uvw_coords" type="PRECISION3"/>
+                <param direction="OUT" isConfig="false"
+                    name="measured_vis" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="NONE" expr="3924480" kind="output" name="measured_vis"/>
+            <port annotation="NONE" expr="3924480" kind="output" name="vis_uvw_coords"/>
+        </node>
+        <node id="delta_psi_4_delta_Broadcast_image_estimate" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="6041764" kind="input" name="input"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="fft_run"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="output"/>
+        </node>
+        <node id="delta_psi_prolate" kind="broadcast">
+            <port annotation="NONE" expr="1229" kind="input" name="prolate"/>
+            <port annotation="NONE" expr="1229" kind="output" name="if_prolate"/>
+        </node>
+        <node id="Fork_loop_delta_psi13" kind="fork">
+            <port annotation="NONE" expr="6145" kind="input" name="in"/>
+            <port annotation="NONE" expr="1229" kind="output" name="out_1"/>
+            <port annotation="NONE" expr="1229" kind="output" name="out_2"/>
+            <port annotation="NONE" expr="1229" kind="output" name="out_3"/>
+            <port annotation="NONE" expr="1229" kind="output" name="out_4"/>
+            <port annotation="NONE" expr="1229" kind="output" name="out_5"/>
+        </node>
+        <node id="delta_psi_delta_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="setup_ri_pipeline_Broadcast_prolate" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="1229" kind="input" name="input"/>
+            <port annotation="NONE" expr="1229" kind="output" name="output"/>
+        </node>
+        <node id="delta_psi_2_prolate" kind="broadcast">
+            <port annotation="NONE" expr="1229" kind="input" name="prolate"/>
+            <port annotation="NONE" expr="1229" kind="output" name="if_prolate"/>
+        </node>
+        <node id="iterator" kind="actor">
+            <data key="graph_desc">Code/include/major_loop_actor.h</data>
+            <loop name="iterator">
+                <param direction="IN" isConfig="true" name="ITER" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="START" type="int"/>
+                <param direction="OUT" isConfig="false"
+                    name="cycle_out" type="int"/>
+            </loop>
+            <port kind="cfg_input" name="ITER"/>
+            <port kind="cfg_input" name="START"/>
+            <port annotation="NONE" expr="5" kind="output" name="cycle_out"/>
+        </node>
+        <node id="setup_ri_pipeline_config_struct_set_up_sequel" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="config_struct_set_up_sequel">
+                <param direction="IN" isConfig="false"
+                    name="config_in" type="Config"/>
+                <param direction="IN" isConfig="false"
+                    name="psf_max_value" type="double"/>
+                <param direction="OUT" isConfig="false"
+                    name="config_out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="psf_max_value"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config_in"/>
+            <port annotation="NONE" expr="1" kind="output" name="config_out"/>
+        </node>
+        <node id="delta_psi_4_Broadcast_cycle" kind="broadcast">
+            <port annotation="READ_ONLY" expr="1" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="delta"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="psi"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="save"/>
+        </node>
+        <node id="setup_ri_pipeline_prolate" kind="roundbuffer">
+            <port annotation="NONE" expr="1229" kind="input" name="if_prolate"/>
+            <port annotation="NONE" expr="1229" kind="output" name="prolate"/>
+        </node>
+        <node id="delta_psi_3_prolate" kind="broadcast">
+            <port annotation="NONE" expr="1229" kind="input" name="prolate"/>
+            <port annotation="NONE" expr="1229" kind="output" name="if_prolate"/>
+        </node>
+        <node id="setup_ri_pipeline_Broadcast_config_prequel" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="input"/>
+            <port annotation="NONE" expr="1" kind="output" name="setup_prequel"/>
+            <port annotation="NONE" expr="1" kind="output" name="setup_psf"/>
+        </node>
+        <node id="delta_psi_4_delta_cycle" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1" kind="output" name="if_cycle"/>
+        </node>
+        <node id="setter_in_image_estimate_d" kind="actor">
+            <data key="graph_desc">Code2/setter_in_image_estimate_d.h</data>
+            <loop name="setter_in_image_estimate_d">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="int"/>
+            </loop>
+            <init name="setter_in_image_estimate_d_init"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="out"/>
+        </node>
+        <node id="setup_ri_pipeline_correction_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="correction_set_up">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="OUT" isConfig="false"
+                    name="prolate" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="1229" kind="output" name="prolate"/>
+        </node>
+        <node id="delta_psi_4_delta_image_out" kind="roundbuffer">
+            <port annotation="NONE" expr="6041764" kind="input" name="if_image_out"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="image_out"/>
+        </node>
+        <node id="Fork_setup_ri_pipeline_visibility_host_set_up0" kind="fork">
+            <port annotation="NONE" expr="5" kind="input" name="in"/>
+            <port annotation="NONE" expr="2" kind="output" name="out_0"/>
+            <port annotation="NONE" expr="3" kind="output" name="out_1"/>
+        </node>
+        <node id="delta_psi_3_Broadcast_cycle" kind="broadcast">
+            <port annotation="READ_ONLY" expr="1" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="delta"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="psi"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="save"/>
+        </node>
+        <node id="snk_out_0" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_0.h</data>
+            <loop name="sub0_snk_out_0">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="30208820" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_1" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_1.h</data>
+            <loop name="sub0_snk_out_1">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_2" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_2.h</data>
+            <loop name="sub0_snk_out_2">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_3" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_3.h</data>
+            <loop name="sub0_snk_out_3">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_4" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_4.h</data>
+            <loop name="sub0_snk_out_4">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="30208820" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_5" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_5.h</data>
+            <loop name="sub0_snk_out_5">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_6" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_6.h</data>
+            <loop name="sub0_snk_out_6">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="1229" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_7" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_7.h</data>
+            <loop name="sub0_snk_out_7">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_8" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_8.h</data>
+            <loop name="sub0_snk_out_8">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_9" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_9.h</data>
+            <loop name="sub0_snk_out_9">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_10" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_10.h</data>
+            <loop name="sub0_snk_out_10">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="1229" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_11" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_11.h</data>
+            <loop name="sub0_snk_out_11">
+                <param direction="IN" isConfig="false" name="in" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="5" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_12" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_12.h</data>
+            <loop name="sub0_snk_out_12">
+                <param direction="IN" isConfig="false" name="in" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="5" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_13" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_13.h</data>
+            <loop name="sub0_snk_out_13">
+                <param direction="IN" isConfig="false" name="in" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="5" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_14" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_14.h</data>
+            <loop name="sub0_snk_out_14">
+                <param direction="IN" isConfig="false" name="in" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="5" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_15" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_15.h</data>
+            <loop name="sub0_snk_out_15">
+                <param direction="IN" isConfig="false" name="in" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="5" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_16" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_16.h</data>
+            <loop name="sub0_snk_out_16">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_17" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_17.h</data>
+            <loop name="sub0_snk_out_17">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_18" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_18.h</data>
+            <loop name="sub0_snk_out_18">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_19" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_19.h</data>
+            <loop name="sub0_snk_out_19">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_20" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_20.h</data>
+            <loop name="sub0_snk_out_20">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="7848960" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_21" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_21.h</data>
+            <loop name="sub0_snk_out_21">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION3"/>
+            </loop>
+            <port annotation="NONE" expr="7848960" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_22" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_22.h</data>
+            <loop name="sub0_snk_out_22">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="6041764" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_23" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_23.h</data>
+            <loop name="sub0_snk_out_23">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="1229" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_24" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_24.h</data>
+            <loop name="sub0_snk_out_24">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_25" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_25.h</data>
+            <loop name="sub0_snk_out_25">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="1229" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_26" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_26.h</data>
+            <loop name="sub0_snk_out_26">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_27" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_27.h</data>
+            <loop name="sub0_snk_out_27">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="1229" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_28" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_28.h</data>
+            <loop name="sub0_snk_out_28">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_29" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_29.h</data>
+            <loop name="sub0_snk_out_29">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="6041764" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_30" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_30.h</data>
+            <loop name="sub0_snk_out_30">
+                <param direction="IN" isConfig="false" name="in" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="3" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_31" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub0/snk_out_31.h</data>
+            <loop name="sub0_snk_out_31">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_psf_host_set_up"
+            sourceport="psf"
+            target="setup_ri_pipeline_Broadcast_psf"
+            targetport="input" type="PRECISION"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_Broadcast_psf"
+            sourceport="setup_clean_psf" target="snk_out_0"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_Broadcast_psf"
+            sourceport="output" target="setup_ri_pipeline_psf"
+            targetport="if_psf" type="PRECISION"/>
+        <edge kind="fifo" source="setter_in_source_list_d"
+            sourceport="out"
+            target="delta_psi_4_in_source_list_d"
+            targetport="in_source_list_d" type="PRECISION3"/>
+        <edge kind="fifo" source="delta_psi_1_Broadcast_cycle"
+            sourceport="psi" target="delta_psi_1_psi_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="delta_psi_1_psi_cycle"
+            sourceport="if_cycle" target="snk_out_1"
+            targetport="in" type="int"/>
+        <edge kind="fifo" source="delta_psi_2_cycle"
+            sourceport="if_cycle"
+            target="delta_psi_2_Broadcast_cycle"
+            targetport="input" type="int"/>
+        <edge kind="fifo" source="delta_psi_2_Broadcast_cycle"
+            sourceport="delta" target="delta_psi_2_delta_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="delta_psi_2_Broadcast_cycle"
+            sourceport="psi" target="delta_psi_2_psi_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="delta_psi_2_Broadcast_cycle"
+            sourceport="save" target="snk_out_2" targetport="in" type="int"/>
+        <edge kind="fifo" source="delta_psi_2_psi_cycle"
+            sourceport="if_cycle" target="snk_out_3"
+            targetport="in" type="int"/>
+        <edge kind="fifo" source="setup_ri_pipeline_psf"
+            sourceport="psf" target="snk_out_4" targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="iterator"
+            sourceport="cycle_out" target="Fork_loop_delta_psi1"
+            targetport="in" type="int"/>
+        <edge kind="fifo" source="Fork_loop_delta_psi1"
+            sourceport="out_1" target="delta_psi_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="Fork_loop_delta_psi1"
+            sourceport="out_2" target="delta_psi_1_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="Fork_loop_delta_psi1"
+            sourceport="out_3" target="delta_psi_2_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="Fork_loop_delta_psi1"
+            sourceport="out_4" target="delta_psi_3_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="Fork_loop_delta_psi1"
+            sourceport="out_5" target="delta_psi_4_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="delta_psi_4_Broadcast_cycle"
+            sourceport="psi" target="delta_psi_4_psi_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="delta_psi_4_psi_cycle"
+            sourceport="if_cycle" target="snk_out_5"
+            targetport="in" type="int"/>
+        <edge kind="fifo" source="delta_psi_1_cycle"
+            sourceport="if_cycle"
+            target="delta_psi_1_Broadcast_cycle"
+            targetport="input" type="int"/>
+        <edge kind="fifo" source="setter_in_num_sources_d"
+            sourceport="out"
+            target="delta_psi_4_in_num_sources_d"
+            targetport="in_num_sources_d" type="int"/>
+        <edge kind="fifo" source="delta_psi_4_in_num_sources_d"
+            sourceport="if_in_num_sources_d"
+            target="delta_psi_4_delta_num_sources_in"
+            targetport="num_sources_in" type="int"/>
+        <edge kind="fifo" source="Fork_loop_delta_psi13"
+            sourceport="out_5" target="delta_psi_4_prolate"
+            targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_4_prolate"
+            sourceport="if_prolate" target="snk_out_6"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_cycle"
+            sourceport="if_cycle"
+            target="delta_psi_Broadcast_cycle" targetport="input" type="int"/>
+        <edge kind="fifo"
+            source="delta_psi_4_in_image_estimate_d"
+            sourceport="if_in_image_estimate_d"
+            target="delta_psi_4_delta_image_estimate"
+            targetport="image_estimate" type="PRECISION"/>
+        <edge kind="fifo"
+            source="delta_psi_4_delta_image_estimate"
+            sourceport="if_image_estimate"
+            target="delta_psi_4_delta_Broadcast_image_estimate"
+            targetport="input" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_4_cycle"
+            sourceport="if_cycle"
+            target="delta_psi_4_Broadcast_cycle"
+            targetport="input" type="int"/>
+        <edge kind="fifo" source="setter_in_image_estimate_d"
+            sourceport="out"
+            target="delta_psi_4_in_image_estimate_d"
+            targetport="in_image_estimate_d" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_4_in_source_list_d"
+            sourceport="if_in_source_list_d"
+            target="delta_psi_4_delta_source_list"
+            targetport="source_list" type="PRECISION3"/>
+        <edge kind="fifo" source="delta_psi_Broadcast_cycle"
+            sourceport="delta" target="delta_psi_delta_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="delta_psi_Broadcast_cycle"
+            sourceport="psi" target="delta_psi_psi_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="delta_psi_Broadcast_cycle"
+            sourceport="save" target="snk_out_7" targetport="in" type="int"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_Broadcast_config_prequel"
+            sourceport="setup_psf"
+            target="setup_ri_pipeline_psf_host_set_up"
+            targetport="config" type="Config"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_psf_host_set_up"
+            sourceport="psf_max_value"
+            target="setup_ri_pipeline_config_struct_set_up_sequel"
+            targetport="psf_max_value" type="double"/>
+        <edge kind="fifo" source="delta_psi_4_delta_source_list"
+            sourceport="if_source_list"
+            target="delta_psi_4_delta_source_list_sink"
+            targetport="source_list" type="PRECISION3"/>
+        <edge kind="fifo" source="delta_psi_3_Broadcast_cycle"
+            sourceport="delta" target="delta_psi_3_delta_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="delta_psi_3_delta_cycle"
+            sourceport="if_cycle" target="snk_out_8"
+            targetport="in" type="int"/>
+        <edge kind="fifo" source="delta_psi_3_cycle"
+            sourceport="if_cycle"
+            target="delta_psi_3_Broadcast_cycle"
+            targetport="input" type="int"/>
+        <edge kind="fifo"
+            source="delta_psi_4_delta_num_sources_in"
+            sourceport="if_num_sources_in"
+            target="delta_psi_4_delta_source_list_sink"
+            targetport="num_sources" type="int"/>
+        <edge kind="fifo" source="delta_psi_1_Broadcast_cycle"
+            sourceport="delta" target="delta_psi_1_delta_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="delta_psi_1_delta_cycle"
+            sourceport="if_cycle" target="snk_out_9"
+            targetport="in" type="int"/>
+        <edge kind="fifo" source="Fork_loop_delta_psi13"
+            sourceport="out_2" target="delta_psi_1_prolate"
+            targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_1_prolate"
+            sourceport="if_prolate" target="snk_out_10"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_config_struct_set_up_sequel"
+            sourceport="config_out"
+            target="setup_ri_pipeline_Broadcast_config"
+            targetport="input" type="Config"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_Broadcast_config"
+            sourceport="setup_clean_psf" target="snk_out_11"
+            targetport="in" type="Config"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_Broadcast_config"
+            sourceport="output" target="snk_out_12"
+            targetport="in" type="Config"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_Broadcast_config"
+            sourceport="setup_degridding_kernel"
+            target="snk_out_13" targetport="in" type="Config"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_Broadcast_config"
+            sourceport="setup_gains" target="snk_out_14"
+            targetport="in" type="Config"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_Broadcast_config"
+            sourceport="setup_vis"
+            target="Fork_setup_ri_pipeline_visibility_host_set_up0"
+            targetport="in" type="Config"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_Broadcast_config"
+            sourceport="setup_gridding_kernel"
+            target="snk_out_15" targetport="in" type="Config"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_config_struct_set_up"
+            sourceport="config"
+            target="setup_ri_pipeline_Broadcast_config_prequel"
+            targetport="input" type="Config"/>
+        <edge kind="fifo" source="delta_psi_psi_cycle"
+            sourceport="if_cycle" target="snk_out_16"
+            targetport="in" type="int"/>
+        <edge kind="fifo" source="delta_psi_2_delta_cycle"
+            sourceport="if_cycle" target="snk_out_17"
+            targetport="in" type="int"/>
+        <edge kind="fifo" source="delta_psi_3_Broadcast_cycle"
+            sourceport="psi" target="delta_psi_3_psi_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="delta_psi_3_psi_cycle"
+            sourceport="if_cycle" target="snk_out_18"
+            targetport="in" type="int"/>
+        <edge kind="fifo" source="delta_psi_1_Broadcast_cycle"
+            sourceport="save" target="snk_out_19" targetport="in" type="int"/>
+        <edge kind="fifo"
+            source="Fork_setup_ri_pipeline_visibility_host_set_up0"
+            sourceport="out_0"
+            target="setup_ri_pipeline_visibility_host_set_up"
+            targetport="config" type="Config"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_visibility_host_set_up"
+            sourceport="measured_vis" target="snk_out_20"
+            targetport="in" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_visibility_host_set_up"
+            sourceport="vis_uvw_coords" target="snk_out_21"
+            targetport="in" type="PRECISION3"/>
+        <edge kind="fifo"
+            source="delta_psi_4_delta_Broadcast_image_estimate"
+            sourceport="fft_run" target="snk_out_22"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo"
+            source="delta_psi_4_delta_Broadcast_image_estimate"
+            sourceport="output"
+            target="delta_psi_4_delta_image_out"
+            targetport="if_image_out" type="PRECISION"/>
+        <edge kind="fifo" source="Fork_loop_delta_psi13"
+            sourceport="out_1" target="delta_psi_prolate"
+            targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_prolate"
+            sourceport="if_prolate" target="snk_out_23"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="setup_ri_pipeline_prolate"
+            sourceport="prolate" target="Fork_loop_delta_psi13"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="Fork_loop_delta_psi13"
+            sourceport="out_3" target="delta_psi_2_prolate"
+            targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="Fork_loop_delta_psi13"
+            sourceport="out_4" target="delta_psi_3_prolate"
+            targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_delta_cycle"
+            sourceport="if_cycle" target="snk_out_24"
+            targetport="in" type="int"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_correction_set_up"
+            sourceport="prolate"
+            target="setup_ri_pipeline_Broadcast_prolate"
+            targetport="input" type="PRECISION"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_Broadcast_prolate"
+            sourceport="output"
+            target="setup_ri_pipeline_prolate"
+            targetport="if_prolate" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_2_prolate"
+            sourceport="if_prolate" target="snk_out_25"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo"
+            source="setup_ri_pipeline_Broadcast_config_prequel"
+            sourceport="setup_prequel"
+            target="setup_ri_pipeline_config_struct_set_up_sequel"
+            targetport="config_in" type="Config"/>
+        <edge kind="fifo" source="delta_psi_4_Broadcast_cycle"
+            sourceport="delta" target="delta_psi_4_delta_cycle"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="delta_psi_4_Broadcast_cycle"
+            sourceport="save" target="snk_out_26" targetport="in" type="int"/>
+        <edge kind="fifo" source="delta_psi_3_prolate"
+            sourceport="if_prolate" target="snk_out_27"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_4_delta_cycle"
+            sourceport="if_cycle" target="snk_out_28"
+            targetport="in" type="int"/>
+        <edge kind="fifo" source="delta_psi_4_delta_image_out"
+            sourceport="image_out" target="snk_out_29"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo"
+            source="Fork_setup_ri_pipeline_visibility_host_set_up0"
+            sourceport="out_1" target="snk_out_30"
+            targetport="in" type="Config"/>
+        <edge kind="fifo" source="delta_psi_3_Broadcast_cycle"
+            sourceport="save" target="snk_out_31" targetport="in" type="int"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="setup_ri_pipeline_Broadcast_psf" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="setup_ri_pipeline_psf_host_set_up" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="PSF_GRID_SIZE"
+            target="setup_ri_pipeline_psf_host_set_up" targetport="PSF_GRID_SIZE"/>
+        <edge kind="dependency" source="MAX_SOURCES"
+            target="delta_psi_4_delta_source_list_sink" targetport="MAX_SOURCES"/>
+        <edge kind="dependency" source="NUM_KERNELS"
+            target="setup_ri_pipeline_config_struct_set_up" targetport="NUM_KERNELS"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="setup_ri_pipeline_config_struct_set_up" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES"
+            target="setup_ri_pipeline_visibility_host_set_up" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_4_delta_Broadcast_image_estimate" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="setup_ri_pipeline_Broadcast_prolate" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="ITER" target="iterator" targetport="ITER"/>
+        <edge kind="dependency" source="START" target="iterator" targetport="START"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="setup_ri_pipeline_correction_set_up" targetport="GRID_SIZE"/>
+    </graph>
+</graphml>

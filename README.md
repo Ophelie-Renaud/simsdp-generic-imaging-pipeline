@@ -184,7 +184,7 @@ To reveal the contrasts:
 
 - Simulating generic imaging pipelines - 1 freq - CPU - balanced-workload based node partitioning - unoptimized code - [nVis = 3924480 , GRID_SIZE = 2048, nMinorCycle = 200] :
 
-![](/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/experimental_result_data/1freq.png)
+![](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/experimental_result_data/1freq.png?ref_type=heads)
 
 - Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [**nVis** = 10xNUM_BASELINE:5xNUM_BASELINE:30xNUM_BASELINE , GRID_SIZE = 2048, nMinorCycle = 200]:
 

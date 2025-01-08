@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <key attr.name="parameters" for="graph" id="parameters"/>
+    <key attr.name="variables" for="graph" id="variables"/>
+    <key attr.name="arguments" for="node" id="arguments"/>
+    <key attr.name="name" attr.type="string" for="graph"/>
+    <key attr.name="graph_desc" attr.type="string" for="node"/>
+    <graph edgedefault="directed">
+        <data key="name">fft_delta_psi</data>
+        <node defaultValue="2458" id="GRID_SIZE" kind="cfg_in_iface"/>
+        <node defaultValue="3924480" id="NUM_VISIBILITIES" kind="cfg_in_iface"/>
+        <node defaultValue="200" id="MAX_SOURCES" kind="cfg_in_iface"/>
+        <node defaultValue="17" id="NUM_GRIDDING_KERNELS" kind="cfg_in_iface"/>
+        <node defaultValue="108800"
+            id="TOTAL_GRIDDING_KERNEL_SAMPLES" kind="cfg_in_iface"/>
+        <node defaultValue="512" id="NUM_RECEIVERS" kind="cfg_in_iface"/>
+        <node defaultValue="132816" id="NUM_BASELINES" kind="cfg_in_iface"/>
+        <node defaultValue="17" id="NUM_DEGRIDDING_KERNELS" kind="cfg_in_iface"/>
+        <node defaultValue="108800"
+            id="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="cfg_in_iface"/>
+        <node defaultValue="200" id="NUM_MINOR_CYCLES" kind="cfg_in_iface"/>
+        <node defaultValue="16" id="OVERSAMPLING_FACTOR" kind="cfg_in_iface"/>
+        <node defaultValue="4" id="SLICES" kind="cfg_in_iface"/>
+        <node id="delta" kind="actor">
+            <data key="graph_desc">Algo/fft_delta.pi</data>
+            <port kind="cfg_input" name="NUM_GRIDDING_KERNELS"/>
+            <port kind="cfg_input" name="TOTAL_GRIDDING_KERNEL_SAMPLES"/>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port kind="cfg_input" name="NUM_RECEIVERS"/>
+            <port kind="cfg_input" name="NUM_BASELINES"/>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="MAX_SOURCES"/>
+            <port kind="cfg_input" name="NUM_DEGRIDDING_KERNELS"/>
+            <port kind="cfg_input" name="OVERSAMPLING_FACTOR"/>
+            <port kind="cfg_input" name="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+            <port kind="cfg_input" name="SLICES"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="image_estimate"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="input" name="measured_vis"/>
+            <port annotation="NONE" expr="MAX_SOURCES"
+                kind="input" name="source_list"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="num_sources_in"/>
+            <port annotation="NONE" expr="NUM_GRIDDING_KERNELS"
+                kind="input" name="gridding_kernel_supports"/>
+            <port annotation="NONE"
+                expr="TOTAL_GRIDDING_KERNEL_SAMPLES" kind="input" name="gridding_kernels"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="input" name="vis_coords"/>
+            <port annotation="NONE" expr="NUM_RECEIVERS"
+                kind="input" name="gains"/>
+            <port annotation="NONE" expr="NUM_BASELINES"
+                kind="input" name="receiver_pairs"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="config"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="psf"/>
+            <port annotation="NONE" expr="GRID_SIZE/2"
+                kind="input" name="prolate"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="NUM_DEGRIDDING_KERNELS"
+                kind="input" name="degridding_kernel_supports"/>
+            <port annotation="NONE"
+                expr="TOTAL_DEGRIDDING_KERNEL_SAMPLES"
+                kind="input" name="degridding_kernels"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="delta_image"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="image_out"/>
+        </node>
+        <node id="Broadcast_residual" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="input"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="psi"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="save"/>
+        </node>
+        <node id="psi" kind="actor">
+            <data key="graph_desc">Algo/sep_psi.pi</data>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="NUM_MINOR_CYCLES"/>
+            <port kind="cfg_input" name="MAX_SOURCES"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="config"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="psf"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="delta_image"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="input_model"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="partial_psf_halfdims"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="MAX_SOURCES"
+                kind="output" name="source_list"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="num_sources_out"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="image_estimate"/>
+        </node>
+        <node id="save_output" kind="actor">
+            <data key="graph_desc">Code/include/major_loop_iter.h</data>
+            <loop name="save_output">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="residual" type="PRECISION"/>
+                <param direction="IN" isConfig="false"
+                    name="model" type="PRECISION"/>
+                <param direction="IN" isConfig="false"
+                    name="clean_psf" type="PRECISION"/>
+                <param direction="IN" isConfig="false"
+                    name="clean_psf_halfdims" type="int2"/>
+                <param direction="IN" isConfig="false" name="psf" type="PRECISION"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="IN" isConfig="false"
+                    name="cycle" type="int"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="residual"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="model"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="clean_psf"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="psf"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="config"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="clean_psf_halfdims"/>
+        </node>
+        <node id="Broadcast_config" kind="broadcast">
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="1.0"
+                kind="output" name="delta"/>
+            <port annotation="WRITE_ONLY" expr="1.0"
+                kind="output" name="psi"/>
+            <port annotation="WRITE_ONLY" expr="1.0"
+                kind="output" name="save"/>
+        </node>
+        <node id="config" kind="src">
+            <port annotation="NONE" expr="1" kind="output" name="config"/>
+        </node>
+        <node id="cycle" kind="src">
+            <port annotation="NONE" expr="1" kind="output" name="cycle"/>
+        </node>
+        <node id="Broadcast_cycle" kind="broadcast">
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="1.0"
+                kind="output" name="delta"/>
+            <port annotation="WRITE_ONLY" expr="1.0"
+                kind="output" name="psi"/>
+            <port annotation="WRITE_ONLY" expr="1.0"
+                kind="output" name="save"/>
+        </node>
+        <node id="psf" kind="src">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="psf"/>
+        </node>
+        <node id="Broadcast_psf" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="READ_ONLY"
+                expr="GRID_SIZE*GRID_SIZE" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY"
+                expr="GRID_SIZE*GRID_SIZE" kind="output" name="delta"/>
+            <port annotation="WRITE_ONLY"
+                expr="GRID_SIZE*GRID_SIZE" kind="output" name="psi"/>
+            <port annotation="WRITE_ONLY"
+                expr="GRID_SIZE*GRID_SIZE" kind="output" name="save"/>
+        </node>
+        <node id="in_image_estimate_d" kind="src">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="in_image_estimate_d"/>
+        </node>
+        <node id="measured_vis" kind="src">
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="measured_vis"/>
+        </node>
+        <node id="in_source_list_d" kind="src">
+            <port annotation="NONE" expr="MAX_SOURCES"
+                kind="output" name="in_source_list_d"/>
+        </node>
+        <node id="in_num_sources_d" kind="src">
+            <port annotation="NONE" expr="1" kind="output" name="in_num_sources_d"/>
+        </node>
+        <node id="gridding_kernel_supports" kind="src">
+            <port annotation="NONE" expr="NUM_GRIDDING_KERNELS"
+                kind="output" name="gridding_kernel_supports"/>
+        </node>
+        <node id="partial_psf_halfdims" kind="src">
+            <port annotation="NONE" expr="1" kind="output" name="partial_psf_halfdims"/>
+        </node>
+        <node id="Broadcast_psfhalfdims" kind="broadcast">
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="1.0"
+                kind="output" name="psi"/>
+            <port annotation="WRITE_ONLY" expr="1" kind="output" name="save"/>
+        </node>
+        <node id="Broadcast_image_estimate" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="input"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="delta"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="save"/>
+        </node>
+        <node id="clean_psf" kind="src">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="clean_psf"/>
+        </node>
+        <node id="gridding_kernels" kind="src">
+            <port annotation="NONE"
+                expr="TOTAL_GRIDDING_KERNEL_SAMPLES"
+                kind="output" name="gridding_kernels"/>
+        </node>
+        <node id="vis_coords" kind="src">
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="vis_coords"/>
+        </node>
+        <node id="gains" kind="src">
+            <port annotation="NONE" expr="NUM_RECEIVERS"
+                kind="output" name="gains"/>
+        </node>
+        <node id="receiver_pairs" kind="src">
+            <port annotation="NONE" expr="NUM_BASELINES"
+                kind="output" name="receiver_pairs"/>
+        </node>
+        <node id="degridding_kernel_supports" kind="src">
+            <port annotation="NONE" expr="NUM_DEGRIDDING_KERNELS"
+                kind="output" name="degridding_kernel_supports"/>
+        </node>
+        <node id="degridding_kernels" kind="src">
+            <port annotation="NONE"
+                expr="TOTAL_DEGRIDDING_KERNEL_SAMPLES"
+                kind="output" name="degridding_kernels"/>
+        </node>
+        <node id="prolate" kind="src">
+            <port annotation="NONE" expr="GRID_SIZE/2"
+                kind="output" name="prolate"/>
+        </node>
+        <node id="out_source_list_d" kind="snk">
+            <port annotation="NONE" expr="MAX_SOURCES"
+                kind="input" name="out_source_list_d"/>
+        </node>
+        <node id="out_num_sources_d" kind="snk">
+            <port annotation="NONE" expr="1" kind="input" name="out_num_sources_d"/>
+        </node>
+        <node id="out_image_estimate_d" kind="snk">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="out_image_estimate_d"/>
+        </node>
+        <edge kind="fifo" source="delta" sourceport="delta_image"
+            target="Broadcast_residual" targetport="input" type="PRECISION"/>
+        <edge kind="fifo" source="delta" sourceport="image_out"
+            target="psi" targetport="input_model" type="PRECISION"/>
+        <edge kind="fifo" source="Broadcast_residual"
+            sourceport="save" target="save_output"
+            targetport="residual" type="PRECISION"/>
+        <edge kind="fifo" source="Broadcast_residual"
+            sourceport="psi" target="psi"
+            targetport="delta_image" type="PRECISION"/>
+        <edge kind="fifo" source="config" sourceport="config"
+            target="Broadcast_config" targetport="input" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config"
+            sourceport="delta" target="delta" targetport="config" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config"
+            sourceport="psi" target="psi" targetport="config" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config"
+            sourceport="save" target="save_output"
+            targetport="config" type="Config"/>
+        <edge kind="fifo" source="cycle" sourceport="cycle"
+            target="Broadcast_cycle" targetport="input" type="int"/>
+        <edge kind="fifo" source="Broadcast_cycle"
+            sourceport="delta" target="delta" targetport="cycle" type="int"/>
+        <edge kind="fifo" source="Broadcast_cycle"
+            sourceport="psi" target="psi" targetport="cycle" type="int"/>
+        <edge kind="fifo" source="Broadcast_cycle"
+            sourceport="save" target="save_output"
+            targetport="cycle" type="int"/>
+        <edge kind="fifo" source="psf" sourceport="psf"
+            target="Broadcast_psf" targetport="input" type="PRECISION"/>
+        <edge kind="fifo" source="Broadcast_psf"
+            sourceport="delta" target="delta" targetport="psf" type="PRECISION"/>
+        <edge kind="fifo" source="Broadcast_psf" sourceport="psi"
+            target="psi" targetport="psf" type="PRECISION"/>
+        <edge kind="fifo" source="Broadcast_psf"
+            sourceport="save" target="save_output"
+            targetport="psf" type="PRECISION"/>
+        <edge kind="fifo" source="in_image_estimate_d"
+            sourceport="in_image_estimate_d" target="delta"
+            targetport="image_estimate" type="PRECISION"/>
+        <edge kind="fifo" source="measured_vis"
+            sourceport="measured_vis" target="delta"
+            targetport="measured_vis" type="PRECISION2"/>
+        <edge kind="fifo" source="in_source_list_d"
+            sourceport="in_source_list_d" target="delta"
+            targetport="source_list" type="PRECISION3"/>
+        <edge kind="fifo" source="in_num_sources_d"
+            sourceport="in_num_sources_d" target="delta"
+            targetport="num_sources_in" type="int"/>
+        <edge kind="fifo" source="gridding_kernel_supports"
+            sourceport="gridding_kernel_supports" target="delta"
+            targetport="gridding_kernel_supports" type="int2"/>
+        <edge kind="fifo" source="partial_psf_halfdims"
+            sourceport="partial_psf_halfdims"
+            target="Broadcast_psfhalfdims" targetport="input" type="int2"/>
+        <edge kind="fifo" source="Broadcast_psfhalfdims"
+            sourceport="psi" target="psi"
+            targetport="partial_psf_halfdims" type="int2"/>
+        <edge kind="fifo" source="Broadcast_psfhalfdims"
+            sourceport="save" target="save_output"
+            targetport="clean_psf_halfdims" type="int2"/>
+        <edge kind="fifo" source="psi"
+            sourceport="image_estimate"
+            target="Broadcast_image_estimate" targetport="input" type="PRECISION"/>
+        <edge kind="fifo" source="Broadcast_image_estimate"
+            sourceport="save" target="save_output"
+            targetport="model" type="PRECISION"/>
+        <edge kind="fifo" source="gridding_kernels"
+            sourceport="gridding_kernels" target="delta"
+            targetport="gridding_kernels" type="PRECISION2"/>
+        <edge kind="fifo" source="vis_coords"
+            sourceport="vis_coords" target="delta"
+            targetport="vis_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="gains" sourceport="gains"
+            target="delta" targetport="gains" type="PRECISION2"/>
+        <edge kind="fifo" source="receiver_pairs"
+            sourceport="receiver_pairs" target="delta"
+            targetport="receiver_pairs" type="int2"/>
+        <edge kind="fifo" source="degridding_kernel_supports"
+            sourceport="degridding_kernel_supports"
+            target="delta"
+            targetport="degridding_kernel_supports" type="int2"/>
+        <edge kind="fifo" source="degridding_kernels"
+            sourceport="degridding_kernels" target="delta"
+            targetport="degridding_kernels" type="PRECISION2"/>
+        <edge kind="fifo" source="prolate" sourceport="prolate"
+            target="delta" targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="psi" sourceport="source_list"
+            target="out_source_list_d"
+            targetport="out_source_list_d" type="PRECISION3"/>
+        <edge kind="fifo" source="Broadcast_image_estimate"
+            sourceport="delta" target="out_image_estimate_d"
+            targetport="out_image_estimate_d" type="PRECISION"/>
+        <edge kind="fifo" source="psi"
+            sourceport="num_sources_out"
+            target="out_num_sources_d"
+            targetport="out_num_sources_d" type="int"/>
+        <edge kind="fifo" source="clean_psf"
+            sourceport="clean_psf" target="save_output"
+            targetport="clean_psf" type="PRECISION"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="Broadcast_psf" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="Broadcast_residual" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE" target="delta" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE" target="psi" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="save_output" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES"
+            target="delta" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="MAX_SOURCES"
+            target="delta" targetport="MAX_SOURCES"/>
+        <edge kind="dependency" source="NUM_GRIDDING_KERNELS"
+            target="delta" targetport="NUM_GRIDDING_KERNELS"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="Broadcast_image_estimate" targetport="GRID_SIZE"/>
+        <edge kind="dependency"
+            source="TOTAL_GRIDDING_KERNEL_SAMPLES" target="delta" targetport="TOTAL_GRIDDING_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="NUM_RECEIVERS"
+            target="delta" targetport="NUM_RECEIVERS"/>
+        <edge kind="dependency" source="NUM_BASELINES"
+            target="delta" targetport="NUM_BASELINES"/>
+        <edge kind="dependency" source="NUM_DEGRIDDING_KERNELS"
+            target="delta" targetport="NUM_DEGRIDDING_KERNELS"/>
+        <edge kind="dependency"
+            source="TOTAL_DEGRIDDING_KERNEL_SAMPLES"
+            target="delta" targetport="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="NUM_MINOR_CYCLES"
+            target="psi" targetport="NUM_MINOR_CYCLES"/>
+        <edge kind="dependency" source="MAX_SOURCES" target="psi" targetport="MAX_SOURCES"/>
+        <edge kind="dependency" source="GRID_SIZE" target="clean_psf"/>
+        <edge kind="dependency" source="NUM_DEGRIDDING_KERNELS" target="degridding_kernel_supports"/>
+        <edge kind="dependency"
+            source="TOTAL_DEGRIDDING_KERNEL_SAMPLES" target="degridding_kernels"/>
+        <edge kind="dependency" source="NUM_RECEIVERS" target="gains"/>
+        <edge kind="dependency" source="NUM_GRIDDING_KERNELS" target="gridding_kernel_supports"/>
+        <edge kind="dependency"
+            source="TOTAL_GRIDDING_KERNEL_SAMPLES" target="gridding_kernels"/>
+        <edge kind="dependency" source="GRID_SIZE" target="in_image_estimate_d"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="measured_vis"/>
+        <edge kind="dependency" source="GRID_SIZE" target="prolate"/>
+        <edge kind="dependency" source="GRID_SIZE" target="psf"/>
+        <edge kind="dependency" source="NUM_BASELINES" target="receiver_pairs"/>
+        <edge kind="dependency" source="MAX_SOURCES" target="in_source_list_d"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="vis_coords"/>
+        <edge kind="dependency" source="GRID_SIZE" target="out_image_estimate_d"/>
+        <edge kind="dependency" source="MAX_SOURCES" target="out_source_list_d"/>
+        <edge kind="dependency" source="OVERSAMPLING_FACTOR"
+            target="delta" targetport="OVERSAMPLING_FACTOR"/>
+        <edge kind="dependency" source="SLICES" target="delta" targetport="SLICES"/>
+    </graph>
+</graphml>

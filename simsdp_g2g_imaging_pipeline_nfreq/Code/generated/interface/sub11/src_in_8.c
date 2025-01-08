@@ -1,0 +1,5 @@
+// Interface actor file
+#include "src_in_8.h"
+void sub11_src_in_8(PRECISION *out) {
+//This function is empty since it is just an interface
+ }

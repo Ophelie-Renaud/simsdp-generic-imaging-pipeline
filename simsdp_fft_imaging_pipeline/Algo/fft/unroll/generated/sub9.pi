@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <key attr.name="parameters" for="graph" id="parameters"/>
+    <key attr.name="variables" for="graph" id="variables"/>
+    <key attr.name="arguments" for="node" id="arguments"/>
+    <key attr.name="name" attr.type="string" for="graph"/>
+    <key attr.name="graph_desc" attr.type="string" for="node"/>
+    <key attr.name="memoryScript" attr.type="string" for="node"/>
+    <graph edgedefault="directed">
+        <data key="name">sub9</data>
+        <node expr="2458" id="GRID_SIZE" kind="param"/>
+        <node expr="4" id="SLICES" kind="param"/>
+        <node
+            id="delta_psi_3_delta_inverse_fft_run_CUFFT_EXECUTE_INVERSE_C2C_actor" kind="actor">
+            <data key="graph_desc">Code/include/fft_run.h</data>
+            <loop name="CUFFT_EXECUTE_INVERSE_C2C_actor">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="uv_grid_in" type="PRECISION2"/>
+                <param direction="OUT" isConfig="false"
+                    name="uv_grid_out" type="PRECISION2"/>
+            </loop>
+            <data key="memoryScript">Code/Scripts/uv_grid_inPlace.bsh</data>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="READ_ONLY" expr="6041764"
+                kind="input" name="uv_grid_in"/>
+            <port annotation="WRITE_ONLY" expr="6041764"
+                kind="output" name="uv_grid_out"/>
+        </node>
+        <node
+            id="delta_psi_3_delta_inverse_fft_run_fft_shift_complex_to_complex_actor" kind="actor">
+            <data key="graph_desc">Code/include/fft_run.h</data>
+            <loop name="fft_shift_complex_to_complex_actor">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="uv_grid_in" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="uv_grid_out" type="PRECISION2"/>
+            </loop>
+            <data key="memoryScript">Code/Scripts/uv_grid_inPlace.bsh</data>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="READ_ONLY" expr="6041764"
+                kind="input" name="uv_grid_in"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="6041764"
+                kind="output" name="uv_grid_out"/>
+        </node>
+        <node id="delta_psi_3_psi_delta_image" kind="broadcast">
+            <port annotation="NONE" expr="6041764" kind="input" name="delta_image"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="if_delta_image"/>
+        </node>
+        <node id="delta_psi_3_delta_merge_grids" kind="actor">
+            <data key="graph_desc">Code/include/splitmerge.h</data>
+            <loop name="merge_gridded_visibilities">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="SLICES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="grids" type="PRECISION2"/>
+                <param direction="OUT" isConfig="false"
+                    name="output_grid" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="SLICES"/>
+            <port annotation="NONE" expr="24167056" kind="input" name="grids"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="output_grid"/>
+        </node>
+        <node id="delta_psi_3_delta_inverse_fft_run_dirty_image" kind="roundbuffer">
+            <port annotation="NONE" expr="6041764" kind="input" name="if_dirty_image"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="dirty_image"/>
+        </node>
+        <node
+            id="delta_psi_3_delta_inverse_fft_run_fft_shift_complex_to_real_actor" kind="actor">
+            <data key="graph_desc">Code/include/fft_run.h</data>
+            <loop name="fft_shift_complex_to_real_actor">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="uv_grid" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="dirty_image" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="READ_ONLY" expr="6041764"
+                kind="input" name="uv_grid"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="6041764"
+                kind="output" name="dirty_image"/>
+        </node>
+        <node id="delta_psi_3_delta_inverse_fft_run_uv_grid" kind="broadcast">
+            <port annotation="NONE" expr="6041764" kind="input" name="uv_grid"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="if_uv_grid"/>
+        </node>
+        <node id="delta_psi_3_delta_delta_image" kind="roundbuffer">
+            <port annotation="NONE" expr="6041764" kind="input" name="if_delta_image"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="delta_image"/>
+        </node>
+        <node
+            id="delta_psi_3_delta_convolution_correction_run_execute_convolution_correction_actor" kind="actor">
+            <data key="graph_desc">Code/include/convolution_correction_run.h</data>
+            <loop name="execute_convolution_correction_actor">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="dirty_image_in" type="PRECISION"/>
+                <param direction="IN" isConfig="false"
+                    name="prolate" type="PRECISION"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="dirty_image_out" type="PRECISION"/>
+            </loop>
+            <data key="memoryScript">Code/Scripts/convolution_correction_run_inPlace.bsh</data>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="READ_ONLY" expr="6041764"
+                kind="input" name="dirty_image_in"/>
+            <port annotation="READ_ONLY" expr="1229" kind="input" name="prolate"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="6041764"
+                kind="output" name="dirty_image_out"/>
+        </node>
+        <node id="delta_psi_3_Broadcast_residual" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="6041764" kind="input" name="input"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="psi"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="save"/>
+        </node>
+        <node
+            id="delta_psi_3_delta_convolution_correction_run_dirty_image_in" kind="broadcast">
+            <port annotation="NONE" expr="6041764" kind="input" name="dirty_image_in"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="if_dirty_image_in"/>
+        </node>
+        <node
+            id="delta_psi_3_delta_convolution_correction_run_dirty_image_out" kind="roundbuffer">
+            <port annotation="NONE" expr="6041764" kind="input" name="if_dirty_image_out"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="dirty_image_out"/>
+        </node>
+        <node id="src_in_0" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub9/src_in_0.h</data>
+            <loop name="sub9_src_in_0">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="src_in_1" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub9/src_in_1.h</data>
+            <loop name="sub9_src_in_1">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="24167056" kind="output" name="out"/>
+        </node>
+        <node id="src_in_2" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub9/src_in_2.h</data>
+            <loop name="sub9_src_in_2">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="src_in_3" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub9/src_in_3.h</data>
+            <loop name="sub9_src_in_3">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="1229" kind="output" name="out"/>
+        </node>
+        <node id="src_in_4" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub9/src_in_4.h</data>
+            <loop name="sub9_src_in_4">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="snk_out_0" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub9/snk_out_0.h</data>
+            <loop name="sub9_snk_out_0">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="6041764" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_1" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub9/snk_out_1.h</data>
+            <loop name="sub9_snk_out_1">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="6041764" kind="input" name="in"/>
+        </node>
+        <edge kind="fifo"
+            source="delta_psi_3_delta_inverse_fft_run_fft_shift_complex_to_complex_actor"
+            sourceport="uv_grid_out"
+            target="delta_psi_3_delta_inverse_fft_run_CUFFT_EXECUTE_INVERSE_C2C_actor"
+            targetport="uv_grid_in" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_3_delta_inverse_fft_run_CUFFT_EXECUTE_INVERSE_C2C_actor"
+            sourceport="uv_grid_out"
+            target="delta_psi_3_delta_inverse_fft_run_fft_shift_complex_to_real_actor"
+            targetport="uv_grid" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_3_delta_inverse_fft_run_uv_grid"
+            sourceport="if_uv_grid"
+            target="delta_psi_3_delta_inverse_fft_run_fft_shift_complex_to_complex_actor"
+            targetport="uv_grid_in" type="PRECISION2"/>
+        <edge kind="fifo" source="delta_psi_3_Broadcast_residual"
+            sourceport="psi" target="delta_psi_3_psi_delta_image"
+            targetport="delta_image" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_3_psi_delta_image"
+            sourceport="if_delta_image" target="snk_out_0"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_3_delta_merge_grids"
+            sourceport="output_grid"
+            target="delta_psi_3_delta_inverse_fft_run_uv_grid"
+            targetport="uv_grid" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_3_delta_inverse_fft_run_fft_shift_complex_to_real_actor"
+            sourceport="dirty_image"
+            target="delta_psi_3_delta_inverse_fft_run_dirty_image"
+            targetport="if_dirty_image" type="PRECISION"/>
+        <edge kind="fifo"
+            source="delta_psi_3_delta_inverse_fft_run_dirty_image"
+            sourceport="dirty_image"
+            target="delta_psi_3_delta_convolution_correction_run_dirty_image_in"
+            targetport="dirty_image_in" type="PRECISION"/>
+        <edge kind="fifo" source="src_in_0" sourceport="out"
+            target="delta_psi_3_delta_inverse_fft_run_fft_shift_complex_to_complex_actor"
+            targetport="config" type="Config"/>
+        <edge kind="fifo"
+            source="delta_psi_3_delta_convolution_correction_run_dirty_image_out"
+            sourceport="dirty_image_out"
+            target="delta_psi_3_delta_delta_image"
+            targetport="if_delta_image" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_3_delta_delta_image"
+            sourceport="delta_image"
+            target="delta_psi_3_Broadcast_residual"
+            targetport="input" type="PRECISION"/>
+        <edge kind="fifo"
+            source="delta_psi_3_delta_convolution_correction_run_dirty_image_in"
+            sourceport="if_dirty_image_in"
+            target="delta_psi_3_delta_convolution_correction_run_execute_convolution_correction_actor"
+            targetport="dirty_image_in" type="PRECISION"/>
+        <edge kind="fifo"
+            source="delta_psi_3_delta_convolution_correction_run_execute_convolution_correction_actor"
+            sourceport="dirty_image_out"
+            target="delta_psi_3_delta_convolution_correction_run_dirty_image_out"
+            targetport="if_dirty_image_out" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_3_Broadcast_residual"
+            sourceport="save" target="snk_out_1" targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="src_in_1" sourceport="out"
+            target="delta_psi_3_delta_merge_grids"
+            targetport="grids" type="PRECISION2"/>
+        <edge kind="fifo" source="src_in_2" sourceport="out"
+            target="delta_psi_3_delta_inverse_fft_run_fft_shift_complex_to_real_actor"
+            targetport="config" type="Config"/>
+        <edge kind="fifo" source="src_in_3" sourceport="out"
+            target="delta_psi_3_delta_convolution_correction_run_execute_convolution_correction_actor"
+            targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="src_in_4" sourceport="out"
+            target="delta_psi_3_delta_convolution_correction_run_execute_convolution_correction_actor"
+            targetport="config" type="Config"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_3_delta_inverse_fft_run_CUFFT_EXECUTE_INVERSE_C2C_actor" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_3_delta_inverse_fft_run_fft_shift_complex_to_complex_actor" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_3_delta_merge_grids" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="SLICES"
+            target="delta_psi_3_delta_merge_grids" targetport="SLICES"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_3_delta_inverse_fft_run_fft_shift_complex_to_real_actor" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_3_delta_convolution_correction_run_execute_convolution_correction_actor" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_3_Broadcast_residual" targetport="GRID_SIZE"/>
+    </graph>
+</graphml>

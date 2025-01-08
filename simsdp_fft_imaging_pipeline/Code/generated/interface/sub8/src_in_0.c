@@ -1,0 +1,5 @@
+// Interface actor file
+#include "src_in_0.h"
+void sub8_src_in_0(int *out) {
+//This function is empty since it is just an interface
+ }

@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <key attr.name="parameters" for="graph" id="parameters"/>
+    <key attr.name="variables" for="graph" id="variables"/>
+    <key attr.name="arguments" for="node" id="arguments"/>
+    <key attr.name="name" attr.type="string" for="graph"/>
+    <key attr.name="graph_desc" attr.type="string" for="node"/>
+    <key attr.name="memoryScript" attr.type="string" for="node"/>
+    <graph edgedefault="directed">
+        <data key="name">sub7</data>
+        <node expr="2458" id="GRID_SIZE" kind="param"/>
+        <node expr="4" id="SLICES" kind="param"/>
+        <node expr="512" id="NUM_RECEIVERS" kind="param"/>
+        <node expr="130816" id="NUM_BASELINES" kind="param"/>
+        <node expr="981120" id="NUM_VISIBILITIES" kind="param"/>
+        <node expr="200" id="NUM_MAX_SOURCES" kind="param"/>
+        <node expr="17" id="NUM_KERNELS" kind="param"/>
+        <node expr="108800" id="TOTAL_KERNEL_SAMPLES" kind="param"/>
+        <node
+            id="delta_psi_1_delta_subtraction_run_visibilities_in" kind="broadcast">
+            <port annotation="NONE" expr="981120" kind="input" name="visibilities_in"/>
+            <port annotation="NONE" expr="981120" kind="output" name="if_visibilities_in"/>
+        </node>
+        <node
+            id="delta_psi_1_delta_convolution_correction_run_dirty_image_in" kind="broadcast">
+            <port annotation="NONE" expr="6041764" kind="input" name="dirty_image_in"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="if_dirty_image_in"/>
+        </node>
+        <node id="delta_psi_1_Broadcast_residual" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="6041764" kind="input" name="input"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="psi"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="save"/>
+        </node>
+        <node id="delta_psi_1_delta_merge_grids" kind="actor">
+            <data key="graph_desc">Code/include/splitmerge.h</data>
+            <loop name="merge_gridded_visibilities">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="SLICES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="grids" type="PRECISION2"/>
+                <param direction="OUT" isConfig="false"
+                    name="output_grid" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="SLICES"/>
+            <port annotation="NONE" expr="24167056" kind="input" name="grids"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="output_grid"/>
+        </node>
+        <node id="Join_delta_psi_1_delta_dft_run_dft_actor0" kind="join">
+            <port annotation="NONE" expr="1962240" kind="input" name="in_0"/>
+            <port annotation="NONE" expr="1962240" kind="input" name="in_1"/>
+            <port annotation="NONE" expr="3924480" kind="output" name="out"/>
+        </node>
+        <node id="delta_psi_1_delta_delta_image" kind="roundbuffer">
+            <port annotation="NONE" expr="6041764" kind="input" name="if_delta_image"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="delta_image"/>
+        </node>
+        <node id="delta_psi_1_delta_gridding_run_uv_grid" kind="roundbuffer">
+            <port annotation="NONE" expr="6041764" kind="input" name="if_uv_grid"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="uv_grid"/>
+        </node>
+        <node
+            id="delta_psi_1_delta_subtraction_run_visibilities_out" kind="roundbuffer">
+            <port annotation="NONE" expr="981120" kind="input" name="if_visibilities_out"/>
+            <port annotation="NONE" expr="981120" kind="output" name="visibilities_out"/>
+        </node>
+        <node id="delta_psi_1_delta_ifft_run_uv_grid" kind="broadcast">
+            <port annotation="NONE" expr="6041764" kind="input" name="uv_grid"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="if_uv_grid"/>
+        </node>
+        <node
+            id="delta_psi_1_delta_convolution_correction_run_dirty_image_out" kind="roundbuffer">
+            <port annotation="NONE" expr="6041764" kind="input" name="if_dirty_image_out"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="dirty_image_out"/>
+        </node>
+        <node
+            id="delta_psi_1_delta_ifft_run_fft_shift_complex_to_real_actor" kind="actor">
+            <data key="graph_desc">Code/include/fft_run.h</data>
+            <loop name="fft_shift_complex_to_real_actor">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="uv_grid" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="dirty_image" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="READ_ONLY" expr="6041764"
+                kind="input" name="uv_grid"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="6041764"
+                kind="output" name="dirty_image"/>
+        </node>
+        <node id="delta_psi_1_psi_delta_image" kind="broadcast">
+            <port annotation="NONE" expr="6041764" kind="input" name="delta_image"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="if_delta_image"/>
+        </node>
+        <node id="delta_psi_1_psi_input_model" kind="broadcast">
+            <port annotation="NONE" expr="6041764" kind="input" name="input_model"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="if_input_model"/>
+        </node>
+        <node id="delta_psi_1_delta_subtraction_run_subtraction" kind="actor">
+            <data key="graph_desc">Code/include/gains_apply_run.h</data>
+            <loop name="subtract_from_measurements">
+                <param direction="IN" isConfig="true"
+                    name="NUM_RECEIVERS" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="NUM_BASELINES" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="measured_vis" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="visibilities_in" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="gains" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="receiver_pairs" type="int2"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="visibilities_out" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_RECEIVERS"/>
+            <port kind="cfg_input" name="NUM_BASELINES"/>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="981120" kind="input" name="measured_vis"/>
+            <port annotation="NONE" expr="981120" kind="input" name="visibilities_in"/>
+            <port annotation="NONE" expr="512" kind="input" name="gains"/>
+            <port annotation="NONE" expr="130816" kind="input" name="receiver_pairs"/>
+            <port annotation="NONE" expr="1" kind="input" name="config"/>
+            <port annotation="NONE" expr="981120" kind="output" name="visibilities_out"/>
+        </node>
+        <node
+            id="delta_psi_1_delta_dft_run_predicted_visibilities" kind="roundbuffer">
+            <port annotation="NONE" expr="981120" kind="input" name="if_predicted_visibilities"/>
+            <port annotation="NONE" expr="981120" kind="output" name="predicted_visibilities"/>
+        </node>
+        <node id="delta_psi_1_delta_ifft_run_dirty_image" kind="roundbuffer">
+            <port annotation="NONE" expr="6041764" kind="input" name="if_dirty_image"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="dirty_image"/>
+        </node>
+        <node
+            id="delta_psi_1_delta_ifft_run_CUFFT_EXECUTE_INVERSE_C2C_actor" kind="actor">
+            <data key="graph_desc">Code/include/fft_run.h</data>
+            <loop name="CUFFT_EXECUTE_INVERSE_C2C_actor">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="uv_grid_in" type="PRECISION2"/>
+                <param direction="OUT" isConfig="false"
+                    name="uv_grid_out" type="PRECISION2"/>
+            </loop>
+            <data key="memoryScript">Code/Scripts/uv_grid_inPlace.bsh</data>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="READ_ONLY" expr="6041764"
+                kind="input" name="uv_grid_in"/>
+            <port annotation="WRITE_ONLY" expr="6041764"
+                kind="output" name="uv_grid_out"/>
+        </node>
+        <node
+            id="delta_psi_1_delta_ifft_run_fft_shift_complex_to_complex_actor" kind="actor">
+            <data key="graph_desc">Code/include/fft_run.h</data>
+            <loop name="fft_shift_complex_to_complex_actor">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="uv_grid_in" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="uv_grid_out" type="PRECISION2"/>
+            </loop>
+            <data key="memoryScript">Code/Scripts/uv_grid_inPlace.bsh</data>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="READ_ONLY" expr="6041764"
+                kind="input" name="uv_grid_in"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="6041764"
+                kind="output" name="uv_grid_out"/>
+        </node>
+        <node id="delta_psi_1_delta_dft_run_dft_actor" kind="actor">
+            <data key="graph_desc">Code/include/dft_run.h</data>
+            <loop name="dft_actor">
+                <param direction="IN" isConfig="true"
+                    name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="NUM_MAX_SOURCES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="sources" type="PRECISION3"/>
+                <param direction="IN" isConfig="false"
+                    name="vis_uvw_coords" type="PRECISION3"/>
+                <param direction="IN" isConfig="false"
+                    name="num_sources" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="visibilities" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port kind="cfg_input" name="NUM_MAX_SOURCES"/>
+            <port annotation="READ_ONLY" expr="200" kind="input" name="sources"/>
+            <port annotation="READ_ONLY" expr="981120"
+                kind="input" name="vis_uvw_coords"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="num_sources"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="981120"
+                kind="output" name="visibilities"/>
+        </node>
+        <node id="delta_psi_1_delta_add_visibilities" kind="actor">
+            <data key="graph_desc">Code/include/gridding_run.h</data>
+            <loop name="add_visibilities">
+                <param direction="IN" isConfig="true"
+                    name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="false" name="v1" type="PRECISION2"/>
+                <param direction="IN" isConfig="false" name="v2" type="PRECISION2"/>
+                <param direction="OUT" isConfig="false"
+                    name="output" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port annotation="NONE" expr="981120" kind="input" name="v2"/>
+            <port annotation="NONE" expr="981120" kind="output" name="output"/>
+        </node>
+        <node id="delta_psi_1_delta_image_passthrough" kind="actor">
+            <data key="graph_desc">Code/include/major_loop_iter.h</data>
+            <loop name="pass_through_image">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="image" type="PRECISION"/>
+                <param direction="OUT" isConfig="false"
+                    name="output_image" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="6041764" kind="input" name="image"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="output_image"/>
+        </node>
+        <node id="delta_psi_1_delta_gridding_run_visibilities" kind="broadcast">
+            <port annotation="NONE" expr="981120" kind="input" name="visibilities"/>
+            <port annotation="NONE" expr="981120" kind="output" name="if_visibilities"/>
+        </node>
+        <node id="delta_psi_1_delta_gridding_run_gridding_actor" kind="actor">
+            <data key="graph_desc">Code/include/gridding_run.h</data>
+            <loop name="gridding_actor">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="NUM_KERNELS" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="TOTAL_KERNEL_SAMPLES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="kernels" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="kernel_supports" type="int2"/>
+                <param direction="IN" isConfig="false"
+                    name="vis_uvw_coords" type="PRECISION3"/>
+                <param direction="IN" isConfig="false"
+                    name="visibilities" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="uv_grid" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port kind="cfg_input" name="NUM_KERNELS"/>
+            <port kind="cfg_input" name="TOTAL_KERNEL_SAMPLES"/>
+            <port annotation="READ_ONLY" expr="108800"
+                kind="input" name="kernels"/>
+            <port annotation="READ_ONLY" expr="17" kind="input" name="kernel_supports"/>
+            <port annotation="READ_ONLY" expr="981120"
+                kind="input" name="vis_uvw_coords"/>
+            <port annotation="READ_ONLY" expr="981120"
+                kind="input" name="visibilities"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="uv_grid"/>
+        </node>
+        <node
+            id="delta_psi_1_delta_convolution_correction_run_execute_convolution_correction_actor" kind="actor">
+            <data key="graph_desc">Code/include/convolution_correction_run.h</data>
+            <loop name="execute_convolution_correction_actor">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="dirty_image_in" type="PRECISION"/>
+                <param direction="IN" isConfig="false"
+                    name="prolate" type="PRECISION"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="dirty_image_out" type="PRECISION"/>
+            </loop>
+            <data key="memoryScript">Code/Scripts/convolution_correction_run_inPlace.bsh</data>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="READ_ONLY" expr="6041764"
+                kind="input" name="dirty_image_in"/>
+            <port annotation="READ_ONLY" expr="1229" kind="input" name="prolate"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="6041764"
+                kind="output" name="dirty_image_out"/>
+        </node>
+        <node id="delta_psi_1_delta_image_out" kind="roundbuffer">
+            <port annotation="NONE" expr="6041764" kind="input" name="if_image_out"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="image_out"/>
+        </node>
+        <node id="src_in_0" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_0.h</data>
+            <loop name="sub7_src_in_0">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="1962240" kind="output" name="out"/>
+        </node>
+        <node id="src_in_1" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_1.h</data>
+            <loop name="sub7_src_in_1">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="src_in_2" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_2.h</data>
+            <loop name="sub7_src_in_2">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="3924480" kind="output" name="out"/>
+        </node>
+        <node id="src_in_3" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_3.h</data>
+            <loop name="sub7_src_in_3">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="2048" kind="output" name="out"/>
+        </node>
+        <node id="src_in_4" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_4.h</data>
+            <loop name="sub7_src_in_4">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="int2"/>
+            </loop>
+            <port annotation="NONE" expr="523264" kind="output" name="out"/>
+        </node>
+        <node id="src_in_5" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_5.h</data>
+            <loop name="sub7_src_in_5">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="4" kind="output" name="out"/>
+        </node>
+        <node id="src_in_6" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_6.h</data>
+            <loop name="sub7_src_in_6">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="src_in_7" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_7.h</data>
+            <loop name="sub7_src_in_7">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION3"/>
+            </loop>
+            <port annotation="NONE" expr="400" kind="output" name="out"/>
+        </node>
+        <node id="src_in_8" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_8.h</data>
+            <loop name="sub7_src_in_8">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION3"/>
+            </loop>
+            <port annotation="NONE" expr="1962240" kind="output" name="out"/>
+        </node>
+        <node id="src_in_9" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_9.h</data>
+            <loop name="sub7_src_in_9">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="2" kind="output" name="out"/>
+        </node>
+        <node id="src_in_10" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_10.h</data>
+            <loop name="sub7_src_in_10">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="2" kind="output" name="out"/>
+        </node>
+        <node id="src_in_11" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_11.h</data>
+            <loop name="sub7_src_in_11">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="6041764" kind="output" name="out"/>
+        </node>
+        <node id="src_in_12" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_12.h</data>
+            <loop name="sub7_src_in_12">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="435200" kind="output" name="out"/>
+        </node>
+        <node id="src_in_13" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_13.h</data>
+            <loop name="sub7_src_in_13">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="int2"/>
+            </loop>
+            <port annotation="NONE" expr="68" kind="output" name="out"/>
+        </node>
+        <node id="src_in_14" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_14.h</data>
+            <loop name="sub7_src_in_14">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION3"/>
+            </loop>
+            <port annotation="NONE" expr="3924480" kind="output" name="out"/>
+        </node>
+        <node id="src_in_15" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_15.h</data>
+            <loop name="sub7_src_in_15">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="4" kind="output" name="out"/>
+        </node>
+        <node id="src_in_16" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_16.h</data>
+            <loop name="sub7_src_in_16">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="1229" kind="output" name="out"/>
+        </node>
+        <node id="src_in_17" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/src_in_17.h</data>
+            <loop name="sub7_src_in_17">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="snk_out_0" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/snk_out_0.h</data>
+            <loop name="sub7_snk_out_0">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="6041764" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_1" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/snk_out_1.h</data>
+            <loop name="sub7_snk_out_1">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="6041764" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_2" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub7/snk_out_2.h</data>
+            <loop name="sub7_snk_out_2">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port annotation="NONE" expr="6041764" kind="input" name="in"/>
+        </node>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_add_visibilities"
+            sourceport="output"
+            target="delta_psi_1_delta_subtraction_run_visibilities_in"
+            targetport="visibilities_in" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_subtraction_run_visibilities_in"
+            sourceport="if_visibilities_in"
+            target="delta_psi_1_delta_subtraction_run_subtraction"
+            targetport="visibilities_in" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_ifft_run_dirty_image"
+            sourceport="dirty_image"
+            target="delta_psi_1_delta_convolution_correction_run_dirty_image_in"
+            targetport="dirty_image_in" type="PRECISION"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_convolution_correction_run_dirty_image_in"
+            sourceport="if_dirty_image_in"
+            target="delta_psi_1_delta_convolution_correction_run_execute_convolution_correction_actor"
+            targetport="dirty_image_in" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_1_delta_delta_image"
+            sourceport="delta_image"
+            target="delta_psi_1_Broadcast_residual"
+            targetport="input" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_1_Broadcast_residual"
+            sourceport="psi" target="delta_psi_1_psi_delta_image"
+            targetport="delta_image" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_1_Broadcast_residual"
+            sourceport="save" target="snk_out_0" targetport="in" type="PRECISION"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_gridding_run_uv_grid"
+            sourceport="uv_grid"
+            target="delta_psi_1_delta_merge_grids"
+            targetport="grids" type="PRECISION2"/>
+        <edge kind="fifo" source="delta_psi_1_delta_merge_grids"
+            sourceport="output_grid"
+            target="delta_psi_1_delta_ifft_run_uv_grid"
+            targetport="uv_grid" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_dft_run_dft_actor"
+            sourceport="visibilities"
+            target="Join_delta_psi_1_delta_dft_run_dft_actor0"
+            targetport="in_1" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="Join_delta_psi_1_delta_dft_run_dft_actor0"
+            sourceport="out"
+            target="delta_psi_1_delta_dft_run_predicted_visibilities"
+            targetport="if_predicted_visibilities" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_convolution_correction_run_dirty_image_out"
+            sourceport="dirty_image_out"
+            target="delta_psi_1_delta_delta_image"
+            targetport="if_delta_image" type="PRECISION"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_gridding_run_gridding_actor"
+            sourceport="uv_grid"
+            target="delta_psi_1_delta_gridding_run_uv_grid"
+            targetport="if_uv_grid" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_subtraction_run_subtraction"
+            sourceport="visibilities_out"
+            target="delta_psi_1_delta_subtraction_run_visibilities_out"
+            targetport="if_visibilities_out" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_subtraction_run_visibilities_out"
+            sourceport="visibilities_out"
+            target="delta_psi_1_delta_gridding_run_visibilities"
+            targetport="visibilities" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_ifft_run_uv_grid"
+            sourceport="if_uv_grid"
+            target="delta_psi_1_delta_ifft_run_fft_shift_complex_to_complex_actor"
+            targetport="uv_grid_in" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_convolution_correction_run_execute_convolution_correction_actor"
+            sourceport="dirty_image_out"
+            target="delta_psi_1_delta_convolution_correction_run_dirty_image_out"
+            targetport="if_dirty_image_out" type="PRECISION"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_ifft_run_CUFFT_EXECUTE_INVERSE_C2C_actor"
+            sourceport="uv_grid_out"
+            target="delta_psi_1_delta_ifft_run_fft_shift_complex_to_real_actor"
+            targetport="uv_grid" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_ifft_run_fft_shift_complex_to_real_actor"
+            sourceport="dirty_image"
+            target="delta_psi_1_delta_ifft_run_dirty_image"
+            targetport="if_dirty_image" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_1_psi_delta_image"
+            sourceport="if_delta_image" target="snk_out_1"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_1_delta_image_out"
+            sourceport="image_out"
+            target="delta_psi_1_psi_input_model"
+            targetport="input_model" type="PRECISION"/>
+        <edge kind="fifo" source="delta_psi_1_psi_input_model"
+            sourceport="if_input_model" target="snk_out_2"
+            targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="src_in_0" sourceport="out"
+            target="Join_delta_psi_1_delta_dft_run_dft_actor0"
+            targetport="in_0" type="PRECISION2"/>
+        <edge kind="fifo" source="src_in_1" sourceport="out"
+            target="delta_psi_1_delta_ifft_run_fft_shift_complex_to_real_actor"
+            targetport="config" type="Config"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_dft_run_predicted_visibilities"
+            sourceport="predicted_visibilities"
+            target="delta_psi_1_delta_add_visibilities"
+            targetport="v2" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_ifft_run_fft_shift_complex_to_complex_actor"
+            sourceport="uv_grid_out"
+            target="delta_psi_1_delta_ifft_run_CUFFT_EXECUTE_INVERSE_C2C_actor"
+            targetport="uv_grid_in" type="PRECISION2"/>
+        <edge kind="fifo" source="src_in_2" sourceport="out"
+            target="delta_psi_1_delta_subtraction_run_subtraction"
+            targetport="measured_vis" type="PRECISION2"/>
+        <edge kind="fifo" source="src_in_3" sourceport="out"
+            target="delta_psi_1_delta_subtraction_run_subtraction"
+            targetport="gains" type="PRECISION2"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_image_passthrough"
+            sourceport="output_image"
+            target="delta_psi_1_delta_image_out"
+            targetport="if_image_out" type="PRECISION"/>
+        <edge kind="fifo"
+            source="delta_psi_1_delta_gridding_run_visibilities"
+            sourceport="if_visibilities"
+            target="delta_psi_1_delta_gridding_run_gridding_actor"
+            targetport="visibilities" type="PRECISION2"/>
+        <edge kind="fifo" source="src_in_4" sourceport="out"
+            target="delta_psi_1_delta_subtraction_run_subtraction"
+            targetport="receiver_pairs" type="int2"/>
+        <edge kind="fifo" source="src_in_5" sourceport="out"
+            target="delta_psi_1_delta_subtraction_run_subtraction"
+            targetport="config" type="Config"/>
+        <edge kind="fifo" source="src_in_6" sourceport="out"
+            target="delta_psi_1_delta_ifft_run_fft_shift_complex_to_complex_actor"
+            targetport="config" type="Config"/>
+        <edge kind="fifo" source="src_in_7" sourceport="out"
+            target="delta_psi_1_delta_dft_run_dft_actor"
+            targetport="sources" type="PRECISION3"/>
+        <edge kind="fifo" source="src_in_8" sourceport="out"
+            target="delta_psi_1_delta_dft_run_dft_actor"
+            targetport="vis_uvw_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="src_in_9" sourceport="out"
+            target="delta_psi_1_delta_dft_run_dft_actor"
+            targetport="num_sources" type="int"/>
+        <edge kind="fifo" source="src_in_10" sourceport="out"
+            target="delta_psi_1_delta_dft_run_dft_actor"
+            targetport="config" type="Config"/>
+        <edge kind="fifo" source="src_in_11" sourceport="out"
+            target="delta_psi_1_delta_image_passthrough"
+            targetport="image" type="PRECISION"/>
+        <edge kind="fifo" source="src_in_12" sourceport="out"
+            target="delta_psi_1_delta_gridding_run_gridding_actor"
+            targetport="kernels" type="PRECISION2"/>
+        <edge kind="fifo" source="src_in_13" sourceport="out"
+            target="delta_psi_1_delta_gridding_run_gridding_actor"
+            targetport="kernel_supports" type="int2"/>
+        <edge kind="fifo" source="src_in_14" sourceport="out"
+            target="delta_psi_1_delta_gridding_run_gridding_actor"
+            targetport="vis_uvw_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="src_in_15" sourceport="out"
+            target="delta_psi_1_delta_gridding_run_gridding_actor"
+            targetport="config" type="Config"/>
+        <edge kind="fifo" source="src_in_16" sourceport="out"
+            target="delta_psi_1_delta_convolution_correction_run_execute_convolution_correction_actor"
+            targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="src_in_17" sourceport="out"
+            target="delta_psi_1_delta_convolution_correction_run_execute_convolution_correction_actor"
+            targetport="config" type="Config"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_1_Broadcast_residual" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_1_delta_merge_grids" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="SLICES"
+            target="delta_psi_1_delta_merge_grids" targetport="SLICES"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_1_delta_ifft_run_fft_shift_complex_to_real_actor" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_RECEIVERS"
+            target="delta_psi_1_delta_subtraction_run_subtraction" targetport="NUM_RECEIVERS"/>
+        <edge kind="dependency" source="NUM_BASELINES"
+            target="delta_psi_1_delta_subtraction_run_subtraction" targetport="NUM_BASELINES"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES"
+            target="delta_psi_1_delta_subtraction_run_subtraction" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_1_delta_subtraction_run_subtraction" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_1_delta_ifft_run_CUFFT_EXECUTE_INVERSE_C2C_actor" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_1_delta_ifft_run_fft_shift_complex_to_complex_actor" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES"
+            target="delta_psi_1_delta_dft_run_dft_actor" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="NUM_MAX_SOURCES"
+            target="delta_psi_1_delta_dft_run_dft_actor" targetport="NUM_MAX_SOURCES"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES"
+            target="delta_psi_1_delta_add_visibilities" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_1_delta_image_passthrough" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_1_delta_gridding_run_gridding_actor" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES"
+            target="delta_psi_1_delta_gridding_run_gridding_actor" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="NUM_KERNELS"
+            target="delta_psi_1_delta_gridding_run_gridding_actor" targetport="NUM_KERNELS"/>
+        <edge kind="dependency" source="TOTAL_KERNEL_SAMPLES"
+            target="delta_psi_1_delta_gridding_run_gridding_actor" targetport="TOTAL_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_1_delta_convolution_correction_run_execute_convolution_correction_actor" targetport="GRID_SIZE"/>
+    </graph>
+</graphml>

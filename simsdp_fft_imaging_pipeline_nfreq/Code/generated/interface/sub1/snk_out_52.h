@@ -1,0 +1,6 @@
+#include "preesm.h"
+// Interface actor file
+#ifndef SNK_OUT_52_H
+#define SNK_OUT_52_H
+void sub1_snk_out_52(int2 *in);
+#endif
