@@ -1,0 +1,6 @@
+Algo/generated/
+Archi/*.layout
+Code/generated
+Code/data/input
+*.xml
+

@@ -190,7 +190,7 @@ To reveal the contrasts:
 
 [wrong value, but the curves i'm targetting]
 
-![](/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/experimental_result_data/simu_nvis.png)
+![](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/experimental_result_data/simu_nvis.png?ref_type=heads)
 
 - Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [nVis = 3924480 , **GRID_SIZE** = 1:21760:108800, nMinorCycle = 200]:
 
