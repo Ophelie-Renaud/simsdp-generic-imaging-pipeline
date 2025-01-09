@@ -188,17 +188,15 @@ To reveal the contrasts:
 
 - Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [**nVis** = 10xNUM_BASELINE:5xNUM_BASELINE:30xNUM_BASELINE , GRID_SIZE = 2048, nMinorCycle = 200]:
 
-[wrong value, but the curves i'm targetting]
-
 ![](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/experimental_result_data/simu_nvis.png?ref_type=heads)
 
-- Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [nVis = 3924480 , **GRID_SIZE** = 1:21760:108800, nMinorCycle = 200]:
+- Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [nVis = 3924480 , **GRID_SIZE** = 512:512:2560, nMinorCycle = 200]:
 
-[ToDo]
+![](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/experimental_result_data/simu_grid.png?ref_type=heads)
 
-- Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [nVis = 3924480 , GRID_SIZE = 2048, **nMinorCycle** = 1:40:200]:
+- Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [nVis = 3924480 , GRID_SIZE = 2048, **nMinorCycle** = 50:50:250]:
 
-[ToDo]
+![](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/experimental_result_data/simu_minor.png?ref_type=heads)
 
 
 
