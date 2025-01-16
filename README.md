@@ -19,6 +19,7 @@ This repository contains six main directories, categorized by the number of freq
 
 ```plaintext
 ├── experimental_result_data/ # Spreadsheet diagrams of experimental results
+├── polynomial_timing/ 	      #CPU and GPU tool for timing calcultaion
 ├── simsdp-g2g-imaging-pipeline/
     ├── Algo/        # Dataflow Algorithms for pipeline steps 
     ├── Archi/       # HPC S-LAM Architecture models (e.g., HPC topology, node configurations)
@@ -75,12 +76,89 @@ This repository contains six main directories, categorized by the number of freq
 ### Parameterized timing estimation
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-    Timings definition consist in polynomials calculation, the procedure is the following.
-    
-    1. Generating instrumented code
-    2. Running instrumented code varying the number of visibilities
-    3. Executing the `plot_and_fit_averages.py` script
-    
+    Timings definition consist in polynomials calculation, the procedure is the following. For each dataflow pipeline configuration do:
+
+1. Generating instrumented code [generation instructions](https://preesm.github.io/tutos/mpsoccodegen/), see section **Instrumented C Code Generation, Execution and Analysis**. Generated versions  for G2G pipeline on CPU and GPU is avaliable of folder `/polynomial_timing/Instrumented_code_g2g_cpu/Code/` and `/polynomial_timing/Instrumented_code_g2g_cpu/Code/`.
+
+   - On CLion, for the CPU version, run the CMakeList.txt, build :hammer: and Run  the code :arrow_forward:.
+
+   - Still on CLion, for GPU version, configure CMake:
+
+      - install nvcc `sudo apt install nvidia-cuda-toolkit`, check the install `nvcc --version`.
+
+      - Settings :gear:>Build, Execution, Deployment > CMake, add profile :heavy_plus_sign:, name `GIP_GPU`, CMake option `-DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc` (if you use the emulator: option `-DUSE_CUDA_EMULATOR=ON`, the emulator only allows you to check that the code is functional, execution will be slower than on a GPU).
+
+   - The timestamp will be stored in the file `Code/generated/analysis.csv` (if not adjust the file path line 73 of `dump.h` --> `#define DUMP_FILE "analysis.csv"` )
+
+2. Running instrumented code varying: `NUM_VIS` [1000000; 2000000;3000000;4000000], `GRID_SIZE` [65536; 262144; 589824; 1048576; 1638400; 2359296; 3211264; 4194304]; , `NUM_MINOR_CYCLE`
+
+   - Change the parameter from the dataflow graph for `example /simsdp_g2g_imaging_pipeline/ Algo/top.pi`, click on blue triangle named `NUM_VIS` and change the value. Generate a code each time you change a parameter value.
+   - For each Config store the calculation time and the configuration in a such as degrid.csv contains `time acquisition1; GRID_SIZE1; NUM_VISIBILITY1;time acquisition2; GRID_SIZE2; NUM_VISIBILITY2;...`
+
+3. Executing the `plot_and_fit_averages.py` script to obtain the fit function. Install scipy `pip install scipy`. Execute : `python plot_and_fit_averages.py <input_file> <num_axis[1-2]> <dof[1-2]> <num_x_datapoints[1]> <num_y_datapoints [file_len/3]>` where the two last parameter are used for deconv,degridding etc. ex `python plot_and_fit_averages.py degrid.csv 2 1 8 4`(on the benchmark there is 8 GRID_SIZE and 4 NUM_VIS).
+
+   <div style="text-align: center;">
+       <img src="https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/polynomial_timing/Figure_1.png?ref_type=heads" alt="Description alternative" style="max-width: 80%;">
+       <p><b>Figure 1:</b> 
+       <pre><code>python plot_and_fit_averages.py degrid.csv 2 1 8 4</code></pre> <br>  
+   	RMSE: 2929.136239024687; <br>
+      Polynomials: [-7.57870456e+02  1.11207625e-03  4.67772660e-04]
+      </p>
+   </div>
+
+   <div style="text-align: center;">
+       <img src="https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/polynomial_timing/Figure_2.png?ref_type=heads" alt="Description alternative" style="max-width: 80%;">
+       <p><b>Figure 2:</b> 
+   	In the original GIP paper the retain value are:
+       <pre><code>python plot_and_fit_averages.py degrid.csv 2 2 8 4</code></pre> <br>  
+   	RMSE: 1310.353129574978; <br>
+    Polynomials:  [-5.38868774e+02  8.93032173e-04 -1.99593895e-11  9.06752993e-04
+     1.90789332e-10 -2.23468265e-10]
+      </p>
+   </div>
+
+   <div style="text-align: center;">
+    <img src="https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/polynomial_timing/Figure_3.png?ref_type=heads" alt="Description alternative" style="max-width: 80%;">
+    <p><b>Figure 2:</b> 
+   In the original GIP paper the retain value are:
+    <pre><code>python plot_and_fit_averages.py degrid.csv 2 6 8 4</code></pre> <br>  
+   RMSE: 254.3481181405604; <br>
+   Polynomials: [ 5.31713245e+04 -8.30510174e-02  2.42638662e-08  1.12866458e-14
+    -5.01452759e-21  3.07430467e-31  1.10957450e-34 -2.16795144e-02
+     3.83814482e-08 -2.25243447e-14  4.15817783e-21  2.80271118e-28
+    -1.08010603e-34  8.34323283e-09 -5.89982326e-15  4.00900882e-21
+    -1.06617401e-27  1.09531005e-34 -5.42048113e-15 -2.23817508e-22
+    -1.06094371e-28 -3.91299875e-36  2.55420177e-21  1.59977576e-28
+     1.48860113e-35 -5.80263610e-28 -2.24210276e-35  5.00611356e-35]
+   </p>
+   </div>
+
+
+   > The axis represent: 
+   >
+   > - z:  the execution time for each configuration.
+   >
+   > - x: the fisrt parameter, here GRID_SIZE.
+   >
+   > - y: the second parameter, here NUM_VIS
+   >
+   >   For each Figure:
+   >
+   > - The upper plot represent the measured data for each x,y value.
+   >
+   > - The bottom plot represent the polynomial model of the fitting function.
+   >
+   >   We target a Root Mean Square Error (RMSE) as short as possible while minimizing the number of coefficient , the value are the coefficient of the polynomials. 
+   >
+   > The number of coefficients has an impact on the RMSE and must be less than the number of points acquired, otherwise it crashes, you should respect the following:
+
+$$
+\text{num\_coeffs} = \frac{(dof + 1)(dof + 2)}{2} \leq \text{num\_points}\\
+\text{hence:}\\
+
+dof \leq \frac{-3 + \sqrt{9 + 8 \times \text{num\_points}}}{2}
+$$
+
 </details>
 
 ### Run SimSDP on a defined HPC architecture
@@ -128,12 +206,12 @@ During its execution, the workflow will log information into the  Console of Pre
 Additionnaly, the workflow execution generates intermediary dataflow graphs that can be found in the **/Algo/generated/** directory. The C code generated by the workflow is contained in the **/Code/generated/** directory. The simulated data are stored in the **/Simulation** directory.
 
 4. A python notebook is provided in the SimSDP project to analyse the simulator generated files: Launch `jupyter notebook` and open “SimSDPproject/SimulationAnalysis.ipynb”. Make sure that the  CSVs are in the reading path. Load each code to display the trends with  your simulated data.
-</details>
-    
+   </details>
+   
 ### Run SimSDP on a defined range of architectures
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-    
+
 1. Add a SimSDP_moldable.csv in the **Archi** folder  which should look something like this:
 
  | Parameters       | min        | max        | step       |
@@ -151,7 +229,7 @@ Additionnaly, the workflow execution generates intermediary dataflow graphs that
 ### Run the generated code
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-    
+
 1. install the requirements:
 ```
 sudo apt-get install libfftw3-dev

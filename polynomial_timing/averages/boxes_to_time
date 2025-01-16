@@ -1,0 +1,38 @@
+setup_ri_pipeline
+	config_struct_set_up - in preesm, constant
+	correction_set_up - in preesm, grid_size
+	config_struct_set_up_sequel - in preesm, constant
+	clean_psf_set_up - rascil, grid_size
+	degridding_kernel_host_set_up - in preesm, constant
+	kernel_host_set_up - in preesm, constant
+	gains_host_set_up - in preesm, num_vis
+	visibility_host_set_up - in preesm, num_vis
+
+hogbom_clean - rascil, num_minor_cycles
+
+save_output - in preesm? grid_size
+
+dft - in preesm, num_minor_cycles, num_visibilities
+
+gains_apply_run
+	reciprocal_transform_actor - in preesm, num_visibilities
+	subtraction - in preesm, num_visibilities
+
+add_visibilities - in preesm, num_visibilities
+	
+grid - code of Nicolas, num_visibilities
+
+fft and inverse fft
+	fftshift and ifftshift - in preesm, grid_size
+	fft and ifft - in preesm, grid_size
+
+convolution_correction
+	applying prolate - in preesm, grid_size
+
+correct_to_finegrid - in preesm, num_visibilities
+
+fft degrid - code of Nicolas, num_visibilities
+
+subtract_image_space - in preesm, grid_size
+
+g2g - code of Nicolas, num visibilities

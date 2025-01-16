@@ -1,0 +1,11 @@
+bin/
+build/
+data/input/*
+data/model/*
+data/output/*
+generated/*
+*.xml
+.project
+cmake-build-*
+.idea/
+
