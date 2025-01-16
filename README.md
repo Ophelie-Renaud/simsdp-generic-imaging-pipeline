@@ -100,7 +100,7 @@ This repository contains six main directories, categorized by the number of freq
    <div style="text-align: center;">
        <img src="https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/polynomial_timing/Figure_1.png?ref_type=heads" alt="Description alternative" style="max-width: 80%;">
        <p><b>Figure 1:</b> 
-       <pre><code>python plot_and_fit_averages.py degrid.csv 2 1 8 4</code></pre> <br>  
+       <pre><code>python plot_and_fit_averages.py degrid.csv 2 1 8 4</code></pre>  
    	RMSE: 2929.136239024687; <br>
       Polynomials: [-7.57870456e+02  1.11207625e-03  4.67772660e-04]
       </p>
@@ -110,18 +110,18 @@ This repository contains six main directories, categorized by the number of freq
        <img src="https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/polynomial_timing/Figure_2.png?ref_type=heads" alt="Description alternative" style="max-width: 80%;">
        <p><b>Figure 2:</b> 
    	In the original GIP paper the retain value are:
-       <pre><code>python plot_and_fit_averages.py degrid.csv 2 2 8 4</code></pre> <br>  
+       <pre><code>python plot_and_fit_averages.py degrid.csv 2 2 8 4</code></pre>   
    	RMSE: 1310.353129574978; <br>
     Polynomials:  [-5.38868774e+02  8.93032173e-04 -1.99593895e-11  9.06752993e-04
      1.90789332e-10 -2.23468265e-10]
       </p>
    </div>
-
+   
    <div style="text-align: center;">
     <img src="https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/polynomial_timing/Figure_3.png?ref_type=heads" alt="Description alternative" style="max-width: 80%;">
-    <p><b>Figure 2:</b> 
-   In the original GIP paper the retain value are:
-    <pre><code>python plot_and_fit_averages.py degrid.csv 2 6 8 4</code></pre> <br>  
+    <p><b>Figure 3:</b> 
+   The dof value that offer the best RMSE for 8x4 input parameter is 6:
+    <pre><code>python plot_and_fit_averages.py degrid.csv 2 6 8 4</code></pre>  
    RMSE: 254.3481181405604; <br>
    Polynomials: [ 5.31713245e+04 -8.30510174e-02  2.42638662e-08  1.12866458e-14
     -5.01452759e-21  3.07430467e-31  1.10957450e-34 -2.16795144e-02
@@ -142,22 +142,19 @@ This repository contains six main directories, categorized by the number of freq
    >
    > - y: the second parameter, here NUM_VIS
    >
-   >   For each Figure:
+   > For each Figure:
    >
    > - The upper plot represent the measured data for each x,y value.
    >
    > - The bottom plot represent the polynomial model of the fitting function.
-   >
-   >   We target a Root Mean Square Error (RMSE) as short as possible while minimizing the number of coefficient , the value are the coefficient of the polynomials. 
-   >
-   > The number of coefficients has an impact on the RMSE and must be less than the number of points acquired, otherwise it crashes, you should respect the following:
 
-$$
-\text{num\_coeffs} = \frac{(dof + 1)(dof + 2)}{2} \leq \text{num\_points}\\
-\text{hence:}\\
+We target a Root Mean Square Error (RMSE) as short as possible while minimizing the number of coefficient , the value are the coefficient of the polynomials. 
+The number of coefficients has an impact on the RMSE and must be less than the number of points acquired, otherwise it crashes, you should respect the following:
 
-dof \leq \frac{-3 + \sqrt{9 + 8 \times \text{num\_points}}}{2}
-$$
+	num_coeffs = (dof + 1)(dof + 2) / 2 ≤ num_points
+hence:
+
+	dof ≤ (-3 + sqrt(9 + 8 × num_points)) / 2
 
 </details>
 
