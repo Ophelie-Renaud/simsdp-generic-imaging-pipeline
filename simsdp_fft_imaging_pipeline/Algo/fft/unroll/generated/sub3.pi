@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <key attr.name="parameters" for="graph" id="parameters"/>
+    <key attr.name="variables" for="graph" id="variables"/>
+    <key attr.name="arguments" for="node" id="arguments"/>
+    <key attr.name="name" attr.type="string" for="graph"/>
+    <key attr.name="graph_desc" attr.type="string" for="node"/>
+    <graph edgedefault="directed">
+        <data key="name">sub3</data>
+        <node expr="2458" id="GRID_SIZE" kind="param"/>
+        <node expr="981120" id="NUM_VISIBILITIES" kind="param"/>
+        <node expr="17" id="NUM_KERNELS" kind="param"/>
+        <node expr="108800" id="TOTAL_KERNEL_SAMPLES" kind="param"/>
+        <node expr="16" id="OVERSAMPLING_FACTOR" kind="param"/>
+        <node expr="0" id="BYPASS" kind="param"/>
+        <node id="Fork_delta_psi_4_delta_grid0" kind="fork">
+            <port annotation="NONE" expr="4" kind="input" name="in"/>
+            <port annotation="NONE" expr="2" kind="output" name="out_0"/>
+            <port annotation="NONE" expr="2" kind="output" name="out_1"/>
+        </node>
+        <node id="Fork_delta_psi_4_delta_grid7" kind="fork">
+            <port annotation="NONE" expr="24167056" kind="input" name="in"/>
+            <port annotation="NONE" expr="12083528" kind="output" name="out_0"/>
+            <port annotation="NONE" expr="12083528" kind="output" name="out_1"/>
+        </node>
+        <node id="delta_psi_4_delta_grid" kind="actor">
+            <data key="graph_desc">Code/include/degridgrid.h</data>
+            <loop name="std_gridding">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="NUM_KERNELS" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="TOTAL_KERNEL_SAMPLES" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="OVERSAMPLING_FACTOR" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="BYPASS" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="maj_iter" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="num_corrected_visibilities" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="kernels" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="kernel_supports" type="int2"/>
+                <param direction="IN" isConfig="false"
+                    name="corrected_vis_uvw_coords" type="PRECISION3"/>
+                <param direction="IN" isConfig="false"
+                    name="visibilities" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="IN" isConfig="false"
+                    name="prev_grid" type="PRECISION2"/>
+                <param direction="OUT" isConfig="false"
+                    name="output_grid" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port kind="cfg_input" name="NUM_KERNELS"/>
+            <port kind="cfg_input" name="TOTAL_KERNEL_SAMPLES"/>
+            <port kind="cfg_input" name="OVERSAMPLING_FACTOR"/>
+            <port kind="cfg_input" name="BYPASS"/>
+            <port annotation="NONE" expr="1" kind="input" name="num_corrected_visibilities"/>
+            <port annotation="NONE" expr="108800" kind="input" name="kernels"/>
+            <port annotation="NONE" expr="17" kind="input" name="kernel_supports"/>
+            <port annotation="NONE" expr="981120" kind="input" name="corrected_vis_uvw_coords"/>
+            <port annotation="NONE" expr="981120" kind="input" name="visibilities"/>
+            <port annotation="NONE" expr="1" kind="input" name="config"/>
+            <port annotation="NONE" expr="1" kind="input" name="maj_iter"/>
+            <port annotation="NONE" expr="6041764" kind="input" name="prev_grid"/>
+            <port annotation="NONE" expr="6041764" kind="output" name="output_grid"/>
+        </node>
+        <node id="Fork_delta_psi_4_delta_grid3" kind="fork">
+            <port annotation="NONE" expr="3924480" kind="input" name="in"/>
+            <port annotation="NONE" expr="1962240" kind="output" name="out_0"/>
+            <port annotation="NONE" expr="1962240" kind="output" name="out_1"/>
+        </node>
+        <node
+            id="delta_psi_4_delta_subtract_from_measurements_finegrid" kind="actor">
+            <data key="graph_desc">Code/include/gains_apply_run.h</data>
+            <loop name="subtract_from_measurements_finegrid">
+                <param direction="IN" isConfig="true"
+                    name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="gridded_measured_vis" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="input_vis" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="num_finegrid_vis" type="int"/>
+                <param direction="OUT" isConfig="false"
+                    name="delta_vis" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port annotation="NONE" expr="981120" kind="input" name="gridded_measured_vis"/>
+            <port annotation="NONE" expr="981120" kind="input" name="input_vis"/>
+            <port annotation="NONE" expr="1" kind="input" name="num_finegrid_vis"/>
+            <port annotation="NONE" expr="981120" kind="output" name="delta_vis"/>
+        </node>
+        <node id="Fork_delta_psi_4_delta_grid2" kind="fork">
+            <port annotation="NONE" expr="68" kind="input" name="in"/>
+            <port annotation="NONE" expr="34" kind="output" name="out_0"/>
+            <port annotation="NONE" expr="34" kind="output" name="out_1"/>
+        </node>
+        <node id="Fork_delta_psi_4_delta_grid4" kind="fork">
+            <port annotation="NONE" expr="3924480" kind="input" name="in"/>
+            <port annotation="NONE" expr="1962240" kind="output" name="out_0"/>
+            <port annotation="NONE" expr="1962240" kind="output" name="out_1"/>
+        </node>
+        <node id="Fork_delta_psi_4_delta_grid1" kind="fork">
+            <port annotation="NONE" expr="435200" kind="input" name="in"/>
+            <port annotation="NONE" expr="217600" kind="output" name="out_0"/>
+            <port annotation="NONE" expr="217600" kind="output" name="out_1"/>
+        </node>
+        <node id="Fork_delta_psi_4_delta_grid6" kind="fork">
+            <port annotation="NONE" expr="4" kind="input" name="in"/>
+            <port annotation="NONE" expr="2" kind="output" name="out_0"/>
+            <port annotation="NONE" expr="2" kind="output" name="out_1"/>
+        </node>
+        <node id="Fork_delta_psi_4_delta_grid5" kind="fork">
+            <port annotation="NONE" expr="4" kind="input" name="in"/>
+            <port annotation="NONE" expr="2" kind="output" name="out_0"/>
+            <port annotation="NONE" expr="2" kind="output" name="out_1"/>
+        </node>
+        <node id="src_in_0" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/src_in_0.h</data>
+            <loop name="sub3_src_in_0">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="4" kind="output" name="out"/>
+        </node>
+        <node id="src_in_1" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/src_in_1.h</data>
+            <loop name="sub3_src_in_1">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="24167056" kind="output" name="out"/>
+        </node>
+        <node id="src_in_2" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/src_in_2.h</data>
+            <loop name="sub3_src_in_2">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION3"/>
+            </loop>
+            <port annotation="NONE" expr="3924480" kind="output" name="out"/>
+        </node>
+        <node id="src_in_3" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/src_in_3.h</data>
+            <loop name="sub3_src_in_3">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="3924480" kind="output" name="out"/>
+        </node>
+        <node id="src_in_4" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/src_in_4.h</data>
+            <loop name="sub3_src_in_4">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="3924480" kind="output" name="out"/>
+        </node>
+        <node id="src_in_5" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/src_in_5.h</data>
+            <loop name="sub3_src_in_5">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="4" kind="output" name="out"/>
+        </node>
+        <node id="src_in_6" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/src_in_6.h</data>
+            <loop name="sub3_src_in_6">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="int2"/>
+            </loop>
+            <port annotation="NONE" expr="68" kind="output" name="out"/>
+        </node>
+        <node id="src_in_7" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/src_in_7.h</data>
+            <loop name="sub3_src_in_7">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="435200" kind="output" name="out"/>
+        </node>
+        <node id="src_in_8" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/src_in_8.h</data>
+            <loop name="sub3_src_in_8">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="4" kind="output" name="out"/>
+        </node>
+        <node id="src_in_9" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/src_in_9.h</data>
+            <loop name="sub3_src_in_9">
+                <param direction="OUT" isConfig="false"
+                    name="out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="4" kind="output" name="out"/>
+        </node>
+        <node id="snk_out_0" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/snk_out_0.h</data>
+            <loop name="sub3_snk_out_0">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="2" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_1" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/snk_out_1.h</data>
+            <loop name="sub3_snk_out_1">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="12083528" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_2" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/snk_out_2.h</data>
+            <loop name="sub3_snk_out_2">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="12083528" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_3" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/snk_out_3.h</data>
+            <loop name="sub3_snk_out_3">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION3"/>
+            </loop>
+            <port annotation="NONE" expr="1962240" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_4" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/snk_out_4.h</data>
+            <loop name="sub3_snk_out_4">
+                <param direction="IN" isConfig="false" name="in" type="int2"/>
+            </loop>
+            <port annotation="NONE" expr="34" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_5" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/snk_out_5.h</data>
+            <loop name="sub3_snk_out_5">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="1962240" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_6" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/snk_out_6.h</data>
+            <loop name="sub3_snk_out_6">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION2"/>
+            </loop>
+            <port annotation="NONE" expr="217600" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_7" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/snk_out_7.h</data>
+            <loop name="sub3_snk_out_7">
+                <param direction="IN" isConfig="false" name="in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="2" kind="input" name="in"/>
+        </node>
+        <node id="snk_out_8" kind="actor">
+            <data key="graph_desc">Code/generated/interface/sub3/snk_out_8.h</data>
+            <loop name="sub3_snk_out_8">
+                <param direction="IN" isConfig="false" name="in" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="2" kind="input" name="in"/>
+        </node>
+        <edge kind="fifo" source="src_in_0" sourceport="out"
+            target="Fork_delta_psi_4_delta_grid0" targetport="in" type="int"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid0"
+            sourceport="out_0" target="delta_psi_4_delta_grid"
+            targetport="num_corrected_visibilities" type="int"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid0"
+            sourceport="out_1" target="snk_out_0" targetport="in" type="int"/>
+        <edge kind="fifo" source="src_in_1" sourceport="out"
+            target="Fork_delta_psi_4_delta_grid7" targetport="in" type="PRECISION2"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid7"
+            sourceport="out_0" target="delta_psi_4_delta_grid"
+            targetport="prev_grid" type="PRECISION2"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid7"
+            sourceport="out_1" target="snk_out_1" targetport="in" type="PRECISION2"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid1"
+            sourceport="out_0" target="delta_psi_4_delta_grid"
+            targetport="kernels" type="PRECISION2"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid2"
+            sourceport="out_0" target="delta_psi_4_delta_grid"
+            targetport="kernel_supports" type="int2"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid3"
+            sourceport="out_0" target="delta_psi_4_delta_grid"
+            targetport="corrected_vis_uvw_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid4"
+            sourceport="out_0" target="delta_psi_4_delta_grid"
+            targetport="visibilities" type="PRECISION2"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid5"
+            sourceport="out_0" target="delta_psi_4_delta_grid"
+            targetport="config" type="Config"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid6"
+            sourceport="out_0" target="delta_psi_4_delta_grid"
+            targetport="maj_iter" type="int"/>
+        <edge kind="fifo" source="delta_psi_4_delta_grid"
+            sourceport="output_grid" target="snk_out_2"
+            targetport="in" type="PRECISION2"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid3"
+            sourceport="out_1" target="snk_out_3" targetport="in" type="PRECISION3"/>
+        <edge kind="fifo"
+            source="delta_psi_4_delta_subtract_from_measurements_finegrid"
+            sourceport="delta_vis"
+            target="Fork_delta_psi_4_delta_grid4" targetport="in" type="PRECISION2"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid2"
+            sourceport="out_1" target="snk_out_4" targetport="in" type="int2"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid4"
+            sourceport="out_1" target="snk_out_5" targetport="in" type="PRECISION2"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid1"
+            sourceport="out_1" target="snk_out_6" targetport="in" type="PRECISION2"/>
+        <edge kind="fifo" source="src_in_2" sourceport="out"
+            target="Fork_delta_psi_4_delta_grid3" targetport="in" type="PRECISION3"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid6"
+            sourceport="out_1" target="snk_out_7" targetport="in" type="int"/>
+        <edge kind="fifo" source="Fork_delta_psi_4_delta_grid5"
+            sourceport="out_1" target="snk_out_8" targetport="in" type="Config"/>
+        <edge kind="fifo" source="src_in_3" sourceport="out"
+            target="delta_psi_4_delta_subtract_from_measurements_finegrid"
+            targetport="gridded_measured_vis" type="PRECISION2"/>
+        <edge kind="fifo" source="src_in_4" sourceport="out"
+            target="delta_psi_4_delta_subtract_from_measurements_finegrid"
+            targetport="input_vis" type="PRECISION2"/>
+        <edge kind="fifo" source="src_in_5" sourceport="out"
+            target="delta_psi_4_delta_subtract_from_measurements_finegrid"
+            targetport="num_finegrid_vis" type="int"/>
+        <edge kind="fifo" source="src_in_6" sourceport="out"
+            target="Fork_delta_psi_4_delta_grid2" targetport="in" type="int2"/>
+        <edge kind="fifo" source="src_in_7" sourceport="out"
+            target="Fork_delta_psi_4_delta_grid1" targetport="in" type="PRECISION2"/>
+        <edge kind="fifo" source="src_in_8" sourceport="out"
+            target="Fork_delta_psi_4_delta_grid6" targetport="in" type="int"/>
+        <edge kind="fifo" source="src_in_9" sourceport="out"
+            target="Fork_delta_psi_4_delta_grid5" targetport="in" type="Config"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="delta_psi_4_delta_grid" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES"
+            target="delta_psi_4_delta_grid" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="NUM_KERNELS"
+            target="delta_psi_4_delta_grid" targetport="NUM_KERNELS"/>
+        <edge kind="dependency" source="TOTAL_KERNEL_SAMPLES"
+            target="delta_psi_4_delta_grid" targetport="TOTAL_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="OVERSAMPLING_FACTOR"
+            target="delta_psi_4_delta_grid" targetport="OVERSAMPLING_FACTOR"/>
+        <edge kind="dependency" source="BYPASS"
+            target="delta_psi_4_delta_grid" targetport="BYPASS"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES"
+            target="delta_psi_4_delta_subtract_from_measurements_finegrid" targetport="NUM_VISIBILITIES"/>
+    </graph>
+</graphml>

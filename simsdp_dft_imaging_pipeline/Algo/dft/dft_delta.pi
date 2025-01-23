@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <key attr.name="parameters" for="graph" id="parameters"/>
+    <key attr.name="variables" for="graph" id="variables"/>
+    <key attr.name="arguments" for="node" id="arguments"/>
+    <key attr.name="name" attr.type="string" for="graph"/>
+    <key attr.name="graph_desc" attr.type="string" for="node"/>
+    <graph edgedefault="directed">
+        <data key="name">dft_delta</data>
+        <node id="NUM_GRIDDING_KERNELS" kind="cfg_in_iface"/>
+        <node id="TOTAL_GRIDDING_KERNEL_SAMPLES" kind="cfg_in_iface"/>
+        <node id="NUM_VISIBILITIES" kind="cfg_in_iface"/>
+        <node id="NUM_RECEIVERS" kind="cfg_in_iface"/>
+        <node id="NUM_BASELINES" kind="cfg_in_iface"/>
+        <node id="GRID_SIZE" kind="cfg_in_iface"/>
+        <node id="MAX_SOURCES" kind="cfg_in_iface"/>
+        <node id="NUM_DEGRIDDING_KERNELS" kind="cfg_in_iface"/>
+        <node id="OVERSAMPLING_FACTOR" kind="cfg_in_iface"/>
+        <node id="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="cfg_in_iface"/>
+        <node id="SLICES" kind="cfg_in_iface"/>
+        <node expr="NUM_VISIBILITIES/SLICES" id="VIS_PER_SLICE" kind="param"/>
+        <node id="image_estimate" kind="src">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="image_estimate"/>
+        </node>
+        <node id="measured_vis" kind="src">
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="measured_vis"/>
+        </node>
+        <node id="source_list" kind="src">
+            <port annotation="NONE" expr="MAX_SOURCES"
+                kind="output" name="source_list"/>
+        </node>
+        <node id="num_sources_in" kind="src">
+            <port annotation="NONE" expr="1" kind="output" name="num_sources_in"/>
+        </node>
+        <node id="gridding_kernel_supports" kind="src">
+            <port annotation="NONE" expr="NUM_GRIDDING_KERNELS"
+                kind="output" name="gridding_kernel_supports"/>
+        </node>
+        <node id="gridding_kernels" kind="src">
+            <port annotation="NONE"
+                expr="TOTAL_GRIDDING_KERNEL_SAMPLES"
+                kind="output" name="gridding_kernels"/>
+        </node>
+        <node id="vis_coords" kind="src">
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="vis_coords"/>
+        </node>
+        <node id="gains" kind="src">
+            <port annotation="NONE" expr="NUM_RECEIVERS"
+                kind="output" name="gains"/>
+        </node>
+        <node id="receiver_pairs" kind="src">
+            <port annotation="NONE" expr="NUM_BASELINES"
+                kind="output" name="receiver_pairs"/>
+        </node>
+        <node id="config" kind="src">
+            <port annotation="NONE" expr="1" kind="output" name="config"/>
+        </node>
+        <node id="psf" kind="src">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="psf"/>
+        </node>
+        <node id="prolate" kind="src">
+            <port annotation="NONE" expr="GRID_SIZE/2"
+                kind="output" name="prolate"/>
+        </node>
+        <node id="delta_image" kind="snk">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="delta_image"/>
+        </node>
+        <node id="dft_run" kind="actor">
+            <data key="graph_desc">Algo/dft_run.pi</data>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port kind="cfg_input" name="NUM_MAX_SOURCES"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="num_sources"/>
+            <port annotation="READ_ONLY" expr="NUM_MAX_SOURCES"
+                kind="input" name="sources"/>
+            <port annotation="READ_ONLY" expr="NUM_VISIBILITIES"
+                kind="input" name="vis_uvw_coords"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="predicted_visibilities"/>
+        </node>
+        <node id="broadcast_config" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="input"/>
+            <port annotation="NONE" expr="1" kind="output" name="output_dft"/>
+            <port annotation="NONE" expr="1" kind="output" name="output_gainsapply"/>
+            <port annotation="NONE" expr="1" kind="output" name="output_gridding"/>
+        </node>
+        <node id="subtraction_run" kind="actor">
+            <data key="graph_desc">Algo/subtraction_run.pi</data>
+            <port kind="cfg_input" name="NUM_RECEIVERS"/>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port kind="cfg_input" name="NUM_BASELINES"/>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="NUM_RECEIVERS"
+                kind="input" name="gains_in"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="input" name="measured_vis"/>
+            <port annotation="NONE" expr="NUM_BASELINES"
+                kind="input" name="receiver_pairs"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="input" name="visibilities_in"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="visibilities_out"/>
+        </node>
+        <node id="image_out" kind="snk">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="image_out"/>
+        </node>
+        <node id="gridding_run" kind="actor">
+            <data key="graph_desc">Algo/gridding_run.pi</data>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="TOTAL_KERNEL_SAMPLES"/>
+            <port kind="cfg_input" name="NUM_KERNELS"/>
+            <port annotation="NONE" expr="TOTAL_KERNEL_SAMPLES"
+                kind="input" name="kernels"/>
+            <port annotation="NONE" expr="NUM_KERNELS"
+                kind="input" name="kernel_supports"/>
+            <port annotation="READ_ONLY" expr="NUM_VISIBILITIES"
+                kind="input" name="vis_uvw_coords"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="input" name="visibilities"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="uv_grid"/>
+        </node>
+        <node id="broadcast_vis_coords" kind="broadcast">
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="input" name="input"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="output_dft"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="output_gridding"/>
+        </node>
+        <node id="ifft_run" kind="actor">
+            <data key="graph_desc">Algo/ifft_run.pi</data>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="uv_grid"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="dirty_image"/>
+        </node>
+        <node id="convolution_correction_run" kind="actor">
+            <data key="graph_desc">Algo/convolution_correction_run.pi</data>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="dirty_image_in"/>
+            <port annotation="READ_ONLY" expr="GRID_SIZE/2"
+                kind="input" name="prolate"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="dirty_image_out"/>
+        </node>
+        <node id="cycle" kind="src">
+            <port annotation="NONE" expr="1" kind="output" name="cycle"/>
+        </node>
+        <node id="token_sink" kind="actor">
+            <data key="graph_desc">Code/include/major_loop_iter.h</data>
+            <loop name="token_sink">
+                <param direction="IN" isConfig="false"
+                    name="token_in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="token_in"/>
+        </node>
+        <node id="psf_sink" kind="actor">
+            <data key="graph_desc">Code/include/major_loop_iter.h</data>
+            <loop name="psf_sink">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false" name="psf" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="psf"/>
+        </node>
+        <node id="image_passthrough" kind="actor">
+            <data key="graph_desc">Code/include/major_loop_iter.h</data>
+            <loop name="pass_through_image">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="image" type="PRECISION"/>
+                <param direction="OUT" isConfig="false"
+                    name="output_image" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="image"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="output_image"/>
+        </node>
+        <node id="degridding_kernel_supports" kind="src">
+            <port annotation="NONE" expr="NUM_DEGRIDDING_KERNELS"
+                kind="output" name="degridding_kernel_supports"/>
+        </node>
+        <node id="degridding_kernels" kind="src">
+            <port annotation="NONE"
+                expr="TOTAL_DEGRIDDING_KERNEL_SAMPLES"
+                kind="output" name="degridding_kernels"/>
+        </node>
+        <node id="degridding_kernel_sink" kind="actor">
+            <data key="graph_desc">Code/include/degridgrid.h</data>
+            <loop name="degridding_kernel_sink">
+                <param direction="IN" isConfig="true"
+                    name="NUM_DEGRIDDING_KERNELS" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="TOTAL_DEGRIDDING_KERNEL_SAMPLES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="supports" type="int2"/>
+                <param direction="IN" isConfig="false"
+                    name="kernels" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_DEGRIDDING_KERNELS"/>
+            <port kind="cfg_input" name="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+            <port annotation="NONE" expr="NUM_DEGRIDDING_KERNELS"
+                kind="input" name="supports"/>
+            <port annotation="NONE"
+                expr="TOTAL_DEGRIDDING_KERNEL_SAMPLES"
+                kind="input" name="kernels"/>
+        </node>
+        <node id="add_visibilities" kind="actor">
+            <data key="graph_desc">Code/include/gridding_run.h</data>
+            <loop name="add_visibilities">
+                <param direction="IN" isConfig="true"
+                    name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="false" name="v1" type="PRECISION2"/>
+                <param direction="IN" isConfig="false" name="v2" type="PRECISION2"/>
+                <param direction="OUT" isConfig="false"
+                    name="output" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="input" name="v2"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="output"/>
+        </node>
+        <node id="merge_grids" kind="actor">
+            <data key="graph_desc">Code/include/splitmerge.h</data>
+            <loop name="merge_gridded_visibilities">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="SLICES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="grids" type="PRECISION2"/>
+                <param direction="OUT" isConfig="false"
+                    name="output_grid" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="SLICES"/>
+            <port annotation="NONE"
+                expr="GRID_SIZE*GRID_SIZE*SLICES" kind="input" name="grids"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="output_grid"/>
+        </node>
+        <node id="split_vis" kind="actor">
+            <data key="graph_desc">Code/include/splitmerge.h</data>
+            <loop name="split_visibilities">
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="IN" isConfig="true"
+                    name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="SLICES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="measured_visibilities" type="PRECISION2"/>
+                <param direction="IN" isConfig="false"
+                    name="vis_coords" type="PRECISION3"/>
+                <param direction="OUT" isConfig="false"
+                    name="visibilities" type="PRECISION2"/>
+                <param direction="OUT" isConfig="false"
+                    name="out_vis_coords" type="PRECISION3"/>
+                <param direction="OUT" isConfig="false"
+                    name="output_configs" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="output_config" type="Config"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port kind="cfg_input" name="SLICES"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="input" name="measured_visibilities"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="input" name="vis_coords"/>
+            <port annotation="NONE" expr="1" kind="input" name="config"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="visibilities"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="out_vis_coords"/>
+            <port annotation="NONE" expr="SLICES" kind="output" name="output_configs"/>
+            <port annotation="NONE" expr="1" kind="output" name="output_config"/>
+        </node>
+        <node id="Broadcast_singular_config" kind="broadcast">
+            <port annotation="NONE" expr="1" kind="input" name="input"/>
+            <port annotation="NONE" expr="1" kind="output" name="ifft"/>
+            <port annotation="NONE" expr="1" kind="output" name="prolate"/>
+        </node>
+        <edge kind="fifo" source="broadcast_config"
+            sourceport="output_dft" target="dft_run"
+            targetport="config" type="Config"/>
+        <edge kind="fifo" source="num_sources_in"
+            sourceport="num_sources_in" target="dft_run"
+            targetport="num_sources" type="int"/>
+        <edge kind="fifo" source="source_list"
+            sourceport="source_list" target="dft_run"
+            targetport="sources" type="PRECISION3"/>
+        <edge kind="fifo" source="gains" sourceport="gains"
+            target="subtraction_run" targetport="gains_in" type="PRECISION2"/>
+        <edge kind="fifo" source="receiver_pairs"
+            sourceport="receiver_pairs" target="subtraction_run"
+            targetport="receiver_pairs" type="int2"/>
+        <edge kind="fifo" source="broadcast_config"
+            sourceport="output_gainsapply"
+            target="subtraction_run" targetport="config" type="Config"/>
+        <edge kind="fifo" source="gridding_kernels"
+            sourceport="gridding_kernels" target="gridding_run"
+            targetport="kernels" type="PRECISION2"/>
+        <edge kind="fifo" source="gridding_kernel_supports"
+            sourceport="gridding_kernel_supports"
+            target="gridding_run" targetport="kernel_supports" type="int2"/>
+        <edge kind="fifo" source="broadcast_vis_coords"
+            sourceport="output_dft" target="dft_run"
+            targetport="vis_uvw_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="broadcast_vis_coords"
+            sourceport="output_gridding" target="gridding_run"
+            targetport="vis_uvw_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="broadcast_config"
+            sourceport="output_gridding" target="gridding_run"
+            targetport="config" type="Config"/>
+        <edge kind="fifo" source="ifft_run"
+            sourceport="dirty_image"
+            target="convolution_correction_run"
+            targetport="dirty_image_in" type="PRECISION"/>
+        <edge kind="fifo" source="prolate" sourceport="prolate"
+            target="convolution_correction_run"
+            targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="convolution_correction_run"
+            sourceport="dirty_image_out" target="delta_image"
+            targetport="delta_image" type="PRECISION"/>
+        <edge kind="fifo" source="cycle" sourceport="cycle"
+            target="token_sink" targetport="token_in" type="int"/>
+        <edge kind="fifo" source="psf" sourceport="psf"
+            target="psf_sink" targetport="psf" type="PRECISION"/>
+        <edge kind="fifo" source="image_passthrough"
+            sourceport="output_image" target="image_out"
+            targetport="image_out" type="PRECISION"/>
+        <edge kind="fifo" source="image_estimate"
+            sourceport="image_estimate"
+            target="image_passthrough" targetport="image" type="PRECISION"/>
+        <edge kind="fifo" source="degridding_kernel_supports"
+            sourceport="degridding_kernel_supports"
+            target="degridding_kernel_sink" targetport="supports" type="int2"/>
+        <edge kind="fifo" source="degridding_kernels"
+            sourceport="degridding_kernels"
+            target="degridding_kernel_sink" targetport="kernels" type="PRECISION2"/>
+        <edge kind="fifo" source="dft_run"
+            sourceport="predicted_visibilities"
+            target="add_visibilities" targetport="v2" type="PRECISION2"/>
+        <edge kind="fifo" source="add_visibilities"
+            sourceport="output" target="subtraction_run"
+            targetport="visibilities_in" type="PRECISION2"/>
+        <edge kind="fifo" source="subtraction_run"
+            sourceport="visibilities_out" target="gridding_run"
+            targetport="visibilities" type="PRECISION2"/>
+        <edge kind="fifo" source="gridding_run"
+            sourceport="uv_grid" target="merge_grids"
+            targetport="grids" type="PRECISION2"/>
+        <edge kind="fifo" source="merge_grids"
+            sourceport="output_grid" target="ifft_run"
+            targetport="uv_grid" type="PRECISION2"/>
+        <edge kind="fifo" source="measured_vis"
+            sourceport="measured_vis" target="split_vis"
+            targetport="measured_visibilities" type="PRECISION2"/>
+        <edge kind="fifo" source="vis_coords"
+            sourceport="vis_coords" target="split_vis"
+            targetport="vis_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="split_vis"
+            sourceport="visibilities" target="subtraction_run"
+            targetport="measured_vis" type="PRECISION2"/>
+        <edge kind="fifo" source="split_vis"
+            sourceport="out_vis_coords"
+            target="broadcast_vis_coords" targetport="input" type="PRECISION3"/>
+        <edge kind="fifo" source="Broadcast_singular_config"
+            sourceport="ifft" target="ifft_run"
+            targetport="config" type="Config"/>
+        <edge kind="fifo" source="Broadcast_singular_config"
+            sourceport="prolate"
+            target="convolution_correction_run"
+            targetport="config" type="Config"/>
+        <edge kind="fifo" source="split_vis"
+            sourceport="output_configs" target="broadcast_config"
+            targetport="input" type="Config"/>
+        <edge kind="fifo" source="split_vis"
+            sourceport="output_config"
+            target="Broadcast_singular_config" targetport="input" type="Config"/>
+        <edge kind="fifo" source="config" sourceport="config"
+            target="split_vis" targetport="config" type="Config"/>
+        <edge kind="dependency" source="NUM_RECEIVERS"
+            target="subtraction_run" targetport="NUM_RECEIVERS"/>
+        <edge kind="dependency" source="NUM_BASELINES"
+            target="subtraction_run" targetport="NUM_BASELINES"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="gridding_run" targetport="GRID_SIZE"/>
+        <edge kind="dependency"
+            source="TOTAL_GRIDDING_KERNEL_SAMPLES"
+            target="gridding_run" targetport="TOTAL_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="NUM_GRIDDING_KERNELS"
+            target="gridding_run" targetport="NUM_KERNELS"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="ifft_run" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="convolution_correction_run" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="subtraction_run" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE" target="delta_image"/>
+        <edge kind="dependency" source="GRID_SIZE" target="image_estimate"/>
+        <edge kind="dependency" source="GRID_SIZE" target="image_out"/>
+        <edge kind="dependency" source="NUM_RECEIVERS" target="gains"/>
+        <edge kind="dependency" source="NUM_GRIDDING_KERNELS" target="gridding_kernel_supports"/>
+        <edge kind="dependency"
+            source="TOTAL_GRIDDING_KERNEL_SAMPLES" target="gridding_kernels"/>
+        <edge kind="dependency" source="GRID_SIZE" target="prolate"/>
+        <edge kind="dependency" source="GRID_SIZE" target="psf"/>
+        <edge kind="dependency" source="NUM_BASELINES" target="receiver_pairs"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="vis_coords"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="measured_vis"/>
+        <edge kind="dependency" source="MAX_SOURCES"
+            target="dft_run" targetport="NUM_MAX_SOURCES"/>
+        <edge kind="dependency" source="MAX_SOURCES" target="source_list"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="psf_sink" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="image_passthrough" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_DEGRIDDING_KERNELS"
+            target="degridding_kernel_sink" targetport="NUM_DEGRIDDING_KERNELS"/>
+        <edge kind="dependency"
+            source="TOTAL_DEGRIDDING_KERNEL_SAMPLES"
+            target="degridding_kernel_sink" targetport="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="NUM_DEGRIDDING_KERNELS" target="degridding_kernel_supports"/>
+        <edge kind="dependency"
+            source="TOTAL_DEGRIDDING_KERNEL_SAMPLES" target="degridding_kernels"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="merge_grids" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="SLICES"
+            target="merge_grids" targetport="SLICES"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="VIS_PER_SLICE"/>
+        <edge kind="dependency" source="SLICES" target="VIS_PER_SLICE"/>
+        <edge kind="dependency" source="VIS_PER_SLICE"
+            target="dft_run" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="VIS_PER_SLICE"
+            target="add_visibilities" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="VIS_PER_SLICE"
+            target="subtraction_run" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="VIS_PER_SLICE"
+            target="gridding_run" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="SLICES"
+            target="split_vis" targetport="SLICES"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES"
+            target="split_vis" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="VIS_PER_SLICE"
+            target="broadcast_vis_coords" targetport="NUM_VISIBILITIES"/>
+    </graph>
+</graphml>

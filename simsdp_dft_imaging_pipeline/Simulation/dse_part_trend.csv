@@ -1,0 +1,27 @@
+Step;Duration(ms)
+initialisation:0;0
+node partitioning:1:1;4436
+thread partitioning node0:1:1;2154
+thread partitioning node1:1:1;1886
+thread partitioning node2:1:1;1009
+simulation:1:1;427
+node partitioning:2:1;3712
+thread partitioning node0:2:1;1824
+thread partitioning node1:2:1;1728
+thread partitioning node2:2:1;1047
+simulation:2:1;386
+node partitioning:3:1;3502
+thread partitioning node0:3:1;1684
+thread partitioning node1:3:1;1752
+thread partitioning node2:3:1;1002
+simulation:3:1;445
+node partitioning:4:1;3399
+thread partitioning node0:4:1;1773
+thread partitioning node1:4:1;1768
+thread partitioning node2:4:1;1031
+simulation:4:1;405
+node partitioning:5:1;3522
+thread partitioning node0:5:1;1763
+thread partitioning node1:5:1;1765
+thread partitioning node2:5:1;933
+simulation:5:1;381

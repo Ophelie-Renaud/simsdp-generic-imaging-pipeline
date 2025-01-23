@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <key attr.name="parameters" for="graph" id="parameters"/>
+    <key attr.name="variables" for="graph" id="variables"/>
+    <key attr.name="arguments" for="node" id="arguments"/>
+    <key attr.name="name" attr.type="string" for="graph"/>
+    <key attr.name="graph_desc" attr.type="string" for="node"/>
+    <graph edgedefault="directed">
+        <data key="name">6freq_top</data>
+        <node id="freq_0" kind="actor">
+            <data key="graph_desc">Algo/g2g/unroll/pipeline_freq_src.pi</data>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="freq_1" kind="actor">
+            <data key="graph_desc">Algo/g2g/unroll/pipeline_freq.pi</data>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="freq_3" kind="actor">
+            <data key="graph_desc">Algo/g2g/unroll/pipeline_freq.pi</data>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="freq_2" kind="actor">
+            <data key="graph_desc">Algo/g2g/unroll/pipeline_freq.pi</data>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="freq_4" kind="actor">
+            <data key="graph_desc">Algo/g2g/unroll/pipeline_freq.pi</data>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+            <port annotation="NONE" expr="1" kind="output" name="out"/>
+        </node>
+        <node id="freq_5" kind="actor">
+            <data key="graph_desc">Algo/g2g/unroll/pipeline_freq_snk.pi</data>
+            <port annotation="NONE" expr="1" kind="input" name="in"/>
+        </node>
+        <edge kind="fifo" source="freq_0" sourceport="out"
+            target="freq_1" targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="freq_1" sourceport="out"
+            target="freq_2" targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="freq_2" sourceport="out"
+            target="freq_3" targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="freq_3" sourceport="out"
+            target="freq_4" targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="freq_4" sourceport="out"
+            target="freq_5" targetport="in" type="PRECISION"/>
+    </graph>
+</graphml>

@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <flags>
+        <sizesAreInBit/>
+    </flags>
+    <files>
+        <algorithm url="/simsdp_g2g_imaging_pipeline/Algo/g2g/unroll/generic_top_flat.pi"/>
+        <architecture url="/simsdp_g2g_imaging_pipeline/Archi/1CoresX86.slam"/>
+        <codegenDirectory url="/simsdp_g2g_imaging_pipeline/Code/generated"/>
+    </files>
+    <constraints excelUrl="">
+        <constraintGroup>
+            <operator name="Core0"/>
+            <task name="generic_top_flat/iterator"/>
+            <task name="generic_top_flat/setup_ri_pipeline_clean_psf_set_up"/>
+            <task name="generic_top_flat/setup_ri_pipeline_visibility_host_set_up"/>
+            <task name="generic_top_flat/setup_ri_pipeline_config_struct_set_up_sequel"/>
+            <task name="generic_top_flat/setup_ri_pipeline_gains_host_set_up"/>
+            <task name="generic_top_flat/setup_ri_pipeline_kernel_host_set_up"/>
+            <task name="generic_top_flat/setup_ri_pipeline_correction_set_up"/>
+            <task name="generic_top_flat/setup_ri_pipeline_psf_host_set_up"/>
+            <task name="generic_top_flat/setup_ri_pipeline_config_struct_set_up"/>
+            <task name="generic_top_flat/setup_ri_pipeline_degridding_kernel_host_set_up"/>
+            <task name="generic_top_flat/delta_psi_save_output"/>
+            <task name="generic_top_flat/delta_psi_delta_g2g_degridgrid"/>
+            <task name="generic_top_flat/delta_psi_delta_grid"/>
+            <task name="generic_top_flat/delta_psi_delta_subtract_image_space"/>
+            <task name="generic_top_flat/delta_psi_delta_source_list_sink"/>
+            <task name="generic_top_flat/delta_psi_delta_psf_sink"/>
+            <task name="generic_top_flat/delta_psi_delta_inv_conv_correction"/>
+            <task name="generic_top_flat/delta_psi_delta_split_s2s"/>
+            <task name="generic_top_flat/delta_psi_delta_split_uvgrid"/>
+            <task name="generic_top_flat/delta_psi_delta_merge_estimate_grid"/>
+            <task name="generic_top_flat/delta_psi_delta_merge_measurement_grid"/>
+            <task name="generic_top_flat/delta_psi_delta_inverse_fft_run_estimation_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_delta_inverse_fft_run_estimation_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_delta_inverse_fft_run_estimation_fft_shift_complex_to_real_actor"/>
+            <task name="generic_top_flat/delta_psi_delta_fft_run_CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_delta_fft_run_fft_shift_real_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_delta_fft_run_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_delta_inverse_fft_run_measurements_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_delta_inverse_fft_run_measurements_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_delta_inverse_fft_run_measurements_fft_shift_complex_to_real_actor"/>
+            <task name="generic_top_flat/delta_psi_delta_correct_to_finegrid_reciprocal_transform_actor"/>
+            <task name="generic_top_flat/delta_psi_delta_correct_to_finegrid_apply_gains"/>
+            <task name="generic_top_flat/delta_psi_delta_correct_to_finegrid_correct_to_finegrid"/>
+            <task name="generic_top_flat/delta_psi_delta_convolution_correction_run_execute_convolution_correction_actor"/>
+            <task name="generic_top_flat/delta_psi_delta_convolution_correction_run_estimation_execute_convolution_correction_actor"/>
+            <task name="generic_top_flat/delta_psi_psi_hogbom_clean"/>
+            <task name="generic_top_flat/delta_psi_psi_token_sink"/>
+            <task name="generic_top_flat/delta_psi_1_save_output"/>
+            <task name="generic_top_flat/delta_psi_1_delta_g2g_degridgrid"/>
+            <task name="generic_top_flat/delta_psi_1_delta_grid"/>
+            <task name="generic_top_flat/delta_psi_1_delta_subtract_image_space"/>
+            <task name="generic_top_flat/delta_psi_1_delta_source_list_sink"/>
+            <task name="generic_top_flat/delta_psi_1_delta_psf_sink"/>
+            <task name="generic_top_flat/delta_psi_1_delta_inv_conv_correction"/>
+            <task name="generic_top_flat/delta_psi_1_delta_split_s2s"/>
+            <task name="generic_top_flat/delta_psi_1_delta_split_uvgrid"/>
+            <task name="generic_top_flat/delta_psi_1_delta_merge_estimate_grid"/>
+            <task name="generic_top_flat/delta_psi_1_delta_merge_measurement_grid"/>
+            <task name="generic_top_flat/delta_psi_1_delta_inverse_fft_run_estimation_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_1_delta_inverse_fft_run_estimation_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_1_delta_inverse_fft_run_estimation_fft_shift_complex_to_real_actor"/>
+            <task name="generic_top_flat/delta_psi_1_delta_fft_run_CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_1_delta_fft_run_fft_shift_real_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_1_delta_fft_run_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_1_delta_inverse_fft_run_measurements_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_1_delta_inverse_fft_run_measurements_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_1_delta_inverse_fft_run_measurements_fft_shift_complex_to_real_actor"/>
+            <task name="generic_top_flat/delta_psi_1_delta_correct_to_finegrid_reciprocal_transform_actor"/>
+            <task name="generic_top_flat/delta_psi_1_delta_correct_to_finegrid_apply_gains"/>
+            <task name="generic_top_flat/delta_psi_1_delta_correct_to_finegrid_correct_to_finegrid"/>
+            <task name="generic_top_flat/delta_psi_1_delta_convolution_correction_run_execute_convolution_correction_actor"/>
+            <task name="generic_top_flat/delta_psi_1_delta_convolution_correction_run_estimation_execute_convolution_correction_actor"/>
+            <task name="generic_top_flat/delta_psi_1_psi_hogbom_clean"/>
+            <task name="generic_top_flat/delta_psi_1_psi_token_sink"/>
+            <task name="generic_top_flat/delta_psi_2_save_output"/>
+            <task name="generic_top_flat/delta_psi_2_delta_g2g_degridgrid"/>
+            <task name="generic_top_flat/delta_psi_2_delta_grid"/>
+            <task name="generic_top_flat/delta_psi_2_delta_subtract_image_space"/>
+            <task name="generic_top_flat/delta_psi_2_delta_source_list_sink"/>
+            <task name="generic_top_flat/delta_psi_2_delta_psf_sink"/>
+            <task name="generic_top_flat/delta_psi_2_delta_inv_conv_correction"/>
+            <task name="generic_top_flat/delta_psi_2_delta_split_s2s"/>
+            <task name="generic_top_flat/delta_psi_2_delta_split_uvgrid"/>
+            <task name="generic_top_flat/delta_psi_2_delta_merge_estimate_grid"/>
+            <task name="generic_top_flat/delta_psi_2_delta_merge_measurement_grid"/>
+            <task name="generic_top_flat/delta_psi_2_delta_inverse_fft_run_estimation_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_2_delta_inverse_fft_run_estimation_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_2_delta_inverse_fft_run_estimation_fft_shift_complex_to_real_actor"/>
+            <task name="generic_top_flat/delta_psi_2_delta_fft_run_CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_2_delta_fft_run_fft_shift_real_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_2_delta_fft_run_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_2_delta_inverse_fft_run_measurements_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_2_delta_inverse_fft_run_measurements_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_2_delta_inverse_fft_run_measurements_fft_shift_complex_to_real_actor"/>
+            <task name="generic_top_flat/delta_psi_2_delta_correct_to_finegrid_reciprocal_transform_actor"/>
+            <task name="generic_top_flat/delta_psi_2_delta_correct_to_finegrid_apply_gains"/>
+            <task name="generic_top_flat/delta_psi_2_delta_correct_to_finegrid_correct_to_finegrid"/>
+            <task name="generic_top_flat/delta_psi_2_delta_convolution_correction_run_execute_convolution_correction_actor"/>
+            <task name="generic_top_flat/delta_psi_2_delta_convolution_correction_run_estimation_execute_convolution_correction_actor"/>
+            <task name="generic_top_flat/delta_psi_2_psi_hogbom_clean"/>
+            <task name="generic_top_flat/delta_psi_2_psi_token_sink"/>
+            <task name="generic_top_flat/delta_psi_3_save_output"/>
+            <task name="generic_top_flat/delta_psi_3_delta_g2g_degridgrid"/>
+            <task name="generic_top_flat/delta_psi_3_delta_grid"/>
+            <task name="generic_top_flat/delta_psi_3_delta_subtract_image_space"/>
+            <task name="generic_top_flat/delta_psi_3_delta_source_list_sink"/>
+            <task name="generic_top_flat/delta_psi_3_delta_psf_sink"/>
+            <task name="generic_top_flat/delta_psi_3_delta_inv_conv_correction"/>
+            <task name="generic_top_flat/delta_psi_3_delta_split_s2s"/>
+            <task name="generic_top_flat/delta_psi_3_delta_split_uvgrid"/>
+            <task name="generic_top_flat/delta_psi_3_delta_merge_estimate_grid"/>
+            <task name="generic_top_flat/delta_psi_3_delta_merge_measurement_grid"/>
+            <task name="generic_top_flat/delta_psi_3_delta_inverse_fft_run_estimation_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_3_delta_inverse_fft_run_estimation_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_3_delta_inverse_fft_run_estimation_fft_shift_complex_to_real_actor"/>
+            <task name="generic_top_flat/delta_psi_3_delta_fft_run_CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_3_delta_fft_run_fft_shift_real_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_3_delta_fft_run_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_3_delta_inverse_fft_run_measurements_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_3_delta_inverse_fft_run_measurements_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_3_delta_inverse_fft_run_measurements_fft_shift_complex_to_real_actor"/>
+            <task name="generic_top_flat/delta_psi_3_delta_correct_to_finegrid_reciprocal_transform_actor"/>
+            <task name="generic_top_flat/delta_psi_3_delta_correct_to_finegrid_apply_gains"/>
+            <task name="generic_top_flat/delta_psi_3_delta_correct_to_finegrid_correct_to_finegrid"/>
+            <task name="generic_top_flat/delta_psi_3_delta_convolution_correction_run_execute_convolution_correction_actor"/>
+            <task name="generic_top_flat/delta_psi_3_delta_convolution_correction_run_estimation_execute_convolution_correction_actor"/>
+            <task name="generic_top_flat/delta_psi_3_psi_hogbom_clean"/>
+            <task name="generic_top_flat/delta_psi_3_psi_token_sink"/>
+            <task name="generic_top_flat/delta_psi_4_save_output"/>
+            <task name="generic_top_flat/delta_psi_4_delta_g2g_degridgrid"/>
+            <task name="generic_top_flat/delta_psi_4_delta_grid"/>
+            <task name="generic_top_flat/delta_psi_4_delta_subtract_image_space"/>
+            <task name="generic_top_flat/delta_psi_4_delta_source_list_sink"/>
+            <task name="generic_top_flat/delta_psi_4_delta_psf_sink"/>
+            <task name="generic_top_flat/delta_psi_4_delta_inv_conv_correction"/>
+            <task name="generic_top_flat/delta_psi_4_delta_split_s2s"/>
+            <task name="generic_top_flat/delta_psi_4_delta_split_uvgrid"/>
+            <task name="generic_top_flat/delta_psi_4_delta_merge_estimate_grid"/>
+            <task name="generic_top_flat/delta_psi_4_delta_merge_measurement_grid"/>
+            <task name="generic_top_flat/delta_psi_4_delta_inverse_fft_run_estimation_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_4_delta_inverse_fft_run_estimation_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_4_delta_inverse_fft_run_estimation_fft_shift_complex_to_real_actor"/>
+            <task name="generic_top_flat/delta_psi_4_delta_fft_run_CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_4_delta_fft_run_fft_shift_real_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_4_delta_fft_run_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_4_delta_inverse_fft_run_measurements_fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top_flat/delta_psi_4_delta_inverse_fft_run_measurements_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top_flat/delta_psi_4_delta_inverse_fft_run_measurements_fft_shift_complex_to_real_actor"/>
+            <task name="generic_top_flat/delta_psi_4_delta_correct_to_finegrid_reciprocal_transform_actor"/>
+            <task name="generic_top_flat/delta_psi_4_delta_correct_to_finegrid_apply_gains"/>
+            <task name="generic_top_flat/delta_psi_4_delta_correct_to_finegrid_correct_to_finegrid"/>
+            <task name="generic_top_flat/delta_psi_4_delta_convolution_correction_run_execute_convolution_correction_actor"/>
+            <task name="generic_top_flat/delta_psi_4_delta_convolution_correction_run_estimation_execute_convolution_correction_actor"/>
+            <task name="generic_top_flat/delta_psi_4_psi_hogbom_clean"/>
+            <task name="generic_top_flat/delta_psi_4_psi_token_sink"/>
+            <task name="generic_top_flat/setter_in_image_estimate_d"/>
+            <task name="generic_top_flat/setter_in_source_list_d"/>
+            <task name="generic_top_flat/setter_in_num_sources_d"/>
+            <task name="generic_top_flat/getter_out_source_list_d"/>
+            <task name="generic_top_flat/getter_out_num_sources_d"/>
+            <task name="generic_top_flat/getter_out_image_estimate_d"/>
+            <task name="generic_top_flat"/>
+        </constraintGroup>
+    </constraints>
+    <timings excelUrl="/simsdp_g2g_imaging_pipeline/Scenarios/g2g_unroll.csv">
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/iterator"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setup_ri_pipeline_clean_psf_set_up"/>
+        <timing opname="x86_f1" time="4073"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setup_ri_pipeline_visibility_host_set_up"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setup_ri_pipeline_config_struct_set_up_sequel"/>
+        <timing opname="x86_f1" time="55"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setup_ri_pipeline_gains_host_set_up"/>
+        <timing opname="x86_f1" time="53"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setup_ri_pipeline_kernel_host_set_up"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setup_ri_pipeline_correction_set_up"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setup_ri_pipeline_psf_host_set_up"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setup_ri_pipeline_config_struct_set_up"/>
+        <timing opname="x86_f1" time="58"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setup_ri_pipeline_degridding_kernel_host_set_up"/>
+        <timing opname="x86_f1" time="7855"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_save_output"/>
+        <timing opname="x86_f1" time="6290"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_g2g_degridgrid"/>
+        <timing opname="x86_f1" time="4545"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_grid"/>
+        <timing opname="x86_f1" time="17"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_subtract_image_space"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_source_list_sink"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_psf_sink"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_inv_conv_correction"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_split_s2s"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_split_uvgrid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_merge_estimate_grid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_merge_measurement_grid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_inverse_fft_run_estimation_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_inverse_fft_run_estimation_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_inverse_fft_run_estimation_fft_shift_complex_to_real_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_fft_run_CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_fft_run_fft_shift_real_to_complex_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_fft_run_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_inverse_fft_run_measurements_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_inverse_fft_run_measurements_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_inverse_fft_run_measurements_fft_shift_complex_to_real_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_correct_to_finegrid_reciprocal_transform_actor"/>
+        <timing opname="x86_f1" time="547"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_correct_to_finegrid_apply_gains"/>
+        <timing opname="x86_f1" time="92"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_correct_to_finegrid_correct_to_finegrid"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_convolution_correction_run_execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_delta_convolution_correction_run_estimation_execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="12906"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_psi_hogbom_clean"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_psi_token_sink"/>
+        <timing opname="x86_f1" time="7855"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_save_output"/>
+        <timing opname="x86_f1" time="6290"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_g2g_degridgrid"/>
+        <timing opname="x86_f1" time="4545"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_grid"/>
+        <timing opname="x86_f1" time="17"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_subtract_image_space"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_source_list_sink"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_psf_sink"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_inv_conv_correction"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_split_s2s"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_split_uvgrid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_merge_estimate_grid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_merge_measurement_grid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_inverse_fft_run_estimation_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_inverse_fft_run_estimation_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_inverse_fft_run_estimation_fft_shift_complex_to_real_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_fft_run_CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_fft_run_fft_shift_real_to_complex_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_fft_run_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_inverse_fft_run_measurements_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_inverse_fft_run_measurements_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_inverse_fft_run_measurements_fft_shift_complex_to_real_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_correct_to_finegrid_reciprocal_transform_actor"/>
+        <timing opname="x86_f1" time="547"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_correct_to_finegrid_apply_gains"/>
+        <timing opname="x86_f1" time="92"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_correct_to_finegrid_correct_to_finegrid"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_convolution_correction_run_execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_delta_convolution_correction_run_estimation_execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="12906"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_psi_hogbom_clean"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_1_psi_token_sink"/>
+        <timing opname="x86_f1" time="7855"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_save_output"/>
+        <timing opname="x86_f1" time="6290"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_g2g_degridgrid"/>
+        <timing opname="x86_f1" time="4545"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_grid"/>
+        <timing opname="x86_f1" time="17"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_subtract_image_space"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_source_list_sink"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_psf_sink"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_inv_conv_correction"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_split_s2s"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_split_uvgrid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_merge_estimate_grid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_merge_measurement_grid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_inverse_fft_run_estimation_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_inverse_fft_run_estimation_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_inverse_fft_run_estimation_fft_shift_complex_to_real_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_fft_run_CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_fft_run_fft_shift_real_to_complex_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_fft_run_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_inverse_fft_run_measurements_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_inverse_fft_run_measurements_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_inverse_fft_run_measurements_fft_shift_complex_to_real_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_correct_to_finegrid_reciprocal_transform_actor"/>
+        <timing opname="x86_f1" time="547"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_correct_to_finegrid_apply_gains"/>
+        <timing opname="x86_f1" time="92"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_correct_to_finegrid_correct_to_finegrid"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_convolution_correction_run_execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_delta_convolution_correction_run_estimation_execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="12906"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_psi_hogbom_clean"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_2_psi_token_sink"/>
+        <timing opname="x86_f1" time="7855"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_save_output"/>
+        <timing opname="x86_f1" time="6290"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_g2g_degridgrid"/>
+        <timing opname="x86_f1" time="4545"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_grid"/>
+        <timing opname="x86_f1" time="17"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_subtract_image_space"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_source_list_sink"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_psf_sink"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_inv_conv_correction"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_split_s2s"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_split_uvgrid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_merge_estimate_grid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_merge_measurement_grid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_inverse_fft_run_estimation_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_inverse_fft_run_estimation_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_inverse_fft_run_estimation_fft_shift_complex_to_real_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_fft_run_CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_fft_run_fft_shift_real_to_complex_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_fft_run_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_inverse_fft_run_measurements_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_inverse_fft_run_measurements_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_inverse_fft_run_measurements_fft_shift_complex_to_real_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_correct_to_finegrid_reciprocal_transform_actor"/>
+        <timing opname="x86_f1" time="547"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_correct_to_finegrid_apply_gains"/>
+        <timing opname="x86_f1" time="92"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_correct_to_finegrid_correct_to_finegrid"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_convolution_correction_run_execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_delta_convolution_correction_run_estimation_execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="12906"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_psi_hogbom_clean"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_3_psi_token_sink"/>
+        <timing opname="x86_f1" time="7855"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_save_output"/>
+        <timing opname="x86_f1" time="6290"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_g2g_degridgrid"/>
+        <timing opname="x86_f1" time="4545"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_grid"/>
+        <timing opname="x86_f1" time="17"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_subtract_image_space"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_source_list_sink"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_psf_sink"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_inv_conv_correction"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_split_s2s"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_split_uvgrid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_merge_estimate_grid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_merge_measurement_grid"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_inverse_fft_run_estimation_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_inverse_fft_run_estimation_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_inverse_fft_run_estimation_fft_shift_complex_to_real_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_fft_run_CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_fft_run_fft_shift_real_to_complex_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_fft_run_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_inverse_fft_run_measurements_fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="425"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_inverse_fft_run_measurements_CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_inverse_fft_run_measurements_fft_shift_complex_to_real_actor"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_correct_to_finegrid_reciprocal_transform_actor"/>
+        <timing opname="x86_f1" time="547"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_correct_to_finegrid_apply_gains"/>
+        <timing opname="x86_f1" time="92"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_correct_to_finegrid_correct_to_finegrid"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_convolution_correction_run_execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="285"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_delta_convolution_correction_run_estimation_execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="12906"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_psi_hogbom_clean"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/delta_psi_4_psi_token_sink"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setter_in_image_estimate_d"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setter_in_source_list_d"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/setter_in_num_sources_d"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/getter_out_source_list_d"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/getter_out_num_sources_d"/>
+        <timing opname="x86_f1" time="1"
+            timingtype="EXECUTION_TIME" vertexname="generic_top_flat/getter_out_image_estimate_d"/>
+        <memcpyspeed opname="x86_f1" setuptime="1" timeperunit="0.001"/>
+    </timings>
+    <simuParams>
+        <mainCore>Core0</mainCore>
+        <mainComNode>shared_mem</mainComNode>
+        <averageDataSize>1000</averageDataSize>
+        <dataTypes>
+            <dataType name="double" size="64"/>
+            <dataType name="Config" size="8"/>
+            <dataType name="PRECISION" size="8"/>
+            <dataType name="int2" size="8"/>
+            <dataType name="PRECISION2" size="8"/>
+            <dataType name="PRECISION3" size="8"/>
+            <dataType name="int" size="32"/>
+        </dataTypes>
+        <specialVertexOperators>
+            <specialVertexOperator path="Core0"/>
+        </specialVertexOperators>
+    </simuParams>
+    <parameterValues/>
+    <papifyConfigs xmlUrl=""/>
+    <energyConfigs xmlUrl="">
+        <performanceObjective objectiveEPS="0.0"/>
+        <peActorsEnergy/>
+    </energyConfigs>
+</scenario>
