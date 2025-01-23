@@ -1,0 +1,21 @@
+# ninja log v6
+340	609	1737567023390324353	CMakeFiles/SEP_Pipeline.dir/src/reduce_vis.c.o	fd971db3d9061350
+0	223	1737567023050326817	CMakeFiles/SEP_Pipeline.dir/src/CPU/common.c.o	cd1a40fd312826d2
+2	50	1737567023051326809	CMakeFiles/SEP_Pipeline.dir/src/CPU/map.c.o	17b5a1a39b409e67
+2	400	1737567023051326809	CMakeFiles/SEP_Pipeline.dir/src/CPU/gains_calibration_run.c.o	7831dc2d6b90d9b8
+1	380	1737567023050326817	CMakeFiles/SEP_Pipeline.dir/src/CPU/degridgrid.c.o	d6cfa7680281c143
+1	374	1737567023050326817	CMakeFiles/SEP_Pipeline.dir/src/CPU/deconvolution_run.c.o	f13079be89839cc5
+4	364	1737567023053326795	CMakeFiles/SEP_Pipeline.dir/src/major_loop_actor.c.o	9a06b73b1286d8
+1	382	1737567023050326817	CMakeFiles/SEP_Pipeline.dir/src/CPU/convolution_correction_run.c.o	8502c826dca717b5
+1	340	1737567023050326817	CMakeFiles/SEP_Pipeline.dir/src/CPU/fft_run.c.o	526cc5ba15796411
+380	734	1737567023429324071	CMakeFiles/SEP_Pipeline.dir/src/top.c.o	435e07436978b979
+374	708	1737567023423324114	CMakeFiles/SEP_Pipeline.dir/src/timings.c.o	d1d20b576422a645
+364	643	1737567023413324187	CMakeFiles/SEP_Pipeline.dir/src/splitmerge.c.o	ef65dda6e582a51d
+223	564	1737567023272325208	CMakeFiles/SEP_Pipeline.dir/src/md5.c.o	4eed3a211d88087a
+382	652	1737567023431324056	CMakeFiles/SEP_Pipeline.dir/main.c.o	55bd2ef46685652d
+1	485	1737567023050326817	CMakeFiles/SEP_Pipeline.dir/src/CPU/dft_run.c.o	de118a30e8cfeffa
+51	425	1737567023100326454	CMakeFiles/SEP_Pipeline.dir/src/major_loop_iter.c.o	e0f96b2df7fdeb31
+2	388	1737567023051326809	CMakeFiles/SEP_Pipeline.dir/src/CPU/gridding_run.c.o	48bd0ccbf7132f77
+3	502	1737567023052326802	CMakeFiles/SEP_Pipeline.dir/src/fifoFunction.c.o	f173e65782422e44
+2	399	1737567023051326809	CMakeFiles/SEP_Pipeline.dir/src/CPU/gains_apply_run.c.o	7c4f971fc5e08dac
+734	763	1737567023783321506	SEP_Pipeline	61986ecf255cf95c
