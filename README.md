@@ -59,8 +59,9 @@ This repository contains six main directories, categorized by the number of freq
 
 ## Requirements
 
-- PREESM framework ([installation instructions](https://preesm.github.io/get/)) 
-- Access to an HPC environment  
+- **PREESM** framework ([installation instructions](https://preesm.github.io/get/)).
+- SimSDP may not be full integrated in the last PREESM release, to access it clone the [Preesm - github repository](https://github.com/preesm/preesm/) and branch `clustering2`.
+- Access to an HPC environment.
 
 ---
 
@@ -71,21 +72,24 @@ This repository contains six main directories, categorized by the number of freq
    git clone git@gitlab-research.centralesupelec.fr:dark-era/simsdp-generic-imaging-pipeline.git
    cd simsdp-generic-imaging-pipeline
 
-2. Launch preesm and open folders from preesm: File>open project from file system> browse `simsdp_g2g_imaging_pipeline` folder.
+2. Launch **PREESM** and open folders from **PREESM**: File>open project from file system> browse `simsdp_g2g_imaging_pipeline` folder.
 
 ### Parameterized timing estimation
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
     Timings definition consist in polynomials calculation, the procedure is the following. For each dataflow pipeline configuration do:
-This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in /averages folder) and compute fitting function for each actor. Here are the instruction for running the method build by Sunrise Wang which a manual method evaluating few samples of data. The automated method extending Sunrise's work can be found in folder /[polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads).
+This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in /averages folder) and compute fitting function for each actor. Here are the instruction for running the method build by Sunrise Wang which a manual method evaluating few samples of data. The automated method extending Sunrise's work can be found in folder [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads).
 
-1. Build the the benchmark that will be stored in averages/ folder:
-   1. In PREESM, the timings algorithm are provided in the algo/ folder select for example `grid_timing.diagram` and tune the parameter values: `NUM_VIS` [1000000; 2000000;3000000;4000000], `GRID_SIZE` [65536; 262144; 589824; 1048576; 1638400; 2359296; 3211264; 4194304]; , `NUM_MINOR_CYCLE`.
+
+1. Build the the benchmark that will be stored in [averages](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing/averages?ref_type=heads) folder:
+   1. In **PREESM**, the timings algorithm are provided in the algo/ folder select for example `grid_timing.diagram` and tune the parameter values: `NUM_VIS` [1000000; 2000000;3000000;4000000], `GRID_SIZE` [65536; 262144; 589824; 1048576; 1638400; 2359296; 3211264; 4194304]; , `NUM_MINOR_CYCLE`.
    2. Open `timing.scenario` and check that the algorithm is `grid_timing.pi`
-   3. Generated the code: click on `codegen2.worklow` > `run workflow` > select `timing.scenario`
-   4. Generate a code for each configuration.
-2. Run the code: `cd Code` > `cmake.` > `make` > `./project_name`, a file with the computed timing is generated in the folder
+   3. Generated the code: click on `codegen2.worklow` > `run workflow` > select `timing.scenario. This has to be done for each configuration.
+   
+2. Run the code: `cd Code` > `cmake.` > `make` > `./project_name`, a file with the computed timing is generated in the folder.
+
 3. For each configuration concatenate the file such as : `time acquisition1; GRID_SIZE1; NUM_VISIBILITY1;time acquisition2; GRID_SIZE2; NUM_VISIBILITY2;...`
+
 4. Executing the `plot_and_fit_averages.py` script to obtain the fit function. Install scipy `pip install scipy`. Execute : `python plot_and_fit_averages.py <input_file> <num_axis[1-2]> <dof[1-2]> <num_x_datapoints[1]> <num_y_datapoints [file_len/3]>` where the two last parameter are used for deconv,degridding etc. ex `python plot_and_fit_averages.py degrid.csv 2 1 8 4`(on the benchmark there is 8 GRID_SIZE and 4 NUM_VIS).
 
    <div style="text-align: center;">
@@ -243,7 +247,7 @@ check: python3 -c "import astropy; print(astropy.__version__)"
 3. copy past the data in Code/data/ folder. If it doesn't exist create a folder output/small/ inside.
 
 4. Run the code and wait till your prompt display: `Process finished with exit code 0`.
-  (It could be long depending on the **NUM_MAJOR_CYCLE** and the **NUM_MINOR_CYCLE**).
+    (It could be long depending on the **NUM_MAJOR_CYCLE** and the **NUM_MINOR_CYCLE**).
 
 5. On CLion, for the CPU version, run the CMakeList.txt, build :hammer: and Run  the code :arrow_forward:.
   - Still on CLion, for GPU version, configure CMake:
@@ -287,6 +291,7 @@ To reveal the contrasts:
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+
 - Simulating generic imaging pipelines - 1 freq - CPU - balanced-workload based node partitioning - unoptimized code - [nVis = 3924480 , GRID_SIZE = 2048, nMinorCycle = 200] :
 
 ![](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/experimental_result_data/1freq.png?ref_type=heads)
@@ -323,6 +328,24 @@ To reveal the contrasts:
 If you use this work, please cite the following publication:
 
 ```plaintext
+# This publication for the Generic Imaging pipeline and the manual version of fitting function calculation
+@InProceedings{10.1007/978-3-031-62874-0_5,
+author="Wang, Sunrise
+and Gac, Nicolas
+and Miomandre, Hugo
+and Nezan, Jean-Francois
+and Desnos, Karol
+and Orieux, Francois",
+editor="Dias, Tiago
+and Busia, Paola",
+title="An Initial Framework for Prototyping Radio-Interferometric Imaging Pipelines",
+booktitle="Design and Architectures for Signal and Image Processing",
+year="2024",
+publisher="Springer Nature Switzerland",
+address="Cham",
+pages="56--67"
+}
+
 # This publication for the design space exploration method
 @inproceedings{renaud:hal-04608249,
   TITLE = {{Multicore and Network Topology Codesign for Pareto-Optimal Multinode Architecture}},
@@ -341,10 +364,16 @@ If you use this work, please cite the following publication:
   HAL_ID = {hal-04608249},
   HAL_VERSION = {v1},
 }
+
+# Soon the SimSDP resource allocation method
+# Soon the SimSDP proof of concept on HPC system with automated fitting function
 ```
 
 ## Contact  
 
 For questions or feedback, please contact:  
-- [Ophélie Renaud](mailto:ophelie.renaud@insa-rennes.fr)
+- [Ophélie Renaud](mailto:ophelie.renaud@ens-paris-saclay.fr)
 
+## Acknowledgement
+
+*This work was supported by DARK-ERA (ANR-20-CE46-0001-01).*
