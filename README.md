@@ -77,27 +77,16 @@ This repository contains six main directories, categorized by the number of freq
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
     Timings definition consist in polynomials calculation, the procedure is the following. For each dataflow pipeline configuration do:
-This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in /averages folder) and compute fitting function for each actor. Here are the instruction for running the method build by Sunrise Wang which a manual method evaluating few samples of data. The automated method extending Sunrise's work can be found in folder /polynomials_timing.
+This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in /averages folder) and compute fitting function for each actor. Here are the instruction for running the method build by Sunrise Wang which a manual method evaluating few samples of data. The automated method extending Sunrise's work can be found in folder /[polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads).
 
 1. Build the the benchmark that will be stored in averages/ folder:
-   1. In Preesm, the timings algorithm are provided in the algo/ folder select for example `grid_timing.diagram` and tune the parameter values: `NUM_VIS` [1000000; 2000000;3000000;4000000], `GRID_SIZE` [65536; 262144; 589824; 1048576; 1638400; 2359296; 3211264; 4194304]; , `NUM_MINOR_CYCLE`.
+   1. In PREESM, the timings algorithm are provided in the algo/ folder select for example `grid_timing.diagram` and tune the parameter values: `NUM_VIS` [1000000; 2000000;3000000;4000000], `GRID_SIZE` [65536; 262144; 589824; 1048576; 1638400; 2359296; 3211264; 4194304]; , `NUM_MINOR_CYCLE`.
    2. Open `timing.scenario` and check that the algorithm is `grid_timing.pi`
    3. Generated the code: click on `codegen2.worklow` > `run workflow` > select `timing.scenario`
    4. Generate a code for each configuration.
 2. Run the code: `cd Code` > `cmake.` > `make` > `./project_name`, a file with the computed timing is generated in the folder
 3. For each configuration concatenate the file such as : `time acquisition1; GRID_SIZE1; NUM_VISIBILITY1;time acquisition2; GRID_SIZE2; NUM_VISIBILITY2;...`
-
-<!--Generating instrumented code [generation instructions](https://preesm.github.io/tutos/mpsoccodegen/), see section **Instrumented C Code Generation, Execution and Analysis**. Generated versions  for G2G pipeline on CPU and GPU is avaliable of folder `/polynomial_timing/Instrumented_code_g2g_cpu/Code/` and `/polynomial_timing/Instrumented_code_g2g_cpu/Code/`.-->
-
-- <!--On CLion, for the CPU version, run the CMakeList.txt, build :hammer: and Run  the code :arrow_forward:.-->
-- <!--Still on CLion, for GPU version, configure CMake:-->
-
-   - <!--install nvcc `sudo apt install nvidia-cuda-toolkit`, check the install `nvcc --version`.-->
-
-   - <!--Settings :gear:>Build, Execution, Deployment > CMake, add profile :heavy_plus_sign:, name `GIP_GPU`, CMake option `-DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc` (if you use the emulator: option `-DUSE_CUDA_EMULATOR=ON`, the emulator only allows you to check that the code is functional, execution will be slower than on a GPU).-->
-
-
-1. Executing the `plot_and_fit_averages.py` script to obtain the fit function. Install scipy `pip install scipy`. Execute : `python plot_and_fit_averages.py <input_file> <num_axis[1-2]> <dof[1-2]> <num_x_datapoints[1]> <num_y_datapoints [file_len/3]>` where the two last parameter are used for deconv,degridding etc. ex `python plot_and_fit_averages.py degrid.csv 2 1 8 4`(on the benchmark there is 8 GRID_SIZE and 4 NUM_VIS).
+4. Executing the `plot_and_fit_averages.py` script to obtain the fit function. Install scipy `pip install scipy`. Execute : `python plot_and_fit_averages.py <input_file> <num_axis[1-2]> <dof[1-2]> <num_x_datapoints[1]> <num_y_datapoints [file_len/3]>` where the two last parameter are used for deconv,degridding etc. ex `python plot_and_fit_averages.py degrid.csv 2 1 8 4`(on the benchmark there is 8 GRID_SIZE and 4 NUM_VIS).
 
    <div style="text-align: center;">
        <img src="https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/polynomial_timing/Figure_1.png?ref_type=heads" alt="Description alternative" style="max-width: 80%;">
@@ -254,7 +243,15 @@ check: python3 -c "import astropy; print(astropy.__version__)"
 3. copy past the data in Code/data/ folder. If it doesn't exist create a folder output/small/ inside.
 
 4. Run the code and wait till your prompt display: `Process finished with exit code 0`.
-(It could be long depending on the **NUM_MAJOR_CYCLE** and the **NUM_MINOR_CYCLE**).
+  (It could be long depending on the **NUM_MAJOR_CYCLE** and the **NUM_MINOR_CYCLE**).
+
+5. On CLion, for the CPU version, run the CMakeList.txt, build :hammer: and Run  the code :arrow_forward:.
+  - Still on CLion, for GPU version, configure CMake:
+
+    - install nvcc `sudo apt install nvidia-cuda-toolkit`, check the install `nvcc --version`.
+
+    - Settings :gear:>Build, Execution, Deployment > CMake, add profile :heavy_plus_sign:, name `GIP_GPU`, CMake option `-DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc` (if you use the emulator: option `-DUSE_CUDA_EMULATOR=ON`, the emulator only allows you to check that the code is functional, execution will be slower than on a GPU).
+
 
 #### Understanding the dataset
 Open a terminal and launch `jupyter notebook`
