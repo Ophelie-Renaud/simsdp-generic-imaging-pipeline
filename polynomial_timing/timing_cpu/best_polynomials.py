@@ -19,11 +19,18 @@ def load_data_and_axis(filename, num_axis):
     result = np.genfromtxt(filename, delimiter=",")
     div_by = num_axis + 1
     if len(result) % div_by != 0:
-        print("Error: number of axis must be divisible by number of data points")
+        print("Error: number of axis %d must be divisible by number of data points %d",div_by, len(result), filename)
         exit()
 
     num_items = int(len(result) / div_by)
     return result.reshape((num_items, div_by))
+
+def poly(x, coeffs):
+    out = 0
+    for deg, coeff in enumerate(coeffs[::-1]):
+        out += coeff * (x ** deg)
+
+    return out
 def poly2Dgeneral(x, *coeffs):
     num_coeffs = len(coeffs)
     expected_coeffs = (dof+1) * (dof + 2) // 2
@@ -40,6 +47,10 @@ def poly2Dgeneral(x, *coeffs):
             curr_coeff_idx += 1
 
     return answer
+
+def fit(points_and_axes, dof):
+    points_and_axes[1].flatten()
+    return np.polyfit(points_and_axes[1].flatten(), points_and_axes[0].flatten(), dof)
 def fit2D(points_and_axes, dof, num_x, num_y):
     x1data, x2data = np.meshgrid(points_and_axes[1].flatten()[0::num_y], points_and_axes[2].flatten()[0:num_y], indexing='ij')
     x1shape = x1data.shape
@@ -54,6 +65,22 @@ def fit2D(points_and_axes, dof, num_x, num_y):
     popt, pcov = scipy.optimize.curve_fit(poly2Dgeneral, axis_data, output_data, p0=orig_guess)
 
     return popt
+
+def plot1D(points_and_axes, coeffs = None, fitting_func = None):
+    plt.figure()
+
+    plt.subplot(1,1,1)
+    plt.plot(points_and_axes[1].flatten(), points_and_axes[0].flatten(), 'ro')
+
+    if coeffs is not None:
+        x = np.linspace(0, points_and_axes[1].flatten()[-1])
+        fitting_func = poly(x, coeffs)
+        plt.plot(x, fitting_func, 'b-')
+
+    plt.xlabel('x')
+    plt.ylabel('y')
+
+    plt.show()
 def compute_mse_2D(data_points, coeffs, dof):
     rmse = 0
     total = 0
@@ -73,76 +100,82 @@ def compute_mse_2D(data_points, coeffs, dof):
 
 
 tests = [
-    ("addvis_timings", [3]), #int NUM_SAMPLES
-    ("clean_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
-    ("config_sequel_timings", [2]), #int NUM_SAMPLES, int NUM_VISIBILITIES
-    ("config_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
-    ("correct_to_finegrid_timings", [3]), #int NUM_SAMPLES, int NUM_MINOR_CYCLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
-    ("dft_timings", [2]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
-    ("dgkernel_timings", [2]), #int NUM_SAMPLES, int NUM_VISIBILITIES
-    ("fftshift_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
-    ("fft_timings", [2]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
-    ("gains_apply_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
-    ("gains_reciprocal_transform_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
-    ("gkernel_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
-    ("prolate_setup_timings", [2]),
-    ("prolate_timings", [2]),
-    ("save_output_timings", [2]),
-    ("subtraction_imagespace_timings", [2]),# int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES
+    ("addvis_timings", 1), #int NUM_SAMPLES
+    ("clean_timings", 2), #int NUM_SAMPLES, int GRID_SIZE
+    ("config_sequel_timings", 0), #int NUM_SAMPLES, int NUM_VISIBILITIES
+    ("config_timings", 0), #int NUM_SAMPLES, int GRID_SIZE
+    ("correct_to_finegrid_timings", 1), #int NUM_SAMPLES, int NUM_MINOR_CYCLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+    ("dft_timings", 2), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+    ("dgkernel_timings", 0), #int NUM_SAMPLES, int NUM_VISIBILITIES
+    ("fftshift_timings", 1), #int NUM_SAMPLES, int GRID_SIZE
+    ("fft_timings", 1), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+    ("gains_apply_timings", 1), #int NUM_SAMPLES, int GRID_SIZE
+    ("gains_reciprocal_transform_timings", 1), #int NUM_SAMPLES, int GRID_SIZE
+    ("gkernel_timings", 0), #int NUM_SAMPLES, int GRID_SIZE
+    ("prolate_setup_timings", 1),
+    ("prolate_timings", 1),
+    ("save_output_timings", 1),
+    ("subtraction_imagespace_timings", 1),# int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES
 ]
 # Parcourir les fichiers dans le dossier 'average'
-for filename in os.listdir(input_folder):
+for test in tests:
+    function_name, num_axis = test
+    #num_axis=num_axis-1
     # Construire le chemin complet du fichier
-    full_path = os.path.join(input_folder, filename)
+    full_path = os.path.join(input_folder, function_name+".csv")
 
-    # Vérifier si c'est un fichier CSV
-    if os.path.isfile(full_path) and filename.endswith(".csv") and filename ==  "clean_timings.csv":
+    data_points = load_data_and_axis(full_path, num_axis)
+    print(num_axis)
+    print(data_points)
 
-        values = []
-        param1 = []
-        param2 = []
-        # Lire les données du fichier
-        with open(full_path, "r") as file:
-            reader = csv.reader(file, delimiter=",")
+    best_rmse = float("inf")
+    best_coeffs = None
+    best_dof = None
 
-            # Convertir toutes les lignes en une liste plate
-            flattened_data = [value for row in reader for value in row]
-            values = [flattened_data[i] for i in range(0, len(flattened_data), 3)]
-            param1 = [flattened_data[i] for i in range(1, len(flattened_data), 3)]
-            param2 = [flattened_data[i] for i in range(2, len(flattened_data), 3)]
-
-        print(values)
-        # Nombre de paramètres différents
-        x = len(np.unique(param1))
-        y = len(np.unique(param2))
-        num_points = x * y
-
-        data_points = load_data_and_axis(full_path, 1)
+    if num_axis == 1:
         points_and_axes = np.split(data_points, 2, axis=1)
+        print(points_and_axes)
+        num_x = len(points_and_axes[1])
+        print(num_x)
         # Calculer le degré maximum
-        max_degree = calculate_max_degree(num_points)
-
-        best_rmse = float("inf")
-        best_coeffs = None
-        best_dof = None
-
-        # Ajuster les polynômes
+        max_degree = calculate_max_degree(num_x)
         for dof in range(1, max_degree + 1):
-            coeffs = fit2D(points_and_axes, 1, len(param1)-1, len(param2)-1)
-            rmse = compute_mse_2D(values, coeffs, dof)
-            print(f"File: {filename}, Degree: {dof}, RMSE: {rmse}")
+            if dof > 0:
+                coeffs = fit(points_and_axes, dof)
+                #plot1D(points_and_axes, coeffs)
+                rmse = 0
+            else:
+                #plot1D(points_and_axes)
+                rmse = 0
             if rmse < best_rmse:
                 best_rmse = rmse
                 best_coeffs = coeffs
                 best_dof = dof
-        print(f"File: {filename}, Best Degree: {best_dof}, Best RMSE: {best_rmse}")
+
+    elif num_axis == 2:
+        points_and_axes = np.split(data_points, 3, axis=1)
+        # Calculer le degré maximum
+        max_degree = calculate_max_degree(points_and_axes)
+        num_x = 1
+        num_y = 1
+
+        for dof in range(1, max_degree + 1):
+            coeffs = fit2D(points_and_axes, dof, num_x, num_y)
+            rmse = compute_mse_2D(points_and_axes, coeffs, dof)
+            #print(poly2Dgeneral((2048*2048, 3924480), *coeffs))
+            #plot2D(points_and_axes, coeffs, num_x, num_y)
+    else:
+        print("Error: dimensions not 1 or 2 are currently not supported")
 
 
-            # Sauvegarde des résultats dans un fichier CSV
-        output_csv = os.path.join(output_folder, "best_fit_results.csv")
-        with open(output_csv, "w") as f:
-            f.write("Filename,Best Degree,Best RMSE,Coefficients\n")
-            #coeffs_str = ",".join(map(str, best_coeffs))
-            f.write(f"{output_csv},{best_dof},{best_rmse},{best_coeffs}\n")
+    print(f"File: {test}, Best Degree: {best_dof}, Best RMSE: {best_rmse}")
 
-        print(f"Results saved to {output_csv}")
+
+        # Sauvegarde des résultats dans un fichier CSV
+    output_csv = os.path.join(output_folder, "best_fit_results.csv")
+    with open(output_csv, "w") as f:
+        f.write("Filename,Best Degree,Best RMSE,Coefficients\n")
+        #coeffs_str = ",".join(map(str, best_coeffs))
+        f.write(f"{output_csv},{best_dof},{best_rmse},{best_coeffs}\n")
+
+    print(f"Results saved to {output_csv}")

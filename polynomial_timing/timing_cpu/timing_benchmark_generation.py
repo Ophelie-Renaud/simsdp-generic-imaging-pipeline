@@ -2,24 +2,37 @@ import subprocess
 import numpy as np
 import os
 import re
+import shutil
 
+def clear_folder(folder_path):
+    for item in os.listdir(folder_path):
+        item_path = os.path.join(folder_path, item)
+        if os.path.isfile(item_path) or os.path.islink(item_path):
+            os.unlink(item_path)  # Supprime les fichiers et liens symboliques
+        elif os.path.isdir(item_path):
+            shutil.rmtree(item_path)  # Supprime les sous-dossiers et leur contenu
 def compute_average_from_csv(filename):
     result = np.genfromtxt(filename, delimiter=",")
     av = np.mean(result)
     return av
+# Répertoire d'entrée et de sortie
+input_folder = "to_average"
+output_folder = "average"
 
+clear_folder(input_folder)
+clear_folder(output_folder)
 # Exécutable compilé
 executable = "./SEP_Pipeline"
 
 # definition de la plage des parametre G = Grid_size, V = nombre de visibilité, C = nombre de cycle mineur, indice 0 = val min, f = val max et s = pas
 G0 = 512
-Gf = 2560
+Gf = 2560 #2560
 Gs = 512
 V0 = 1000000
-Vf = 4000000
+Vf = 4000000 #4000000
 Vs = 1000000
 C0 = 50
-Cf = 250
+Cf = 250 #250
 Cs = 50
 
 # Liste des tests avec plages de valeurs pour certains paramètres
@@ -64,9 +77,7 @@ for test in tests:
             print(f"Erreur :\n{result.stderr}")
 
 
-# Répertoire d'entrée et de sortie
-input_folder = "to_average"
-output_folder = "average"
+
 
 # Créer le dossier 'average' s'il n'existe pas
 os.makedirs(output_folder, exist_ok=True)
@@ -94,7 +105,12 @@ for filename in os.listdir(input_folder):
 
                 # Ajouter les résultats au fichier de sortie
                 with open(output_file, "a") as f:
-                    f.write(f"{average}, {d1}, {d2}, {d3},")
+                    if d3!=0:
+                        f.write(f"{average}, {d1}, {d2}, {d3},")
+                    elif d2!=0:
+                        f.write(f"{average}, {d1}, {d2},")
+                    else:
+                        f.write(f"{average}, {d1}")
 
                 print(f"Résultats ajoutés pour {filename} : {average}")
             else:

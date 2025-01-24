@@ -1,1 +1,3 @@
 polynomial_timing/timing_cpu/data/
+polynomial_timing/timing_cpu/average/
+polynomial_timing/timing_cpu/to_average/

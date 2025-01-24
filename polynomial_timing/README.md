@@ -44,6 +44,7 @@ For sure like me you don't have NVIDIA GPU on your laptop. First of all: shame o
 #### Grid5000 cluster
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+
 ```
 #copy file
 scp -r timing_cpu orenaud@access.grid5000.fr:rennes
@@ -95,6 +96,7 @@ From here the steps are the same as on CPU:
 #### Ruche Mesocentre
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+
 ```
 #copy file
 scp -r Code renaudo@ruche.mesocentre.universite-paris-saclay.fr:/workdir/renaudo
