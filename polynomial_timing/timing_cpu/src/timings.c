@@ -12,11 +12,11 @@ void save_timings(int size, char* filename, clock_t* timings, int param1, int pa
         perror("Error opening file");
         return;
     }
-
-	for(int i = 0; i < size - 1; ++i){
+for(int i = 0; i < size - 1; ++i){
 		fprintf(file, "%ld, ", timings[i]);
 	}
 	fprintf(file, "%ld", timings[size - 1]);
+
 
 	fclose(file);
 }
