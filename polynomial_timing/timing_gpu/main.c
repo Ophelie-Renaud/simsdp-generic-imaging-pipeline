@@ -17,6 +17,7 @@ int main(int argc, char *argv[]) {
             return 1;
         }
         int NUM_SAMPLES = atoi(argv[2]);
+        //CPU only
         time_constant_setups(NUM_SAMPLES);
 
     } else if (strcmp(function_name, "time_gridsize_setups") == 0) {
@@ -26,6 +27,7 @@ int main(int argc, char *argv[]) {
         }
         int NUM_SAMPLES = atoi(argv[2]);
         int GRID_SIZE = atoi(argv[3]);
+        //CPU only
         time_gridsize_setups(NUM_SAMPLES, GRID_SIZE);
     }else if (strcmp(function_name, "time_visibility_setups") == 0) {
         if (argc != 4) {
@@ -34,6 +36,7 @@ int main(int argc, char *argv[]) {
         }
         int NUM_SAMPLES = atoi(argv[2]);
         int NUM_VISIBILITIES = atoi(argv[3]);
+        //CPU only
         time_visibility_setups(NUM_SAMPLES, NUM_VISIBILITIES);
     } else if (strcmp(function_name, "time_save_output") == 0) {
         if (argc != 4) {
@@ -42,6 +45,7 @@ int main(int argc, char *argv[]) {
         }
         int NUM_SAMPLES = atoi(argv[2]);
         int GRID_SIZE = atoi(argv[3]);
+        // CPU only
         time_save_output(NUM_SAMPLES, GRID_SIZE);
     }else if (strcmp(function_name, "time_dft") == 0) {
         if (argc != 6) {
@@ -52,6 +56,7 @@ int main(int argc, char *argv[]) {
         int NUM_MINOR_CYCLES = atoi(argv[3]);
         int NUM_VISIBILITIES = atoi(argv[4]);
         int NUM_ACTUAL_VISIBILITIES = atoi(argv[5]);
+        // GPU
         time_dft(NUM_SAMPLES, NUM_MINOR_CYCLES,NUM_VISIBILITIES,NUM_ACTUAL_VISIBILITIES);
     }else if (strcmp(function_name, "time_gains_application") == 0) {
         if (argc != 5) {
@@ -61,6 +66,7 @@ int main(int argc, char *argv[]) {
         int NUM_SAMPLES = atoi(argv[2]);
         int NUM_VISIBILITIES = atoi(argv[3]);
         int NUM_ACTUAL_VISIBILITIES = atoi(argv[4]);
+        // GPU
         time_gains_application(NUM_SAMPLES, NUM_VISIBILITIES,NUM_ACTUAL_VISIBILITIES);
     }else if (strcmp(function_name, "time_add_visibilities") == 0) {
         if (argc != 4) {
@@ -69,6 +75,7 @@ int main(int argc, char *argv[]) {
         }
         int NUM_SAMPLES = atoi(argv[2]);
         int NUM_VISIBILITIES = atoi(argv[3]);
+        // GPU
         time_add_visibilities(NUM_SAMPLES, NUM_VISIBILITIES);
     }else if (strcmp(function_name, "time_prolate") == 0) {
         if (argc != 4) {
@@ -77,6 +84,7 @@ int main(int argc, char *argv[]) {
         }
         int NUM_SAMPLES = atoi(argv[2]);
         int GRID_SIZE = atoi(argv[3]);
+        // GPU
         time_prolate(NUM_SAMPLES, GRID_SIZE);
     }else if (strcmp(function_name, "time_finegrid") == 0) {
         if (argc != 5) {
@@ -86,6 +94,7 @@ int main(int argc, char *argv[]) {
         int NUM_SAMPLES = atoi(argv[2]);
         int NUM_VISIBILITIES = atoi(argv[3]);
         int NUM_ACTUAL_VISIBILITIES = atoi(argv[4]);
+        // CPU only
         time_finegrid(NUM_SAMPLES, NUM_VISIBILITIES, NUM_ACTUAL_VISIBILITIES);
     }else if (strcmp(function_name, "time_subtract_ispace") == 0) {
         if (argc != 4) {
@@ -94,6 +103,7 @@ int main(int argc, char *argv[]) {
         }
         int NUM_SAMPLES = atoi(argv[2]);
         int GRID_SIZE = atoi(argv[3]);
+        // CPU only
         time_subtract_ispace(NUM_SAMPLES, GRID_SIZE);
     }else if (strcmp(function_name, "time_fftshift") == 0) {
         if (argc != 4) {
@@ -102,6 +112,7 @@ int main(int argc, char *argv[]) {
         }
         int NUM_SAMPLES = atoi(argv[2]);
         int GRID_SIZE = atoi(argv[3]);
+        //GPU
         time_fftshift(NUM_SAMPLES, GRID_SIZE);
     }else if (strcmp(function_name, "time_fft") == 0) {
         if (argc != 4) {
@@ -110,6 +121,7 @@ int main(int argc, char *argv[]) {
         }
         int NUM_SAMPLES = atoi(argv[2]);
         int GRID_SIZE = atoi(argv[3]);
+        // GPU
         time_fft(NUM_SAMPLES, GRID_SIZE);
     }else if (strcmp(function_name, "time_hogbom") == 0) {
         if (argc != 5) {
@@ -119,6 +131,7 @@ int main(int argc, char *argv[]) {
         int NUM_SAMPLES = atoi(argv[2]);
         int GRID_SIZE = atoi(argv[3]);
         int NUM_MINOR_CYCLES = atoi(argv[4]);
+        //CPU only
         time_hogbom(NUM_SAMPLES, GRID_SIZE, NUM_MINOR_CYCLES);
     }else{
         fprintf(stderr, "Error: Unknown function '%s'\n", function_name);

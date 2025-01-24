@@ -10,6 +10,8 @@ def compute_average_from_csv(filename):
 
 # Exécutable compilé
 executable = "./SEP_Pipeline"
+
+# definition de la plage des parametre G = Grid_size, V = nombre de visibilité, C = nombre de cycle mineur, indice 0 = val min, f = val max et s = pas
 G0 = 512
 Gf = 2560
 Gs = 512
@@ -26,11 +28,11 @@ tests = [
     ("time_gridsize_setups", [3, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
     ("time_visibility_setups", [3, (V0, Vf, Vs)]), #int NUM_SAMPLES, int NUM_VISIBILITIES
     ("time_save_output", [3, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
-    ("time_dft", [3, (C0, Cf, Cs), (V0, Vf, Vs), 10]), #int NUM_SAMPLES, int NUM_MINOR_CYCLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
-    ("time_gains_application", [3, (V0, Vf, Vs), (10, 50, 10)]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+    ("time_dft", [3, (C0, Cf, Cs), (V0, Vf, Vs), V0]), #int NUM_SAMPLES, int NUM_MINOR_CYCLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+    ("time_gains_application", [3, (V0, Vf, Vs), V0]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
     ("time_add_visibilities", [3, (V0, Vf, Vs)]), #int NUM_SAMPLES, int NUM_VISIBILITIES
     ("time_prolate", [3, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
-    ("time_finegrid", [3, (V0, Vf, Vs), (10, 50, 10)]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+    ("time_finegrid", [3, (V0, Vf, Vs), V0]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
     ("time_subtract_ispace", [1, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
     ("time_fftshift", [3, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
     ("time_fft", [3, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
@@ -77,11 +79,12 @@ for filename in os.listdir(input_folder):
     # Vérifier si c'est un fichier
     if os.path.isfile(full_path):
         # Extraire le nom de base et les paramètres du fichier
-        match = re.match(r"(?P<name>\w+)_(?P<d1>\d+)\*(?P<d2>\d+)", filename)
+        match = re.match(r"(?P<name>\w+)_(?P<d1>\d+)\*(?P<d2>\d+)\*(?P<d3>\d+)", filename)
         if match:
             name = match.group("name")
             d1 = int(match.group("d1"))
             d2 = int(match.group("d2"))
+            d3 = int(match.group("d3"))
 
             # Calculer la moyenne
             average = compute_average_from_csv(full_path)
@@ -91,9 +94,9 @@ for filename in os.listdir(input_folder):
 
                 # Ajouter les résultats au fichier de sortie
                 with open(output_file, "a") as f:
-                    f.write(f"{average}, {d1}, {d2},")
+                    f.write(f"{average}, {d1}, {d2}, {d3},")
 
-                print(f"Résultats ajoutés pour {filename} : {average}, {d1}, {d2}")
+                print(f"Résultats ajoutés pour {filename} : {average}")
             else:
                 print(f"Impossible de calculer la moyenne pour {filename}.")
         else:

@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void save_timings(int size, char* filename, clock_t* timings, int param1, int param2){
+void save_timings(int size, char* filename, clock_t* timings, int param1, int param2,int param3){
 	FILE* file;
     char full_path[256];
-    snprintf(full_path, sizeof(full_path), "to_average/%s_%d*%d", filename, param1, param2);
+    snprintf(full_path, sizeof(full_path), "to_average/%s_%d*%d*%d", filename, param1, param2,param3);
 	file = fopen(full_path, "w");
     if (!file) {
         perror("Error opening file");
@@ -93,10 +93,10 @@ void time_constant_setups(int NUM_SAMPLES){
 		gains_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "config_timings", config_timings,0,0);
-	save_timings(NUM_SAMPLES, "config_sequel_timings", config_sequel_timings,0,0);
-	save_timings(NUM_SAMPLES, "dgkernel_timings", dgkernel_timings,0,0);
-	save_timings(NUM_SAMPLES, "gkernel_timings", gkernel_timings,0,0);
+	save_timings(NUM_SAMPLES, "config_timings", config_timings,0,0,0);
+	save_timings(NUM_SAMPLES, "config_sequel_timings", config_sequel_timings,0,0,0);
+	save_timings(NUM_SAMPLES, "dgkernel_timings", dgkernel_timings,0,0,0);
+	save_timings(NUM_SAMPLES, "gkernel_timings", gkernel_timings,0,0,0);
 
 	free(degridding_kernel_supports);
 	free(gridding_kernel_supports);
@@ -126,7 +126,7 @@ void time_gridsize_setups(int NUM_SAMPLES, int GRID_SIZE){
 		prolate_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "prolate_setup_timings", prolate_timings,GRID_SIZE,0);
+	save_timings(NUM_SAMPLES, "prolate_setup_timings", prolate_timings,GRID_SIZE,0,0);
 	free(prolate_timings);
 	free(prolate);
 }
@@ -163,7 +163,7 @@ void time_visibility_setups(int NUM_SAMPLES, int NUM_VISIBILITIES){
 
 		sprintf(output_filename_vis, "visibility_setup_timings_%d", j+1);
 
-		save_timings(NUM_SAMPLES, output_filename_vis, visibility_timings,NUM_VISIBILITIES,0);
+		save_timings(NUM_SAMPLES, output_filename_vis, visibility_timings,NUM_VISIBILITIES,0,0);
 		printf("Freeing\n");
 		free(visibilities);
 		free(vis_coords);
@@ -204,7 +204,7 @@ void time_save_output(int NUM_SAMPLES, int GRID_SIZE){
 		saveoutput_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "save_output_timings", saveoutput_timings,GRID_SIZE,0);
+	save_timings(NUM_SAMPLES, "save_output_timings", saveoutput_timings,GRID_SIZE,0,0);
 	free(saveoutput_timings);
 	free(residual);
 	free(model);
@@ -247,7 +247,7 @@ void time_dft(int NUM_SAMPLES, int NUM_MINOR_CYCLES, int NUM_VISIBILITIES, int N
 		dft_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "dft_timings", dft_timings,NUM_MINOR_CYCLES,NUM_VISIBILITIES);
+	save_timings(NUM_SAMPLES, "dft_timings", dft_timings,NUM_MINOR_CYCLES,NUM_VISIBILITIES,0);
 
 	free(sources);
 	free(orig_vis);
@@ -297,8 +297,8 @@ void time_gains_application(int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUA
 		recip_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "gains_apply_timings", gains_apply_timings,NUM_VISIBILITIES,0);
-	save_timings(NUM_SAMPLES, "gains_reciprocal_transform_timings", recip_timings,NUM_VISIBILITIES,0);
+	save_timings(NUM_SAMPLES, "gains_apply_timings", gains_apply_timings,NUM_VISIBILITIES,0,0);
+	save_timings(NUM_SAMPLES, "gains_reciprocal_transform_timings", recip_timings,NUM_VISIBILITIES,0,0);
 
 	free(gains_out);
 	free(orig_vis);
@@ -329,7 +329,7 @@ void time_add_visibilities(int NUM_SAMPLES, int NUM_VISIBILITIES){
 		addvis_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "addvis_timings", addvis_timings, NUM_VISIBILITIES,0);
+	save_timings(NUM_SAMPLES, "addvis_timings", addvis_timings, NUM_VISIBILITIES,0,0);
 	free(addvis_timings);
 	free(v1);
 	free(v2);
@@ -358,7 +358,7 @@ void time_prolate(int NUM_SAMPLES, int GRID_SIZE){
 		prolate_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "prolate_timings", prolate_timings, GRID_SIZE,0);
+	save_timings(NUM_SAMPLES, "prolate_timings", prolate_timings, GRID_SIZE,0,0);
 	free(prolate_timings);
 	free(dirty_image_in);
 	free(dirty_image_out);
@@ -397,7 +397,7 @@ void time_finegrid(int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBIL
 		finegrid_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "correct_to_finegrid_timings", finegrid_timings, NUM_VISIBILITIES,0);
+	save_timings(NUM_SAMPLES, "correct_to_finegrid_timings", finegrid_timings, NUM_VISIBILITIES,0,0);
 
 	free(out_viscoords);
 	free(out_vis);
@@ -425,7 +425,7 @@ void time_subtract_ispace(int NUM_SAMPLES, int GRID_SIZE){
 		subimage_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "subtraction_imagespace_timings", subimage_timings, GRID_SIZE, 0);
+	save_timings(NUM_SAMPLES, "subtraction_imagespace_timings", subimage_timings, GRID_SIZE, 0,0);
 	free(subimage_timings);
 	free(i1);
 	free(i2);
@@ -451,7 +451,7 @@ void time_fftshift(int NUM_SAMPLES, int GRID_SIZE){
 		fftshift_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "fftshift_timings", fftshift_timings, GRID_SIZE,0);
+	save_timings(NUM_SAMPLES, "fftshift_timings", fftshift_timings, GRID_SIZE,0,0);
 	free(fftshift_timings);
 	free(in);
 	free(out);
@@ -481,7 +481,7 @@ void time_fft(int NUM_SAMPLES, int GRID_SIZE){
 		fft_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "fft_timings", fft_timings, GRID_SIZE,0);
+	save_timings(NUM_SAMPLES, "fft_timings", fft_timings, GRID_SIZE,0,0);
 	free(fft_timings);
 	free(in);
 	free(out);
@@ -523,7 +523,7 @@ void time_hogbom(int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES){
 		clean_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "clean_timings", clean_timings, GRID_SIZE, NUM_MINOR_CYCLES);
+	save_timings(NUM_SAMPLES, "clean_timings", clean_timings, GRID_SIZE, NUM_MINOR_CYCLES,0);
 	free(psf);
 	free(current_model);
 	free(sources_out);

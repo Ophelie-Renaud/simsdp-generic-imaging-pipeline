@@ -71,6 +71,25 @@ def compute_mse_2D(data_points, coeffs, dof):
     rmse = math.sqrt(rmse)
     return rmse
 
+
+tests = [
+    ("addvis_timings", [3]), #int NUM_SAMPLES
+    ("clean_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
+    ("config_sequel_timings", [2]), #int NUM_SAMPLES, int NUM_VISIBILITIES
+    ("config_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
+    ("correct_to_finegrid_timings", [3]), #int NUM_SAMPLES, int NUM_MINOR_CYCLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+    ("dft_timings", [2]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+    ("dgkernel_timings", [2]), #int NUM_SAMPLES, int NUM_VISIBILITIES
+    ("fftshift_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
+    ("fft_timings", [2]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+    ("gains_apply_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
+    ("gains_reciprocal_transform_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
+    ("gkernel_timings", [2]), #int NUM_SAMPLES, int GRID_SIZE
+    ("prolate_setup_timings", [2]),
+    ("prolate_timings", [2]),
+    ("save_output_timings", [2]),
+    ("subtraction_imagespace_timings", [2]),# int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES
+]
 # Parcourir les fichiers dans le dossier 'average'
 for filename in os.listdir(input_folder):
     # Construire le chemin complet du fichier

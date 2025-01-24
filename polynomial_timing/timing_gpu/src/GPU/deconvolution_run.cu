@@ -728,3 +728,120 @@ __global__ void compress_sources(PRECISION3 *sources)
 		}
 	}
 }
+
+void hogbom_clean(int GRID_SIZE, int NUM_MINOR_CYCLES, int MAX_SOURCES, IN PRECISION* residual, IN PRECISION* psf, int2* partial_psf_halfdims,
+		IN Config* config, IN PRECISION* current_model, OUT int* num_sources_out, OUT PRECISION3* sources_out, OUT PRECISION* output_model){
+
+	PRECISION* temp_residual = (PRECISION*) malloc(sizeof(PRECISION) * GRID_SIZE * GRID_SIZE);
+	memcpy(temp_residual, residual, sizeof(PRECISION) * GRID_SIZE * GRID_SIZE);
+
+	//maybe do the add in another node and only output the model/deconv of the current iteration here
+	memcpy(output_model, current_model, sizeof(PRECISION) * GRID_SIZE * GRID_SIZE);
+
+	*num_sources_out = 0;
+
+	const double WEAK_SOURCE_PERC = config->weak_source_percent_img;
+	const double GAIN = config->loop_gain;
+	const double NOISE_FACTOR = config->noise_factor;
+
+	for(int i = 0; i < NUM_MINOR_CYCLES; ++i){
+		if(i % 50 == 0){
+			printf("UPDATE >>> Performing minor cycle number: %u...\n\n", i);
+		}
+
+		//locate largest source
+		PRECISION curr_max = 0.f;
+		int2 max_pos = {.x = 0, .y = 0};
+		PRECISION curr_average = 0.f;
+
+		for(int y = 0; y < GRID_SIZE; ++y){
+			for(int x = 0; x < GRID_SIZE; ++x){
+				int curr_idx = y * GRID_SIZE + x;
+				PRECISION curr_val = ABS(temp_residual[curr_idx]);
+				curr_average = curr_idx == 0 ? curr_val : curr_average + (curr_val - curr_average) / curr_idx;
+
+				if(curr_val > curr_max){
+					curr_max = fabs(temp_residual[curr_idx]);
+					max_pos.x = x; max_pos.y = y;
+				}
+			}
+		}
+
+		int max_idx = max_pos.y * GRID_SIZE + max_pos.x;
+
+		//check to see if we should terminate
+		bool extracting_noise = ABS(curr_max) < NOISE_FACTOR * curr_average * GAIN;
+	    bool weak_source = *num_sources_out > 0 && ABS(curr_max) < (ABS(sources_out[0].z) * WEAK_SOURCE_PERC);
+
+		if(extracting_noise || weak_source){
+			break;
+		}
+
+		int2 psf_center = {.x = GRID_SIZE / 2, .y = GRID_SIZE / 2};
+
+		float max_val = temp_residual[max_idx] / config->psf_max_value;
+
+		//printf("%f\n", max_val);
+
+		//add to source list. this is only used for the DFT degridder, also the y and x are swapped due to it expecting the row as the first and the column as the second
+		sources_out[*num_sources_out].x = max_pos.x; sources_out[*num_sources_out].y = max_pos.y; sources_out[*num_sources_out].z = max_val * GAIN;
+		*num_sources_out = *num_sources_out + 1;
+
+		//add to model, which will be used in more recent degridders
+		output_model[max_idx] += max_val * GAIN;
+
+		//subtract partial PSF from current residual, offsets used to account for when the support of the psf falls outside of the image FIXXXX
+		//int2 image_start_offset = {.x = MIN(max_pos.x, partial_psf_halfdims->x * 30), .y = MIN(max_pos.y, partial_psf_halfdims->y * 30)};
+		//int2 image_end_offset = {.x = MIN(GRID_SIZE - max_pos.x, partial_psf_halfdims->x * 30 + 1), .y = MIN(GRID_SIZE - max_pos.y, partial_psf_halfdims->y * 30 + 1)};
+
+
+		int2 image_start_offset = {.x = MIN(max_pos.x, GRID_SIZE/2), .y = MIN(max_pos.y, GRID_SIZE/2)};
+		int2 image_end_offset = {.x = MIN(GRID_SIZE - max_pos.x, GRID_SIZE/2), .y = MIN(GRID_SIZE - max_pos.y, GRID_SIZE/2)};
+
+		for(int y = max_pos.y - image_start_offset.y; y < max_pos.y + image_end_offset.y; ++y){
+			for(int x = max_pos.x - image_start_offset.x; x < max_pos.x + image_end_offset.x; ++x){
+				int image_idx = y * GRID_SIZE + x;
+				int psf_idx = (y - max_pos.y + psf_center.y) * GRID_SIZE + (GRID_SIZE - (x - max_pos.x + psf_center.x));
+
+				temp_residual[image_idx] -= GAIN * max_val * psf[psf_idx] * config->psf_max_value;
+			}
+		}
+
+		/*for(int i = *num_sources_out - 2; i >= 0; --i)
+		{
+		    if(max_pos.x == (int)sources_out[i].x && max_pos.y == (int)sources_out[i].y)
+		    {
+				sources_out[i].z += sources_out[*num_sources_out - 1].z;
+		        --*num_sources_out;
+		        break;
+		    }
+		}*/
+	}
+
+
+	/*for(int i = 0; i < 10000; ++i){
+		int x = rand() % GRID_SIZE;
+		int y = rand() % GRID_SIZE;
+
+		int idx = y * GRID_SIZE + x;
+
+		output_model[idx] += config->psf_max_value * GAIN;
+	}*/
+
+
+	if(*num_sources_out > 0)
+	{
+		printf("UPDATE >>> Performing conversion on Source coordinates...\n\n");
+
+		for(int index=0; index < *num_sources_out; index ++)
+		{
+			sources_out[index].x = (sources_out[index].x - GRID_SIZE / 2) * config->cell_size;
+			sources_out[index].y = (sources_out[index].y - GRID_SIZE / 2) * config->cell_size;
+		}
+	}
+
+    free(temp_residual);
+
+	printf("sources_out\t\t: ");
+	MD5_Update(sizeof(PRECISION3) * *num_sources_out, sources_out);
+}

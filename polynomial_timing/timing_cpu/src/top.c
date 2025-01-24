@@ -15,10 +15,10 @@ void config_struct_set_up(int GRID_SIZE, int NUM_KERNELS, OUT Config *config_str
 	config_struct->frequency_hz                        = SPEED_OF_LIGHT;
 	config_struct->dirty_image_output                   = "gleam_small_dirty_image.csv";
 	config_struct->right_ascension						= true;
-	config_struct->visibility_source_file				= "../data/input/GLEAM_small_visibilities_corrupted.csv";
+	config_struct->visibility_source_file				= "data/input/GLEAM_small_visibilities_corrupted.csv";
 	//    config_struct->visibility_source_file				= "../data/input/gleam_small_visibilities_corrupted_0p5_std.csv";
 
-	config_struct->output_path							= "../data/output/small/";
+	config_struct->output_path							= "data/output/small/";
 
 	// Testing
 	config_struct->perform_system_test                 = false;
@@ -27,7 +27,7 @@ void config_struct_set_up(int GRID_SIZE, int NUM_KERNELS, OUT Config *config_str
 	config_struct->system_test_visibilities            = "";
 
 	// Gains - NOTE: initial gains from file logic not implemented yet
-	config_struct->default_gains_file = "../data/input/TrueGainsNotRotated.csv";
+	config_struct->default_gains_file = "data/input/TrueGainsNotRotated.csv";
 	config_struct->output_gains_file = "estimated_gains.csv";
 	config_struct->use_default_gains	= true;
 
@@ -36,12 +36,12 @@ void config_struct_set_up(int GRID_SIZE, int NUM_KERNELS, OUT Config *config_str
 	config_struct->w_scale             = pow(NUM_KERNELS - 1, 2.0) / config_struct->max_w;
 	config_struct->oversampling        = 16;
 	config_struct->uv_scale            = config_struct->cell_size * GRID_SIZE;
-	config_struct->kernel_real_file    = "../data/input/kernels/new/wproj_manualconj_gridding_kernels_real_x16.csv";
-	config_struct->kernel_imag_file    = "../data/input/kernels/new/wproj_manualconj_gridding_kernels_imag_x16.csv";
-	config_struct->kernel_support_file = "../data/input/kernels/new/wproj_manualconj_gridding_kernel_supports_x16.csv";
-	config_struct->degridding_kernel_real_file    = "../data/input/kernels/new/wproj_manualconj_degridding_kernels_real_x16.csv";
-	config_struct->degridding_kernel_imag_file    = "../data/input/kernels/new/wproj_manualconj_degridding_kernels_imag_x16.csv";
-	config_struct->degridding_kernel_support_file = "../data/input/kernels/new/wproj_manualconj_degridding_kernel_supports_x16.csv";
+	config_struct->kernel_real_file    = "data/input/kernels/new/wproj_manualconj_gridding_kernels_real_x16.csv";
+	config_struct->kernel_imag_file    = "data/input/kernels/new/wproj_manualconj_gridding_kernels_imag_x16.csv";
+	config_struct->kernel_support_file = "data/input/kernels/new/wproj_manualconj_gridding_kernel_supports_x16.csv";
+	config_struct->degridding_kernel_real_file    = "data/input/kernels/new/wproj_manualconj_degridding_kernels_real_x16.csv";
+	config_struct->degridding_kernel_imag_file    = "data/input/kernels/new/wproj_manualconj_degridding_kernels_imag_x16.csv";
+	config_struct->degridding_kernel_support_file = "data/input/kernels/new/wproj_manualconj_degridding_kernel_supports_x16.csv";
 	config_struct->force_weight_to_one	= true;
 
 	// Deconvolution
@@ -56,7 +56,7 @@ void config_struct_set_up(int GRID_SIZE, int NUM_KERNELS, OUT Config *config_str
 	config_struct->noise_factor          = 1.5;
 	config_struct->model_sources_output  = "sample_model_sources.csv";
 	config_struct->residual_image_output = "residual_image.csv";
-	config_struct->psf_input_file        = "../data/input/gleam_small_psf.csv";
+	config_struct->psf_input_file        = "data/input/gleam_small_psf.csv";
 
 	config_struct->psf_image_output = "dirty_psf.csv";
 	config_struct->clean_psf_image_output = "clean_psf.csv";

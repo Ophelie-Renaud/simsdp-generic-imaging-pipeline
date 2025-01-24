@@ -4,12 +4,16 @@ SimSDP is an HPC resource allocation framework and simulation tool designed to o
 
 The primary goal of SimSDP is to simulate the **Science Data Processor (SDP)** pipeline from the Square Kilometre Array (SKA), converting visibilities into output images on massive HPC architectures, handling datasets as large as the SKA requirements (xTB).
 
-In this project aims to use SimSDP to simulate the deployment of the Generic Imaging Pipeline with a single and multi-frequency scenarii on Multinode - Multicore architecture, on Multinode - MonoGPU architecture and (might be) on Multinode - MultiGPU architecture.
 
+The aim of this project is to facilitate the comparison of algorithm describing the SDP using SimSDP.  As a dataflow-based tool, SimSDP takes into account the dataflow application graph as well as a csv file containing the execution times of the actors on each target to be simulated. Dataflow representation of  the **Generic Imaging Pipeline** with a single and multi-frequency scenarii are provided. Our goal is to simulate these pipelines on Multinode - Multicore architecture, on Multinode - MonoGPU architecture and (might be) on Multinode - MultiGPU architecture.
 
-<img src="https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/experimental_result_data/project_goal.png?ref_type=heads" style="zoom:100%;" />
+<img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/project_goal.png" style="zoom:100%;" />
 
+Algorithm performance is influenced by parameters such as the number of visibility points, grid size and number of minor cycles. We aim to identify and evaluate the influence of these parameters on scaling and assess whether a solution is viable in the context of SKA.
 
+To achieve this, we provide tools that automatically estimate the execution time of dataflow actors for each targeted architecture and simulate algorithm performance by varying a set of parameter values automatically.
+
+<img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/project_goal2.png" style="zoom:100%;" />
 
 ---
 
@@ -77,8 +81,8 @@ This repository contains six main directories, categorized by the number of freq
 ### Parameterized timing estimation
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-    Timings definition consist in polynomials calculation, the procedure is the following. For each dataflow pipeline configuration do:
-This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in /averages folder) and compute fitting function for each actor. Here are the instruction for running the method build by Sunrise Wang which a manual method evaluating few samples of data. The automated method extending Sunrise's work can be found in folder [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads).
+Timings definition consist in polynomials calculation, the procedure is the following. For each dataflow pipeline configuration do:
+This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in /averages folder) and compute fitting function for each actor. Here are the instruction for running the method build by Sunrise Wang which a manual method evaluating few samples of data. The automated method extending Sunrise\'s work can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) folder.
 
 
 1. Build the the benchmark that will be stored in [averages](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing/averages?ref_type=heads) folder:
@@ -93,7 +97,7 @@ This section consist in setting up a method to define actor timings with a fitti
 4. Executing the `plot_and_fit_averages.py` script to obtain the fit function. Install scipy `pip install scipy`. Execute : `python plot_and_fit_averages.py <input_file> <num_axis[1-2]> <dof[1-2]> <num_x_datapoints[1]> <num_y_datapoints [file_len/3]>` where the two last parameter are used for deconv,degridding etc. ex `python plot_and_fit_averages.py degrid.csv 2 1 8 4`(on the benchmark there is 8 GRID_SIZE and 4 NUM_VIS).
 
    <div style="text-align: center;">
-       <img src="https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/polynomial_timing/Figure_1.png?ref_type=heads" alt="Description alternative" style="max-width: 80%;">
+       <img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/Figure_1.png" alt="Description alternative" style="max-width: 80%;">
        <p><b>Figure 1:</b> 
        <pre><code>python plot_and_fit_averages.py degrid.csv 2 1 8 4</code></pre>  
    	RMSE: 2929.136239024687; <br>
@@ -102,7 +106,7 @@ This section consist in setting up a method to define actor timings with a fitti
    </div>
 
    <div style="text-align: center;">
-       <img src="https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/polynomial_timing/Figure_2.png?ref_type=heads" alt="Description alternative" style="max-width: 80%;">
+       <img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/Figure_2.png" alt="Description alternative" style="max-width: 80%;">
        <p><b>Figure 2:</b> 
    	In the original GIP paper the retain value are:
        <pre><code>python plot_and_fit_averages.py degrid.csv 2 2 8 4</code></pre>   
@@ -113,7 +117,7 @@ This section consist in setting up a method to define actor timings with a fitti
    </div>
 
    <div style="text-align: center;">
-    <img src="https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/polynomial_timing/Figure_3.png?ref_type=heads" alt="Description alternative" style="max-width: 80%;">
+    <img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/Figure_3.png" alt="Description alternative" style="max-width: 80%;">
     <p><b>Figure 3:</b> 
    The dof value that offer the best RMSE for 8x4 input parameter is 6:
     <pre><code>python plot_and_fit_averages.py degrid.csv 2 6 8 4</code></pre>  
@@ -294,19 +298,19 @@ To reveal the contrasts:
 
 - Simulating generic imaging pipelines - 1 freq - CPU - balanced-workload based node partitioning - unoptimized code - [nVis = 3924480 , GRID_SIZE = 2048, nMinorCycle = 200] :
 
-![](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/experimental_result_data/1freq.png?ref_type=heads)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/1freq.png)
 
 - Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [**nVis** = 10xNUM_BASELINE:5xNUM_BASELINE:30xNUM_BASELINE , GRID_SIZE = 2048, nMinorCycle = 200]:
 
-![](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/experimental_result_data/simu_nvis.png?ref_type=heads)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simu_nvis.png)
 
 - Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [nVis = 3924480 , **GRID_SIZE** = 512:512:2560, nMinorCycle = 200]:
 
-![](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/experimental_result_data/simu_grid.png?ref_type=heads)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simu_grid.png)
 
 - Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [nVis = 3924480 , GRID_SIZE = 2048, **nMinorCycle** = 50:50:250]:
 
-![](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/experimental_result_data/simu_minor.png?ref_type=heads)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simu_minor.png)
 
 
 

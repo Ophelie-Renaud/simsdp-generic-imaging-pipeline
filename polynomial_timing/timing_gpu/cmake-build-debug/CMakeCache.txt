@@ -30,16 +30,19 @@ CMAKE_BUILD_TYPE:STRING=Debug
 //Enable colored diagnostics throughout.
 CMAKE_COLOR_DIAGNOSTICS:BOOL=ON
 
+//No help, variable specified on the command line.
+CMAKE_CXX_COMPILER:UNINITIALIZED=/usr/bin/g++-12
+
 //C compiler
-CMAKE_C_COMPILER:FILEPATH=/usr/bin/cc
+CMAKE_C_COMPILER:STRING=/usr/bin/gcc-12
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_C_COMPILER_AR:FILEPATH=/usr/bin/gcc-ar-13
+CMAKE_C_COMPILER_AR:FILEPATH=/usr/bin/gcc-ar-12
 
 //A wrapper around 'ranlib' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_C_COMPILER_RANLIB:FILEPATH=/usr/bin/gcc-ranlib-13
+CMAKE_C_COMPILER_RANLIB:FILEPATH=/usr/bin/gcc-ranlib-12
 
 //Flags used by the C compiler during all build types.
 CMAKE_C_FLAGS:STRING=
@@ -205,7 +208,7 @@ OpenMP_C_FLAGS:STRING=-fopenmp
 OpenMP_C_LIB_NAMES:STRING=gomp;pthread
 
 //Path to the gomp library for OpenMP
-OpenMP_gomp_LIBRARY:FILEPATH=/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so
+OpenMP_gomp_LIBRARY:FILEPATH=/usr/lib/gcc/x86_64-linux-gnu/12/libgomp.so
 
 //Path to the pthread library for OpenMP
 OpenMP_pthread_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpthread.a
@@ -221,15 +224,6 @@ SEP_Pipeline_SOURCE_DIR:STATIC=/home/orenaud/Documents/CENTRAL SUPELEC REPO/sims
 
 //Use OpenMP
 USE_OpenMP:BOOL=ON
-
-//Value Computed by CMake
-timing_gpu_BINARY_DIR:STATIC=/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/polynomial_timing/timing_gpu/cmake-build-debug
-
-//Value Computed by CMake
-timing_gpu_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-timing_gpu_SOURCE_DIR:STATIC=/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/polynomial_timing/timing_gpu
 
 
 ########################
@@ -374,7 +368,7 @@ FIND_PACKAGE_MESSAGE_DETAILS_LAPACK:INTERNAL=[/usr/lib/x86_64-linux-gnu/liblapac
 //Details about finding OpenMP
 FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[TRUE][c ][v4.5()]
 //Details about finding OpenMP_C
-FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_C:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_C:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/12/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //ADVANCED property for variable: LAPACK_lapack_LIBRARY
