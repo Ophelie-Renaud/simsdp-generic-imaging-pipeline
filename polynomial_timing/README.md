@@ -7,7 +7,7 @@ The proposed method consist in two automated steps:
 - The first step consist in building the benchmark of timing for each dataflow actor.
 - The second step consist in building fitting functions for each actor and store the one that give the best RMSE among all tested configurations.
 
-![](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/raw/main/polynomial_timing/poly_fit.png?ref_type=heads)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/poly_fit.png)
 
 ## Run the former method
 
@@ -22,7 +22,7 @@ The proposed method consist in two automated steps:
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-    
+
 `cd timing_cpu` > `cmake .` > `make`
 
 It will generate a `SEP_Pipeline` executable.
