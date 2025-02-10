@@ -9,20 +9,79 @@ The proposed method consist in two automated steps:
 
 ![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/poly_fit.png)
 
-## Run the former method
+## Run the original method [[r]](#ref)
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+All the steps are detail on the main readme and you have to use this command for each averages/timing files:
+Considering that computation execution time have been manually processed and stored in the Considering **average/** folder then run the following command:
+
+> [!TIP]
+>
+> Do not run script from CLion, it will crash if you don't set enough resource, preferred run from prompt.
+
+`python plot_and_fit_averages.py averages/addvis.csv 1 1 5 0`  RMSE = 0.2607680962081062  :white_check_mark:
+
+`python plot_and_fit_averages.py averages/clean.csv 2 2 4 4`  RMSE = 1722.0090647527306 :x:
+
+`python plot_and_fit_averages.py averages/degrid.csv 2 1 8 4`  RMSE = 1310.353129574978 :x:
+
+`python plot_and_fit_averages.py averages/dft.csv 2 2 4 4`  RMSE = 328.79013774421367 :x:
+
+> NUM_MINOR_CYCLE, NUM_VIS
+
+`python plot_and_fit_averages.py averages/dgkernel.csv 1 0 1 0`  RMSE = NA :x:
+
+`python plot_and_fit_averages.py averages/fft.csv 1 1 5 0`  RMSE = 85.36911021588533 :white_check_mark:
+
+> GRID_SIZE
+
+`python plot_and_fit_averages.py averages/fftshift.csv 1 1 5 0`  RMSE = 0.2105075974340459 :white_check_mark:
+
+`python plot_and_fit_averages.py averages/finegrid.csv 1 1 5 0`  RMSE = 0.5555977761734401 :white_check_mark:
+
+`python plot_and_fit_averages.py averages/gains_apply.csv 1 1 5 0`  RMSE = 1.81580101699881 :white_check_mark:
+
+`python plot_and_fit_averages.py averages/gkernel.csv 1 0 1 0`  RMSE = NA :x:
+
+`python plot_and_fit_averages.py averages/grid.csv 2 2 8 4`  RMSE = 1311.535059598015 :x:
+
+`python plot_and_fit_averages.py averages/prolate.csv 1 1 5 0`  RMSE = 0.31412379399377993​ :white_check_mark:
+
+`python plot_and_fit_averages.py averages/prolate_setup.csv 1 1 5 0`  RMSE = 0.0 :white_check_mark:
+
+`python plot_and_fit_averages.py averages/s2s.csv 2 2 8 4`  RMSE = 1729.33617134492 :x:
+
+> GRID_SIZE, NUM_VIS
+
+`python plot_and_fit_averages.py averages/save_output.csv 1 1 5 0`  RMSE = 30.2903978986482  :x:
+
+`python plot_and_fit_averages.py averages/sub_ispace.csv 1 1 5 0`  RMSE = 0.21088577379699533 :white_check_mark:
+
+`python plot_and_fit_averages.py averages/vis_load.csv 1 1 5 0`  RMSE = 6.689979239296699 :white_check_mark:
+
+The RMSE alone does not allow conclusions to be drawn about the model's performance, but it does provide some insights. The fewer parameters required for the calculations, the simpler the model, the more reliable the adjustment function.
+Calculations depending on 2 parameters are the most difficult to model, 2-dimensional polynomials with a degree of 2 are not reliable enough to model their calculation time. Hence the need to evaluate several possible fitting functions.
+
+
+
+---
 
 `python plot_and_fit_averages.py averages/degrid.csv 2 1 8 4`
 
+If you want to use the same command for the automated generated files there is a bug that you can bypass inserting :
+```python
+def load_data_and_axis(filename, num_axis):
+	result = numpy.genfromtxt(filename, delimiter=",")
+	result = result[:-1] #<-- this line 
+```
+
 </details>
 
-## Run the automatic method for CPU timing
+## Run the automatic method for CPU timing (on your laptop)
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-
 `cd timing_cpu` > `cmake .` > `make`
 
 It will generate a `SEP_Pipeline` executable.
@@ -35,13 +94,27 @@ Run: `python best_polynomials.py`
 
 This will compute polynomials from the /average folder and save the polynomial providing the best RMSE in the /polynimials_fits folder. 
 
+Here are the result comparing the RMSE between measured values and model result (the manual model vs. our proposed model) for each computation:
+
+![](/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/polynomial_timing/comparaison_rmse.png)
+
+> [!NOTE]
+>
+> The process is the same for GPU from the **timing_cpu/** folder if your laptop is equipped with NVIDIA GPU.
+
 </details>
 
-## Run the automatic method for GPU timing
+## Run the automatic method for GPU timing (on remote cluster)
 
 For sure like me you don't have NVIDIA GPU on your laptop. First of all: shame on us. Second of all here are how I obtain my result with the on Grid5000 cluster and on Ruche Mesocentre:
 
 #### Grid5000 cluster
+
+<details>
+    <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+
+Here are the following step to run on Grid5000 cluster: 
+
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 
@@ -91,6 +164,13 @@ make
 From here the steps are the same as on CPU:
 `cd timing_cpu` > `cmake .` > `make`
 ...
+
+</details>
+
+Otherwise a script is provided to automatically transfer files, connect to the required node and submit a job that will execute the script:
+`python3 run_on_grid5000.py`
+
+
 </details>
 
 #### Ruche Mesocentre
@@ -134,10 +214,13 @@ Run the job:
 ```
 sbatch job_timing.sh
 ```
+
 </details>
 
-Once the timings are computed, on the PREESM projects e.g:  simsdp-g2g-imaging-pipeline/timings.csv replace the timing by the computed formula.
+> [!WARNING]
+>
+> Once the timings are computed, on the PREESM projects e.g:  simsdp-g2g-imaging-pipeline/timings.csv replace the timing by the computed formula.
 
 ## References
 
-*[r] S. Wang, N. Gac, H. Miomandre, J.-F. Nezan, K. Desnos, F. Orieux « An Initial Framework for Prototyping Radio-Interferometric Imaging Pipelines»*
+<a id="ref"></a> *[[r]](https://hal.science/hal-04361151/file/paper_dasip24_5_wang_updated-2.pdf) S. Wang, N. Gac, H. Miomandre, J.-F. Nezan, K. Desnos, F. Orieux « An Initial Framework for Prototyping Radio-Interferometric Imaging Pipelines»*.

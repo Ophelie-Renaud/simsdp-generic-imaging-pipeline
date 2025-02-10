@@ -3,6 +3,7 @@
 #include "include/timings.h"
 
 int main(int argc, char *argv[]) {
+    printf("Welcome to the main that encapsulate all computations!\n");
     if (argc < 2) {
         fprintf(stderr, "Usage: %s <function_name> [params...]\n", argv[0]);
         return 1;
@@ -112,10 +113,12 @@ int main(int argc, char *argv[]) {
         int GRID_SIZE = atoi(argv[3]);
         time_fft(NUM_SAMPLES, GRID_SIZE);
     }else if (strcmp(function_name, "time_hogbom") == 0) {
+        printf("launch clean");
         if (argc != 5) {
             fprintf(stderr, "Usage: %s time_hogbom <NUM_SAMPLES> <GRID_SIZE> <NUM_MINOR_CYCLES>\n", argv[0]);
             return 1;
         }
+        printf("launch clean");
         int NUM_SAMPLES = atoi(argv[2]);
         int GRID_SIZE = atoi(argv[3]);
         int NUM_MINOR_CYCLES = atoi(argv[4]);

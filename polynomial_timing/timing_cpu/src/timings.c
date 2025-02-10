@@ -12,6 +12,7 @@ void save_timings(int size, char* filename, clock_t* timings, int param1, int pa
         perror("Error opening file");
         return;
     }
+    printf("Writing timings to %s\n", full_path);
 for(int i = 0; i < size - 1; ++i){
 		fprintf(file, "%ld, ", timings[i]);
 	}
@@ -505,6 +506,10 @@ void time_hogbom(int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES){
 	}
 	int2 psf_halfdims = {.x = 50, .y = 50};
 	PRECISION* current_model = (PRECISION*)malloc(sizeof(PRECISION) * GRID_SIZE * GRID_SIZE);
+    if (current_model == NULL) {
+    perror("Memory allocation failed");
+    exit(EXIT_FAILURE);
+	}
 	memset(current_model, 0, sizeof(PRECISION) * GRID_SIZE * GRID_SIZE);
 	PRECISION3* sources_out = (PRECISION3*)malloc(sizeof(PRECISION3) * NUM_MINOR_CYCLES);
 

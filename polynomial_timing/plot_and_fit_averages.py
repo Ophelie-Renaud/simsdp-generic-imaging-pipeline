@@ -11,7 +11,7 @@ def load_data_and_axis(filename, num_axis):
 	result = numpy.genfromtxt(filename, delimiter=",")
 	div_by = num_axis + 1
 	if len(result) % div_by != 0:
-		print("Error: number of axis must be divisible by number of data points")
+		print("Error: number of axis must be divisible by number of data points",div_by, len(result), filename)
 		exit()
 
 	num_items = int(len(result) / div_by)
@@ -143,6 +143,8 @@ def compute_mse_2D(data_points, coeffs, dof):
 	rmse = math.sqrt(rmse)
 	return rmse
 
+def rmse(measure, predict):
+    return numpy.sqrt(numpy.mean((numpy.array(measure) - numpy.array(predict))**2))
 
 num_axis = int(sys.argv[2])
 filename = sys.argv[1]
@@ -160,8 +162,14 @@ if num_axis == 1:
 	points_and_axes = numpy.split(data_points, 2, axis=1)
 	if dof > 0:
 		coeffs = fit(points_and_axes, dof)
-		plot1D(points_and_axes, coeffs)
-		print(coeffs)
+		#plot1D(points_and_axes, coeffs)
+		measure = points_and_axes[0]
+		print("measure: " +str(measure))
+		predict = poly(points_and_axes[1],coeffs)
+		print("predict: " +str(predict))
+		rmse = rmse(measure, predict)
+		print("RMSE: " +str(rmse))
+		print("COEFS: " +str(coeffs))
 	else:
 		plot1D(points_and_axes)
 

@@ -1,2 +1,18 @@
 Filename,Best Degree,Best RMSE,Coefficients
-polynomial_fits/best_fit_results.csv,None,inf,None
+addvis_timings,1,5477241.331198126,[ 3.21e-06 -1.00e+00]
+clean_timings,1,34921.37433726943,[ 5.76252600e+03  6.39704050e+00 -1.56753212e+00]
+config_sequel_timings,0,0,0
+config_timings,0,0,0
+correct_to_finegrid_timings,1,1195677673.8447237,[4.941e-05 2.183e+02]
+dft_timings,2,23429.13012507407,[ 7.26211193e+03  4.21804202e-03 -1.24725444e-09 -2.42921462e+01
+  1.21059264e-05  2.55049666e-02]
+dgkernel_timings,0,0,0
+fftshift_timings,1,178794.62410215527,[  0.08232422 -47.03      ]
+fft_timings,1,344305.01714419195,[  0.14425781 -90.58      ]
+gains_apply_timings,1,274408385.2867108,[9.577e-05 5.010e+01]
+gains_reciprocal_transform_timings,1,0.0,[0. 0.]
+gkernel_timings,0,0,0
+prolate_setup_timings,1,0.0,[0. 0.]
+prolate_timings,1,335704.3642052883,[  0.12798828 -88.33      ]
+save_output_timings,1,4416776.569852459,[    2.28916016 -1161.53      ]
+subtraction_imagespace_timings,1,14673.138717509117,[ 0.00636719 -3.86      ]

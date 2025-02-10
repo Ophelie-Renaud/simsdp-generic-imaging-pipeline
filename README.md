@@ -13,7 +13,7 @@ Algorithm performance is influenced by parameters such as the number of visibili
 
 To achieve this, we provide tools that automatically estimate the execution time of dataflow actors for each targeted architecture and simulate algorithm performance by varying a set of parameter values automatically.
 
-<img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/project_goal2.png" style="zoom:100%;" />
+<img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/project_goal2.png" style="zoom:50%;" />
 
 ---
 
@@ -81,9 +81,9 @@ This repository contains six main directories, categorized by the number of freq
 ### Parameterized timing estimation
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-Timings definition consist in polynomials calculation, the procedure is the following. For each dataflow pipeline configuration do:
-This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in /averages folder) and compute fitting function for each actor. Here are the instruction for running the method build by Sunrise Wang which a manual method evaluating few samples of data. The automated method extending Sunrise\'s work can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) folder.
 
+Timings definition consist in polynomials calculation, the procedure is the following. For each dataflow pipeline configuration do:
+This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in /averages folder) and compute fitting function for each actor. Here are the instruction for running the method build by Sunrise Wang which a manual method evaluating few samples of data. The automated method extending Sunrise\'s work can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) folder. Here are the manual and tedious method:
 
 1. Build the the benchmark that will be stored in [averages](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing/averages?ref_type=heads) folder:
    1. In **PREESM**, the timings algorithm are provided in the algo/ folder select for example `grid_timing.diagram` and tune the parameter values: `NUM_VIS` [1000000; 2000000;3000000;4000000], `GRID_SIZE` [65536; 262144; 589824; 1048576; 1638400; 2359296; 3211264; 4194304]; , `NUM_MINOR_CYCLE`.
@@ -133,7 +133,9 @@ This section consist in setting up a method to define actor timings with a fitti
    </div>
 
 
-   > The axis represent: 
+   > [!NOTE]
+>
+> The axis represent: 
    >
    > - z:  the execution time for each configuration.
    >
@@ -147,14 +149,14 @@ This section consist in setting up a method to define actor timings with a fitti
    >
    > - The bottom plot represent the polynomial model of the fitting function.
 
-We target a Root Mean Square Error (RMSE) as short as possible while minimizing the number of coefficient , the value are the coefficient of the polynomials. 
-The number of coefficients has an impact on the RMSE and must be less than the number of points acquired, otherwise it crashes, you should respect the following:
+We target a Root Mean Square Error (RMSE) as short as possible while minimizing the number of coefficient , the value are the coefficient of the polynomials. The number of coefficients has an impact on the RMSE and must be less than the number of points acquired, otherwise it crashes, you should respect the following:
 
 	num_coeffs = (dof + 1)(dof + 2) / 2 ≤ num_points
 hence:
 
 	dof ≤ (-3 + sqrt(9 + 8 × num_points)) / 2
 
+As you can see all these steps while necessary are tedious manually. We provide a solution in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) folder.
 </details>
 
 ### Run SimSDP on a defined HPC architecture
@@ -162,24 +164,18 @@ hence:
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 
+The project already contains the required component to run SimSDP. However you can tune the project as you want.
+
 1. Create a CSV file that will be exploit by the method to generate  multinode multicore HPC S-LAM files. Name this file “SimSDP_archi.csv”  and save it in the **Archi** folder. Your file should look like this:    
 
    ```bash
    Node name;Core ID;Core frequency;Intranode rate;Internode rate
    Node0;0;2000.0;472.0;9.42
    Node0;1;2000.0;472.0;9.42
-   Node0;2;2000.0;472.0;9.42
-   Node0;3;2000.0;472.0;9.42
    Node1;0;2000.0;472.0;9.42
-   Node1;1;2000.0;472.0;9.42
-   Node1;2;2000.0;472.0;9.42
-   Node1;3;2000.0;472.0;9.42
-   Node2;0;2000.0;472.0;9.42
-   Node2;1;2000.0;472.0;9.42
-   Node2;2;2000.0;472.0;9.42
-   Node2;3;2000.0;472.0;9.42
+   ...
    ```
-
+   
 2. Configure your network architecture: right click on your project “Preesm > generate custom architecture network”. Choose the network you  want. You can let it as default. It generates a XML file stored in the **Archi** folder (you can update it as you want). Your file should look like this:  
     ```html
    <!-- Cluster with shared backbone:3:4:1 -->
@@ -201,9 +197,8 @@ During its execution, the workflow will log information into the  Console of Pre
 
 Additionnaly, the workflow execution generates intermediary dataflow graphs that can be found in the **/Algo/generated/** directory. The C code generated by the workflow is contained in the **/Code/generated/** directory. The simulated data are stored in the **/Simulation** directory.
 
-4. A python notebook is provided in the SimSDP project to analyse the simulator generated files: Launch `jupyter notebook` and open “SimSDPproject/SimulationAnalysis.ipynb”. Make sure that the  CSVs are in the reading path. Load each code to display the trends with  your simulated data.
+4. A python notebook is provided in the SimSDP project to analyse the simulator generated files: Launch `jupyter notebook` and open *SimSDPproject/SimulationAnalysis.ipynb*. Make sure that the  CSVs are in the reading path. Load each code to display the trends with  your simulated data.
    </details>
-   
 ### Run SimSDP on a defined range of architectures
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
@@ -227,7 +222,8 @@ Additionnaly, the workflow execution generates intermediary dataflow graphs that
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 
 1. install the requirements:
-```
+
+```bash
 sudo apt-get install libfftw3-dev
 
 #BLAS
@@ -259,13 +255,6 @@ check: python3 -c "import astropy; print(astropy.__version__)"
     - install nvcc `sudo apt install nvidia-cuda-toolkit`, check the install `nvcc --version`.
 
     - Settings :gear:>Build, Execution, Deployment > CMake, add profile :heavy_plus_sign:, name `GIP_GPU`, CMake option `-DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc` (if you use the emulator: option `-DUSE_CUDA_EMULATOR=ON`, the emulator only allows you to check that the code is functional, execution will be slower than on a GPU).
-
-
-#### Understanding the dataset
-Open a terminal and launch `jupyter notebook`
-and retrieve the file : /ska_sep_preesm/notebooks/dataset_prep.ipynb
-
-Reload each code to update with your setup (you have to wait some time on several display, don't panic).
 
 #### Visualizing the outut
 At this stage verify that your output folder contains files such as :"cycle_0_clean_psf.csv"
