@@ -536,3 +536,52 @@ void time_hogbom(int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES){
 	free(in);
 	free(out);
 }
+void time_grid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
+  	clock_t* grid_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
+
+	clock_t start, end;
+	clock_t CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
+
+  int num_kernel = 0;
+  int total_kernel_samples = 0;
+
+  	PRECISION2* kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		kernels[i] = (float)rand()/(float)RAND_MAX;
+	}
+    int2* kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		kernel_supports[i] = (int)rand()/(int)RAND_MAX;
+	}
+    PRECISION3* vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		vis_uvw_coords[i] = (float)rand()/(float)RAND_MAX;
+	}
+    PRECISION2* visibilities = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		visibilities[i] = (float)rand()/(float)RAND_MAX;
+	}
+    Config config;
+	config_struct_set_up(GRID_SIZE, 17, &config);
+	config.weak_source_percent_gc = 0;
+	config.weak_source_percent_img = 0;
+	config.psf_max_value = 1.f;
+
+    PRECISION2* uv_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+
+  	for(int i = 0; i < NUM_SAMPLES; ++i){
+		start = clock();
+		gridding_actor(GRID_SIZE, NUM_VISIBILITIES, num_kernel, total_kernel_samples, kernels, kernel_supports,vis_uvw_coords,visibilities, &config,uv_grid);
+		end = clock();
+		grid_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
+	}
+    save_timings(NUM_SAMPLES, "grid_timings", grid_timings, GRID_SIZE, NUM_VISIBILITIES,0);
+
+    free(kernels);
+    free(kernel_supports);
+    free(vis_uvw_coords);
+    free(visibilities);
+    free(uv_grid);
+
+
+}

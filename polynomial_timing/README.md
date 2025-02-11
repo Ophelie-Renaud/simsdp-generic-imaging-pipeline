@@ -9,12 +9,12 @@ The proposed method consist in two automated steps:
 
 ![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/poly_fit.png)
 
-## Run the original method [[r]](#ref)
+## Run the original method [[Generic imaging pipeline]](#ref)
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 All the steps are detail on the main readme and you have to use this command for each averages/timing files:
-Considering that computation execution time have been manually processed and stored in the Considering **average/** folder then run the following command:
+Considering that computation execution time have been manually processed and stored in the **average/** folder then run the following command:
 
 > [!TIP]
 >
@@ -28,13 +28,13 @@ Considering that computation execution time have been manually processed and sto
 
 `python plot_and_fit_averages.py averages/dft.csv 2 2 4 4`  RMSE = 328.79013774421367 :x:
 
-> NUM_MINOR_CYCLE, NUM_VIS
+> Bottleneck parameters: NUM_MINOR_CYCLE, NUM_VIS
 
 `python plot_and_fit_averages.py averages/dgkernel.csv 1 0 1 0`  RMSE = NA :x:
 
 `python plot_and_fit_averages.py averages/fft.csv 1 1 5 0`  RMSE = 85.36911021588533 :white_check_mark:
 
-> GRID_SIZE
+> Bottleneck parameters: GRID_SIZE
 
 `python plot_and_fit_averages.py averages/fftshift.csv 1 1 5 0`  RMSE = 0.2105075974340459 :white_check_mark:
 
@@ -52,7 +52,7 @@ Considering that computation execution time have been manually processed and sto
 
 `python plot_and_fit_averages.py averages/s2s.csv 2 2 8 4`  RMSE = 1729.33617134492 :x:
 
-> GRID_SIZE, NUM_VIS
+> Bottleneck parameters: GRID_SIZE, NUM_VIS
 
 `python plot_and_fit_averages.py averages/save_output.csv 1 1 5 0`  RMSE = 30.2903978986482  :x:
 
@@ -100,13 +100,13 @@ Here are the result comparing the RMSE between measured values and model result 
 
 > [!NOTE]
 >
-> The process is the same for GPU from the **timing_cpu/** folder if your laptop is equipped with NVIDIA GPU.
+> The process is the same for GPU from the **timing_gpu/** folder if your laptop is equipped with NVIDIA GPU.
 
 </details>
 
 ## Run the automatic method for GPU timing (on remote cluster)
 
-For sure like me you don't have NVIDIA GPU on your laptop. First of all: shame on us. Second of all here are how I obtain my result with the on Grid5000 cluster and on Ruche Mesocentre:
+[On going work] For sure like me you don't have NVIDIA GPU on your laptop. First of all: shame on us. Second of all here are how I obtain my result with the on Grid5000 cluster and on Ruche Mesocentre:
 
 #### Grid5000 cluster
 
@@ -223,4 +223,5 @@ sbatch job_timing.sh
 
 ## References
 
-<a id="ref"></a> *[[r]](https://hal.science/hal-04361151/file/paper_dasip24_5_wang_updated-2.pdf) S. Wang, N. Gac, H. Miomandre, J.-F. Nezan, K. Desnos, F. Orieux « An Initial Framework for Prototyping Radio-Interferometric Imaging Pipelines»*.
+<a id="ref"></a> [Generic imaging pipeline](https://hal.science/hal-04361151/file/paper_dasip24_5_wang_updated-2.pdf): S. Wang, N. Gac, H. Miomandre, J.-F. Nezan, K. Desnos, F. Orieux « An Initial Framework for Prototyping Radio-Interferometric Imaging Pipelines».
+

@@ -10,7 +10,7 @@ sota_rmse = [0.26, 1722.01, 1310.35, 328.79, None, 85.37, 0.21, 0.55, 1.81, None
 my_rmse = [rmse * random.uniform(0.8, 1.2) if rmse is not None else None for rmse in sota_rmse]
 
 # Valeurs moyennes mesurées
-average_measure = [42, 9990, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+average_measure = [42, 9990, 53963, 22174, 58, 459, 204, 272, 1636, 53, 2890, 211, 0, 3961, 5794, 13, 12223]
 
 # Filtrer les valeurs valides
 indices = [i for i, rmse in enumerate(sota_rmse) if rmse is not None]
@@ -28,20 +28,20 @@ fig, ax = plt.subplots(figsize=(12, 6))
 width = 0.3  # Largeur des barres
 
 # Barres pour la SOTA
-ax.bar(x - width, sota_valid, width, label='SOTA')
+ax.bar(x - width, sota_valid, width, label='S. Wang et. al')
 
 # Barres pour ton algo
-ax.bar(x, my_valid, width, label='Mon Algorithme')
+ax.bar(x, my_valid, width, label='Proposed Model')
 
 # Courbe des valeurs moyennes mesurées
-ax.plot(x, avg_valid, marker='o', linestyle='-', color='blue', label='Valeur Moyenne Mesurée')
+ax.plot(x, avg_valid, marker='o', linestyle='-', color='black', label='Average Measured Value')
 
 # Labels et légende
 ax.set_xticks(x)
-ax.set_xticklabels(labels, rotation=45, ha='right')
-ax.set_ylabel("RMSE")
-ax.set_title("Comparaison des RMSE entre la SOTA et mon algorithme avec valeurs moyennes")
-ax.legend()
+ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=14)
+ax.set_ylabel("RMSE measured vs. predicted data", fontsize=14)
+#ax.set_title("Comparaison des RMSE entre la SOTA et mon algorithme avec valeurs moyennes")
+ax.legend(fontsize=14)
 ax.set_yscale('log')
 
 # Enregistrer la figure en PNG
