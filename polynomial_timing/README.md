@@ -9,7 +9,7 @@ The proposed method consist in two automated steps:
 
 ![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/poly_fit.png)
 
-## Run the original method [[Generic imaging pipeline]](#ref)
+## Run the original method [*Generic imaging pipeline*](#ref)
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
