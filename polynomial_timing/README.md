@@ -96,7 +96,7 @@ This will compute polynomials from the /average folder and save the polynomial p
 
 Here are the result comparing the RMSE between measured values and model result (the manual model vs. our proposed model) for each computation:
 
-![](/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/polynomial_timing/comparaison_rmse.png)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/comparaison_rmse.png)
 
 > [!NOTE]
 >
