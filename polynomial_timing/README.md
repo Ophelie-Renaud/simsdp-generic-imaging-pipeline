@@ -82,6 +82,7 @@ def load_data_and_axis(filename, num_axis):
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+
 `cd timing_cpu` > `cmake .` > `make`
 
 It will generate a `SEP_Pipeline` executable.
@@ -118,12 +119,12 @@ Here are the following step to run on Grid5000 cluster:
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 
-```
+```bash
 #copy file
 scp -r timing_cpu orenaud@access.grid5000.fr:rennes
 ```
 
-```
+```bash
 #connect the cluster
 ssh orenaud@access.grid5000.fr
 ssh rennes
@@ -136,7 +137,7 @@ lspci | grep -i nvidia
 nvcc -V
 ```
 Each time you change of node:
-```
+```bash
 #install all required lib
 sudo-g5k apt-get install libfftw3-dev
 
@@ -155,7 +156,7 @@ sudo-g5k apt install jupyter-notebook
 sudo-g5k apt install python3-astropy
 ```
 Run the code:
-```
+```bash
 cd timing_gpu
 cmake .
 make
@@ -167,8 +168,7 @@ From here the steps are the same as on CPU:
 
 </details>
 
-Otherwise a script is provided to automatically transfer files, connect to the required node and submit a job that will execute the script:
-`python3 run_on_grid5000.py`
+Otherwise a script is provided to automatically transfer files, connect to the required node and submit a job that will execute the script: `python3 run_on_grid5000.py`.
 
 
 </details>
@@ -177,18 +177,18 @@ Otherwise a script is provided to automatically transfer files, connect to the r
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 
-```
+```bash
 #copy file
 scp -r Code renaudo@ruche.mesocentre.universite-paris-saclay.fr:/workdir/renaudo
 ```
-```
+```bash
 #connect the cluster
 ssh renaudo@ruche.mesocentre.universite-paris-saclay.fr
 #retrieve your files
 cd /workdir/renaudo/Code
 ```
 Construct your slurm script:
-```
+```bash
 touch job_timing.sh
 
 nano job_timing.sh
