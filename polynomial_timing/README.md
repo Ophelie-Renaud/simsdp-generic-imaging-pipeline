@@ -7,7 +7,7 @@ The proposed method consist in two automated steps:
 - The first step consist in building the benchmark of timing for each dataflow actor.
 - The second step consist in building fitting functions for each actor and store the one that give the best RMSE among all tested configurations.
 
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/poly_fit.png)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/pic/poly_fit.png)
 
 ## Run the original method [*Generic imaging pipeline*](#ref)
 
@@ -96,7 +96,7 @@ This will compute polynomials from the /average folder and save the polynomial p
 
 Here are the result comparing the RMSE between measured values and model result (the manual model vs. our proposed model) for each computation:
 
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/comparaison_rmse.png)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/pic/comparaison_rmse.png)
 
 > [!NOTE]
 >

@@ -194,11 +194,13 @@ def compute_mse_2D(data_points, coeffs, dof):
 
     rmse = math.sqrt(rmse)
     return rmse
+def rmse(measure, predict):
+    return np.sqrt(np.mean((np.array(measure) - np.array(predict))**2))
 
 # Sauvegarde des résultats dans un fichier CSV
 output_csv = os.path.join(output_folder, "best_fit_results.csv")
 with open(output_csv, "w") as f:
-    f.write("Filename,Best Degree,Best RMSE,Coefficients\n")
+    f.write("Filename,Best Degree,Best RMSE,Coefficients,Average\n")
 
 tests = [
     ("addvis_timings", 1), #int NUM_VISIBILITIES (func= poly1D)
@@ -221,46 +223,56 @@ tests = [
 # Parcourir les fichiers dans le dossier 'average'
 for test in tests:
     function_name, num_axis = test
-    #num_axis=num_axis-1
+
     # Construire le chemin complet du fichier
     full_path = os.path.join(input_folder, function_name+".csv")
-    #print(num_axis)
-    data_points = load_data_and_axis(full_path, num_axis)
-    #print(num_axis)
-    #print(data_points)
 
-    best_rmse = float("inf")
+    data_points = load_data_and_axis(full_path, num_axis)
+
+    best_rmse = float('inf')
     best_coeffs = None
     best_dof = None
+    average_mes = None
+    rmse_value = 0
 
     if num_axis== 0:
         #no parameter no fit
         best_rmse = 0
         best_coeffs = 0
         best_dof = 0
+        average_mes = 0
 
     elif num_axis == 1:
         #split data_points into 2 section (value and part_x)
         points_and_axes = np.split(data_points, 2, axis=1)
+
+        part_val = points_and_axes[0]
+        average_mes = np.mean(part_val)
+
         part_x = points_and_axes[1]
         num_x = len(np.unique(part_x[:, 0]))
 
         # Calculer le degré maximum
         max_degree = calculate_max_degree1D(num_x)
+
+        #rmse_value = 0
+        #best_rmse = 0
         for dof in range(1, max_degree + 1):
             if dof > 0:
                 coeffs = fit(points_and_axes, dof)
-                rmse = compute_mse_1D(points_and_axes, coeffs, dof)
-
+                #rmse = compute_mse_1D(points_and_axes, coeffs, dof)
+                measure = points_and_axes[0]
+                predict = poly(points_and_axes[1],coeffs)
+                rmse_value = rmse(measure, predict)
             else:
                 coeffs = 0
-                rmse = 0
+                rmse_value = 0
 
-            print("RMSE: " + str(rmse))
+            print("RMSE: " + str(rmse_value))
             print(coeffs)
 
-            if rmse < best_rmse:
-                best_rmse = rmse
+            if rmse_value < best_rmse:
+                best_rmse = rmse_value
                 best_coeffs = coeffs
                 best_dof = dof
 
@@ -272,6 +284,9 @@ for test in tests:
         #split data_points into 3 section (value, part_x and part_y)
         points_and_axes = np.split(data_points, 3, axis=1)
 
+        part_val = points_and_axes[0]
+        average_mes = np.mean(part_val)
+
         part_x = points_and_axes[1]
         part_y = points_and_axes[2]
 
@@ -280,21 +295,23 @@ for test in tests:
 
         max_degree = calculate_max_degree2D(num_x*num_y)
 
+        #rmse_value = 0
+        #best_rmse = 0
         for dof in range(1, max_degree):
             coeffs = fit2D(points_and_axes, dof, num_x, num_y)
-            rmse = compute_mse_2D(points_and_axes, coeffs, dof)
+            rmse_value = compute_mse_2D(points_and_axes, coeffs, dof)
 
-            print("RMSE: " + str(rmse))
+            print("RMSE: " + str(rmse_value))
             print(coeffs)
-            if rmse < best_rmse:
-                best_rmse = rmse
+            if rmse_value < best_rmse:
+                best_rmse = rmse_value
                 best_coeffs = coeffs
                 best_dof = dof
             #plot2D(points_and_axes, coeffs, num_x, num_y)
             #if dof == max_degree :
                 #i don't why I can't the best coef
-            dof = best_dof
-            plot2D(points_and_axes, best_coeffs, num_x, num_y)
+            #dof = best_dof
+#            plot2D(points_and_axes, best_coeffs, num_x, num_y)
 
     else:
         print("Error: dimensions not 1 or 2 are currently not supported")
@@ -307,8 +324,8 @@ for test in tests:
     output_csv = os.path.join(output_folder, "best_fit_results.csv")
     with open(output_csv, "a") as f:
         #coeffs_str = ",".join(map(str, best_coeffs))
-        f.write(f"{function_name},{best_dof},{best_rmse},{best_coeffs}\n")
+        f.write(f"{function_name},{best_dof},{best_rmse},{best_coeffs},{average_mes}\n")
 
     print(f"Results saved to {output_csv}")
 # À la fin, toutes les fenêtres resteront ouvertes
-plt.show()  # Ce `show` final permet de garder les fenêtres ouvertes
+#plt.show()  # Ce `show` final permet de garder les fenêtres ouvertes

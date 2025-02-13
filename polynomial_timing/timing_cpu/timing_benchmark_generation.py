@@ -106,6 +106,9 @@ tests = [
     ("time_fftshift", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
     ("time_fft", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
     ("time_hogbom", [NUM_SAMPLES, (G0, Gf, Gs),(C0, Cf, Cs)]), # int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES
+    ("time_grid", [NUM_SAMPLES, (G0, Gf, Gs),(V0, Vf, Vs)]),
+    ("time_degrid", [NUM_SAMPLES, (G0, Gf, Gs),(V0, Vf, Vs)]),
+    ("time_s2s", [NUM_SAMPLES, (G0, Gf, Gs),(V0, Vf, Vs)]),
 ]
 
 #test_unit = [

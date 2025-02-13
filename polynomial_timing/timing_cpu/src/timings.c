@@ -1,3 +1,13 @@
+/*
+	============================================================================
+	Name        : timings.c
+	Author      : swang & orenaud
+	Version     : 1.2
+	Copyright   : CECILL-C
+	Description : encapsulation of pipeline calculations for execution time benchmarking
+	============================================================================
+ */
+
 #include "timings.h"
 #include <time.h>
 #include <stdio.h>
@@ -571,7 +581,7 @@ void time_grid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
 
   	for(int i = 0; i < NUM_SAMPLES; ++i){
 		start = clock();
-		gridding_actor(GRID_SIZE, NUM_VISIBILITIES, num_kernel, total_kernel_samples, kernels, kernel_supports,vis_uvw_coords,visibilities, &config,uv_grid);
+		std_gridding(GRID_SIZE, NUM_VISIBILITIES, num_kernel, total_kernel_samples,oversampling_factor,bypass, maj_iter,num_corrected_visibilities, gridding_kernels,gridding_kernel_supports ,corrected_vis_uvw_coords,visibilities, &config,prev_grid, output_grid);
 		end = clock();
 		grid_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
@@ -582,6 +592,115 @@ void time_grid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
     free(vis_uvw_coords);
     free(visibilities);
     free(uv_grid);
+}
+void time_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
+  	clock_t* grid_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
 
+	clock_t start, end;
+	clock_t CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
+
+  int num_kernel = 0;
+  int total_kernel_samples = 0;
+
+  	PRECISION2* kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		kernels[i] = (float)rand()/(float)RAND_MAX;
+	}
+    int2* kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		kernel_supports[i] = (int)rand()/(int)RAND_MAX;
+	}
+    PRECISION3* vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		vis_uvw_coords[i] = (float)rand()/(float)RAND_MAX;
+	}
+    PRECISION2* visibilities = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		visibilities[i] = (float)rand()/(float)RAND_MAX;
+	}
+    Config config;
+	config_struct_set_up(GRID_SIZE, 17, &config);
+	config.weak_source_percent_gc = 0;
+	config.weak_source_percent_img = 0;
+	config.psf_max_value = 1.f;
+
+    PRECISION2* uv_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+
+  	for(int i = 0; i < NUM_SAMPLES; ++i){
+		start = clock();
+		std_degridding(GRID_SIZE, NUM_VISIBILITIES, num_kernel, total_kernel_samples,oversampling_factor,bypass, maj_iter,num_corrected_visibilities, gridding_kernels,gridding_kernel_supports ,corrected_vis_uvw_coords,visibilities, &config,prev_grid, output_grid);
+		end = clock();
+		grid_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
+	}
+    save_timings(NUM_SAMPLES, "grid_timings", grid_timings, GRID_SIZE, NUM_VISIBILITIES,0);
+
+    free(kernels);
+    free(kernel_supports);
+    free(vis_uvw_coords);
+    free(visibilities);
+    free(uv_grid);
+}
+void time_s2s_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
+  clock_t* degrid_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
+
+  clock_t start, end;
+  clock_t CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
+
+  int num_gridding_kernel = 0;
+  int num_degridding_kernel=0;
+  int total_gridding_kernel_samples=0;
+  int total_degridding_kernel_samples=0;
+  int oversampling_factor = 0;
+
+  PRECISION2* gridding_kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		gridding_kernels[i] = (float)rand()/(float)RAND_MAX;
+	}
+    int2* gridding_kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		gridding_kernel_supports[i] = (int)rand()/(int)RAND_MAX;
+	}
+          PRECISION2* degridding_kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		degridding_kernels[i] = (float)rand()/(float)RAND_MAX;
+	}
+    int2* degridding_kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		degridding_kernel_supports[i] = (int)rand()/(int)RAND_MAX;
+	}
+        PRECISION2* input_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		input_grid[i] = (float)rand()/(float)RAND_MAX;
+	}
+        PRECISION3* corrected_vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		corrected_vis_uvw_coords[i] = (float)rand()/(float)RAND_MAX;
+	}
+        int* num_corrected_visibilities = (int*)malloc(sizeof(int) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		num_corrected_visibilities[i] = (int)rand()/(int)RAND_MAX;
+	}
+        Config config;
+	config_struct_set_up(GRID_SIZE, 17, &config);
+	config.weak_source_percent_gc = 0;
+	config.weak_source_percent_img = 0;
+	config.psf_max_value = 1.f;
+
+  PRECISION2* output_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+  for(int i = 0; i < NUM_SAMPLES; ++i){
+		start = clock();
+		g2g_degridgrid(GRID_SIZE, NUM_VISIBILITIES, num_gridding_kernel,num_degridding_kernel, total_gridding_kernel_samples,total_gridding_kernel_samples,oversampling_factor, gridding_kernels,gridding_kernel_supports ,degridding_kernels, degridding_kernel_supports, input_grid,corrected_vis_uvw_coords,num_corrected_visibilities, &config,uv_grid, output_grid);
+		end = clock();
+		degrid_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
+	}
+        save_timings(NUM_SAMPLES, "degrid_timings", degrid_timings, GRID_SIZE, NUM_VISIBILITIES,0);
+
+        free(gridding_kernels);
+        free(gridding_kernel_supports);
+        free(degridding_kernels);
+        free(degridding_kernel_supports);
+        free(input_grid);
+        free(corrected_vis_uvw_coords);
+        free(num_corrected_visibilities);
 
 }

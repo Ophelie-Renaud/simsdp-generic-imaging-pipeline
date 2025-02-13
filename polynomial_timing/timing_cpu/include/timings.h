@@ -34,6 +34,9 @@ extern "C" {
 	void time_fftshift(int NUM_SAMPLES, int GRID_SIZE);
 	void time_fft(int NUM_SAMPLES, int GRID_SIZE);
 	void time_hogbom(int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES);
+	void time_grid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES);
+	void time_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES);
+	void time_s2s_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES);
 
 #ifdef __cplusplus
 }

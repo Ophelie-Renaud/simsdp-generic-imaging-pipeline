@@ -113,16 +113,41 @@ int main(int argc, char *argv[]) {
         int GRID_SIZE = atoi(argv[3]);
         time_fft(NUM_SAMPLES, GRID_SIZE);
     }else if (strcmp(function_name, "time_hogbom") == 0) {
-        printf("launch clean");
         if (argc != 5) {
             fprintf(stderr, "Usage: %s time_hogbom <NUM_SAMPLES> <GRID_SIZE> <NUM_MINOR_CYCLES>\n", argv[0]);
             return 1;
         }
-        printf("launch clean");
         int NUM_SAMPLES = atoi(argv[2]);
         int GRID_SIZE = atoi(argv[3]);
         int NUM_MINOR_CYCLES = atoi(argv[4]);
         time_hogbom(NUM_SAMPLES, GRID_SIZE, NUM_MINOR_CYCLES);
+    }else if (strcmp(function_name, "time_grid") == 0) {
+        if (argc != 5) {
+            fprintf(stderr, "Usage: %s time_grid <NUM_SAMPLES> <GRID_SIZE> <NUM_VISIBILITIES>\n", argv[0]);
+            return 1;
+        }
+        int NUM_SAMPLES = atoi(argv[2]);
+        int GRID_SIZE = atoi(argv[3]);
+        int NUM_VISIBILITIES = atoi(argv[4]);
+        time_grid(NUM_SAMPLES, GRID_SIZE, NUM_VISIBILITIES);
+    }else if (strcmp(function_name, "time_degrid") == 0) {
+        if (argc != 5) {
+            fprintf(stderr, "Usage: %s time_degrid <NUM_SAMPLES> <GRID_SIZE> <NUM_VISIBILITIES>\n", argv[0]);
+            return 1;
+        }
+        int NUM_SAMPLES = atoi(argv[2]);
+        int GRID_SIZE = atoi(argv[3]);
+        int NUM_VISIBILITIES = atoi(argv[4]);
+        time_degrid(NUM_SAMPLES, GRID_SIZE, NUM_VISIBILITIES);
+    }else if (strcmp(function_name, "time_s2s") == 0) {
+        if (argc != 5) {
+            fprintf(stderr, "Usage: %s time_degrid <NUM_SAMPLES> <GRID_SIZE> <NUM_VISIBILITIES>\n", argv[0]);
+            return 1;
+        }
+        int NUM_SAMPLES = atoi(argv[2]);
+        int GRID_SIZE = atoi(argv[3]);
+        int NUM_VISIBILITIES = atoi(argv[4]);
+        time_s2s_degrid(NUM_SAMPLES, GRID_SIZE, NUM_VISIBILITIES);
     }else{
         fprintf(stderr, "Error: Unknown function '%s'\n", function_name);
         return 1;
