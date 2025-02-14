@@ -12,7 +12,23 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <Python.h>
 
+/**
+ * Saves execution timings to a file.
+ *
+ * This function creates a file in the "to_average" directory with a name
+ * based on the `filename` parameter and the provided dimensions (param1, param2, param3).
+ * It writes the `timings` array as comma-separated values.
+ *
+ * Parameters:
+ * - size: number of elements in the `timings` array.
+ * - filename: base name of the file.
+ * - timings: array of execution times (in clock ticks).
+ * - param1, param2, param3: parameters included in the filename to contextualize the measurements.
+ *
+ * Example of generated file: to_average/my_file_64*128*32
+ */
 void save_timings(int size, char* filename, clock_t* timings, int param1, int param2,int param3){
 	FILE* file;
     char full_path[256];
@@ -32,6 +48,28 @@ for(int i = 0; i < size - 1; ++i){
 	fclose(file);
 }
 
+/**
+ * Expands or truncates an array to match a target size.
+ *
+ * If the target size is smaller than the original size, the array is truncated.
+ * If the target size is larger, the original array is repeated as many times as needed,
+ * with any remaining elements copied from the beginning of the original array.
+ *
+ * Parameters:
+ * - norig: number of elements in the original array.
+ * - ntarget: desired number of elements in the target array.
+ * - orig: pointer to the original array.
+ * - target: pointer to the target array.
+ * - size: size (in bytes) of each element.
+ *
+ * Behavior:
+ * - If `ntarget <= norig`, the first `ntarget` elements of `orig` are copied to `target`.
+ * - If `ntarget > norig`, the `orig` array is repeated until `target` is filled.
+ *
+ * Example:
+ * - Input: orig = [1, 2, 3], norig = 3, ntarget = 7
+ * - Output: target = [1, 2, 3, 1, 2, 3, 1]
+ */
 void set_target(int norig, int ntarget, void* orig, void* target, int size){
 	if(norig >= ntarget){
 		memcpy(target, orig, ntarget * size);
@@ -48,7 +86,15 @@ void set_target(int norig, int ntarget, void* orig, void* target, int size){
 	int offset = mult * norig;
 	memcpy(target + offset, orig, dif * size);
 }
+/*
+	============================================================================
+	The following functions measures and records the execution time the generic
+	imaging pipeline operations.
 
+	Timing is recorded in milliseconds and saved to the `to_average` directory
+	with names like "config_timings", "dgkernel_timings", etc.
+	============================================================================
+*/
 void time_constant_setups(int NUM_SAMPLES){
 	clock_t* config_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
 	clock_t* config_sequel_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
@@ -552,36 +598,55 @@ void time_grid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
 	clock_t start, end;
 	clock_t CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
 
-  int num_kernel = 0;
-  int total_kernel_samples = 0;
+  int num_kernel = 17;
+  int total_kernel_samples = 108800;
+int oversampling_factor = 16;
+int bypass = 0;
 
-  	PRECISION2* kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+  	int* maj_iter = (int*)malloc(sizeof(int) * GRID_SIZE * GRID_SIZE);
 	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		kernels[i] = (float)rand()/(float)RAND_MAX;
+		maj_iter[i] = (int)rand()/(int)RAND_MAX;
 	}
-    int2* kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
+    int* num_corrected_visibilities = (int*)malloc(sizeof(int) * GRID_SIZE * GRID_SIZE);
 	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		kernel_supports[i] = (int)rand()/(int)RAND_MAX;
+		num_corrected_visibilities[i] = (int)rand()/(int)RAND_MAX;
 	}
-    PRECISION3* vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		vis_uvw_coords[i] = (float)rand()/(float)RAND_MAX;
-	}
+         PRECISION2* kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+         for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+    kernels[i].x = (float)rand() / (float)RAND_MAX;
+    kernels[i].y = (float)rand() / (float)RAND_MAX;
+}
+             int2* kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
+	for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+    kernel_supports[i].x = (int)rand() / (int)RAND_MAX;
+    kernel_supports[i].y = (int)rand() / (int)RAND_MAX;
+}
+    PRECISION3* corrected_vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * GRID_SIZE * GRID_SIZE);
+	for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+    corrected_vis_uvw_coords[i].x = (float)rand() / (float)RAND_MAX;
+    corrected_vis_uvw_coords[i].y = (float)rand() / (float)RAND_MAX;
+    corrected_vis_uvw_coords[i].z = (float)rand() / (float)RAND_MAX;
+}
     PRECISION2* visibilities = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
 	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		visibilities[i] = (float)rand()/(float)RAND_MAX;
+		visibilities[i].x = (float)rand() / (float)RAND_MAX;
+    visibilities[i].y = (float)rand() / (float)RAND_MAX;
 	}
     Config config;
 	config_struct_set_up(GRID_SIZE, 17, &config);
 	config.weak_source_percent_gc = 0;
 	config.weak_source_percent_img = 0;
 	config.psf_max_value = 1.f;
-
-    PRECISION2* uv_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+	PRECISION2* prev_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+        for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		prev_grid[i].x = (float)rand() / (float)RAND_MAX;
+    prev_grid[i].y = (float)rand() / (float)RAND_MAX;
+	}
+    PRECISION2* output_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
 
   	for(int i = 0; i < NUM_SAMPLES; ++i){
 		start = clock();
-		std_gridding(GRID_SIZE, NUM_VISIBILITIES, num_kernel, total_kernel_samples,oversampling_factor,bypass, maj_iter,num_corrected_visibilities, gridding_kernels,gridding_kernel_supports ,corrected_vis_uvw_coords,visibilities, &config,prev_grid, output_grid);
+		std_gridding(GRID_SIZE, NUM_VISIBILITIES, num_kernel, total_kernel_samples,oversampling_factor,bypass, maj_iter,num_corrected_visibilities, kernels,kernel_supports ,corrected_vis_uvw_coords,visibilities, &config,prev_grid, output_grid);
 		end = clock();
 		grid_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
@@ -589,9 +654,11 @@ void time_grid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
 
     free(kernels);
     free(kernel_supports);
-    free(vis_uvw_coords);
+    free(corrected_vis_uvw_coords);
     free(visibilities);
-    free(uv_grid);
+    free(prev_grid);
+    free(output_grid);
+	free(grid_timings);
 }
 void time_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
   	clock_t* grid_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
@@ -599,24 +666,35 @@ void time_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
 	clock_t start, end;
 	clock_t CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
 
-  int num_kernel = 0;
-  int total_kernel_samples = 0;
+  int num_kernel = 17;
+  int total_kernel_samples = 108800;
+  int oversampling_factor=16;
 
-  	PRECISION2* kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+  	      PRECISION2* kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+         for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+    kernels[i].x = (float)rand() / (float)RAND_MAX;
+    kernels[i].y = (float)rand() / (float)RAND_MAX;
+}
+             int2* kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
+	for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+    kernel_supports[i].x = (int)rand() / (int)RAND_MAX;
+    kernel_supports[i].y = (int)rand() / (int)RAND_MAX;
+}
+
+PRECISION2* input_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+         for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+    input_grid[i].x = (float)rand() / (float)RAND_MAX;
+    input_grid[i].y = (float)rand() / (float)RAND_MAX;
+}
+        PRECISION3* corrected_vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * GRID_SIZE * GRID_SIZE);
+	for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+    corrected_vis_uvw_coords[i].x = (float)rand() / (float)RAND_MAX;
+    corrected_vis_uvw_coords[i].y = (float)rand() / (float)RAND_MAX;
+    corrected_vis_uvw_coords[i].z = (float)rand() / (float)RAND_MAX;
+}
+    int* num_corrected_visibilities = (int*)malloc(sizeof(int) * GRID_SIZE * GRID_SIZE);
 	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		kernels[i] = (float)rand()/(float)RAND_MAX;
-	}
-    int2* kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		kernel_supports[i] = (int)rand()/(int)RAND_MAX;
-	}
-    PRECISION3* vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		vis_uvw_coords[i] = (float)rand()/(float)RAND_MAX;
-	}
-    PRECISION2* visibilities = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		visibilities[i] = (float)rand()/(float)RAND_MAX;
+		num_corrected_visibilities[i] = (int)rand()/(int)RAND_MAX;
 	}
     Config config;
 	config_struct_set_up(GRID_SIZE, 17, &config);
@@ -624,21 +702,23 @@ void time_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
 	config.weak_source_percent_img = 0;
 	config.psf_max_value = 1.f;
 
-    PRECISION2* uv_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+    PRECISION2* output_visibilities = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
 
   	for(int i = 0; i < NUM_SAMPLES; ++i){
 		start = clock();
-		std_degridding(GRID_SIZE, NUM_VISIBILITIES, num_kernel, total_kernel_samples,oversampling_factor,bypass, maj_iter,num_corrected_visibilities, gridding_kernels,gridding_kernel_supports ,corrected_vis_uvw_coords,visibilities, &config,prev_grid, output_grid);
+		std_degridding(GRID_SIZE, NUM_VISIBILITIES, num_kernel, total_kernel_samples,oversampling_factor, kernels, kernel_supports, input_grid,corrected_vis_uvw_coords, num_corrected_visibilities, &config, output_visibilities);
 		end = clock();
 		grid_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
-    save_timings(NUM_SAMPLES, "grid_timings", grid_timings, GRID_SIZE, NUM_VISIBILITIES,0);
+    save_timings(NUM_SAMPLES, "degrid_timings", grid_timings, GRID_SIZE, NUM_VISIBILITIES,0);
 
     free(kernels);
     free(kernel_supports);
-    free(vis_uvw_coords);
-    free(visibilities);
-    free(uv_grid);
+    free(input_grid);
+    free(corrected_vis_uvw_coords);
+    free(num_corrected_visibilities);
+    free(output_visibilities);
+free(grid_timings);
 }
 void time_s2s_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
   clock_t* degrid_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
@@ -646,35 +726,42 @@ void time_s2s_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
   clock_t start, end;
   clock_t CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
 
-  int num_gridding_kernel = 0;
-  int num_degridding_kernel=0;
-  int total_gridding_kernel_samples=0;
-  int total_degridding_kernel_samples=0;
+  int num_gridding_kernel = 17;
+  int num_degridding_kernel=17;
+  int total_gridding_kernel_samples=108800;
+  int total_degridding_kernel_samples=108800;
   int oversampling_factor = 0;
 
   PRECISION2* gridding_kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
 	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		gridding_kernels[i] = (float)rand()/(float)RAND_MAX;
+		gridding_kernels[i].x = (float)rand() / (float)RAND_MAX;
+    gridding_kernels[i].y = (float)rand() / (float)RAND_MAX;
 	}
     int2* gridding_kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
 	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		gridding_kernel_supports[i] = (int)rand()/(int)RAND_MAX;
+		gridding_kernel_supports[i].x = (int)rand() / (int)RAND_MAX;
+    gridding_kernel_supports[i].y = (int)rand() / (int)RAND_MAX;
 	}
           PRECISION2* degridding_kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
 	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		degridding_kernels[i] = (float)rand()/(float)RAND_MAX;
+		degridding_kernels[i].x = (float)rand() / (float)RAND_MAX;
+    degridding_kernels[i].y = (float)rand() / (float)RAND_MAX;
 	}
     int2* degridding_kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
 	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		degridding_kernel_supports[i] = (int)rand()/(int)RAND_MAX;
+		degridding_kernel_supports[i].x = (int)rand() / (int)RAND_MAX;
+    degridding_kernel_supports[i].y = (int)rand() / (int)RAND_MAX;
 	}
         PRECISION2* input_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
 	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		input_grid[i] = (float)rand()/(float)RAND_MAX;
+		input_grid[i].x = (float)rand() / (float)RAND_MAX;
+    input_grid[i].y = (float)rand() / (float)RAND_MAX;
 	}
         PRECISION3* corrected_vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * GRID_SIZE * GRID_SIZE);
 	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		corrected_vis_uvw_coords[i] = (float)rand()/(float)RAND_MAX;
+		corrected_vis_uvw_coords[i].x = (float)rand() / (float)RAND_MAX;
+    corrected_vis_uvw_coords[i].y = (float)rand() / (float)RAND_MAX;
+    corrected_vis_uvw_coords[i].z = (float)rand() / (float)RAND_MAX;
 	}
         int* num_corrected_visibilities = (int*)malloc(sizeof(int) * GRID_SIZE * GRID_SIZE);
 	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
@@ -689,11 +776,11 @@ void time_s2s_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
   PRECISION2* output_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
   for(int i = 0; i < NUM_SAMPLES; ++i){
 		start = clock();
-		g2g_degridgrid(GRID_SIZE, NUM_VISIBILITIES, num_gridding_kernel,num_degridding_kernel, total_gridding_kernel_samples,total_gridding_kernel_samples,oversampling_factor, gridding_kernels,gridding_kernel_supports ,degridding_kernels, degridding_kernel_supports, input_grid,corrected_vis_uvw_coords,num_corrected_visibilities, &config,uv_grid, output_grid);
+		g2g_degridgrid(GRID_SIZE, NUM_VISIBILITIES, num_gridding_kernel,num_degridding_kernel, total_gridding_kernel_samples,total_degridding_kernel_samples,oversampling_factor, gridding_kernels,gridding_kernel_supports ,degridding_kernels, degridding_kernel_supports, input_grid,corrected_vis_uvw_coords,num_corrected_visibilities, &config, output_grid);
 		end = clock();
 		degrid_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
-        save_timings(NUM_SAMPLES, "degrid_timings", degrid_timings, GRID_SIZE, NUM_VISIBILITIES,0);
+        save_timings(NUM_SAMPLES, "s2s_timings", degrid_timings, GRID_SIZE, NUM_VISIBILITIES,0);
 
         free(gridding_kernels);
         free(gridding_kernel_supports);
@@ -702,5 +789,54 @@ void time_s2s_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
         free(input_grid);
         free(corrected_vis_uvw_coords);
         free(num_corrected_visibilities);
+free(degrid_timings);
 
+}
+
+void time_s2s_degrid_python(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
+    // Initialiser l'interpréteur Python
+    Py_Initialize();
+
+    // Importer le module Python
+    PyObject *pName = PyUnicode_DecodeFSDefault("degrid_module");
+    PyObject *pModule = PyImport_Import(pName);
+    Py_DECREF(pName);
+
+    if (pModule != NULL) {
+        // Récupérer la fonction degrid
+        PyObject *pFunc = PyObject_GetAttrString(pModule, "degrid");
+
+        if (pFunc && PyCallable_Check(pFunc)) {
+            // Préparer les arguments
+            PyObject *pArgs = PyTuple_Pack(3,
+                PyLong_FromLong(NUM_SAMPLES),
+                PyLong_FromLong(GRID_SIZE),
+                PyLong_FromLong(NUM_VISIBILITIES)
+            );
+
+            // Appeler la fonction
+            PyObject *pValue = PyObject_CallObject(pFunc, pArgs);
+            Py_DECREF(pArgs);
+
+            if (pValue != NULL) {
+                long result = PyLong_AsLong(pValue);
+                printf("Resultat du degridding: %ld\n", result);
+                Py_DECREF(pValue);
+            } else {
+                PyErr_Print();
+                fprintf(stderr, "Appel de la fonction Python echoue\n");
+            }
+        } else {
+            PyErr_Print();
+            fprintf(stderr, "La fonction degrid est introuvable\n");
+        }
+        Py_XDECREF(pFunc);
+        Py_DECREF(pModule);
+    } else {
+        PyErr_Print();
+        fprintf(stderr, "Le module Python n'a pas pu etre charge\n");
+    }
+
+    // Fermer l'interpréteur Python
+    Py_Finalize();
 }

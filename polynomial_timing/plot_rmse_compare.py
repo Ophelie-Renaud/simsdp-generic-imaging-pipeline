@@ -12,7 +12,7 @@ my_rmse = [0.26, 58, 10, 10, None, 0.01, 0.01, 0.01, 0.01, None, 10, 0.01, 0.01,
 # Valeurs moyennes mesurées
 average_measure_wang = [42, 9990, 53963, 22174, 58, 459, 204, 272, 1636, 53, 2890, 211, 0, 3961, 5794, 13, 12223]
 
-average_measure_us = [42, 9990, 53963, 22174, 58, 459, 204, 272, 1636, 53, 2890, 211, 0, 3961, 5794, 13, 12223]
+average_measure_us = [420, 99900, 539630, 221740, 580, 4590, 2040, 2720, 16360, 530, 28900, 2110, 0, 39610, 57940, 130, 122230]
 
 # Filtrer les valeurs valides
 indices = [i for i, rmse in enumerate(sota_rmse) if rmse is not None]

@@ -141,7 +141,7 @@ int main(int argc, char *argv[]) {
         time_degrid(NUM_SAMPLES, GRID_SIZE, NUM_VISIBILITIES);
     }else if (strcmp(function_name, "time_s2s") == 0) {
         if (argc != 5) {
-            fprintf(stderr, "Usage: %s time_degrid <NUM_SAMPLES> <GRID_SIZE> <NUM_VISIBILITIES>\n", argv[0]);
+            fprintf(stderr, "Usage: %s time_s2s <NUM_SAMPLES> <GRID_SIZE> <NUM_VISIBILITIES>\n", argv[0]);
             return 1;
         }
         int NUM_SAMPLES = atoi(argv[2]);
