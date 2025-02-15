@@ -80,6 +80,7 @@ cd simsdp-generic-imaging-pipeline
 ### Polynomial regression for static timing estimation
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+
 This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in **/averages** :file_folder:) and compute fitting function for each actor. The original method was setting up by Sunrise Wang and consist in a manual method evaluating few samples of data (details of the method are available in the [wiki](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/wikis/pages)), however once benchmark is set up additional instruction can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) :file_folder: section **SOTA**. The proposed automated method extending Sunrise\'s work can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) :file_folder: section **Proposed method**.  
 </details>
 
@@ -87,6 +88,7 @@ This section consist in setting up a method to define actor timings with a fitti
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+
 The SimSDP consist in 3 main steps:
 
 - **Node-level partitioning**: Divide the dataflow graph into subgraph, each associated to an architecture node.
