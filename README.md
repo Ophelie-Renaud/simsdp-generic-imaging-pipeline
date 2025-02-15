@@ -71,48 +71,64 @@ This repository contains six main directories, categorized by the number of freq
 
 ## Getting Started
 
-1. Clone the repository:
-   ```bash
-   git clone git@gitlab-research.centralesupelec.fr:dark-era/simsdp-generic-imaging-pipeline.git
-   cd simsdp-generic-imaging-pipeline
+Clone the repository:
+```bash
+git clone git@gitlab-research.centralesupelec.fr:dark-era/simsdp-generic-imaging-pipeline.git
+cd simsdp-generic-imaging-pipeline
+```
 
-2. Launch **PREESM** and open folders from **PREESM**: File>open project from file system> browse `simsdp_g2g_imaging_pipeline` folder.
-
-### Parameterized timing estimation
+### Polynomial regression for static timing estimation
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in /averages folder) and compute fitting function for each actor. The original method was setting up by Sunrise Wang and consist in a manual method evaluating few samples of data (details of the method are available in the [wiki](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/wikis/pages), however once benchmark is set up additional instruction can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) folder. The proposed automated method extending Sunrise\'s work can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) folder.  
+This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in **/averages** :file_folder:) and compute fitting function for each actor. The original method was setting up by Sunrise Wang and consist in a manual method evaluating few samples of data (details of the method are available in the [wiki](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/wikis/pages)), however once benchmark is set up additional instruction can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) :file_folder: section **SOTA**. The proposed automated method extending Sunrise\'s work can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) :file_folder: section **Proposed method**.  
 </details>
 
 ### Run SimSDP on a defined HPC architecture
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+The SimSDP consist in 3 main steps:
+
+- **Node-level partitioning**: Divide the dataflow graph into subgraph, each associated to an architecture node.
+- **Thread-level partitioning**: For each subgraph allocate resources on an architecture node.
+- **Simulation**: Simulate the intra- and inter- architecture node behavior.
+
+
 SimSDP has been [is going to be] updated in order to manage several partitioning mode.
 
-- Manual mode (this project): One subgraph on the topgraph is associated to a node architecture.
-- Random mode: The whole graph is partitioned among the available node and distributed in random-workload.
-- Balanced workload mode (the original method, for more detail see [wiki](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/wikis/pages)): The whole graph is partitioned among the available node and distributed in balanced-workload.
 
-[ToDo] setting up the manual mode.
-</details>
+- <u>**Manual mode** (this project): One subgraph on the topgraph is associated to a node architecture</u>.
+- **Random mode**: The whole graph is partitioned among the available node and distributed in random-workload.
+- **Balanced workload mode** (the original method, for more detail see [wiki](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/wikis/pages)): The whole graph is partitioned among the available node and distributed in balanced-workload.
 
-### Run SimSDP on a defined range of architectures
-<details>
-    <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+#### Simulating on <u>multicore</u> & multinode architecture
 
-1. Add a SimSDP_moldable.csv in the **Archi** folder  which should look something like this:
+Setting up the manual mode: open preesm projects > `workflows/NodePartitioning.worflow` > select the `NodePartitioner` task > `properties` > `Partitioning mode` :arrow_right: `manual`.
 
- | Parameters       | min        | max        | step       |
-   | ---------------- | ---------- | ---------- | ---------- |
-   | number of nodes  | 1          | 6          | 1          |
-   | number of cores  | 1          | 6          | 1          |
-   | core frequency   | 1          | 1          | 1          |
-   | network topology | 1          | 4          | 1          |
-   | node memory      | 1000000000 | 1000000000 | 1000000000 |
+##### Single node simulation
 
-2. Run SimSDP: Right-click on the workflow “/Workflows/**hypervisor_dse**.workflow” and select “Preesm > Run Workflow”, In the scenario selection wizard, select “/Scenarios/init_**.scenario
-3. Analyse the simulation with the`jupyter notebook` .
+1. Launch **PREESM** and open defined preesm projects: `File` > `open project from file system` > browse: `simsdp_g2g_imaging_pipeline` folder.
+
+2. Run simulation: `Workflows/codegen.worflow` > right click > `Preesm` > `run workflow` > browse: `1` or `4core.scenario`.
+
+   During its compilation :hourglass:, the workflow will log information into the Console of Preesm. When running a workflow, you should always check this console for warnings and errors (or any other useful information).
+
+   The C code generated by the workflow is contained in the **/Code/generated/** directory. 
+
+3. Result :bar_chart: : A Gantt chart is generated.
+
+##### multi node simulation
+
+1. Launch **PREESM** and open defined preesm projects: `File `> `open project from file system` > browse: `simsdp_g2g_imaging_pipeline_nfreq` folder.
+
+2. Run simulation: `Workflows/codegen.worflow` > right click > `Preesm` > `run workflow` > browse: `hypervisor.workflow` .
+
+   During its compilation :hourglass:, the workflow will log information into the   Console of Preesm. When running a workflow, you should always check this console for warnings and errors (or any other useful information).
+
+   Additionnaly, the workflow execution generates intermediary dataflow graphs that can be found in the **/Algo/generated/** directory. The C code generated by the workflow is contained in the **/Code/generated/** directory. The simulated data are stored in the **/Simulation** directory.
+
+3. Result :bar_chart: : A python notebook is provided in the SimSDP project to analyse the simulator generated files: Launch `jupyter notebook` and open *SimSDPproject/SimulationAnalysis.ipynb*. Make sure that the  CSVs are in the reading path. Load each code to display the trends with  your simulated data.
+
 </details>
 
 ### Run the generated code

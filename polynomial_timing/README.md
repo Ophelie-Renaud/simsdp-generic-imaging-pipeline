@@ -9,11 +9,10 @@ The proposed method consist in two automated steps:
 
 ![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/pic/poly_fit.png)
 
-## Run the original method [*Generic imaging pipeline*](#ref)
+## SOTA [*S. Wang, et al*](#ref)
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-
 All the steps are detail on the main readme and you have to use this command for each averages/timing files:
 Considering that computation execution time have been manually processed and stored in the **average/** folder then run the following command:
 
@@ -64,22 +63,19 @@ Considering that computation execution time have been manually processed and sto
 The RMSE alone does not allow conclusions to be drawn about the model's performance, but it does provide some insights. The fewer parameters required for the calculations, the simpler the model, the more reliable the adjustment function.
 Calculations depending on 2 parameters are the most difficult to model, 2-dimensional polynomials with a degree of 2 are not reliable enough to model their calculation time. Hence the need to evaluate several possible fitting functions.
 
+<!--`python plot_and_fit_averages.py averages/degrid.csv 2 1 8 4`-->
 
+<!--If you want to use the same command for the automated generated files there is a bug that you can bypass inserting :-->
 
----
-
-`python plot_and_fit_averages.py averages/degrid.csv 2 1 8 4`
-
-If you want to use the same command for the automated generated files there is a bug that you can bypass inserting :
-```python
+<!--
 def load_data_and_axis(filename, num_axis):
 	result = numpy.genfromtxt(filename, delimiter=",")
 	result = result[:-1] #<-- this line 
-```
+-->
 
 </details>
 
-## Run the automatic method for CPU timing (on your laptop)
+## Proposed method (automated polynomial regression with RMSE as optimization criteria) - on your laptop
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
@@ -96,17 +92,19 @@ Run: `python best_polynomials.py`
 
 This will compute polynomials from the /average folder and save the polynomial providing the best RMSE in the /polynimials_fits folder. 
 
-Here are the result comparing the RMSE between measured values and model result (the manual model vs. our proposed model) for each computation:
-
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/pic/comparaison_rmse.png)
-
 > [!NOTE]
 >
 > The process is the same for GPU from the **timing_gpu/** folder if your laptop is equipped with NVIDIA GPU.
 
 </details>
 
-## Run the automatic method for GPU timing (on remote cluster)
+Here are the result comparing the RMSE between measured values and model result (the manual model vs. our proposed model) for each computation:
+
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/polynomial_timing/pic/comparaison_rmse.png)
+
+The average measured value are here just to put RMSE into perspective. Our average measured value are greater than the SOTA since we browse larger range of configuration. Our proposed method allow equals RMSE on simple computation (computation with 1 parameter and best polynomial is linear (deg = 1)) and lower RMSE on complex computation since we browse several polynomials and the degree of polynomial is greater because our samples are larger. However comparing RMSE on the training measures is not enough to evaluate the performance of our model, to do so we should compare the simulated latency (where computation timing is the fitting function) to the measured latency running the full pipeline.
+
+## Proposed method (automated polynomial regression with RMSE as optimization criteria) - on remote cluster
 
 [On going work] For sure like me you don't have NVIDIA GPU on your laptop. First of all: shame on us. Second of all here are how I obtain my result with the on Grid5000 cluster and on Ruche Mesocentre:
 
@@ -224,5 +222,5 @@ sbatch job_timing.sh
 
 ## References
 
-<a id="ref"></a> [Generic imaging pipeline](https://hal.science/hal-04361151/file/paper_dasip24_5_wang_updated-2.pdf): S. Wang, N. Gac, H. Miomandre, J.-F. Nezan, K. Desnos, F. Orieux « An Initial Framework for Prototyping Radio-Interferometric Imaging Pipelines».
+<a id="ref"></a> [Manual regression & 1 node generic imaging pipeline](https://hal.science/hal-04361151/file/paper_dasip24_5_wang_updated-2.pdf): S. Wang, N. Gac, H. Miomandre, J.-F. Nezan, K. Desnos, F. Orieux « An Initial Framework for Prototyping Radio-Interferometric Imaging Pipelines».
 
