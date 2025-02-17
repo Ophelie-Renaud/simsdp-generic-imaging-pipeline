@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -DSKYTOSKY_DOUBLE -O3 -DNDEBUG -shared -Wl,-soname,libgpu_skytosky_double.so -o libgpu_skytosky_double.so CMakeFiles/gpu_skytosky_double.dir/__/gpu_skytosky_double_generated_interpolation_wrapper.cu.o  /usr/lib/x86_64-linux-gnu/libcudart_static.a -ldl /usr/lib/x86_64-linux-gnu/librt.a 

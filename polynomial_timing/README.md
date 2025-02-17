@@ -13,8 +13,10 @@ The proposed method consist in two automated steps:
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+
+
 All the steps are detail on the main readme and you have to use this command for each averages/timing files:
-Considering that computation execution time have been manually processed and stored in the **average/** folder then run the following command:
+Considering that computation execution time have been manually processed and stored in the  `average` (`cd polynomial_timing/sota/`) folder then run the following command:
 
 > [!TIP]
 >

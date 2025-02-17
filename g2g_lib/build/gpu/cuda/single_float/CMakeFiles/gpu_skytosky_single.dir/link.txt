@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -DSKYTOSKY_SINGLE -O3 -DNDEBUG -shared -Wl,-soname,libgpu_skytosky_single.so -o ../../../libgpu_skytosky_single.so CMakeFiles/gpu_skytosky_single.dir/__/gpu_skytosky_single_generated_interpolation_wrapper.cu.o  /usr/lib/x86_64-linux-gnu/libcudart_static.a -ldl /usr/lib/x86_64-linux-gnu/librt.a 

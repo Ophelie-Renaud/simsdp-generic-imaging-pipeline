@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -DSKYTOSKY_SINGLE -Wall -mavx -pthread -fopenmp -O3 --std=c++11 -O3 -DNDEBUG -shared -Wl,-soname,libcpu_skytosky_single.so -o ../../libcpu_skytosky_single.so CMakeFiles/cpu_skytosky_single.dir/__/interpolation_wrapper.cpp.o 

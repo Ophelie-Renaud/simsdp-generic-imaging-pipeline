@@ -12,8 +12,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <Python.h>
-
+#include "libcpu_skytosky_single.h"
 /**
  * Saves execution timings to a file.
  *
@@ -793,50 +792,9 @@ free(degrid_timings);
 
 }
 
-void time_s2s_degrid_python(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
-    // Initialiser l'interpréteur Python
-    Py_Initialize();
+void time_s2s_degrid_optim(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
 
-    // Importer le module Python
-    PyObject *pName = PyUnicode_DecodeFSDefault("degrid_module");
-    PyObject *pModule = PyImport_Import(pName);
-    Py_DECREF(pName);
+     interpolation_parameters params;
+         get_sky2sky_matrix_v0(&params);
 
-    if (pModule != NULL) {
-        // Récupérer la fonction degrid
-        PyObject *pFunc = PyObject_GetAttrString(pModule, "degrid");
-
-        if (pFunc && PyCallable_Check(pFunc)) {
-            // Préparer les arguments
-            PyObject *pArgs = PyTuple_Pack(3,
-                PyLong_FromLong(NUM_SAMPLES),
-                PyLong_FromLong(GRID_SIZE),
-                PyLong_FromLong(NUM_VISIBILITIES)
-            );
-
-            // Appeler la fonction
-            PyObject *pValue = PyObject_CallObject(pFunc, pArgs);
-            Py_DECREF(pArgs);
-
-            if (pValue != NULL) {
-                long result = PyLong_AsLong(pValue);
-                printf("Resultat du degridding: %ld\n", result);
-                Py_DECREF(pValue);
-            } else {
-                PyErr_Print();
-                fprintf(stderr, "Appel de la fonction Python echoue\n");
-            }
-        } else {
-            PyErr_Print();
-            fprintf(stderr, "La fonction degrid est introuvable\n");
-        }
-        Py_XDECREF(pFunc);
-        Py_DECREF(pModule);
-    } else {
-        PyErr_Print();
-        fprintf(stderr, "Le module Python n'a pas pu etre charge\n");
-    }
-
-    // Fermer l'interpréteur Python
-    Py_Finalize();
 }

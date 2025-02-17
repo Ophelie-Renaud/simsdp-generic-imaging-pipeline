@@ -76,6 +76,7 @@ Clone the repository:
 git clone git@gitlab-research.centralesupelec.fr:dark-era/simsdp-generic-imaging-pipeline.git
 cd simsdp-generic-imaging-pipeline
 ```
+---
 
 ### Polynomial regression for static timing estimation
 <details>
@@ -84,7 +85,52 @@ cd simsdp-generic-imaging-pipeline
 This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in **/averages** :file_folder:) and compute fitting function for each actor. The original method was setting up by Sunrise Wang and consist in a manual method evaluating few samples of data (details of the method are available in the [wiki](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/wikis/pages)), however once benchmark is set up additional instruction can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) :file_folder: section **SOTA**. The proposed automated method extending Sunrise\'s work can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) :file_folder: section **Proposed method**.  
 </details>
 
-### Run SimSDP on a defined HPC architecture
+---
+
+### Optimized G2G integration
+<details>
+    <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+
+1. generate the *.so librarie: `cd g2g_lib` > `cmake .` > `make`, the lib.so will be built in **build** :file_folder:.
+
+2. create `libcpu_skytosky_single.h`:
+```c
+#ifndef LIBCPU_SKYTOSKY_SINGLE_H
+#define LIBCPU_SKYTOSKY_SINGLE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// Déclarations des fonctions exportées
+void degridding_quad_pola(void);
+void dgg_init_s2s(void);
+void free_params(void);
+void gridding_psf(void);
+void gridding_quad_pola(void);
+void init(void);
+void s2s_quad_pola(void);
+void s2s_single_pola(void);
+void get_sky2sky_matrix_v0(struct interpolation_parameters* params);
+void get_sky2sky_matrix_v1(struct interpolation_parameters* params);
+void get_sky2sky_matrix_v3(struct interpolation_parameters* params);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // LIBCPU_SKYTOSKY_SINGLE_H
+```
+3. include header: `#include "libcpu_skytosky_single.h"`.
+
+4. compile with the lib: `gcc -o exe main.c -libcpu_skytosky_single.so -lcpu_skytosky_single -libcpu_skytosky_single.h`.
+
+   > This is how optimized G2G has been include in our computation set.
+</details>
+
+---
+
+### Run SimSDP on a simulated HPC architecture
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
@@ -132,6 +178,8 @@ Setting up the manual mode: open preesm projects > `workflows/NodePartitioning.w
 3. Result :bar_chart: : A python notebook is provided in the SimSDP project to analyse the simulator generated files: Launch `jupyter notebook` and open *SimSDPproject/SimulationAnalysis.ipynb*. Make sure that the  CSVs are in the reading path. Load each code to display the trends with  your simulated data.
 
 </details>
+
+---
 
 ### Run the generated code
 <details>
@@ -196,6 +244,8 @@ To reveal the contrasts:
     
 </details>
 
+---
+
 ## Experimental results
 
 <details>
@@ -254,7 +304,9 @@ publisher="Springer Nature Switzerland",
 address="Cham",
 pages="56--67"
 }
+```
 
+```plaintext
 # This publication for the design space exploration method
 @inproceedings{renaud:hal-04608249,
   TITLE = {{Multicore and Network Topology Codesign for Pareto-Optimal Multinode Architecture}},
@@ -273,8 +325,13 @@ pages="56--67"
   HAL_ID = {hal-04608249},
   HAL_VERSION = {v1},
 }
+```
 
+```plaintext
 # Soon the SimSDP resource allocation method
+```
+
+```plaintext
 # Soon the SimSDP proof of concept on HPC system with automated fitting function
 ```
 
