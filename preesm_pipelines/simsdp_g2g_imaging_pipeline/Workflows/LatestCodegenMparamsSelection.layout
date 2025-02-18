@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+   <vertices>
+      <vertex id="scenario" x="57" y="325"/>
+      <vertex id="Scheduling" x="597" y="155"/>
+      <vertex id="MEG Builder" x="793" y="133"/>
+      <vertex id="Memory Allocation" x="1415" y="371"/>
+      <vertex id="Code Generation" x="1623" y="438"/>
+      <vertex id="pisdf-srdag" x="425" y="191"/>
+      <vertex id="Memory Bounds Estimator" x="973" y="256"/>
+      <vertex id="Gantt Exporter" x="793" y="277"/>
+      <vertex id="Mparams selection" x="219" y="168"/>
+      <vertex id="Param Export" x="425" y="70"/>
+      <vertex id="Display Gantt" x="793" y="421"/>
+   </vertices>
+</layout>

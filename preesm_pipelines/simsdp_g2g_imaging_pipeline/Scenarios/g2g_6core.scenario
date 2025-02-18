@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <flags>
+        <sizesAreInBit/>
+    </flags>
+    <files>
+        <algorithm url="/simsdp_g2g_imaging_pipeline/Algo/g2g/generic_top_g2g_coarse_to_unroll.pi"/>
+        <architecture url="/simsdp_g2g_imaging_pipeline/Archi/6CoresX86.slam"/>
+        <codegenDirectory url="/simsdp_g2g_imaging_pipeline/Code/generated"/>
+    </files>
+    <constraints excelUrl="">
+        <constraintGroup>
+            <operator name="Core0"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/g2g_degridgrid"/>
+            <task name="generic_top/delta_psi/delta/grid"/>
+            <task name="generic_top/delta_psi/delta/subtract_image_space"/>
+            <task name="generic_top/delta_psi/delta/source_list_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/inv_conv_correction"/>
+            <task name="generic_top/delta_psi/delta/split_s2s"/>
+            <task name="generic_top/delta_psi/delta/split_uvgrid"/>
+            <task name="generic_top/delta_psi/delta/merge_estimate_grid"/>
+            <task name="generic_top/delta_psi/delta/merge_measurement_grid"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation"/>
+            <task name="generic_top/delta_psi/delta/fft_run/CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_real_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/apply_gains"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+        <constraintGroup>
+            <operator name="Core1"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/g2g_degridgrid"/>
+            <task name="generic_top/delta_psi/delta/grid"/>
+            <task name="generic_top/delta_psi/delta/subtract_image_space"/>
+            <task name="generic_top/delta_psi/delta/source_list_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/inv_conv_correction"/>
+            <task name="generic_top/delta_psi/delta/split_s2s"/>
+            <task name="generic_top/delta_psi/delta/split_uvgrid"/>
+            <task name="generic_top/delta_psi/delta/merge_estimate_grid"/>
+            <task name="generic_top/delta_psi/delta/merge_measurement_grid"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation"/>
+            <task name="generic_top/delta_psi/delta/fft_run/CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_real_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/apply_gains"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+        <constraintGroup>
+            <operator name="Core2"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/g2g_degridgrid"/>
+            <task name="generic_top/delta_psi/delta/grid"/>
+            <task name="generic_top/delta_psi/delta/subtract_image_space"/>
+            <task name="generic_top/delta_psi/delta/source_list_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/inv_conv_correction"/>
+            <task name="generic_top/delta_psi/delta/split_s2s"/>
+            <task name="generic_top/delta_psi/delta/split_uvgrid"/>
+            <task name="generic_top/delta_psi/delta/merge_estimate_grid"/>
+            <task name="generic_top/delta_psi/delta/merge_measurement_grid"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation"/>
+            <task name="generic_top/delta_psi/delta/fft_run/CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_real_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/apply_gains"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+        <constraintGroup>
+            <operator name="Core3"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/g2g_degridgrid"/>
+            <task name="generic_top/delta_psi/delta/grid"/>
+            <task name="generic_top/delta_psi/delta/subtract_image_space"/>
+            <task name="generic_top/delta_psi/delta/source_list_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/inv_conv_correction"/>
+            <task name="generic_top/delta_psi/delta/split_s2s"/>
+            <task name="generic_top/delta_psi/delta/split_uvgrid"/>
+            <task name="generic_top/delta_psi/delta/merge_estimate_grid"/>
+            <task name="generic_top/delta_psi/delta/merge_measurement_grid"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation"/>
+            <task name="generic_top/delta_psi/delta/fft_run/CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_real_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/apply_gains"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+        <constraintGroup>
+            <operator name="Core4"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/g2g_degridgrid"/>
+            <task name="generic_top/delta_psi/delta/grid"/>
+            <task name="generic_top/delta_psi/delta/subtract_image_space"/>
+            <task name="generic_top/delta_psi/delta/source_list_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/inv_conv_correction"/>
+            <task name="generic_top/delta_psi/delta/split_s2s"/>
+            <task name="generic_top/delta_psi/delta/split_uvgrid"/>
+            <task name="generic_top/delta_psi/delta/merge_estimate_grid"/>
+            <task name="generic_top/delta_psi/delta/merge_measurement_grid"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation"/>
+            <task name="generic_top/delta_psi/delta/fft_run/CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_real_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/apply_gains"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+        <constraintGroup>
+            <operator name="Core5"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/g2g_degridgrid"/>
+            <task name="generic_top/delta_psi/delta/grid"/>
+            <task name="generic_top/delta_psi/delta/subtract_image_space"/>
+            <task name="generic_top/delta_psi/delta/source_list_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/inv_conv_correction"/>
+            <task name="generic_top/delta_psi/delta/split_s2s"/>
+            <task name="generic_top/delta_psi/delta/split_uvgrid"/>
+            <task name="generic_top/delta_psi/delta/merge_estimate_grid"/>
+            <task name="generic_top/delta_psi/delta/merge_measurement_grid"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation"/>
+            <task name="generic_top/delta_psi/delta/fft_run/CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_real_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/apply_gains"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+    </constraints>
+    <timings excelUrl="/simsdp_g2g_imaging_pipeline/Scenarios/g2g_unroll.csv">
+        <memcpyspeed opname="x86_f1" setuptime="1" timeperunit="1.0E-8"/>
+        <memcpyspeed opname="x86" setuptime="1" timeperunit="1.0E-6"/>
+    </timings>
+    <simuParams>
+        <mainCore>Core0</mainCore>
+        <mainComNode>shared_mem</mainComNode>
+        <averageDataSize>1000</averageDataSize>
+        <dataTypes>
+            <dataType name="double" size="64"/>
+            <dataType name="Config" size="8"/>
+            <dataType name="PRECISION" size="8"/>
+            <dataType name="int2" size="8"/>
+            <dataType name="PRECISION2" size="8"/>
+            <dataType name="PRECISION3" size="8"/>
+            <dataType name="int" size="32"/>
+        </dataTypes>
+        <specialVertexOperators>
+            <specialVertexOperator path="Core0"/>
+            <specialVertexOperator path="Core0"/>
+            <specialVertexOperator path="Core1"/>
+            <specialVertexOperator path="Core2"/>
+            <specialVertexOperator path="Core3"/>
+            <specialVertexOperator path="Core4"/>
+            <specialVertexOperator path="Core5"/>
+        </specialVertexOperators>
+    </simuParams>
+    <parameterValues/>
+    <papifyConfigs xmlUrl=""/>
+    <energyConfigs xmlUrl="">
+        <performanceObjective objectiveEPS="0.0"/>
+        <peActorsEnergy/>
+    </energyConfigs>
+</scenario>
