@@ -54,27 +54,24 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim"
+CMAKE_SOURCE_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build"
+CMAKE_BINARY_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build"
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
 all: cpu/all
-all: gpu/cuda/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
 preinstall: cpu/preinstall
-preinstall: gpu/cuda/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: cpu/clean
-clean: gpu/cuda/clean
 .PHONY : clean
 
 #=============================================================================
@@ -126,68 +123,20 @@ cpu/single_float/clean: cpu/single_float/CMakeFiles/cpu_skytosky_single.dir/clea
 .PHONY : cpu/single_float/clean
 
 #=============================================================================
-# Directory level rules for directory gpu/cuda
-
-# Recursive "all" directory target.
-gpu/cuda/all: gpu/cuda/single_float/all
-gpu/cuda/all: gpu/cuda/double_float/all
-.PHONY : gpu/cuda/all
-
-# Recursive "preinstall" directory target.
-gpu/cuda/preinstall: gpu/cuda/single_float/preinstall
-gpu/cuda/preinstall: gpu/cuda/double_float/preinstall
-.PHONY : gpu/cuda/preinstall
-
-# Recursive "clean" directory target.
-gpu/cuda/clean: gpu/cuda/single_float/clean
-gpu/cuda/clean: gpu/cuda/double_float/clean
-.PHONY : gpu/cuda/clean
-
-#=============================================================================
-# Directory level rules for directory gpu/cuda/double_float
-
-# Recursive "all" directory target.
-gpu/cuda/double_float/all: gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/all
-.PHONY : gpu/cuda/double_float/all
-
-# Recursive "preinstall" directory target.
-gpu/cuda/double_float/preinstall:
-.PHONY : gpu/cuda/double_float/preinstall
-
-# Recursive "clean" directory target.
-gpu/cuda/double_float/clean: gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/clean
-.PHONY : gpu/cuda/double_float/clean
-
-#=============================================================================
-# Directory level rules for directory gpu/cuda/single_float
-
-# Recursive "all" directory target.
-gpu/cuda/single_float/all: gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/all
-.PHONY : gpu/cuda/single_float/all
-
-# Recursive "preinstall" directory target.
-gpu/cuda/single_float/preinstall:
-.PHONY : gpu/cuda/single_float/preinstall
-
-# Recursive "clean" directory target.
-gpu/cuda/single_float/clean: gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/clean
-.PHONY : gpu/cuda/single_float/clean
-
-#=============================================================================
 # Target rules for target cpu/single_float/CMakeFiles/cpu_skytosky_single.dir
 
 # All Build rule for target.
 cpu/single_float/CMakeFiles/cpu_skytosky_single.dir/all:
 	$(MAKE) $(MAKESILENT) -f cpu/single_float/CMakeFiles/cpu_skytosky_single.dir/build.make cpu/single_float/CMakeFiles/cpu_skytosky_single.dir/depend
 	$(MAKE) $(MAKESILENT) -f cpu/single_float/CMakeFiles/cpu_skytosky_single.dir/build.make cpu/single_float/CMakeFiles/cpu_skytosky_single.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" --progress-num=3,4 "Built target cpu_skytosky_single"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build/CMakeFiles" --progress-num=3,4 "Built target cpu_skytosky_single"
 .PHONY : cpu/single_float/CMakeFiles/cpu_skytosky_single.dir/all
 
 # Build rule for subdir invocation for target.
 cpu/single_float/CMakeFiles/cpu_skytosky_single.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build/CMakeFiles" 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cpu/single_float/CMakeFiles/cpu_skytosky_single.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build/CMakeFiles" 0
 .PHONY : cpu/single_float/CMakeFiles/cpu_skytosky_single.dir/rule
 
 # Convenience name for target.
@@ -206,14 +155,14 @@ cpu/single_float/CMakeFiles/cpu_skytosky_single.dir/clean:
 cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/all:
 	$(MAKE) $(MAKESILENT) -f cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/build.make cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/depend
 	$(MAKE) $(MAKESILENT) -f cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/build.make cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" --progress-num=1,2 "Built target cpu_skytosky_double"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build/CMakeFiles" --progress-num=1,2 "Built target cpu_skytosky_double"
 .PHONY : cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/all
 
 # Build rule for subdir invocation for target.
 cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build/CMakeFiles" 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build/CMakeFiles" 0
 .PHONY : cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/rule
 
 # Convenience name for target.
@@ -224,58 +173,6 @@ cpu_skytosky_double: cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/rule
 cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/clean:
 	$(MAKE) $(MAKESILENT) -f cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/build.make cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/clean
 .PHONY : cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/clean
-
-#=============================================================================
-# Target rules for target gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir
-
-# All Build rule for target.
-gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/all:
-	$(MAKE) $(MAKESILENT) -f gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/build.make gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/depend
-	$(MAKE) $(MAKESILENT) -f gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/build.make gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" --progress-num=7,8 "Built target gpu_skytosky_single"
-.PHONY : gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/all
-
-# Build rule for subdir invocation for target.
-gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" 0
-.PHONY : gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/rule
-
-# Convenience name for target.
-gpu_skytosky_single: gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/rule
-.PHONY : gpu_skytosky_single
-
-# clean rule for target.
-gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/clean:
-	$(MAKE) $(MAKESILENT) -f gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/build.make gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/clean
-.PHONY : gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/clean
-
-#=============================================================================
-# Target rules for target gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir
-
-# All Build rule for target.
-gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/all:
-	$(MAKE) $(MAKESILENT) -f gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/build.make gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/depend
-	$(MAKE) $(MAKESILENT) -f gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/build.make gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" --progress-num=5,6 "Built target gpu_skytosky_double"
-.PHONY : gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/all
-
-# Build rule for subdir invocation for target.
-gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" 0
-.PHONY : gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/rule
-
-# Convenience name for target.
-gpu_skytosky_double: gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/rule
-.PHONY : gpu_skytosky_double
-
-# clean rule for target.
-gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/clean:
-	$(MAKE) $(MAKESILENT) -f gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/build.make gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/clean
-.PHONY : gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

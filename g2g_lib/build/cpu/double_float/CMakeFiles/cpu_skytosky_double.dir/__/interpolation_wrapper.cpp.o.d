@@ -1,5 +1,5 @@
 cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/__/interpolation_wrapper.cpp.o: \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/cpu/interpolation_wrapper.cpp \
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/cpu/interpolation_wrapper.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/13/string \
  /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
@@ -119,8 +119,8 @@ cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/__/interpolation_wrapper.cpp
  /usr/include/c++/13/bits/hash_bytes.h \
  /usr/include/c++/13/bits/basic_string.tcc \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/omp.h \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/cpu/convolution_strategies.h \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/common/interpolation_parameters.h \
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/cpu/convolution_strategies.h \
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/common/interpolation_parameters.h \
  /usr/include/c++/13/complex /usr/include/c++/13/cmath \
  /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
@@ -169,10 +169,10 @@ cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/__/interpolation_wrapper.cpp
  /usr/include/c++/13/bits/ostream.tcc \
  /usr/include/c++/13/bits/istream.tcc \
  /usr/include/c++/13/bits/sstream.tcc \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/common/spec_types.h \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/cpu/../common/uvw_structure.h \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/cpu/../common/complex_structure.h \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/cpu/../common/polarization_vector.h \
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/common/spec_types.h \
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/cpu/../common/uvw_structure.h \
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/cpu/../common/complex_structure.h \
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/cpu/../common/polarization_vector.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/immintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/x86gprintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/ia32intrin.h \
@@ -268,8 +268,8 @@ cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/__/interpolation_wrapper.cpp
  /usr/lib/gcc/x86_64-linux-gnu/13/include/prfchwintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/keylockerintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/amxfp16intrin.h \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/cpu/polarization_strategies.h \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/cpu/../common/polarization_common.h \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/cpu/interpolation_template.h \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/cpu/../common/interpolation_wrapper.h \
- /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/degridgrid/master/degridgrid/moris/gridder/optim/cpu/sky2sky_matrix.h
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/cpu/polarization_strategies.h \
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/cpu/../common/polarization_common.h \
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/cpu/interpolation_template.h \
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/cpu/../common/interpolation_wrapper.h \
+ /home/orenaud/Documents/CENTRAL\ SUPELEC\ REPO/simsdp-generic-imaging-pipeline/g2g_lib/cpu/sky2sky_matrix.h

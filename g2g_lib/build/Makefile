@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim"
+CMAKE_SOURCE_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build"
+CMAKE_BINARY_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build//CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build/CMakeFiles" "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -142,32 +142,6 @@ cpu_skytosky_double/fast:
 	$(MAKE) $(MAKESILENT) -f cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/build.make cpu/double_float/CMakeFiles/cpu_skytosky_double.dir/build
 .PHONY : cpu_skytosky_double/fast
 
-#=============================================================================
-# Target rules for targets named gpu_skytosky_single
-
-# Build rule for target.
-gpu_skytosky_single: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gpu_skytosky_single
-.PHONY : gpu_skytosky_single
-
-# fast build rule for target.
-gpu_skytosky_single/fast:
-	$(MAKE) $(MAKESILENT) -f gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/build.make gpu/cuda/single_float/CMakeFiles/gpu_skytosky_single.dir/build
-.PHONY : gpu_skytosky_single/fast
-
-#=============================================================================
-# Target rules for targets named gpu_skytosky_double
-
-# Build rule for target.
-gpu_skytosky_double: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gpu_skytosky_double
-.PHONY : gpu_skytosky_double
-
-# fast build rule for target.
-gpu_skytosky_double/fast:
-	$(MAKE) $(MAKESILENT) -f gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/build.make gpu/cuda/double_float/CMakeFiles/gpu_skytosky_double.dir/build
-.PHONY : gpu_skytosky_double/fast
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -178,8 +152,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... cpu_skytosky_double"
 	@echo "... cpu_skytosky_single"
-	@echo "... gpu_skytosky_double"
-	@echo "... gpu_skytosky_single"
 .PHONY : help
 
 

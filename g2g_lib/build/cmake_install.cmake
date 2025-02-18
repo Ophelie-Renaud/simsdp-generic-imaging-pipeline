@@ -1,4 +1,4 @@
-# Install script for directory: /home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim
+# Install script for directory: /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "Release")
+    set(CMAKE_INSTALL_CONFIG_NAME "")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -44,8 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/cpu/cmake_install.cmake")
-  include("/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/gpu/cuda/cmake_install.cmake")
+  include("/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build/cpu/cmake_install.cmake")
 
 endif()
 
@@ -57,5 +56,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

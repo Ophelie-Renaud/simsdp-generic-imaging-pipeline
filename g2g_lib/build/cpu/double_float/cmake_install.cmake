@@ -1,4 +1,4 @@
-# Install script for directory: /home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/cpu/double_float
+# Install script for directory: /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/cpu/double_float
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

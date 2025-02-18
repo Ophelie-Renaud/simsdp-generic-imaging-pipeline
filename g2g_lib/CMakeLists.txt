@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(g2g CXX)
+project(g2g C)
 
 include_directories(common)
 
@@ -7,7 +7,7 @@ option(ENABLE_NATIVE_TUNING "Enable architecture-specific tuning" ON)
 option(ENABLE_FAST_MATH "Enable fast math optimizations" ON)
 
 if(ENABLE_NATIVE_TUNING)
-    set(TUNING_FLAGS "-march=native -mtune=native -std=c++11")
+    set(TUNING_FLAGS "-march=native -mtune=native -std=c11")
     message("Set -march and -mtune=native compiler flags")
 else()
     set(TUNING_FLAGS "")

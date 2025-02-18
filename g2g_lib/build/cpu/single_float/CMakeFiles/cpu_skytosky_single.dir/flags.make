@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -Dcpu_skytosky_single_EXPORTS
 
-CXX_INCLUDES = -I"/home/orenaud/Documents/CENTRAL SUPELEC REPO/degridgrid/master/degridgrid/moris/gridder/optim/common"
+CXX_INCLUDES = -I"/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/g2g_lib/common"
 
 CXX_FLAGS = -DSKYTOSKY_SINGLE -Wall -mavx -pthread -fopenmp -O3 --std=c++11 -O3 -DNDEBUG -fPIC
 
