@@ -356,6 +356,8 @@ To reveal the contrasts:
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 .
 
+How to retrieve the following results: `cd experimental_result_data/` > `python plot_simulation`.
+
 | Pipeline        | Architecture            | SimSDP      |
 | --------------- | ----------------------- | ----------- |
 | G2G - ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |

@@ -334,7 +334,7 @@
         <timing opname="x86" time="0.0000472 * GRID_SIZE * GRID_SIZE + 0.087" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/convolution_correction_run_estimation/execute_convolution_correction_actor"/>
         <timing opname="x86" time="0.0000472 * GRID_SIZE * GRID_SIZE + 0.087" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
         <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/token_sink"/>
-        <timing opname="x86" time="-733.859365 + 0.000554321295 * GRID_SIZE * GRID_SIZE - 0.0000000000323880936 * GRID_SIZE * GRID_SIZE * GRID_SIZE * GRID_SIZE + 4.06456629 * NUM_MINOR_CYCLES + 0.00000882088313 * NUM_MINOR_CYCLES * GRID_SIZE * GRID_SIZE + 0.0000286686141 * NUM_MINOR_CYCLES * NUM_MINOR_CYCLES" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/hogbom_clean"/>
+        <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/hogbom_clean"/>
         <timing opname="x86" time="0.0000028174 * GRID_SIZE * GRID_SIZE + 0.14" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/subtract_image_space"/>
         <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/split_uvgrid"/>
         <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/split_s2s"/>
