@@ -2,7 +2,7 @@
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns">
     <graph edgedefault="directed">
         <data key="name">generic_top</data>
-        <node expr="200.0" id="MAX_SOURCES" kind="param"/>
+        <node expr="NUM_MINOR_CYCLES" id="MAX_SOURCES" kind="param"/>
         <node expr="130816.0" id="NUM_BASELINES" kind="param"/>
         <node expr="17.0" id="NUM_GRIDDING_KERNELS" kind="param"/>
         <node expr="512.0" id="NUM_RECEIVERS" kind="param"/>
@@ -13,10 +13,10 @@
         <node expr="17.0" id="NUM_DEGRIDDING_KERNELS" kind="param"/>
         <node expr="108800.0" id="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="param"/>
         <node expr="16.0" id="OVERSAMPLING_FACTOR" kind="param"/>
-        <node expr="6.0" id="SLICES" kind="param"/>
-        <node expr="1024.0" id="GRID_SIZE" kind="moldable_param" moldable_expr="1024;2048"/>
-        <node expr="50;100;200;300;400" id="NUM_MINOR_CYCLES" kind="moldable_param" moldable_expr="50;100;200;300;400"/>
-        <node expr="3924480.0;2*3924480.0" id="NUM_VISIBILITIES" kind="moldable_param" moldable_expr="3924480.0;2*3924480.0"/>
+        <node expr="4.0" id="SLICES" kind="param"/>
+        <node expr="512;1024;1536;2048;2560" id="GRID_SIZE" kind="moldable_param" moldable_expr="512;1024;1536;2048;2560"/>
+        <node expr="50.0" id="NUM_MINOR_CYCLES" kind="moldable_param" moldable_expr="50; 100; 150; 200; 250"/>
+        <node expr="130816*10" id="NUM_VISIBILITIES" kind="moldable_param" moldable_expr="130816*10;130816*15;130816*20;130816*25;130816*30"/>
         <node id="iterator" kind="actor">
             <data key="graph_desc">Code/include/major_loop_actor.h</data>
             <loop name="iterator">
@@ -148,5 +148,6 @@
         <edge kind="dependency" source="OVERSAMPLING_FACTOR" target="delta_psi" targetport="OVERSAMPLING_FACTOR"/>
         <edge kind="dependency" source="SLICES" target="delta_psi" targetport="SLICES"/>
         <edge kind="dependency" source="NUM_MINOR_CYCLES" target="delta_psi" targetport="NUM_MINOR_CYCLES"/>
+        <edge kind="dependency" source="NUM_MINOR_CYCLES" target="MAX_SOURCES"/>
     </graph>
 </graphml>

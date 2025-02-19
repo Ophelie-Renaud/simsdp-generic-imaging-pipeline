@@ -77,7 +77,7 @@ def load_data_and_axis(filename, num_axis):
 
 </details>
 
-## Proposed method (automated polynomial regression with RMSE as optimization criteria) - on your laptop
+## Proposed method (automated polynomial regression with RMSE as optimization criteria) - on your laptop :computer:
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
@@ -94,9 +94,9 @@ Run: `python best_polynomials.py`
 
 This will compute polynomials from the /average folder and save the polynomial providing the best RMSE in the /polynimials_fits folder. 
 
-> [!NOTE]
->
-> The process is the same for GPU from the **timing_gpu/** folder if your laptop is equipped with NVIDIA GPU.
+| 📝 **Note**                                                   |
+| ------------------------------------------------------------ |
+| The process is the same for GPU from the 📁 `timing_gpu`  if your laptop is equipped with NVIDIA GPU. |
 
 </details>
 
@@ -108,7 +108,9 @@ The average measured value are here just to put RMSE into perspective. Our avera
 
 ## Proposed method (automated polynomial regression with RMSE as optimization criteria) - on remote cluster
 
-[On going work] For sure like me you don't have NVIDIA GPU on your laptop. First of all: shame on us. Second of all here are how I obtain my result with the on Grid5000 cluster and on Ruche Mesocentre:
+| 📝 **Note**                                                   |
+| ------------------------------------------------------------ |
+| The **ongoing work** gives an alternative to run the code on external resources. I m trying to exhibit how I obtain results on `Grid5000 cluster` and on `Ruche Mesocentre` 🗄️. |
 
 #### Grid5000 cluster
 

@@ -15,7 +15,7 @@
         <node defaultValue="16.0" id="OVERSAMPLING_FACTOR" kind="cfg_in_iface"/>
         <node defaultValue="4.0" id="SLICES" kind="cfg_in_iface"/>
         <node id="delta" kind="actor">
-            <data key="graph_desc">Algo/g2g/s2s_delta_no_loop.pi</data>
+            <data key="graph_desc">Algo/g2g/s2s_delta.pi</data>
             <port kind="cfg_input" name="NUM_GRIDDING_KERNELS"/>
             <port kind="cfg_input" name="TOTAL_GRIDDING_KERNEL_SAMPLES"/>
             <port kind="cfg_input" name="NUM_VISIBILITIES"/>

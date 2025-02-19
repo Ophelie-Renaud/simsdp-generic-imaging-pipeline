@@ -36,14 +36,6 @@ This repository contains six main directories, categorized by the number of freq
 ├── param_code/ # resulting parameterized dataflow code
 ```
 
-> [!NOTE]
->
-> The original Generic Imaging Pipeline has been formatted with the automatic cycle-unrolling integrated into PREESM to respect the dataflow paradigm in order to fit input requirement of the dataflow-based SimSDP framework.
-
-
-
----
-
 ## Key Features
 
 - **HPC Resource Allocation**:  
@@ -63,7 +55,11 @@ This repository contains six main directories, categorized by the number of freq
 ## Requirements
 
 - **PREESM** framework ([installation instructions](https://preesm.github.io/get/)).
-- SimSDP may not be full integrated in the last PREESM release, to access it clone the [Preesm - github repository](https://github.com/preesm/preesm/) and branch `clustering2`.
+
+ | 📝 **Note**                                                   |
+  | ------------------------------------------------------------ |
+  | SimSDP may not be full integrated in the last PREESM release, to access it clone the [Preesm - github repository](https://github.com/preesm/preesm/) and branch `clustering2`. This is on going to be fixed. |
+
 - Access to an HPC environment.
 
 ---
@@ -80,7 +76,14 @@ cd simsdp-generic-imaging-pipeline
 ### Polynomial regression for static timing estimation :file_folder: `polynomial_timing`
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-This section consist in setting up a method to define actor timings with a fitting function to facilitate algorithm comparison varying parameters. The method consist in building sampling (stored in **/averages** :file_folder:) and compute fitting function for each actor. The original method was setting up by Sunrise Wang and consist in a manual method evaluating few samples of data (details of the method are available in the [wiki](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/wikis/pages)), however once benchmark is set up additional instruction can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) :file_folder: section **SOTA**. The proposed automated method extending Sunrise\'s work can be found in [polynomials_timing](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/tree/main/polynomial_timing?ref_type=heads) :file_folder: section **Proposed method**.  
+.
+
+This section describes a method for defining actor timings using a fitting function to facilitate algorithm comparison across varying parameters. The method involves building a set of samples (stored in :file_folder:`averages`) and computing a fitting function with polynomial regression for each actor.
+
+The original method, developed by Sunrise Wang, is a manual approach that evaluates a limited number of data samples. Details of this method can be found on the :open_book: `wiki` page :page_facing_up: **Timing Modeling Manual Method**. Once the benchmark is set up, additional instructions are available in the :file_folder:`polynomials_timing` section under **SOTA**.
+
+The proposed automated method, which extends :page_facing_up: [S. Wang, et al.](https://hal.science/hal-04361151/file/paper_dasip24_5_wang_updated-2.pdf) work, is documented in the :file_folder:`polynomials_timing` section under **Proposed Method**.
+
 </details>
 
 ---
@@ -89,9 +92,16 @@ This section consist in setting up a method to define actor timings with a fitti
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 
+| 📝 **Note**                                                   |
+| ------------------------------------------------------------ |
+| The **ongoing work** consists in integrating the optimized G2G version into a dataflow actor. The current one is not optimized because ...<br /><br />The optimized version consists of C++ libraries from N. Monnier.<br /><br />The steps include: <br />✅ Build the library <br />✅ Integrate it into the project <br />⬜ Translate the original Python code into C++ <br />⬜ Encapsulate it into a dataflow actor |
+
+
+
 1. generate the *.so librarie: `cd g2g_lib` > `cmake .` > `make`, the lib.so will be built in **build** :file_folder:.
 
 2. create `libcpu_skytosky_single.h`:
+
 ```c
 #ifndef LIBCPU_SKYTOSKY_SINGLE_H
 #define LIBCPU_SKYTOSKY_SINGLE_H
@@ -133,50 +143,87 @@ void get_sky2sky_matrix_v3(struct interpolation_parameters* params);
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+    .
 
-The SimSDP consist in 3 main steps:
-
-- **Node-level partitioning**: Divide the dataflow graph into subgraph, each associated to an architecture node.
-- **Thread-level partitioning**: For each subgraph allocate resources on an architecture node.
-- **Simulation**: Simulate the intra- and inter- architecture node behavior.
+SimSDP consists of three main steps:
 
 
-SimSDP has been [is going to be] updated in order to manage several partitioning mode.
+- **Node-level partitioning**: Divides the dataflow graph into subgraphs, each assigned to an architecture node.
+- **Thread-level partitioning**: Allocates resources for each subgraph on an architecture node.
+- **Simulation**: Simulates both intra-node and inter-node behaviors.
 
+SimSDP **has been [or is going to be] updated** to support multiple partitioning modes:
 
-- <u>**Manual mode** (this project): One subgraph on the topgraph is associated to a node architecture</u>.
-- **Random mode**: The whole graph is partitioned among the available node and distributed in random-workload.
-- **Balanced workload mode** (the original method, for more detail see [wiki](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/wikis/pages)): The whole graph is partitioned among the available node and distributed in balanced-workload.
+- <u>**Manual mode** (this project)</u>: Manually constructed subgraphs in the top-level graph are automatically mapped to architecture nodes.
+- **Random mode**: The entire graph is partitioned among the available nodes and distributed with a random workload.
+- **Balanced workload mode** (the original method, for more details see :open_book: `wiki`): The entire graph is partitioned among the available nodes and distributed with a balanced workload.
 
-#### Simulating on <u>multicore</u> & multinode architecture
+#### Simulating on <u>Multicore</u> & Multinode Architectures
 
-Setting up the manual mode: open preesm projects > `workflows/NodePartitioning.worflow` > select the `NodePartitioner` task > `properties` > `Partitioning mode` :arrow_right: `manual`.
+##### Setup
 
-Dataflow pipelines are parameterized with moldable parameters (for detail see [A. Honorat, et al.]([honorat - moldable](https://hal.science/hal-03752645/file/dasip22.pdf))). This features allows to browse a range of parameter describing actors, simulate key metrics and provide DSE insights. The moldable parameters here are: `NUM_VIS` = {...}, `GRID_SIZE` = {50,100,200,300,400} , `NUM_MINOR_CYCLE` = {50,100,200,300,400}.
+To configure **manual mode**, follow these steps:
 
-##### Single node simulation
+1. Open **PREESM** projects.
+2. Navigate to `workflows/NodePartitioning.workflow`.
+3. Select the `NodePartitioner` task.
+4. Go to `Properties` > `Partitioning mode` :arrow_right: `manual`.
 
-1. Launch **PREESM** and open defined preesm projects: `File` > `open project from file system` > browse: `simsdp_g2g_imaging_pipeline` folder.
+Dataflow pipelines are parameterized with moldable parameters. *(For details, see :page_facing_up: [A. Honorat, et al.](https://hal.science/hal-03752645/file/dasip22.pdf).)* This feature allows for parameter exploration, key metric simulations, and design space exploration (DSE). The moldable parameters include:
 
-2. Run simulation: `Workflows/codegenMparmSelection.worflow` > right click > `Preesm` > `run workflow` > browse: `1` or `6core.scenario`.
+- `NUM_VIS` = {10× `NUM_BASELINES`; 15× `NUM_BASELINES`; 20× `NUM_BASELINES`; 25× `NUM_BASELINES`; 30× `NUM_BASELINES`}
+  *where `NUM_BASELINES` = `NANT` × (`NANT` - 1) / 2 = 130816 (since `NANT` = 512)*
+- `GRID_SIZE` = {512; 1024; 1536; 2048; 2560}
+- `NUM_MINOR_CYCLE` = {50; 100; 150; 200; 250}
 
-   During its compilation :hourglass:, the workflow will log information into the Console of Preesm. When running a workflow, you should always check this console for warnings and errors (or any other useful information).
+------
 
-3. Result :bar_chart: : The C code and the moldable parameter log generated by the workflow are contained in the **/Code/generated/** directory. 
+##### Single-Node Simulation
 
----
+1. Launch **PREESM** and open the required project:
 
-##### multi node simulation
+   - `File` > `Open Project from File System` > Browse to `simsdp_g2g_imaging_pipeline` folder.
 
-1. Launch **PREESM** and open defined preesm projects: `File `> `open project from file system` > browse: `simsdp_g2g_imaging_pipeline_nfreq` folder.
+2. Run the simulation:
 
-2. Run simulation: `Workflows/codegen.worflow` > right click > `Preesm` > `run workflow` > browse: `hypervisor.workflow` .
+   - Navigate to `Workflows/codegenMparmSelection.workflow`.
+   - Right-click > `Preesm` > `Run Workflow`.
+   - Select `1` or `6core.scenario`.
 
-   During its compilation :hourglass:, the workflow will log information into the   Console of Preesm. When running a workflow, you should always check this console for warnings and errors (or any other useful information).
+   :hourglass: During compilation, workflow logs will appear in the **Preesm Console**. Always check for warnings, errors, or any relevant information.
 
-3. Result :bar_chart: : The workflow execution generates intermediary dataflow graphs that can be found in the **/Algo/generated/** directory. The C code generated by the workflow is contained in the **/Code/generated/** directory. The simulated data are stored in the **/Simulation** directory.
+3. **Results** :bar_chart::
 
-4. Additionnaly, a python notebook is provided in the SimSDP project to analyse the simulator generated files: Launch `jupyter notebook` and open *SimSDPproject/SimulationAnalysis.ipynb*. Make sure that the  CSVs are in the reading path. Load each code to display the trends with  your simulated data.
+   - The generated **C code** and **moldable parameter logs** are located in the `/Code/generated/` directory.
+
+------
+
+##### Multi-Node Simulation
+
+1. Launch **PREESM** and open the required project:
+
+   - `File` > `Open Project from File System` > Browse to `simsdp_g2g_imaging_pipeline_nfreq` folder.
+
+2. Run the simulation:
+
+   - Navigate to `Workflows/codegen.workflow`.
+   - Right-click > `Preesm` > `Run Workflow`.
+   - Select `hypervisor.workflow`.
+
+   :hourglass: During compilation, workflow logs will appear in the **Preesm Console**. Always check for warnings, errors, or any relevant information.
+
+3. **Results** :bar_chart::
+
+   - **Intermediate dataflow graphs**: Located in `/Algo/generated/`.
+   - **Generated C code**: Found in `/Code/generated/`.
+   - **Simulated data**: Stored in the `/Simulation/` directory.
+
+4. **Further Analysis**:
+
+   - A **Python notebook** is provided for analyzing simulation results.
+   - Open `jupyter notebook` and load *SimSDPproject/SimulationAnalysis.ipynb*.
+   - Ensure the required **CSV files** are accessible in the reading path.
+   - Execute the notebook cells to visualize trends from the simulated data.
 
 </details>
 
@@ -226,6 +273,10 @@ check: python3 -c "import astropy; print(astropy.__version__)"
 ---
 
 ##### Automating generated code execution varying parameter
+
+| 📝 **Note**                                                   |
+| ------------------------------------------------------------ |
+| The **ongoing work** consists in scripting generated code execution varying parameter value (considering that the scheduling will not vary). the optimized G2G version into a dataflow actor. The current one is not optimized because ...<br /><br />The optimized version consists of C++ libraries from N. Monnier.<br /><br />The steps include: <br />✅ Provide a script to compile generated code and store result (execution time) in log files<br />✅ Identify the generated code change in order to pass argument to facilitate parameter variation <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (1 node) <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (6 nodes) |
 
 1. copy past generated code in folder `param_code`.
 2. Apply some change:
@@ -393,9 +444,9 @@ pages="56--67"
 # Soon the SimSDP proof of concept on HPC system with automated fitting function
 ```
 
-## Wiki
+## Wiki :open_book:
 
-For references and so on take a look on the [wiki](https://gitlab-research.centralesupelec.fr/dark-era/simsdp-generic-imaging-pipeline/-/wikis/pages).
+For references and so on take a look on the :open_book: `wiki`.
 
 ## Contact  
 

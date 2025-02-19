@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <key attr.name="parameters" for="graph" id="parameters"/>
+    <key attr.name="variables" for="graph" id="variables"/>
+    <key attr.name="arguments" for="node" id="arguments"/>
+    <key attr.name="name" attr.type="string" for="graph"/>
+    <key attr.name="graph_desc" attr.type="string" for="node"/>
+    <key attr.name="delay" attr.type="string" for="edge"/>
     <graph edgedefault="directed">
         <data key="name">s2s_delta</data>
-        <node defaultValue="17.0" id="NUM_GRIDDING_KERNELS" kind="cfg_in_iface"/>
-        <node defaultValue="108800.0" id="TOTAL_GRIDDING_KERNEL_SAMPLES" kind="cfg_in_iface"/>
-        <node defaultValue="3924480.0" id="NUM_VISIBILITIES" kind="cfg_in_iface"/>
-        <node defaultValue="512.0" id="NUM_RECEIVERS" kind="cfg_in_iface"/>
-        <node defaultValue="132816.0" id="NUM_BASELINES" kind="cfg_in_iface"/>
-        <node defaultValue="2458.0" id="GRID_SIZE" kind="cfg_in_iface"/>
-        <node defaultValue="200.0" id="MAX_SOURCES" kind="cfg_in_iface"/>
-        <node defaultValue="16.0" id="OVERSAMPLING_FACTOR" kind="cfg_in_iface"/>
-        <node defaultValue="17.0" id="NUM_DEGRIDDING_KERNELS" kind="cfg_in_iface"/>
-        <node defaultValue="108800.0" id="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="cfg_in_iface"/>
+        <node id="NUM_GRIDDING_KERNELS" kind="cfg_in_iface"/>
+        <node id="TOTAL_GRIDDING_KERNEL_SAMPLES" kind="cfg_in_iface"/>
+        <node id="NUM_VISIBILITIES" kind="cfg_in_iface"/>
+        <node id="NUM_RECEIVERS" kind="cfg_in_iface"/>
+        <node id="NUM_BASELINES" kind="cfg_in_iface"/>
+        <node id="GRID_SIZE" kind="cfg_in_iface"/>
+        <node id="MAX_SOURCES" kind="cfg_in_iface"/>
+        <node id="OVERSAMPLING_FACTOR" kind="cfg_in_iface"/>
+        <node id="NUM_DEGRIDDING_KERNELS" kind="cfg_in_iface"/>
+        <node id="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="cfg_in_iface"/>
         <node expr="0.0" id="PERFORM_SIMPLIFICATION" kind="param"/>
         <node defaultValue="4.0" id="SLICES" kind="cfg_in_iface"/>
         <node expr="NUM_VISIBILITIES/SLICES" id="VIS_PER_SLICE" kind="param"/>
         <node expr="0.0" id="BYPASS" kind="param"/>
-        <node expr="1.0" id="ONE" kind="param"/>
         <node id="delta_image" kind="snk">
             <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="delta_image"/>
         </node>
@@ -200,19 +205,18 @@
             <port kind="cfg_input" name="TOTAL_KERNEL_SAMPLES"/>
             <port kind="cfg_input" name="OVERSAMPLING_FACTOR"/>
             <port kind="cfg_input" name="BYPASS"/>
-            <port kind="cfg_input" name="ONE"/>
             <port annotation="READ_ONLY" expr="1.0" kind="input" name="num_corrected_visibilities"/>
             <port annotation="READ_ONLY" expr="TOTAL_KERNEL_SAMPLES" kind="input" name="kernels"/>
             <port annotation="READ_ONLY" expr="NUM_KERNELS" kind="input" name="kernel_supports"/>
             <port annotation="READ_ONLY" expr="NUM_VISIBILITIES" kind="input" name="corrected_vis_uvw_coords"/>
             <port annotation="READ_ONLY" expr="NUM_VISIBILITIES" kind="input" name="visibilities"/>
             <port annotation="READ_ONLY" expr="1.0" kind="input" name="config"/>
-            <port annotation="NONE" expr="ONE" kind="input" name="maj_iter"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="maj_iter"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="prev_grid"/>
             <port annotation="WRITE_ONLY" expr="GRID_SIZE*GRID_SIZE" kind="output" name="output_grid"/>
         </node>
         <node id="Broadcast_num_visibilities" kind="broadcast">
-            <port kind="cfg_input" name="ONE"/>
-            <port annotation="NONE" expr="ONE" kind="input" name="input"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="input"/>
             <port annotation="NONE" expr="1.0" kind="output" name="grid_measurement"/>
             <port annotation="NONE" expr="1.0" kind="output" name="g2g"/>
         </node>
@@ -361,11 +365,23 @@
             <port annotation="WRITE_ONLY" expr="GRID_SIZE*GRID_SIZE" kind="output" name="output_grid"/>
         </node>
         <node id="Broadcast_configs" kind="broadcast">
-            <port kind="cfg_input" name="ONE"/>
-            <port annotation="READ_ONLY" expr="ONE" kind="input" name="input"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="input"/>
             <port annotation="WRITE_ONLY" expr="1.0" kind="output" name="grid"/>
             <port annotation="WRITE_ONLY" expr="1.0" kind="output" name="g2g"/>
         </node>
+        <node id="Broadcast_gridded_measured" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="input"/>
+            <port annotation="NONE" expr="GRID_SIZE * GRID_SIZE" kind="output" name="merge"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="output" name="prev"/>
+        </node>
+        <node expr="GRID_SIZE*GRID_SIZE" getter="" id="Broadcast_gridded_measured_prev__grid_prev_grid" kind="delay" level="permanent" setter="">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="set"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="output" name="get"/>
+        </node>
+        <edge expr="GRID_SIZE*GRID_SIZE" kind="fifo" source="Broadcast_gridded_measured" sourceport="prev" target="grid" targetport="prev_grid" type="PRECISION2">
+            <data key="delay">Broadcast_gridded_measured_prev__grid_prev_grid</data>
+        </edge>
         <edge kind="fifo" source="Broadcast_config" sourceport="fft_run" target="fft_run" targetport="config" type="Config"/>
         <edge kind="fifo" source="Broadcast_config" sourceport="inverse_fft_run" target="inverse_fft_run_estimation" targetport="config" type="Config"/>
         <edge kind="fifo" source="Broadcast_image_estimate" sourceport="output" target="image_out" targetport="image_out" type="PRECISION"/>
@@ -422,7 +438,8 @@
         <edge kind="fifo" source="Broadcast_config" sourceport="split" target="split_s2s" targetport="config" type="Config"/>
         <edge kind="fifo" source="correct_to_finegrid" sourceport="num_output_visibilities" target="split_s2s" targetport="num_corrected_vis" type="int"/>
         <edge kind="fifo" source="split_s2s" sourceport="maj_iter_out" target="grid" targetport="maj_iter" type="int"/>
-        <edge kind="fifo" source="grid" sourceport="output_grid" target="merge_measurement_grid" targetport="grids" type="PRECISION2"/>
+        <edge kind="fifo" source="grid" sourceport="output_grid" target="Broadcast_gridded_measured" targetport="input" type="PRECISION2"/>
+        <edge kind="fifo" source="Broadcast_gridded_measured" sourceport="merge" target="merge_measurement_grid" targetport="grids" type="PRECISION2"/>
         <edge kind="fifo" source="cycle" sourceport="cycle" target="split_s2s" targetport="maj_iter" type="int"/>
         <edge kind="dependency" source="GRID_SIZE" target="inverse_fft_run_estimation" targetport="GRID_SIZE"/>
         <edge kind="dependency" source="GRID_SIZE" target="delta_image"/>
@@ -482,8 +499,7 @@
         <edge kind="dependency" source="VIS_PER_SLICE" target="Broadcast_corrected_viscoords" targetport="NUM_VISIBILITIES"/>
         <edge kind="dependency" source="GRID_SIZE" target="split_s2s" targetport="GRID_SIZE"/>
         <edge kind="dependency" source="BYPASS" target="grid" targetport="BYPASS"/>
-        <edge kind="dependency" source="ONE" target="Broadcast_num_visibilities" targetport="ONE"/>
-        <edge kind="dependency" source="ONE" target="Broadcast_configs" targetport="ONE"/>
-        <edge kind="dependency" source="ONE" target="grid" targetport="ONE"/>
+        <edge kind="dependency" source="GRID_SIZE" target="Broadcast_gridded_measured" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE" target="Broadcast_gridded_measured_prev__grid_prev_grid"/>
     </graph>
 </graphml>
