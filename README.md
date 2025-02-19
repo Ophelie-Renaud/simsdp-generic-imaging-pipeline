@@ -94,9 +94,9 @@ The proposed automated method, which extends :page_facing_up: [S. Wang, et al.](
 
 | 📝 **Note**                                                   |
 | ------------------------------------------------------------ |
-| The **ongoing work** consists in integrating the optimized G2G version into a dataflow actor. The current one is not optimized because ...<br /><br />The optimized version consists of C++ libraries from N. Monnier.<br /><br />The steps include: <br />✅ Build the library <br />✅ Integrate it into the project <br />⬜ Translate the original Python code into C++ <br />⬜ Encapsulate it into a dataflow actor |
+| The **ongoing work** consists in integrating the optimized G2G version into a dataflow actor. The current one is not optimized because ...<br /><br />The optimized version consists of C++ libraries from 📄 [N. Monnier, et al.](https://hal.science/hal-03725824/document).<br /><br />The steps include: <br />✅ Build the library <br />✅ Integrate it into the project <br />⬜ Translate the original Python code into C++ <br />⬜ Encapsulate it into a dataflow actor |
 
-
+##### Including G2G libraries
 
 1. generate the *.so librarie: `cd g2g_lib` > `cmake .` > `make`, the lib.so will be built in **build** :file_folder:.
 
@@ -133,7 +133,6 @@ void get_sky2sky_matrix_v3(struct interpolation_parameters* params);
 
 4. compile with the lib: `gcc -o exe main.c -libcpu_skytosky_single.so -lcpu_skytosky_single -libcpu_skytosky_single.h`.
 
-   > This is how optimized G2G has been include in our computation set.
 
 </details>
 
@@ -355,36 +354,30 @@ To reveal the contrasts:
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+.
 
-- Simulating generic imaging pipelines - 1 freq - CPU - balanced-workload based node partitioning - unoptimized code - [nVis = 3924480 , GRID_SIZE = 2048, nMinorCycle = 200] :
+| Pipeline        | Architecture            | SimSDP      |
+| --------------- | ----------------------- | ----------- |
+| G2G - ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/1freq.png)
+![](/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/experimental_result_data/simulation_g2g.png)
 
-- Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [**nVis** = 10xNUM_BASELINE:5xNUM_BASELINE:30xNUM_BASELINE , GRID_SIZE = 2048, nMinorCycle = 200]:
+[ToDo]: feed with polynomial timings.
 
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simu_nvis.png)
+| Pipeline       | Architecture            | SimSDP      |
+| -------------- | ----------------------- | ----------- |
+| DFT- ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
-- Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [nVis = 3924480 , **GRID_SIZE** = 512:512:2560, nMinorCycle = 200]:
+| Pipeline       | Architecture            | SimSDP      |
+| -------------- | ----------------------- | ----------- |
+| FFT- ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simu_grid.png)
-
-- Simulating generic imaging pipelines - 21 freq - CPU - frequency-based node partitioning - [nVis = 3924480 , GRID_SIZE = 2048, **nMinorCycle** = 50:50:250]:
-
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simu_minor.png)
+| Pipeline    | Architecture            | SimSDP      |
+| ----------- | ----------------------- | ----------- |
+| G2G - Clean | 6 core CPU x86 - 1 node | semi-manual |
 
 
 
-- Simulating generic imaging pipelines - 21 freq - **GPU** - frequency-based node partitioning - [**nVis** = 1:784896:3924480 , nKernel = 108800, nMinorCycle = 200]:
-
-[ToDo]
-
-- Simulating generic imaging pipelines - 21 freq - **GPU** - frequency-based node partitioning - [nVis = 3924480 , **nKernel** = 1:21760:108800, nMinorCycle = 200]:
-
-[ToDo]
-
-- Simulating generic imaging pipelines - 21 freq - **GPU** - frequency-based node partitioning - [nVis = 3924480 , nKernel = 108800, **nMinorCycle** = 1:40:200]:
-
-[ToDo]
 </details>
 
 
