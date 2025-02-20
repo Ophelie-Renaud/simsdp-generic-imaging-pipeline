@@ -373,6 +373,22 @@ How to retrieve the following results: `pip install scikit-learn` then `cd exper
 
 ![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/3D_comparison_g2g.png)
 
+| 📝 **Analysis**                                               |
+| ------------------------------------------------------------ |
+| The G2G pipeline execution time scales with `GRID_SIZE` and `NUM_VIS`, following the complexity:  <br />Our method achieves a **RMSE of X**, improving over SOTA by better capturing real execution behavior. |
+
+$$
+O(2n^2_g \log_2 n_g + 2n_v (n_{gk} + n_{dgk}))\\
+$$
+Where:
+-  $$n_g$$  is the number of grid points,
+-  $$n_v$$  is the number of visibilities,
+-  $$n_{gk}$$  is the size of the gridding kernel,
+-  $$n_{dgk}$$ is the support size of the de-gridding kernel.
+
+
+
+
 [ToDo]: feed with polynomial timings.
 
 | Pipeline       | Architecture            | SimSDP      |
