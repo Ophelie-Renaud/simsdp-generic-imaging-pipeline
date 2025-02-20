@@ -375,11 +375,10 @@ How to retrieve the following results: `pip install scikit-learn` then `cd exper
 
 | 📝 **Analysis**                                               |
 | ------------------------------------------------------------ |
-| The G2G pipeline execution time scales with `GRID_SIZE` and `NUM_VIS`, following the complexity:  <br />Our method achieves a **RMSE of X**, improving over SOTA by better capturing real execution behavior. |
+| The **G2G** pipeline execution time scales with `GRID_SIZE` and `NUM_VIS`, following the complexity:  <br />Our method achieves a **RMSE of X**, improving over SOTA by better capturing real execution behavior. |
 
-$$
-O(2n^2_g \log_2 n_g + 2n_v (n_{gk} + n_{dgk}))\\
-$$
+$$O(2n^2_g \log_2 n_g + 2n_v (n_{gk} + n_{dgk}))$$
+
 Where:
 -  $$n_g$$  is the number of grid points,
 -  $$n_v$$  is the number of visibilities,
@@ -397,17 +396,52 @@ Where:
 
 ![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simulation_dft.png)
 
+| 📝 **Analysis**                                               |
+| ------------------------------------------------------------ |
+| The **DFT** pipeline execution time scales with `NUM_VIS`, following the complexity:  <br />Our method achieves a **RMSE of X**, improving over SOTA by better capturing real execution behavior. |
+
+$$O(n^2_g \log_2 n_g + n_v  n_{gk})$$
+
+Where:
+-  $$n_g$$  is the number of grid points,
+-  $$n_v$$  is the number of visibilities,
+-  $$n_{gk}$$  is the size of the gridding kernel,
+-  $$n_{dgk}$$ is the support size of the de-gridding kernel.
+
 | Pipeline       | Architecture            | SimSDP      |
 | -------------- | ----------------------- | ----------- |
 | FFT- ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
 ![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simulation_fft.png)
 
+| 📝 **Analysis**                                               |
+| ------------------------------------------------------------ |
+| The **FFT** pipeline execution time scales with `NUM_VIS`, following the complexity:  <br />Our method achieves a **RMSE of X**, improving over SOTA by better capturing real execution behavior. |
+
+$$O(n^2_g \log_2 n_g + n_v  n_{dgk})$$
+
+Where:
+-  $$n_g$$  is the number of grid points,
+-  $$n_v$$  is the number of visibilities,
+-  $$n_{gk}$$  is the size of the gridding kernel,
+-  $$n_{dgk}$$ is the support size of the de-gridding kernel.
+
 | Pipeline    | Architecture            | SimSDP      |
 | ----------- | ----------------------- | ----------- |
 | G2G - Clean | 6 core CPU x86 - 1 node | semi-manual |
 
 ![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/3D_comparison_g2g_clean.png)
+
+| 📝 **Analysis**                                               |
+| ------------------------------------------------------------ |
+| The **DFT** pipeline execution time scales with `NUM_VIS`, following the complexity:  <br />Our method achieves a **RMSE of X**, improving over SOTA by better capturing real execution behavior. |
+
+$$O(n^2_g + n_m  n_p)$$
+
+Where:
+-  $$n_g$$  is the number of grid points,
+-  $$n_m$$  is the number of minor cycle,
+-  $$n_p$$  is the support of the PSF,
 
 </details>
 
