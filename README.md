@@ -234,6 +234,9 @@ Dataflow pipelines are parameterized with moldable parameters. *(For details, se
 
 ##### Basic execution
 
+<details>
+    <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+
 1. install the requirements:
 
 ```bash
@@ -268,6 +271,8 @@ check: python3 -c "import astropy; print(astropy.__version__)"
     - install nvcc `sudo apt install nvidia-cuda-toolkit`, check the install `nvcc --version`.
 
     - Settings :gear:>Build, Execution, Deployment > CMake, add profile :heavy_plus_sign:, name `GIP_GPU`, CMake option `-DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc` (if you use the emulator: option `-DUSE_CUDA_EMULATOR=ON`, the emulator only allows you to check that the code is functional, execution will be slower than on a GPU).
+
+</details>
 
 ---
 
@@ -325,6 +330,9 @@ check: python3 -c "import astropy; print(astropy.__version__)"
 
 ##### Visualizing the outut
 
+<details>
+    <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+
 At this stage verify that your output folder contains files such as :"cycle_0_clean_psf.csv"
 
 ```bash
@@ -345,7 +353,8 @@ To reveal the contrasts:
 - Color > Matplotlib > viridis / inferno (most popular in astro-papers)
 
 ![](https://github.com/Ophelie-Renaud/Imaging/blob/main/DS9_g2g_example1.png?raw=true)
-    
+</details>
+
 </details>
 
 ---
@@ -356,13 +365,13 @@ To reveal the contrasts:
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 .
 
-How to retrieve the following results: `cd experimental_result_data/` > `python plot_simulation`.
+How to retrieve the following results: `pip install scikit-learn` then `cd experimental_result_data/` > `python plot_simulation`.
 
 | Pipeline        | Architecture            | SimSDP      |
 | --------------- | ----------------------- | ----------- |
 | G2G - ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/3D_surface_g2g.png)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/3D_comparison_g2g.png)
 
 [ToDo]: feed with polynomial timings.
 
@@ -382,7 +391,7 @@ How to retrieve the following results: `cd experimental_result_data/` > `python 
 | ----------- | ----------------------- | ----------- |
 | G2G - Clean | 6 core CPU x86 - 1 node | semi-manual |
 
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/3D_surface_g2g_clean.png)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/3D_comparison_g2g_clean.png)
 
 </details>
 
