@@ -362,7 +362,7 @@ How to retrieve the following results: `cd experimental_result_data/` > `python 
 | --------------- | ----------------------- | ----------- |
 | G2G - ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simulation_g2g.png)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/3D_surface_g2g.png)
 
 [ToDo]: feed with polynomial timings.
 
@@ -382,7 +382,7 @@ How to retrieve the following results: `cd experimental_result_data/` > `python 
 | ----------- | ----------------------- | ----------- |
 | G2G - Clean | 6 core CPU x86 - 1 node | semi-manual |
 
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simulation_g2g_clean.png)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/3D_surface_g2g_clean.png)
 
 </details>
 
