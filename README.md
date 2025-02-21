@@ -2,7 +2,11 @@
 
 SimSDP is an HPC resource allocation framework and simulation tool designed to optimize intra-node and inter-node resource allocation for scientific data processing. It combines **PREESM** for rapid prototyping and **SimGrid** for simulating inter-node communication and computation. 
 
-The primary goal of SimSDP is to simulate the **Science Data Processor (SDP)** pipeline from the Square Kilometre Array (SKA), converting visibilities into output images on massive HPC architectures, handling datasets as large as the SKA requirements (xTB).
+The primary goal of SimSDP is to simulate the **Science Data Processor (SDP)** pipeline from the Square Kilometre Array (SKA), converting visibilities into output images on massive HPC architectures, handling datasets as large as the SKA requirements (179 Po :astonished:).
+
+| 📝 **Note**                                                   |
+| ------------------------------------------------------------ |
+| Data = `N_ANT` x `N_CHANNEL` x `N_POL` x `BANDWIDTH` x `OBS_TIME` x `N_BYTE`<br /><br />(10min)=130000 × 4000 × 2 × 10⁶ × 600 × 4 = 2 Po<br />(12h)= 130000 × 4000 × 2 × 10⁶ × 43200 × 4 = 179 Po<br /><br /> **LOFAR (LOw Frequency ARray)** comparison:<br />(10min)=4992 × 256 × 2 × 195000 × 600 × 2 = 300 To<br />(12h)= 4992 × 256 × 2 × 195000 × 43200 × 2 = 21 Po<br /><br /> **NenuFAR (New Extension in Nançay Upgrading LOFAR)** comparison:<br />(10min)=1936 × 768 × 2 × 195000 × 600 × 2 = 348 To<br />(12h)= 1936 × 768 × 2 × 195000 × 43200 × 2 = 25 Po |
 
 
 The aim of this project is to facilitate the comparison of algorithm describing the SDP using SimSDP.  As a dataflow-based tool, SimSDP takes into account the dataflow application graph as well as a csv file containing the execution times of the actors on each target to be simulated. Dataflow representation of  the **Generic Imaging Pipeline** with a single and multi-frequency scenarii are provided. Our goal is to simulate these pipelines on Multinode - Multicore architecture, on Multinode - MonoGPU architecture and (might be) on Multinode - MultiGPU architecture.
@@ -80,7 +84,7 @@ cd simsdp-generic-imaging-pipeline
 
 This section describes a method for defining actor timings using a fitting function to facilitate algorithm comparison across varying parameters. The method involves building a set of samples (stored in :file_folder:`averages`) and computing a fitting function with polynomial regression for each actor.
 
-The original method, developed by Sunrise Wang, is a manual approach that evaluates a limited number of data samples. Details of this method can be found on the :open_book: `wiki` page :page_facing_up: **Timing Modeling Manual Method**. Once the benchmark is set up, additional instructions are available in the :file_folder:`polynomials_timing` section under **SOTA**.
+The original method, developed by @sunrise.wang, is a manual approach that evaluates a limited number of data samples. Details of this method can be found on the :open_book: `wiki` page :page_facing_up: **Timing Modeling Manual Method**. Once the benchmark is set up, additional instructions are available in the :file_folder:`polynomials_timing` section under **SOTA**.
 
 The proposed automated method, which extends :page_facing_up: [S. Wang, et al.](https://hal.science/hal-04361151/file/paper_dasip24_5_wang_updated-2.pdf) work, is documented in the :file_folder:`polynomials_timing` section under **Proposed Method**.
 
@@ -94,7 +98,7 @@ The proposed automated method, which extends :page_facing_up: [S. Wang, et al.](
 
 | 📝 **Note**                                                   |
 | ------------------------------------------------------------ |
-| The **ongoing work** consists in integrating the optimized G2G version into a dataflow actor. The current one is not optimized because ...<br /><br />The optimized version consists of C++ libraries from 📄 [N. Monnier, et al.](https://hal.science/hal-03725824/document).<br /><br />The steps include: <br />✅ Build the library <br />✅ Integrate it into the project <br />⬜ Translate the original Python code into C++ <br />⬜ Encapsulate it into a dataflow actor |
+| The **ongoing work** consists in integrating the optimized G2G version into a dataflow actor. The current one is not optimized because ... 🙆‍♀️  <br /><br />The optimized version consists of C++ libraries from 📄 [N. Monnier, et al.](https://hal.science/hal-03725824/document).<br /><br />The steps include: <br />✅ Build the library <br />✅ Integrate it into the project <br />⬜ Translate the original Python code into C++ <br />⬜ Encapsulate it into a dataflow actor |
 
 ##### Including G2G libraries
 
@@ -130,9 +134,11 @@ void get_sky2sky_matrix_v3(struct interpolation_parameters* params);
 #endif // LIBCPU_SKYTOSKY_SINGLE_H
 ```
 3. include header: `#include "libcpu_skytosky_single.h"`.
-
 4. compile with the lib: `gcc -o exe main.c -libcpu_skytosky_single.so -lcpu_skytosky_single -libcpu_skytosky_single.h`.
 
+##### Optimized G2G dataflow actor implementation
+
+ `cd g2g` > `cmake .` > `make`  >`./g2g`
 
 </details>
 
@@ -258,19 +264,18 @@ sudo apt install python3-astropy
  
 check: python3 -c "import astropy; print(astropy.__version__)"
 ```
-2. Download [GLEAM](https://nasext-vaader.insa-rennes.fr/ietr-vaader/preesm/assets/sep_data.zip) (or whatever dataset).
+2. Download [GLEAM](https://nasext-vaader.insa-rennes.fr/ietr-vaader/preesm/assets/sep_data.zip) (or whatever dataset) and copy past the data in :file_folder: `Code/data/`. If it doesn't exist create :file_folder: `output/small/` inside `data/`.
 
-3. copy past the data in Code/data/ folder. If it doesn't exist create a folder output/small/ inside.
+3. Run the code : `cmake .`  > `make` > `./sep` , and wait till your prompt display: `Process finished with exit code 0`(It could be long depending on the `NUM_MAJOR_CYCLE` and the `NUM_MINOR_CYCLE`).
+    If you prefer CLion for as interface:
 
-4. Run the code and wait till your prompt display: `Process finished with exit code 0`.
-    (It could be long depending on the **NUM_MAJOR_CYCLE** and the **NUM_MINOR_CYCLE**).
+    - For the CPU version, run the CMakeList.txt, build :hammer: and Run  the code :arrow_forward:.
 
-5. On CLion, for the CPU version, run the CMakeList.txt, build :hammer: and Run  the code :arrow_forward:.
-  - Still on CLion, for GPU version, configure CMake:
+    - For GPU version, configure CMake:
 
-    - install nvcc `sudo apt install nvidia-cuda-toolkit`, check the install `nvcc --version`.
+      - install nvcc `sudo apt install nvidia-cuda-toolkit`, check the install `nvcc --version`.
 
-    - Settings :gear:>Build, Execution, Deployment > CMake, add profile :heavy_plus_sign:, name `GIP_GPU`, CMake option `-DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc` (if you use the emulator: option `-DUSE_CUDA_EMULATOR=ON`, the emulator only allows you to check that the code is functional, execution will be slower than on a GPU).
+      - Settings :gear:>Build, Execution, Deployment > CMake, add profile :heavy_plus_sign:, name `GIP_GPU`, CMake option `-DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc` (if you use the emulator: option `-DUSE_CUDA_EMULATOR=ON`, the emulator only allows you to check that the code is functional, execution will be slower than on a GPU).
 
 </details>
 
@@ -280,9 +285,9 @@ check: python3 -c "import astropy; print(astropy.__version__)"
 
 | 📝 **Note**                                                   |
 | ------------------------------------------------------------ |
-| The **ongoing work** consists in scripting generated code execution varying parameter value (considering that the scheduling will not vary). the optimized G2G version into a dataflow actor. The current one is not optimized because ...<br /><br />The optimized version consists of C++ libraries from N. Monnier.<br /><br />The steps include: <br />✅ Provide a script to compile generated code and store result (execution time) in log files<br />✅ Identify the generated code change in order to pass argument to facilitate parameter variation <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (1 node) <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (6 nodes) |
+| The **ongoing work** consists in scripting generated code execution varying parameter value (considering that the scheduling will not vary). Once the parameterized code is setting up the only command require is step 4. <br /><br />The steps include: <br />✅ Provide a script to compile generated code and store result (execution time) in log files<br />✅ Identify the generated code change in order to pass argument to facilitate parameter variation <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (1 node) <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (6 nodes) |
 
-1. copy past generated code in folder `param_code`.
+1. copy past generated code from `preesm_pipeline` in folder `param_code`.
 2. Apply some change:
      - preesm_gen.h:
         ```c
@@ -315,6 +320,8 @@ check: python3 -c "import astropy; print(astropy.__version__)"
         args.num_minor_cycle = NUM_MINOR_CYCLE;
         ...
         if (launch(CORE_ID[i], &coreThreads[i], coreThreadComputations[i],&args)) {
+        ...
+        coreThreadComputations[_PREESM_MAIN_THREAD_](&args);
       ```
     - core0.c etc...:
         ```c
@@ -324,7 +331,7 @@ check: python3 -c "import astropy; print(astropy.__version__)"
         int num_minor_cycle = args->num_minor_cycle;
     	# and replace all "int/*NUM_VIS*/" -->num_vis
         ```
-3. run the script : `./run_experiments.sh` that will generate a log file with measured execution time in `log_execution_time.txt`
+3. run the script : `chmod +x run_experiments.sh` then  `./run_experiments.sh` that will generate a log file with measured execution time in `log_execution_time.txt`.
 
 ---
 
@@ -390,6 +397,8 @@ Where:
 
 [ToDo]: feed with polynomial timings.
 
+---
+
 | Pipeline       | Architecture            | SimSDP      |
 | -------------- | ----------------------- | ----------- |
 | DFT- ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
@@ -408,6 +417,8 @@ Where:
 -  $$n_{gk}$$  is the size of the gridding kernel,
 -  $$n_{dgk}$$ is the support size of the de-gridding kernel.
 
+---
+
 | Pipeline       | Architecture            | SimSDP      |
 | -------------- | ----------------------- | ----------- |
 | FFT- ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
@@ -425,6 +436,8 @@ Where:
 -  $$n_v$$  is the number of visibilities,
 -  $$n_{gk}$$  is the size of the gridding kernel,
 -  $$n_{dgk}$$ is the support size of the de-gridding kernel.
+
+---
 
 | Pipeline    | Architecture            | SimSDP      |
 | ----------- | ----------------------- | ----------- |
