@@ -13,6 +13,8 @@ The proposed method consist in two automated steps:
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+    .
+
 | 📝 **Note**                                                   |
 | ------------------------------------------------------------ |
 | Once the benchmark is build (following the steps described on the :open_book: `wiki` page :page_facing_up: **Timing Modeling Manual Method**). Considering that computation execution time have been manually processed and stored in the  `average` (`cd polynomial_timing/sota/`) folder then run the following command:<br /><br />*Do not run script from CLion, it will crash if you don't set enough resource, preferred run from prompt.* |
@@ -76,6 +78,7 @@ def load_data_and_axis(filename, num_axis):
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+    .
 
 `cd timing_cpu` > `cmake .` > `make`
 
@@ -111,11 +114,13 @@ The average measured value are here just to put RMSE into perspective. Our avera
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+    .
 
 Here are the following step to run on Grid5000 cluster: 
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+    .
 
 ```bash
 #copy file
@@ -171,9 +176,11 @@ Otherwise a script is provided to automatically transfer files, connect to the r
 
 </details>
 
+
 #### Ruche Mesocentre
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+    .
 
 ```bash
 #copy file

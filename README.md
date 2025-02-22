@@ -237,11 +237,13 @@ Dataflow pipelines are parameterized with moldable parameters. *(For details, se
 ### Run the generated code from :file_folder: `param_code`
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+    .
 
 ##### Basic execution
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+    .
 
 1. install the requirements:
 
@@ -268,13 +270,12 @@ check: python3 -c "import astropy; print(astropy.__version__)"
 
 3. Run the code : `cmake .`  > `make` > `./sep` , and wait till your prompt display: `Process finished with exit code 0`(It could be long depending on the `NUM_MAJOR_CYCLE` and the `NUM_MINOR_CYCLE`).
     If you prefer CLion for as interface:
-
     - For the CPU version, run the CMakeList.txt, build :hammer: and Run  the code :arrow_forward:.
-
+    
     - For GPU version, configure CMake:
-
+    
       - install nvcc `sudo apt install nvidia-cuda-toolkit`, check the install `nvcc --version`.
-
+    
       - Settings :gear:>Build, Execution, Deployment > CMake, add profile :heavy_plus_sign:, name `GIP_GPU`, CMake option `-DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc` (if you use the emulator: option `-DUSE_CUDA_EMULATOR=ON`, the emulator only allows you to check that the code is functional, execution will be slower than on a GPU).
 
 </details>
@@ -283,13 +284,17 @@ check: python3 -c "import astropy; print(astropy.__version__)"
 
 ##### Automating generated code execution varying parameter
 
+<details>
+    <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+    .
+
 | 📝 **Note**                                                   |
 | ------------------------------------------------------------ |
 | The **ongoing work** consists in scripting generated code execution varying parameter value (considering that the scheduling will not vary). Once the parameterized code is setting up the only command require is step 3. <br /><br />The steps include: <br />✅ Provide a script to compile generated code and store result (execution time) in log files<br />✅ Identify the generated code change in order to pass argument to facilitate parameter variation <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (1 node) <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (6 nodes) |
 
-1. copy past generated code from `preesm_pipeline` in folder `param_code`.
-2. Apply some change:
-     - preesm_gen.h:
+1. Copy past generated code from `preesm_pipeline` in folder `param_code`.
+2. Apply the Following Modifications:
+     - 🛠 **Edit** `preesm_gen.h`, modify the argument handling and define a struct for parameters:
         ```c
          /* if (arg != NULL) {
             printf("Warning: expecting NULL arguments\n");
@@ -298,45 +303,59 @@ check: python3 -c "import astropy; print(astropy.__version__)"
         
         typedef struct {
            int num_vis;
-	       int grid_size;
+            int grid_size;
            int num_minor_cycle;
        } ThreadArgs;
        ```
-    - main.c
-    	```c
-        unsigned int launch(unsigned int core_id, pthread_t *thread, void* (*start_routine)(void*), void* arg) {
-        ...
-      pthread_create(thread, &attr, start_routine, arg);
-      ...
-      int main(int argc, char *argv[]) {
-    	// Vérification du nombre d'arguments passés
-    	if (argc != 4) {
-    	printf("Usage: %s <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE>\n", argv[0]);
-    	return 1;
-    	}
-        // Récupérer les paramètres passés
-        int NUM_VIS = atoi(argv[1]);
-        int GRID_SIZE = atoi(argv[2]);
-        int NUM_MINOR_CYCLE = atoi(argv[3]);
-      
-        ThreadArgs args;
-        args.num_vis = NUM_VIS;
-        args.grid_size = GRID_SIZE;
-        args.num_minor_cycle = NUM_MINOR_CYCLE;
-        ...
-        if (launch(CORE_ID[i], &coreThreads[i], coreThreadComputations[i],&args)) {
-        ...
-        coreThreadComputations[_PREESM_MAIN_THREAD_](&args);
-      ```
-    - core0.c etc...:
-        ```c
-        ThreadArgs* args = (ThreadArgs*) arg;  // Conversion du pointeur void* en ThreadArgs*
-        int num_vis = args->num_vis;
-        int grid_size = args->grid_size;
-        int num_minor_cycle = args->num_minor_cycle;
-    	// and replace all "int/*NUM_VIS*/" -->num_vis etc...
-        ```
-3. run the script : `chmod +x run_experiments.sh` then  `./run_experiments.sh g2g` that will generate a log file with measured execution time in `g2g.csv`.
+     - 🛠 **Edit** `main.c`, pass parameters via command-line arguments and store them in a struct:
+     	```c
+         unsigned int launch(unsigned int core_id, pthread_t *thread, void* (*start_routine)(void*), void* arg) {
+         ...
+       pthread_create(thread, &attr, start_routine, arg);
+       ...
+       int main(int argc, char *argv[]) {
+     	// Ensure correct number of arguments
+     	if (argc != 4) {
+     	printf("Usage: %s <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE>\n", argv[0]);
+     	return 1;
+     	}
+         // Parse command-line arguments
+         int NUM_VIS = atoi(argv[1]);
+         int GRID_SIZE = atoi(argv[2]);
+         int NUM_MINOR_CYCLE = atoi(argv[3]);
+       
+         // Store them in a struct
+         ThreadArgs args;
+         args.num_vis = NUM_VIS;
+         args.grid_size = GRID_SIZE;
+         args.num_minor_cycle = NUM_MINOR_CYCLE;
+         ...
+         if (launch(CORE_ID[i], &coreThreads[i], coreThreadComputations[i],&args)) {
+         ...
+         coreThreadComputations[_PREESM_MAIN_THREAD_](&args);
+       ```
+     - 🛠 **Edit** `core0.c` etc..., update functions to use the parameter struct:
+         ```c
+         ThreadArgs* args = (ThreadArgs*) arg;  // Conversion du pointeur void* en ThreadArgs*
+         int num_vis = args->num_vis;
+         int grid_size = args->grid_size;
+         int num_minor_cycle = args->num_minor_cycle;
+     	
+         // Replace all instances of hardcoded values:
+         // int /*NUM_VIS*/ → num_vis
+         // int /*GRID_SIZE*/ → grid_size
+         // int /*NUM_MINOR_CYCLE*/ → num_minor_cycle
+         ```
+3. :arrow_forward: ​**Run** the experiment  script : 
+     ```
+     chmod +x run_experiments.sh
+     ./run_experiments.sh g2g   # Run for g2g pipeline
+     ./run_experiments.sh fft   # Run for fft pipeline
+     ./run_experiments.sh dft   # Run for dft pipeline
+     ```
+      :boom: ​This will generate a log file with measured execution time in `g2g.csv` :arrow_right: copy the result file into: :file_folder: `experimental_result_data/moldable/measure/` .
+
+</details>
 
 ---
 
@@ -344,6 +363,7 @@ check: python3 -c "import astropy; print(astropy.__version__)"
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+    .
 
 At this stage verify that your output folder contains files such as :"cycle_0_clean_psf.csv"
 
