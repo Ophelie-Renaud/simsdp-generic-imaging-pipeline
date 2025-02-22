@@ -13,14 +13,9 @@ The proposed method consist in two automated steps:
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-
-
-All the steps are detail on the main readme and you have to use this command for each averages/timing files:
-Considering that computation execution time have been manually processed and stored in the  `average` (`cd polynomial_timing/sota/`) folder then run the following command:
-
-> [!TIP]
->
-> Do not run script from CLion, it will crash if you don't set enough resource, preferred run from prompt.
+| 📝 **Note**                                                   |
+| ------------------------------------------------------------ |
+| Once the benchmark is build (following the steps described on the :open_book: `wiki` page :page_facing_up: **Timing Modeling Manual Method**). Considering that computation execution time have been manually processed and stored in the  `average` (`cd polynomial_timing/sota/`) folder then run the following command:<br /><br />*Do not run script from CLion, it will crash if you don't set enough resource, preferred run from prompt.* |
 
 `python plot_and_fit_averages.py averages/addvis.csv 1 1 5 0`  RMSE = 0.2607680962081062  :white_check_mark:
 
@@ -30,13 +25,13 @@ Considering that computation execution time have been manually processed and sto
 
 `python plot_and_fit_averages.py averages/dft.csv 2 2 4 4`  RMSE = 328.79013774421367 :x:
 
-> Bottleneck parameters: NUM_MINOR_CYCLE, NUM_VIS
+> Bottleneck parameters: `NUM_MINOR_CYCLE`, `NUM_VIS`
 
 `python plot_and_fit_averages.py averages/dgkernel.csv 1 0 1 0`  RMSE = NA :x:
 
 `python plot_and_fit_averages.py averages/fft.csv 1 1 5 0`  RMSE = 85.36911021588533 :white_check_mark:
 
-> Bottleneck parameters: GRID_SIZE
+> Bottleneck parameters: `GRID_SIZE`
 
 `python plot_and_fit_averages.py averages/fftshift.csv 1 1 5 0`  RMSE = 0.2105075974340459 :white_check_mark:
 
@@ -54,7 +49,7 @@ Considering that computation execution time have been manually processed and sto
 
 `python plot_and_fit_averages.py averages/s2s.csv 2 2 8 4`  RMSE = 1729.33617134492 :x:
 
-> Bottleneck parameters: GRID_SIZE, NUM_VIS
+> Bottleneck parameters: `GRID_SIZE`, `NUM_VIS`
 
 `python plot_and_fit_averages.py averages/save_output.csv 1 1 5 0`  RMSE = 30.2903978986482  :x:
 

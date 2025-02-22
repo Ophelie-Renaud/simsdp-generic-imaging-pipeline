@@ -101,7 +101,7 @@ def plot_3d_comparison(file_key,simu_sota_path, simu_path, measure_path):
     fig.colorbar(surf1, ax=axes[1], shrink=0.5, aspect=15)
 
     # Mesure
-    surf2 = axes[2].plot_surface(X, Y, Z_meas, cmap='plasma', edgecolor='none', alpha=0.9)
+    surf2 = axes[2].plot_surface(X, Y, Z_meas, cmap='viridis', edgecolor='none', alpha=0.9)
     title = f"Mesure - {file_key}"
     axes[2].set_title(title)
     axes[2].set_xlabel("GRID_SIZE")

@@ -26,8 +26,7 @@ To achieve this, we provide tools that automatically estimate the execution time
 This repository contains six main directories, categorized by the number of frequencies processed in the pipeline:
 
 ```plaintext
-├── experimental_result_data/ # Spreadsheet diagrams of experimental results
-├── g2g_lib/ # tools to build g2g lib
+├── g2g_optim_actor/          # tools to build g2g lib
 ├── polynomial_timing/ 	      # CPU and GPU tool for timing calcultaion
 ├── preesm_pipelines/		  # g2g/dft/fft 1node/multinode architecture preesm projects
     ├── simsdp-g2g-imaging-pipeline/
@@ -38,6 +37,7 @@ This repository contains six main directories, categorized by the number of freq
         ├── Workflows/   # Workflow descriptions of the HPC resource allocation and simulation
     ├── ...
 ├── param_code/ # resulting parameterized dataflow code
+├── experimental_result_data/ # Spreadsheet diagrams of experimental results
 ```
 
 ## Key Features
@@ -46,7 +46,7 @@ This repository contains six main directories, categorized by the number of freq
   Implements a model-based approach to optimize workload distribution between nodes using **PREESM**.
   
 - **Simulation of Large Datasets**:  
-  Handles simulations for datasets as large as those required by the SKA (xTB).
+  Handles simulations for datasets as large as those required by the SKA (179 Po).
   
 - **Modular Pipeline Design**:  
   Each pipeline step (G2G, FFT, DFT) is modular, supporting easy adaptation to different architectures and use cases.
@@ -86,13 +86,13 @@ This section describes a method for defining actor timings using a fitting funct
 
 The original method, developed by @sunrise.wang, is a manual approach that evaluates a limited number of data samples. Details of this method can be found on the :open_book: `wiki` page :page_facing_up: **Timing Modeling Manual Method**. Once the benchmark is set up, additional instructions are available in the :file_folder:`polynomials_timing` section under **SOTA**.
 
-The proposed automated method, which extends :page_facing_up: [S. Wang, et al.](https://hal.science/hal-04361151/file/paper_dasip24_5_wang_updated-2.pdf) work, is documented in the :file_folder:`polynomials_timing` section under **Proposed Method**.
+The proposed automated method, which extends :page_facing_up: [S. Wang, et al.](https://hal.science/hal-04361151/file/paper_dasip24_5_wang_updated-2.pdf) work, is documented in the :file_folder: ​`polynomials_timing` section under **Proposed Method**.
 
 </details>
 
 ---
 
-### Optimized G2G integration
+### Optimized G2G integration :file_folder: `g2g_optim_actor`
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 
@@ -285,20 +285,25 @@ check: python3 -c "import astropy; print(astropy.__version__)"
 
 | 📝 **Note**                                                   |
 | ------------------------------------------------------------ |
-| The **ongoing work** consists in scripting generated code execution varying parameter value (considering that the scheduling will not vary). Once the parameterized code is setting up the only command require is step 4. <br /><br />The steps include: <br />✅ Provide a script to compile generated code and store result (execution time) in log files<br />✅ Identify the generated code change in order to pass argument to facilitate parameter variation <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (1 node) <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (6 nodes) |
+| The **ongoing work** consists in scripting generated code execution varying parameter value (considering that the scheduling will not vary). Once the parameterized code is setting up the only command require is step 3. <br /><br />The steps include: <br />✅ Provide a script to compile generated code and store result (execution time) in log files<br />✅ Identify the generated code change in order to pass argument to facilitate parameter variation <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (1 node) <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (6 nodes) |
 
 1. copy past generated code from `preesm_pipeline` in folder `param_code`.
 2. Apply some change:
      - preesm_gen.h:
         ```c
+         /* if (arg != NULL) {
+            printf("Warning: expecting NULL arguments\n");
+            fflush (stdout);
+          }*/
+        
         typedef struct {
-            int num_vis;
-            int grid_size;
-            int num_minor_cycle;
-        } ThreadArgs;
-        ```
+           int num_vis;
+	       int grid_size;
+           int num_minor_cycle;
+       } ThreadArgs;
+       ```
     - main.c
-		```c
+    	```c
         unsigned int launch(unsigned int core_id, pthread_t *thread, void* (*start_routine)(void*), void* arg) {
         ...
       pthread_create(thread, &attr, start_routine, arg);
@@ -329,9 +334,9 @@ check: python3 -c "import astropy; print(astropy.__version__)"
         int num_vis = args->num_vis;
         int grid_size = args->grid_size;
         int num_minor_cycle = args->num_minor_cycle;
-    	# and replace all "int/*NUM_VIS*/" -->num_vis
+    	// and replace all "int/*NUM_VIS*/" -->num_vis etc...
         ```
-3. run the script : `chmod +x run_experiments.sh` then  `./run_experiments.sh` that will generate a log file with measured execution time in `log_execution_time.txt`.
+3. run the script : `chmod +x run_experiments.sh` then  `./run_experiments.sh g2g` that will generate a log file with measured execution time in `g2g.csv`.
 
 ---
 
@@ -366,7 +371,7 @@ To reveal the contrasts:
 
 ---
 
-## Experimental results
+## Experimental results :file_folder: `experimental_result_data`
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
@@ -427,7 +432,7 @@ Where:
 
 | 📝 **Analysis**                                               |
 | ------------------------------------------------------------ |
-| The **FFT** pipeline execution time scales with `NUM_VIS`, following the complexity:  <br />Our method achieves a **RMSE of X**, improving over SOTA by better capturing real execution behavior. |
+| The **FFT** pipeline execution time scales with `GRID_SIZE`, following the complexity:  <br />Our method achieves a **RMSE of X**, improving over SOTA by better capturing real execution behavior. |
 
 $$O(n^2_g \log_2 n_g + n_v  n_{dgk})$$
 
@@ -447,7 +452,7 @@ Where:
 
 | 📝 **Analysis**                                               |
 | ------------------------------------------------------------ |
-| The **DFT** pipeline execution time scales with `NUM_VIS`, following the complexity:  <br />Our method achieves a **RMSE of X**, improving over SOTA by better capturing real execution behavior. |
+| The **G2G** pipeline with **Clean** execution time scales with `GRID_SIZE` and  `NUM_MINOR_CYCLE` , following the complexity:  <br />Our method achieves a **RMSE of X**, improving over SOTA by better capturing real execution behavior. |
 
 $$O(n^2_g + n_m  n_p)$$
 
