@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <key attr.name="parameters" for="graph" id="parameters"/>
+    <key attr.name="variables" for="graph" id="variables"/>
+    <key attr.name="arguments" for="node" id="arguments"/>
+    <key attr.name="name" attr.type="string" for="graph"/>
+    <key attr.name="graph_desc" attr.type="string" for="node"/>
+    <graph edgedefault="directed">
+        <data key="name">sep_psi</data>
+        <node id="GRID_SIZE" kind="cfg_in_iface"/>
+        <node id="NUM_MINOR_CYCLES" kind="cfg_in_iface"/>
+        <node id="MAX_SOURCES" kind="cfg_in_iface"/>
+        <node id="config" kind="src">
+            <port annotation="NONE" expr="1" kind="output" name="config"/>
+        </node>
+        <node id="psf" kind="src">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="psf"/>
+        </node>
+        <node id="delta_image" kind="src">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="delta_image"/>
+        </node>
+        <node id="source_list" kind="snk">
+            <port annotation="NONE" expr="MAX_SOURCES"
+                kind="input" name="source_list"/>
+        </node>
+        <node id="num_sources_out" kind="snk">
+            <port annotation="NONE" expr="1" kind="input" name="num_sources_out"/>
+        </node>
+        <node id="image_estimate" kind="snk">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="image_estimate"/>
+        </node>
+        <node id="input_model" kind="src">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="input_model"/>
+        </node>
+        <node id="hogbom_clean" kind="actor">
+            <data key="graph_desc">Code/include/deconvolution_run.h</data>
+            <loop name="hogbom_clean">
+                <param direction="IN" isConfig="true"
+                    name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="NUM_MINOR_CYCLES" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="MAX_SOURCES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="residual" type="PRECISION"/>
+                <param direction="IN" isConfig="false"
+                    name="partial_psf" type="PRECISION"/>
+                <param direction="IN" isConfig="false"
+                    name="partial_psf_halfdims" type="int2"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="IN" isConfig="false"
+                    name="current_model" type="PRECISION"/>
+                <param direction="OUT" isConfig="false"
+                    name="num_sources_out" type="int"/>
+                <param direction="OUT" isConfig="false"
+                    name="sources_out" type="PRECISION3"/>
+                <param direction="OUT" isConfig="false"
+                    name="output_model" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="NUM_MINOR_CYCLES"/>
+            <port kind="cfg_input" name="MAX_SOURCES"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="residual"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="partial_psf"/>
+            <port annotation="NONE" expr="1" kind="input" name="config"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="input" name="current_model"/>
+            <port annotation="NONE" expr="1" kind="input" name="partial_psf_halfdims"/>
+            <port annotation="NONE" expr="1" kind="output" name="num_sources_out"/>
+            <port annotation="NONE" expr="MAX_SOURCES"
+                kind="output" name="sources_out"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE"
+                kind="output" name="output_model"/>
+        </node>
+        <node id="partial_psf_halfdims" kind="src">
+            <port annotation="NONE" expr="1" kind="output" name="partial_psf_halfdims"/>
+        </node>
+        <node id="cycle" kind="src">
+            <port annotation="NONE" expr="1" kind="output" name="cycle"/>
+        </node>
+        <node id="token_sink" kind="actor">
+            <data key="graph_desc">Code/include/major_loop_iter.h</data>
+            <loop name="token_sink">
+                <param direction="IN" isConfig="false"
+                    name="token_in" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1" kind="input" name="token_in"/>
+        </node>
+        <edge kind="fifo" source="config" sourceport="config"
+            target="hogbom_clean" targetport="config" type="Config"/>
+        <edge kind="fifo" source="delta_image"
+            sourceport="delta_image" target="hogbom_clean"
+            targetport="residual" type="PRECISION"/>
+        <edge kind="fifo" source="input_model"
+            sourceport="input_model" target="hogbom_clean"
+            targetport="current_model" type="PRECISION"/>
+        <edge kind="fifo" source="psf" sourceport="psf"
+            target="hogbom_clean" targetport="partial_psf" type="PRECISION"/>
+        <edge kind="fifo" source="hogbom_clean"
+            sourceport="num_sources_out" target="num_sources_out"
+            targetport="num_sources_out" type="int"/>
+        <edge kind="fifo" source="hogbom_clean"
+            sourceport="sources_out" target="source_list"
+            targetport="source_list" type="PRECISION3"/>
+        <edge kind="fifo" source="hogbom_clean"
+            sourceport="output_model" target="image_estimate"
+            targetport="image_estimate" type="PRECISION"/>
+        <edge kind="fifo" source="partial_psf_halfdims"
+            sourceport="partial_psf_halfdims"
+            target="hogbom_clean"
+            targetport="partial_psf_halfdims" type="int2"/>
+        <edge kind="fifo" source="cycle" sourceport="cycle"
+            target="token_sink" targetport="token_in" type="int"/>
+        <edge kind="dependency" source="GRID_SIZE" target="delta_image"/>
+        <edge kind="dependency" source="GRID_SIZE" target="psf"/>
+        <edge kind="dependency" source="GRID_SIZE" target="image_estimate"/>
+        <edge kind="dependency" source="GRID_SIZE" target="input_model"/>
+        <edge kind="dependency" source="GRID_SIZE"
+            target="hogbom_clean" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_MINOR_CYCLES"
+            target="hogbom_clean" targetport="NUM_MINOR_CYCLES"/>
+        <edge kind="dependency" source="MAX_SOURCES"
+            target="hogbom_clean" targetport="MAX_SOURCES"/>
+        <edge kind="dependency" source="MAX_SOURCES" target="source_list"/>
+    </graph>
+</graphml>

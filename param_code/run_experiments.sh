@@ -48,7 +48,7 @@ if [ ! -f SEP_Pipeline ]; then
 fi
 
 # Fichier de log
-echo "NUM_VISIBILITIES;GRID_SIZE;NUM_MINOR_CYCLE;DurationII;Latency" > $OUTPUT_FILE  # En-tête du fichier
+echo "NUM_VISIBILITIES;GRID_SIZE;NUM_MINOR_CYCLES;DurationII;Latency" > $OUTPUT_FILE  # En-tête du fichier
 
 # Boucle sur les différents paramètres
 for NUM_VIS in "${NUM_VIS_values[@]}"

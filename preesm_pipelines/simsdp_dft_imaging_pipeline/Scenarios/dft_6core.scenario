@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <flags>
+        <sizesAreInBit/>
+    </flags>
+    <files>
+        <algorithm url="/simsdp_dft_imaging_pipeline/Algo/dft/generic_top_dft_coarse_to_unroll.pi"/>
+        <architecture url="/simsdp_dft_imaging_pipeline/Archi/6CoresX86.slam"/>
+        <codegenDirectory url="/simsdp_dft_imaging_pipeline/Code/generated"/>
+    </files>
+    <constraints excelUrl="">
+        <constraintGroup>
+            <operator name="Core0"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/token_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/image_passthrough"/>
+            <task name="generic_top/delta_psi/delta/degridding_kernel_sink"/>
+            <task name="generic_top/delta_psi/delta/add_visibilities"/>
+            <task name="generic_top/delta_psi/delta/merge_grids"/>
+            <task name="generic_top/delta_psi/delta/split_vis"/>
+            <task name="generic_top/delta_psi/delta/dft_run/dft_actor"/>
+            <task name="generic_top/delta_psi/delta/dft_run"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/subtraction"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run"/>
+            <task name="generic_top/delta_psi/delta/gridding_run/gridding_actor"/>
+            <task name="generic_top/delta_psi/delta/gridding_run"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+        <constraintGroup>
+            <operator name="Core1"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/token_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/image_passthrough"/>
+            <task name="generic_top/delta_psi/delta/degridding_kernel_sink"/>
+            <task name="generic_top/delta_psi/delta/add_visibilities"/>
+            <task name="generic_top/delta_psi/delta/merge_grids"/>
+            <task name="generic_top/delta_psi/delta/split_vis"/>
+            <task name="generic_top/delta_psi/delta/dft_run/dft_actor"/>
+            <task name="generic_top/delta_psi/delta/dft_run"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/subtraction"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run"/>
+            <task name="generic_top/delta_psi/delta/gridding_run/gridding_actor"/>
+            <task name="generic_top/delta_psi/delta/gridding_run"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+        <constraintGroup>
+            <operator name="Core2"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/token_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/image_passthrough"/>
+            <task name="generic_top/delta_psi/delta/degridding_kernel_sink"/>
+            <task name="generic_top/delta_psi/delta/add_visibilities"/>
+            <task name="generic_top/delta_psi/delta/merge_grids"/>
+            <task name="generic_top/delta_psi/delta/split_vis"/>
+            <task name="generic_top/delta_psi/delta/dft_run/dft_actor"/>
+            <task name="generic_top/delta_psi/delta/dft_run"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/subtraction"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run"/>
+            <task name="generic_top/delta_psi/delta/gridding_run/gridding_actor"/>
+            <task name="generic_top/delta_psi/delta/gridding_run"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+        <constraintGroup>
+            <operator name="Core3"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/token_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/image_passthrough"/>
+            <task name="generic_top/delta_psi/delta/degridding_kernel_sink"/>
+            <task name="generic_top/delta_psi/delta/add_visibilities"/>
+            <task name="generic_top/delta_psi/delta/merge_grids"/>
+            <task name="generic_top/delta_psi/delta/split_vis"/>
+            <task name="generic_top/delta_psi/delta/dft_run/dft_actor"/>
+            <task name="generic_top/delta_psi/delta/dft_run"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/subtraction"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run"/>
+            <task name="generic_top/delta_psi/delta/gridding_run/gridding_actor"/>
+            <task name="generic_top/delta_psi/delta/gridding_run"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+        <constraintGroup>
+            <operator name="Core4"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/token_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/image_passthrough"/>
+            <task name="generic_top/delta_psi/delta/degridding_kernel_sink"/>
+            <task name="generic_top/delta_psi/delta/add_visibilities"/>
+            <task name="generic_top/delta_psi/delta/merge_grids"/>
+            <task name="generic_top/delta_psi/delta/split_vis"/>
+            <task name="generic_top/delta_psi/delta/dft_run/dft_actor"/>
+            <task name="generic_top/delta_psi/delta/dft_run"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/subtraction"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run"/>
+            <task name="generic_top/delta_psi/delta/gridding_run/gridding_actor"/>
+            <task name="generic_top/delta_psi/delta/gridding_run"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+        <constraintGroup>
+            <operator name="Core5"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/token_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/image_passthrough"/>
+            <task name="generic_top/delta_psi/delta/degridding_kernel_sink"/>
+            <task name="generic_top/delta_psi/delta/add_visibilities"/>
+            <task name="generic_top/delta_psi/delta/merge_grids"/>
+            <task name="generic_top/delta_psi/delta/split_vis"/>
+            <task name="generic_top/delta_psi/delta/dft_run/dft_actor"/>
+            <task name="generic_top/delta_psi/delta/dft_run"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run/subtraction"/>
+            <task name="generic_top/delta_psi/delta/subtraction_run"/>
+            <task name="generic_top/delta_psi/delta/gridding_run/gridding_actor"/>
+            <task name="generic_top/delta_psi/delta/gridding_run"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/ifft_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+    </constraints>
+    <timings excelUrl="">
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/iterator"/>
+        <timing opname="x86" time="0.0013 * GRID_SIZE * GRID_SIZE + 0.677" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/save_output"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/correction_set_up"/>
+        <timing opname="x86" time="58" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+        <timing opname="x86" time="55" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+        <timing opname="x86" time="53" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+        <timing opname="x86" time="0.001039 * NUM_VISIBILITIES - 4.7" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+        <timing opname="x86" time="0.000003575 * NUM_VISIBILITIES + 0.1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/add_visibilities"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/degridding_kernel_sink"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/image_passthrough"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/merge_grids"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/psf_sink"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/split_vis"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/token_sink"/>
+        <timing opname="x86" time="-733.859365 + 0.000554321295 * GRID_SIZE * GRID_SIZE - 0.0000000000323880936 * GRID_SIZE * GRID_SIZE * GRID_SIZE * GRID_SIZE + 4.06456629 * NUM_MINOR_CYCLES + 0.00000882088313 * NUM_MINOR_CYCLES * GRID_SIZE * GRID_SIZE + 0.0000286686141 * NUM_MINOR_CYCLES * NUM_MINOR_CYCLES" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/hogbom_clean"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/token_sink"/>
+        <timing opname="x86" time="0.0000472 * GRID_SIZE * GRID_SIZE + 0.087" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+        <timing opname="x86" time="7155" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/dft_run/dft_actor"/>
+        <timing opname="x86" time="970" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/gridding_run/gridding_actor"/>
+        <timing opname="x86" time="0.00000000000435 * GRID_SIZE * GRID_SIZE * GRID_SIZE * GRID_SIZE + 0.00004317 * GRID_SIZE * GRID_SIZE + 5.2" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/ifft_run/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_real_actor"/>
+        <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/subtraction_run/reciprocal_transform_actor"/>
+        <timing opname="x86" time="0.00000000000435 * GRID_SIZE * GRID_SIZE * GRID_SIZE * GRID_SIZE + 0.00004317 * GRID_SIZE * GRID_SIZE + 5.2" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/subtraction_run/subtraction"/>
+        <memcpyspeed opname="x86" setuptime="1" timeperunit="6.170012059298443E-11"/>
+    </timings>
+    <simuParams>
+        <mainCore>Core0</mainCore>
+        <mainComNode>shared_mem</mainComNode>
+        <averageDataSize>1000</averageDataSize>
+        <dataTypes>
+            <dataType name="double" size="64"/>
+            <dataType name="Config" size="8"/>
+            <dataType name="PRECISION" size="8"/>
+            <dataType name="int2" size="8"/>
+            <dataType name="PRECISION2" size="8"/>
+            <dataType name="PRECISION3" size="8"/>
+            <dataType name="int" size="32"/>
+        </dataTypes>
+        <specialVertexOperators>
+            <specialVertexOperator path="Core0"/>
+            <specialVertexOperator path="Core1"/>
+            <specialVertexOperator path="Core2"/>
+            <specialVertexOperator path="Core3"/>
+            <specialVertexOperator path="Core4"/>
+            <specialVertexOperator path="Core5"/>
+        </specialVertexOperators>
+    </simuParams>
+    <parameterValues/>
+    <papifyConfigs xmlUrl=""/>
+    <energyConfigs xmlUrl="">
+        <performanceObjective objectiveEPS="0.0"/>
+        <peActorsEnergy/>
+    </energyConfigs>
+</scenario>

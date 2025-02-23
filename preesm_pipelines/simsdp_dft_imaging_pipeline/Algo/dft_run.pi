@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <key attr.name="parameters" for="graph" id="parameters"/>
+    <key attr.name="variables" for="graph" id="variables"/>
+    <key attr.name="arguments" for="node" id="arguments"/>
+    <key attr.name="name" attr.type="string" for="graph"/>
+    <key attr.name="graph_desc" attr.type="string" for="node"/>
+    <graph edgedefault="directed">
+        <data key="name">dft_run</data>
+        <node id="NUM_VISIBILITIES" kind="cfg_in_iface"/>
+        <node id="NUM_MAX_SOURCES" kind="cfg_in_iface"/>
+        <node id="dft_actor" kind="actor">
+            <data key="graph_desc">Code/include/dft_run.h</data>
+            <loop name="dft_actor">
+                <param direction="IN" isConfig="true"
+                    name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="true"
+                    name="NUM_MAX_SOURCES" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="sources" type="PRECISION3"/>
+                <param direction="IN" isConfig="false"
+                    name="vis_uvw_coords" type="PRECISION3"/>
+                <param direction="IN" isConfig="false"
+                    name="num_sources" type="int"/>
+                <param direction="IN" isConfig="false"
+                    name="config" type="Config"/>
+                <param direction="OUT" isConfig="false"
+                    name="visibilities" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port kind="cfg_input" name="NUM_MAX_SOURCES"/>
+            <port annotation="READ_ONLY" expr="NUM_MAX_SOURCES"
+                kind="input" name="sources"/>
+            <port annotation="READ_ONLY" expr="NUM_VISIBILITIES"
+                kind="input" name="vis_uvw_coords"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="num_sources"/>
+            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="NUM_VISIBILITIES"
+                kind="output" name="visibilities"/>
+        </node>
+        <node id="num_sources" kind="src">
+            <port annotation="READ_ONLY" expr="1" kind="output" name="num_sources"/>
+        </node>
+        <node id="vis_uvw_coords" kind="src">
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="output" name="vis_uvw_coords"/>
+        </node>
+        <node id="sources" kind="src">
+            <port annotation="READ_ONLY" expr="NUM_MAX_SOURCES"
+                kind="output" name="sources"/>
+        </node>
+        <node id="predicted_visibilities" kind="snk">
+            <port annotation="NONE" expr="NUM_VISIBILITIES"
+                kind="input" name="predicted_visibilities"/>
+        </node>
+        <node id="config" kind="src">
+            <port annotation="NONE" expr="1" kind="output" name="config"/>
+        </node>
+        <edge kind="fifo" source="sources" sourceport="sources"
+            target="dft_actor" targetport="sources" type="PRECISION3"/>
+        <edge kind="fifo" source="vis_uvw_coords"
+            sourceport="vis_uvw_coords" target="dft_actor"
+            targetport="vis_uvw_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="num_sources"
+            sourceport="num_sources" target="dft_actor"
+            targetport="num_sources" type="int"/>
+        <edge kind="fifo" source="dft_actor"
+            sourceport="visibilities"
+            target="predicted_visibilities"
+            targetport="predicted_visibilities" type="PRECISION2"/>
+        <edge kind="fifo" source="config" sourceport="config"
+            target="dft_actor" targetport="config" type="Config"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES"
+            target="dft_actor" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="predicted_visibilities"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="vis_uvw_coords"/>
+        <edge kind="dependency" source="NUM_MAX_SOURCES" target="sources"/>
+        <edge kind="dependency" source="NUM_MAX_SOURCES"
+            target="dft_actor" targetport="NUM_MAX_SOURCES"/>
+    </graph>
+</graphml>

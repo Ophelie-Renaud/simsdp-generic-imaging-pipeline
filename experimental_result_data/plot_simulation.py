@@ -9,15 +9,18 @@ from sklearn.metrics import mean_squared_error
 simulated_sota_csv_files = {
     "g2g_clean": "moldable/simu_sota/g2g_clean.csv",
     "g2g": "moldable/simu_sota/g2g.csv",
+    "dft": "moldable/simu_sota/dft.csv",
 }
 simulated_csv_files = {
     "g2g_clean": "moldable/simu/g2g_clean.csv",
     "g2g": "moldable/simu/g2g.csv",
+    "dft": "moldable/simu/dft.csv",
 }
 
 measured_csv_files = {
     "g2g_clean": "moldable/measure/g2g_clean.csv",
     "g2g": "moldable/measure/g2g.csv",
+    "dft": "moldable/measure/dft.csv",
 }
 
 subset_name = "DurationII"  # Colonne d'intérêt (ex: "Latency" ou "DurationII")

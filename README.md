@@ -11,13 +11,21 @@ The primary goal of SimSDP is to simulate the **Science Data Processor (SDP)** p
 
 The aim of this project is to facilitate the comparison of algorithm describing the SDP using SimSDP.  As a dataflow-based tool, SimSDP takes into account the dataflow application graph as well as a csv file containing the execution times of the actors on each target to be simulated. Dataflow representation of  the **Generic Imaging Pipeline** with a single and multi-frequency scenarii are provided. Our goal is to simulate these pipelines on Multinode - Multicore architecture, on Multinode - MonoGPU architecture and (might be) on Multinode - MultiGPU architecture.
 
-<img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/project_goal.png" style="zoom:100%;" />
+<div align="center">
+    <img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/project_goal.png" style="zoom:100%;" />
+    <p><em>Figure 1 : The figure is a dataflow-based representation of a multi-spectral radio-interferometric imaging pipeline where each top nodes will be assigned to an HPC architecture node. The HPC architecture nodes to consider are multicore, mono-GPU and multi-GPU .</em></p>
+</div>
 
-Algorithm performance is influenced by parameters such as the number of visibility points, grid size and number of minor cycles. We aim to identify and evaluate the influence of these parameters on scaling and assess whether a solution is viable in the context of SKA.
+Algorithm performance is influenced by parameters such as the *number of visibility points*, *grid size* and *number of minor cycles*. We aim to identify and evaluate the influence of these parameters on scaling and assess whether a solution is viable in the context of SKA.
 
 To achieve this, we provide tools that automatically estimate the execution time of dataflow actors for each targeted architecture and simulate algorithm performance by varying a set of parameter values automatically.
 
+
+
+<div align="center">
 <img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/project_goal2.png" style="zoom:30%;" />
+<p><em>Figure 2 : Simplified representation of the SimSDP workflow.</em></p>
+</div>
 
 ---
 
@@ -77,7 +85,7 @@ cd simsdp-generic-imaging-pipeline
 ```
 ---
 
-### Polynomial regression for static timing estimation :file_folder: `polynomial_timing`
+## Polynomial regression for static timing estimation :file_folder: `polynomial_timing`
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 .
@@ -92,7 +100,7 @@ The proposed automated method, which extends :page_facing_up: [S. Wang, et al.](
 
 ---
 
-### Optimized G2G integration :file_folder: `g2g_optim_actor`
+## Optimized G2G integration :file_folder: `g2g_optim_actor`
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
 
@@ -144,7 +152,7 @@ void get_sky2sky_matrix_v3(struct interpolation_parameters* params);
 
 ---
 
-### Run SimSDP on :file_folder: `preesm_pipelines`
+## Run SimSDP on :file_folder: `preesm_pipelines`
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
@@ -200,6 +208,9 @@ Dataflow pipelines are parameterized with moldable parameters. *(For details, se
 3. **Results** :bar_chart::
 
    - The generated **C code** and **moldable parameter logs** are located in the `/Code/generated/` directory.
+   - :boom: ​Rename the log file by `g2g.csv` :arrow_right: copy the result file into: :file_folder: `experimental_result_data/moldable/simu/` .
+   
+   
 
 ------
 
@@ -234,7 +245,7 @@ Dataflow pipelines are parameterized with moldable parameters. *(For details, se
 
 ---
 
-### Run the generated code from :file_folder: `param_code`
+## Run the generated code from :file_folder: `param_code`
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
     .
@@ -428,7 +439,7 @@ Where:
 | -------------- | ----------------------- | ----------- |
 | DFT- ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simulation_dft.png)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/3D_comparison_dft.png)
 
 | 📝 **Analysis**                                               |
 | ------------------------------------------------------------ |
@@ -448,7 +459,7 @@ Where:
 | -------------- | ----------------------- | ----------- |
 | FFT- ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
-![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/simulation_fft.png)
+![](https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/3D_comparison_fft.png)
 
 | 📝 **Analysis**                                               |
 | ------------------------------------------------------------ |
