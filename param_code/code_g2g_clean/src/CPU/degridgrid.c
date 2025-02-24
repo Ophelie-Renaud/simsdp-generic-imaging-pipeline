@@ -275,8 +275,15 @@ void g2g_degridgrid(int GRID_SIZE, int NUM_VISIBILITIES, int NUM_GRIDDING_KERNEL
 
 		int idx = x + y * GRID_SIZE;
 
-		degridded_visibility.x = input_grid[idx].x;
-		degridded_visibility.y = input_grid[idx].y;
+		if (input_grid && ((void *)&input_grid[idx] >= (void *)input_grid)) {
+			degridded_visibility.x = input_grid[idx].x;
+			degridded_visibility.y = input_grid[idx].y;
+		} else {
+			printf("Warning: input_grid is NULL or idx is out of bounds, setting default values.\n");
+			degridded_visibility.x = 0;
+			degridded_visibility.y = 0;
+		}
+
 
 
 

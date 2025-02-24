@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g"
+CMAKE_SOURCE_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g_clean_1c"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g"
+CMAKE_BINARY_DIR = "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g_clean_1c"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/CMakeFiles" "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g//CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g_clean_1c/CMakeFiles" "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g_clean_1c//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g_clean_1c/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target

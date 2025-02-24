@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <graph edgedefault="directed">
+        <data key="name">setup_ri_pipeline</data>
+        <node id="NUM_GRIDDING_KERNELS" kind="cfg_in_iface"/>
+        <node id="GRID_SIZE" kind="cfg_in_iface"/>
+        <node id="GAUSSIAN_CLEAN_PSF" kind="cfg_in_iface"/>
+        <node id="NUM_RECEIVERS" kind="cfg_in_iface"/>
+        <node id="NUM_BASELINES" kind="cfg_in_iface"/>
+        <node id="TOTAL_GRIDDING_KERNEL_SAMPLES" kind="cfg_in_iface"/>
+        <node id="NUM_VISIBILITIES" kind="cfg_in_iface"/>
+        <node id="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="cfg_in_iface"/>
+        <node id="NUM_DEGRIDDING_KERNELS" kind="cfg_in_iface"/>
+        <node expr="2458.0" id="PSF_GRID_SIZE" kind="param"/>
+        <node id="clean_psf_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="clean_psf_host_set_up">
+                <param direction="IN" isConfig="true" name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true" name="GAUSSIAN_CLEAN_PSF" type="int"/>
+                <param direction="IN" isConfig="false" name="config" type="Config"/>
+                <param direction="IN" isConfig="false" name="dirty_psf" type="PRECISION"/>
+                <param direction="OUT" isConfig="false" name="clean_psf" type="PRECISION"/>
+                <param direction="OUT" isConfig="false" name="partial_psf_halfdims" type="int2"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="GAUSSIAN_CLEAN_PSF"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="config"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="dirty_psf"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="output" name="clean_psf"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="partial_psf_halfdims"/>
+        </node>
+        <node id="visibility_host_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="visibility_host_set_up">
+                <param direction="IN" isConfig="true" name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="false" name="config" type="Config"/>
+                <param direction="OUT" isConfig="false" name="vis_uvw_coords" type="PRECISION3"/>
+                <param direction="OUT" isConfig="false" name="measured_vis" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="config"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="output" name="measured_vis"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="output" name="vis_uvw_coords"/>
+        </node>
+        <node id="Broadcast_config_prequel" kind="broadcast">
+            <port annotation="NONE" expr="1.0" kind="input" name="input"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="setup_prequel"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="setup_psf"/>
+        </node>
+        <node id="config_struct_set_up_sequel" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="config_struct_set_up_sequel">
+                <param direction="IN" isConfig="false" name="config_in" type="Config"/>
+                <param direction="IN" isConfig="false" name="psf_max_value" type="double"/>
+                <param direction="OUT" isConfig="false" name="config_out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="1.0" kind="input" name="psf_max_value"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="config_in"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="config_out"/>
+        </node>
+        <node id="gains_host_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="gains_host_set_up">
+                <param direction="IN" isConfig="true" name="NUM_RECEIVERS" type="int"/>
+                <param direction="IN" isConfig="true" name="NUM_BASELINES" type="int"/>
+                <param direction="IN" isConfig="false" name="config" type="Config"/>
+                <param direction="OUT" isConfig="false" name="gains" type="PRECISION2"/>
+                <param direction="OUT" isConfig="false" name="receiver_pairs" type="int2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_RECEIVERS"/>
+            <port kind="cfg_input" name="NUM_BASELINES"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="config"/>
+            <port annotation="NONE" expr="NUM_BASELINES" kind="output" name="receiver_pairs"/>
+            <port annotation="NONE" expr="NUM_RECEIVERS" kind="output" name="gains"/>
+        </node>
+        <node id="kernel_host_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="kernel_host_set_up">
+                <param direction="IN" isConfig="true" name="NUM_KERNELS" type="int"/>
+                <param direction="IN" isConfig="true" name="TOTAL_KERNEL_SAMPLES" type="int"/>
+                <param direction="IN" isConfig="false" name="config" type="Config"/>
+                <param direction="OUT" isConfig="false" name="kernel_supports" type="int2"/>
+                <param direction="OUT" isConfig="false" name="kernels" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_KERNELS"/>
+            <port kind="cfg_input" name="TOTAL_KERNEL_SAMPLES"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="config"/>
+            <port annotation="NONE" expr="NUM_KERNELS" kind="output" name="kernel_supports"/>
+            <port annotation="NONE" expr="TOTAL_KERNEL_SAMPLES" kind="output" name="kernels"/>
+        </node>
+        <node id="correction_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="correction_set_up">
+                <param direction="IN" isConfig="true" name="GRID_SIZE" type="int"/>
+                <param direction="OUT" isConfig="false" name="prolate" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE/2" kind="output" name="prolate"/>
+        </node>
+        <node id="psf_host_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="psf_host_set_up">
+                <param direction="IN" isConfig="true" name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true" name="PSF_GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false" name="config" type="Config"/>
+                <param direction="OUT" isConfig="false" name="psf" type="PRECISION"/>
+                <param direction="OUT" isConfig="false" name="psf_max_value" type="double"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="PSF_GRID_SIZE"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="GRID_SIZE*GRID_SIZE" kind="output" name="psf"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="psf_max_value"/>
+        </node>
+        <node id="config_struct_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="config_struct_set_up">
+                <param direction="IN" isConfig="true" name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true" name="NUM_KERNELS" type="int"/>
+                <param direction="OUT" isConfig="false" name="config" type="Config"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_KERNELS"/>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="config"/>
+        </node>
+        <node id="Broadcast_clean_psf" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="READ_ONLY" expr="GRID_SIZE*GRID_SIZE" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="GRID_SIZE*GRID_SIZE" kind="output" name="output"/>
+        </node>
+        <node id="Broadcast_psfhalfdims" kind="broadcast">
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="1.0" kind="output" name="output"/>
+        </node>
+        <node id="Broadcast_receiver_pairs" kind="broadcast">
+            <port kind="cfg_input" name="NUM_BASELINES"/>
+            <port annotation="READ_ONLY" expr="NUM_BASELINES" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="NUM_BASELINES" kind="output" name="output"/>
+        </node>
+        <node id="Broadcast_kernel_supports" kind="broadcast">
+            <port kind="cfg_input" name="NUM_GRIDDING_KERNELS"/>
+            <port annotation="READ_ONLY" expr="NUM_GRIDDING_KERNELS" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="NUM_GRIDDING_KERNELS" kind="output" name="output"/>
+        </node>
+        <node id="Broadcast_kernels" kind="broadcast">
+            <port kind="cfg_input" name="TOTAL_GRIDDING_KERNEL_SAMPLES"/>
+            <port annotation="READ_ONLY" expr="TOTAL_GRIDDING_KERNEL_SAMPLES" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="TOTAL_GRIDDING_KERNEL_SAMPLES" kind="output" name="output"/>
+        </node>
+        <node id="Broadcast_vis_coords" kind="broadcast">
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port annotation="READ_ONLY" expr="NUM_VISIBILITIES" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="NUM_VISIBILITIES" kind="output" name="output"/>
+        </node>
+        <node id="Broadcast_prolate" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE/2" kind="input" name="input"/>
+            <port annotation="NONE" expr="GRID_SIZE/2" kind="output" name="output"/>
+        </node>
+        <node id="Broadcast_psf" kind="broadcast">
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="input"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="output" name="setup_clean_psf"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="output" name="output"/>
+        </node>
+        <node id="Broadcast_config" kind="broadcast">
+            <port annotation="NONE" expr="1.0" kind="input" name="input"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="setup_clean_psf"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="output"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="setup_degridding_kernel"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="setup_gains"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="setup_vis"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="setup_gridding_kernel"/>
+        </node>
+        <node id="Broadcast_measured_vis" kind="broadcast">
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port annotation="READ_ONLY" expr="NUM_VISIBILITIES" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="NUM_VISIBILITIES" kind="output" name="output"/>
+        </node>
+        <node id="Broadcast_gains" kind="broadcast">
+            <port kind="cfg_input" name="NUM_RECEIVERS"/>
+            <port annotation="READ_ONLY" expr="NUM_RECEIVERS" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="NUM_RECEIVERS" kind="output" name="output"/>
+        </node>
+        <node id="degridding_kernel_host_set_up" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="degridding_kernel_host_set_up">
+                <param direction="IN" isConfig="true" name="NUM_DEGRIDDING_KERNELS" type="int"/>
+                <param direction="IN" isConfig="true" name="TOTAL_DEGRIDDING_KERNEL_SAMPLES" type="int"/>
+                <param direction="IN" isConfig="false" name="config" type="Config"/>
+                <param direction="OUT" isConfig="false" name="degridding_kernel_supports" type="int2"/>
+                <param direction="OUT" isConfig="false" name="degridding_kernels" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_DEGRIDDING_KERNELS"/>
+            <port kind="cfg_input" name="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="config"/>
+            <port annotation="NONE" expr="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="output" name="degridding_kernels"/>
+            <port annotation="NONE" expr="NUM_DEGRIDDING_KERNELS" kind="output" name="degridding_kernel_supports"/>
+        </node>
+        <node id="Broadcast_degridding_kernels" kind="broadcast">
+            <port kind="cfg_input" name="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+            <port annotation="READ_ONLY" expr="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="output" name="output"/>
+        </node>
+        <node id="Broadcast_degridding_kernel_supports" kind="broadcast">
+            <port kind="cfg_input" name="NUM_DEGRIDDING_KERNELS"/>
+            <port annotation="READ_ONLY" expr="NUM_DEGRIDDING_KERNELS" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="NUM_DEGRIDDING_KERNELS" kind="output" name="output"/>
+        </node>
+        <node id="config" kind="snk">
+            <port annotation="NONE" expr="1.0" kind="input" name="config"/>
+        </node>
+        <node id="clean_psf" kind="snk">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="clean_psf"/>
+        </node>
+        <node id="psf_halfdims" kind="snk">
+            <port annotation="NONE" expr="1.0" kind="input" name="psf_halfdims"/>
+        </node>
+        <node id="gridding_kernel_supports" kind="snk">
+            <port annotation="NONE" expr="NUM_GRIDDING_KERNELS" kind="input" name="gridding_kernel_supports"/>
+        </node>
+        <node id="gridding_kernels" kind="snk">
+            <port annotation="NONE" expr="TOTAL_GRIDDING_KERNEL_SAMPLES" kind="input" name="gridding_kernels"/>
+        </node>
+        <node id="psf" kind="snk">
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="psf"/>
+        </node>
+        <node id="receiver_pairs" kind="snk">
+            <port annotation="NONE" expr="NUM_BASELINES" kind="input" name="receiver_pairs"/>
+        </node>
+        <node id="vis_uvw_coords" kind="snk">
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="input" name="vis_uvw_coords"/>
+        </node>
+        <node id="degridding_kernel_supports" kind="snk">
+            <port annotation="NONE" expr="NUM_DEGRIDDING_KERNELS" kind="input" name="degridding_kernel_supports"/>
+        </node>
+        <node id="degridding_kernels" kind="snk">
+            <port annotation="NONE" expr="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="input" name="degridding_kernels"/>
+        </node>
+        <node id="gains" kind="snk">
+            <port annotation="NONE" expr="NUM_RECEIVERS" kind="input" name="gains"/>
+        </node>
+        <node id="measured_visibilities" kind="snk">
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="input" name="measured_visibilities"/>
+        </node>
+        <node id="prolate" kind="snk">
+            <port annotation="NONE" expr="GRID_SIZE/2" kind="input" name="prolate"/>
+        </node>
+        <edge kind="fifo" source="psf_host_set_up" sourceport="psf_max_value" target="config_struct_set_up_sequel" targetport="psf_max_value" type="double"/>
+        <edge kind="fifo" source="config_struct_set_up" sourceport="config" target="Broadcast_config_prequel" targetport="input" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config_prequel" sourceport="setup_prequel" target="config_struct_set_up_sequel" targetport="config_in" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config_prequel" sourceport="setup_psf" target="psf_host_set_up" targetport="config" type="Config"/>
+        <edge kind="fifo" source="clean_psf_set_up" sourceport="clean_psf" target="Broadcast_clean_psf" targetport="input" type="PRECISION"/>
+        <edge kind="fifo" source="gains_host_set_up" sourceport="receiver_pairs" target="Broadcast_receiver_pairs" targetport="input" type="int2"/>
+        <edge kind="fifo" source="kernel_host_set_up" sourceport="kernel_supports" target="Broadcast_kernel_supports" targetport="input" type="int2"/>
+        <edge kind="fifo" source="kernel_host_set_up" sourceport="kernels" target="Broadcast_kernels" targetport="input" type="PRECISION2"/>
+        <edge kind="fifo" source="clean_psf_set_up" sourceport="partial_psf_halfdims" target="Broadcast_psfhalfdims" targetport="input" type="int2"/>
+        <edge kind="fifo" source="correction_set_up" sourceport="prolate" target="Broadcast_prolate" targetport="input" type="PRECISION"/>
+        <edge kind="fifo" source="psf_host_set_up" sourceport="psf" target="Broadcast_psf" targetport="input" type="PRECISION"/>
+        <edge kind="fifo" source="Broadcast_psf" sourceport="setup_clean_psf" target="clean_psf_set_up" targetport="dirty_psf" type="PRECISION"/>
+        <edge kind="fifo" source="config_struct_set_up_sequel" sourceport="config_out" target="Broadcast_config" targetport="input" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config" sourceport="setup_clean_psf" target="clean_psf_set_up" targetport="config" type="Config"/>
+        <edge kind="fifo" source="gains_host_set_up" sourceport="gains" target="Broadcast_gains" targetport="input" type="PRECISION2"/>
+        <edge kind="fifo" source="degridding_kernel_host_set_up" sourceport="degridding_kernels" target="Broadcast_degridding_kernels" targetport="input" type="PRECISION2"/>
+        <edge kind="fifo" source="degridding_kernel_host_set_up" sourceport="degridding_kernel_supports" target="Broadcast_degridding_kernel_supports" targetport="input" type="int2"/>
+        <edge kind="fifo" source="Broadcast_config" sourceport="output" target="config" targetport="config" type="Config"/>
+        <edge kind="fifo" source="Broadcast_clean_psf" sourceport="output" target="clean_psf" targetport="clean_psf" type="PRECISION"/>
+        <edge kind="fifo" source="Broadcast_psfhalfdims" sourceport="output" target="psf_halfdims" targetport="psf_halfdims" type="int2"/>
+        <edge kind="fifo" source="Broadcast_kernel_supports" sourceport="output" target="gridding_kernel_supports" targetport="gridding_kernel_supports" type="int2"/>
+        <edge kind="fifo" source="Broadcast_kernels" sourceport="output" target="gridding_kernels" targetport="gridding_kernels" type="PRECISION2"/>
+        <edge kind="fifo" source="Broadcast_psf" sourceport="output" target="psf" targetport="psf" type="PRECISION"/>
+        <edge kind="fifo" source="Broadcast_receiver_pairs" sourceport="output" target="receiver_pairs" targetport="receiver_pairs" type="int2"/>
+        <edge kind="fifo" source="Broadcast_vis_coords" sourceport="output" target="vis_uvw_coords" targetport="vis_uvw_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="Broadcast_degridding_kernel_supports" sourceport="output" target="degridding_kernel_supports" targetport="degridding_kernel_supports" type="int2"/>
+        <edge kind="fifo" source="Broadcast_degridding_kernels" sourceport="output" target="degridding_kernels" targetport="degridding_kernels" type="PRECISION2"/>
+        <edge kind="fifo" source="Broadcast_gains" sourceport="output" target="gains" targetport="gains" type="PRECISION2"/>
+        <edge kind="fifo" source="Broadcast_measured_vis" sourceport="output" target="measured_visibilities" targetport="measured_visibilities" type="PRECISION2"/>
+        <edge kind="fifo" source="Broadcast_prolate" sourceport="output" target="prolate" targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="Broadcast_config" sourceport="setup_degridding_kernel" target="degridding_kernel_host_set_up" targetport="config" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config" sourceport="setup_gains" target="gains_host_set_up" targetport="config" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config" sourceport="setup_vis" target="visibility_host_set_up" targetport="config" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config" sourceport="setup_gridding_kernel" target="kernel_host_set_up" targetport="config" type="Config"/>
+        <edge kind="fifo" source="visibility_host_set_up" sourceport="measured_vis" target="Broadcast_measured_vis" targetport="input" type="PRECISION2"/>
+        <edge kind="fifo" source="visibility_host_set_up" sourceport="vis_uvw_coords" target="Broadcast_vis_coords" targetport="input" type="PRECISION3"/>
+        <edge kind="dependency" source="GAUSSIAN_CLEAN_PSF" target="clean_psf_set_up" targetport="GAUSSIAN_CLEAN_PSF"/>
+        <edge kind="dependency" source="GRID_SIZE" target="correction_set_up" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE" target="config_struct_set_up" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_BASELINES" target="gains_host_set_up" targetport="NUM_BASELINES"/>
+        <edge kind="dependency" source="GRID_SIZE" target="psf_host_set_up" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_GRIDDING_KERNELS" target="config_struct_set_up" targetport="NUM_KERNELS"/>
+        <edge kind="dependency" source="GRID_SIZE" target="clean_psf_set_up" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_RECEIVERS" target="gains_host_set_up" targetport="NUM_RECEIVERS"/>
+        <edge kind="dependency" source="NUM_GRIDDING_KERNELS" target="kernel_host_set_up" targetport="NUM_KERNELS"/>
+        <edge kind="dependency" source="TOTAL_GRIDDING_KERNEL_SAMPLES" target="kernel_host_set_up" targetport="TOTAL_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="GRID_SIZE" target="Broadcast_clean_psf" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_GRIDDING_KERNELS" target="Broadcast_kernel_supports" targetport="NUM_GRIDDING_KERNELS"/>
+        <edge kind="dependency" source="TOTAL_GRIDDING_KERNEL_SAMPLES" target="Broadcast_kernels" targetport="TOTAL_GRIDDING_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="NUM_BASELINES" target="Broadcast_receiver_pairs" targetport="NUM_BASELINES"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="Broadcast_vis_coords" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="GRID_SIZE" target="Broadcast_prolate" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="TOTAL_DEGRIDDING_KERNEL_SAMPLES" target="degridding_kernel_host_set_up" targetport="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="NUM_DEGRIDDING_KERNELS" target="degridding_kernel_host_set_up" targetport="NUM_DEGRIDDING_KERNELS"/>
+        <edge kind="dependency" source="GRID_SIZE" target="prolate"/>
+        <edge kind="dependency" source="TOTAL_DEGRIDDING_KERNEL_SAMPLES" target="Broadcast_degridding_kernels" targetport="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="NUM_DEGRIDDING_KERNELS" target="Broadcast_degridding_kernel_supports" targetport="NUM_DEGRIDDING_KERNELS"/>
+        <edge kind="dependency" source="NUM_RECEIVERS" target="Broadcast_gains" targetport="NUM_RECEIVERS"/>
+        <edge kind="dependency" source="GRID_SIZE" target="Broadcast_psf" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="Broadcast_measured_vis" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="GRID_SIZE" target="psf"/>
+        <edge kind="dependency" source="NUM_DEGRIDDING_KERNELS" target="degridding_kernel_supports"/>
+        <edge kind="dependency" source="TOTAL_DEGRIDDING_KERNEL_SAMPLES" target="degridding_kernels"/>
+        <edge kind="dependency" source="NUM_RECEIVERS" target="gains"/>
+        <edge kind="dependency" source="NUM_GRIDDING_KERNELS" target="gridding_kernel_supports"/>
+        <edge kind="dependency" source="TOTAL_GRIDDING_KERNEL_SAMPLES" target="gridding_kernels"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="measured_visibilities"/>
+        <edge kind="dependency" source="NUM_BASELINES" target="receiver_pairs"/>
+        <edge kind="dependency" source="GRID_SIZE" target="clean_psf"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="vis_uvw_coords"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="visibility_host_set_up" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="PSF_GRID_SIZE" target="psf_host_set_up" targetport="PSF_GRID_SIZE"/>
+    </graph>
+</graphml>

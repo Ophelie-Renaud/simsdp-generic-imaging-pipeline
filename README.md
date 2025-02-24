@@ -347,11 +347,16 @@ check: python3 -c "import astropy; print(astropy.__version__)"
        ```
      - 🛠 **Edit** `core0.c` etc..., update functions to use the parameter struct:
          ```c
+          // if (arg != NULL) {
+          //   printf("Warning: expecting NULL arguments\n");
+          //   fflush (stdout);
+          // }
+     	
          ThreadArgs* args = (ThreadArgs*) arg;  // Conversion du pointeur void* en ThreadArgs*
          int num_vis = args->num_vis;
          int grid_size = args->grid_size;
          int num_minor_cycle = args->num_minor_cycle;
-     	
+         
          // Replace all instances of hardcoded values:
          // int /*NUM_VIS*/ → num_vis
          // int /*GRID_SIZE*/ → grid_size

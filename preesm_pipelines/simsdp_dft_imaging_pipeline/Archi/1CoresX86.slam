@@ -8,15 +8,13 @@
         <spirit:componentInstance>
             <spirit:instanceName>Core0</spirit:instanceName>
             <spirit:hardwareId>0</spirit:hardwareId>
-            <spirit:componentRef spirit:library=""
-                spirit:name="x86_f1" spirit:vendor="" spirit:version=""/>
+            <spirit:componentRef spirit:library="" spirit:name="x86" spirit:vendor="" spirit:version=""/>
             <spirit:configurableElementValues/>
         </spirit:componentInstance>
         <spirit:componentInstance>
             <spirit:instanceName>shared_mem</spirit:instanceName>
             <spirit:hardwareId>0</spirit:hardwareId>
-            <spirit:componentRef spirit:library=""
-                spirit:name="SHARED_MEM" spirit:vendor="" spirit:version=""/>
+            <spirit:componentRef spirit:library="" spirit:name="SHARED_MEM" spirit:vendor="" spirit:version=""/>
             <spirit:configurableElementValues/>
         </spirit:componentInstance>
     </spirit:componentInstances>
@@ -30,16 +28,11 @@
     <spirit:hierConnections/>
     <spirit:vendorExtensions>
         <slam:componentDescriptions xmlns:slam="http://sourceforge.net/projects/dftools/slam">
-            <slam:componentDescription slam:componentRef="x86_f1"
-                slam:componentType="CPU" slam:refinement=""/>
-            <slam:componentDescription
-                slam:componentRef="SHARED_MEM"
-                slam:componentType="parallelComNode"
-                slam:refinement="" slam:speed="1.0E9"/>
+            <slam:componentDescription slam:componentRef="x86" slam:componentType="CPU" slam:refinement=""/>
+            <slam:componentDescription slam:componentRef="SHARED_MEM" slam:componentType="parallelComNode" slam:refinement="" slam:speed="1.0E9"/>
         </slam:componentDescriptions>
         <slam:linkDescriptions xmlns:slam="http://sourceforge.net/projects/dftools/slam">
-            <slam:linkDescription slam:directedLink="undirected"
-                slam:linkType="DataLink" slam:referenceId="0"/>
+            <slam:linkDescription slam:directedLink="undirected" slam:linkType="DataLink" slam:referenceId="0"/>
         </slam:linkDescriptions>
         <slam:designDescription xmlns:slam="http://sourceforge.net/projects/dftools/slam">
             <slam:parameters/>

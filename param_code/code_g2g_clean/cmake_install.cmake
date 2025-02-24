@@ -1,4 +1,4 @@
-# Install script for directory: /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g
+# Install script for directory: /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g_clean_1c
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g_clean_1c/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
