@@ -14,9 +14,9 @@
         <node expr="108800.0" id="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="param"/>
         <node expr="16.0" id="OVERSAMPLING_FACTOR" kind="param"/>
         <node expr="4.0" id="SLICES" kind="param"/>
-        <node expr="512;1024;1536;2048;2560" id="GRID_SIZE" kind="moldable_param" moldable_expr="512;1024;1536;2048;2560"/>
-        <node expr="50.0" id="NUM_MINOR_CYCLES" kind="moldable_param" moldable_expr="50; 100; 150; 200; 250"/>
-        <node expr="130816*10;130816*15;130816*20;130816*25;130816*30" id="NUM_VISIBILITIES" kind="moldable_param" moldable_expr="130816*10;130816*15;130816*20;130816*25;130816*30"/>
+        <node expr="512.0" id="GRID_SIZE" kind="moldable_param" moldable_expr="512;1024;1536"/>
+        <node expr="50.0" id="NUM_MINOR_CYCLES" kind="moldable_param" moldable_expr="50; 100; 150"/>
+        <node expr="130816*10;130816*15;130816*20" id="NUM_VISIBILITIES" kind="moldable_param" moldable_expr="130816*10;130816*15;130816*20"/>
         <node id="iterator" kind="actor">
             <data key="graph_desc">Code/include/major_loop_actor.h</data>
             <loop name="iterator">

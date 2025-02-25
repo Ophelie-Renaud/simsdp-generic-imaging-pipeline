@@ -74,25 +74,34 @@ def plot_3d_comparison(file_key,simu_sota_path, simu_path, measure_path):
     print(f"c_min: {c_min}, c_max: {c_max}")
 
     # Vérification des dimensions
-    if len(z_simu_sota) != len(z_meas):
+    if len(z_simu_sota) > len(z_meas):
         print(f"Attention : Dimensions différentes pour {file_key} -> Ajustement en cours")
         z_simu_sota = z_simu_sota[:len(z_meas)]  # Tronquer
         y_simu_sota = y_simu_sota[:len(y_meas)]
         x_simu_sota = x_simu_sota[:len(x_meas)]
         c_simu_sota = c_simu_sota[:len(c_meas)]
-        rmse_sota = compute_rmse(z_simu_sota, z_meas)
-    else:
-        rmse_sota = compute_rmse(z_simu_sota, z_meas)
-        
-    if len(z_simu) != len(z_meas):
+    elif len(z_simu_sota) < len(z_meas):
+        z_meas = z_meas[:len(z_simu_sota)]  # Tronquer
+        y_meas = y_meas[:len(y_simu_sota)]
+        x_meas = x_meas[:len(x_simu_sota)]
+        c_meas = c_meas[:len(c_simu_sota)]
+            
+    rmse_sota = compute_rmse(z_simu_sota, z_meas)    
+    
+    if len(z_simu) > len(z_meas):
         print(f"Attention : Dimensions différentes pour {file_key} -> Ajustement en cours")
-        z_simu = z_simu_sota[:len(z_meas)]  # Tronquer
-        y_simu = y_simu_sota[:len(y_meas)]
-        x_simu = x_simu_sota[:len(x_meas)]
-        c_simu = c_simu_sota[:len(c_meas)]
+        z_simu = z_simu[:len(z_meas)]  # Tronquer
+        y_simu = y_simu[:len(y_meas)]
+        x_simu = x_simu[:len(x_meas)]
+        c_simu = c_simu[:len(c_meas)]
         rmse = compute_rmse(z_simu, z_meas)
-    else:
-        rmse = compute_rmse(z_simu, z_meas)
+    elif len(z_simu) > len(z_meas):
+        z_meas = z_meas[:len(z_simu)]  # Tronquer
+        y_meas = y_meas[:len(y_simu)]
+        x_meas = x_meas[:len(x_simu)]
+        c_meas = c_meas[:len(c_simu)]
+        
+    rmse = compute_rmse(z_simu, z_meas)
 
     # Création des grilles pour interpolation
     xi = np.linspace(min(x_simu), max(x_simu), 50)

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# pb run all fait tourner que dft je sais pas pourquoi
+
 # Vérification du nombre d'arguments
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <mode>"
@@ -9,6 +11,7 @@ fi
 
 MODE=$1
 
+declare -A MODES  # Déclaration du tableau associatif
 MODES=(
     [g2g]="code_g2g g2g.csv"
     [g2g_clean]="code_g2g_clean g2g_clean.csv"
@@ -62,17 +65,19 @@ run_mode() {
             done
         done
     done
-    
+    echo "Exécution terminée de $MODE. Résultats enregistrés dans $DIR/$OUTPUT_FILE"
     cd ..
 }
 
 if [ "$MODE" == "all" ]; then
-    for key in "${!MODES[@]}"; do
-        run_mode ${MODES[$key]}
+     for key in "${!MODES[@]}"; do
+        eval set -- ${MODES[$key]}
+        run_mode "$1" "$2"
     done
 else
     if [[ -n "${MODES[$MODE]}" ]]; then
-        run_mode ${MODES[$MODE]}
+        eval set -- ${MODES[$MODE]}
+        run_mode "$1" "$2"
     else
         echo "Erreur : mode invalide '$MODE'. Choisissez parmi : g2g, fft, dft, g2g_clean, all."
         exit 1
