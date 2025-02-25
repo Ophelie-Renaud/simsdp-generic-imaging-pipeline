@@ -81,12 +81,14 @@ def plot_3d_comparison(file_key,simu_sota_path, simu_path, measure_path):
         x_simu_sota = x_simu_sota[:len(x_meas)]
         c_simu_sota = c_simu_sota[:len(c_meas)]
     elif len(z_simu_sota) < len(z_meas):
+        print(f"Attention : Dimensions différentes pour {file_key} -> Ajustement en cours")
         z_meas = z_meas[:len(z_simu_sota)]  # Tronquer
         y_meas = y_meas[:len(y_simu_sota)]
         x_meas = x_meas[:len(x_simu_sota)]
         c_meas = c_meas[:len(c_simu_sota)]
             
-    rmse_sota = compute_rmse(z_simu_sota, z_meas)    
+    rmse_sota = compute_rmse(z_simu_sota, z_meas)
+    error_sota = (rmse_sota/ np.mean(z_meas))*100
     
     if len(z_simu) > len(z_meas):
         print(f"Attention : Dimensions différentes pour {file_key} -> Ajustement en cours")
@@ -96,12 +98,14 @@ def plot_3d_comparison(file_key,simu_sota_path, simu_path, measure_path):
         c_simu = c_simu[:len(c_meas)]
         rmse = compute_rmse(z_simu, z_meas)
     elif len(z_simu) > len(z_meas):
+        print(f"Attention : Dimensions différentes pour {file_key} -> Ajustement en cours")
         z_meas = z_meas[:len(z_simu)]  # Tronquer
         y_meas = y_meas[:len(y_simu)]
         x_meas = x_meas[:len(x_simu)]
         c_meas = c_meas[:len(c_simu)]
         
     rmse = compute_rmse(z_simu, z_meas)
+    error = (rmse/ np.mean(z_meas))*100
 
     # Création des grilles pour interpolation
     xi = np.linspace(min(x_simu), max(x_simu), 50)
@@ -112,10 +116,11 @@ def plot_3d_comparison(file_key,simu_sota_path, simu_path, measure_path):
     Z_simu = griddata((x_simu, y_simu), z_simu, (X, Y), method='cubic')
     Z_meas = griddata((x_meas, y_meas), z_meas, (X, Y), method='cubic')
     
-    c_value = [50, 100, 150, 200, 250]
-    colors = ['#3498db', '#2ecc71', '#f1c40f', '#e67e22', '#e74c3c']
+    c_value = [50, 100, 150] #, 200, 250]
+    colors = ['#3498db', '#2ecc71', '#f1c40f'] #, '#e67e22', '#e74c3c']
     cmap = mcolors.ListedColormap(colors)
-    norm = mcolors.BoundaryNorm([45, 75, 125, 175, 225, 275], cmap.N)
+    norm = mcolors.BoundaryNorm([45, 75, 125, 175], cmap.N)
+    #norm = mcolors.BoundaryNorm([45, 75, 125, 175, 225, 275], cmap.N)
 
 
     # Création de la figure avec 2 sous-graphes
@@ -125,7 +130,7 @@ def plot_3d_comparison(file_key,simu_sota_path, simu_path, measure_path):
     surf0 = axes[0].plot_surface(X, Y, Z_simu_sota, cmap=cmap, edgecolor='none', alpha=0.9)
     title = f"Simulation S. Wang et. al. - {file_key}"
     if rmse is not None:
-        title += f"\nRMSE = {rmse_sota:.2f}"
+        title += f"\nRMSE = {rmse_sota:.2f}\nError = {error_sota:.2f}%"
     axes[0].set_title(title)
     axes[0].set_xlabel("GRID_SIZE")
     axes[0].set_ylabel("NUM_VISIBILITIES")
@@ -143,7 +148,7 @@ def plot_3d_comparison(file_key,simu_sota_path, simu_path, measure_path):
     surf1 = axes[1].plot_surface(X, Y, Z_simu, cmap=cmap, edgecolor='none', alpha=0.9)
     title = f"Simulation - {file_key}"
     if rmse is not None:
-        title += f"\nRMSE = {rmse:.2f}"
+        title += f"\nRMSE = {rmse:.2f}\nError = {error:.2f}%"
     axes[1].set_title(title)
     axes[1].set_xlabel("GRID_SIZE")
     axes[1].set_ylabel("NUM_VISIBILITIES")
