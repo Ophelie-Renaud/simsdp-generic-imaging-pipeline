@@ -420,8 +420,10 @@ How to retrieve the following results: `pip install scikit-learn`, `pip install 
 | G2G - ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/3D_comparison_g2g.pdf" style="zoom:100%;" />
-<p><em>Figure : g2g.</em></p>
+  <object data="experimental_result_data/3D_comparison_g2g.pdf" type="application/pdf" width="80%" height="500px">
+    <p>❌ Impossible d'afficher le PDF. <a href="experimental_result_data/3D_comparison_g2g.pdf">Téléchargez-le ici</a>.</p>
+  </object>
+  <p><em>Figure : g2g.</em></p>
 </div>
 
 👉 [Voir l'animation 3D interactive](https://ophelie-renaud.github.io/simsdp-generic-imaging-pipeline/experimental_result_data/3D_comparison_g2g.html)
