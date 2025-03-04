@@ -419,7 +419,7 @@ How to retrieve the following results: `pip install scikit-learn`, `pip install 
 | --------------- | ----------------------- | ----------- |
 | G2G - ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
-<iframe src="https://ophelie-renaud.github.io/simsdp-generic-imaging-pipeline /experimental_result_data/3D_comparison_g2g.html" width="50" height="430"></iframe>
+<iframe src="https://ophelie-renaud.github.io/simsdp-generic-imaging-pipeline/experimental_result_data/3D_comparison_g2g.html" width="500" height="430"></iframe>
 
 
 
@@ -446,7 +446,7 @@ Where:
 | -------------- | ----------------------- | ----------- |
 | DFT- ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
-<iframe src="https://ophelie-renaud.github.io/simsdp-generic-imaging-pipeline /experimental_result_data/3D_comparison_dft.html" width="50" height="430"></iframe>
+<iframe src="https://ophelie-renaud.github.io/simsdp-generic-imaging-pipeline/experimental_result_data/3D_comparison_dft.html" width="500" height="430"></iframe>
 
 | 📝 **Analysis**                                               |
 | ------------------------------------------------------------ |
@@ -466,7 +466,7 @@ Where:
 | -------------- | ----------------------- | ----------- |
 | FFT- ~~Clean~~ | 6 core CPU x86 - 1 node | semi-manual |
 
-<iframe src="https://ophelie-renaud.github.io/simsdp-generic-imaging-pipeline /experimental_result_data/3D_comparison_fft.html" width="50" height="430"></iframe>
+<iframe src="https://ophelie-renaud.github.io/simsdp-generic-imaging-pipeline/experimental_result_data/3D_comparison_fft.html" width="500" height="430"></iframe>
 
 | 📝 **Analysis**                                               |
 | ------------------------------------------------------------ |
@@ -486,7 +486,7 @@ Where:
 | ----------- | ----------------------- | ----------- |
 | G2G - Clean | 6 core CPU x86 - 1 node | semi-manual |
 
-<iframe src="https://ophelie-renaud.github.io/simsdp-generic-imaging-pipeline /experimental_result_data/3D_comparison_g2g_clean.html" width="50" height="430"></iframe>
+<iframe src="https://ophelie-renaud.github.io/simsdp-generic-imaging-pipeline/experimental_result_data/3D_comparison_g2g_clean.html" width="500" height="430"></iframe>
 
 | 📝 **Analysis**                                               |
 | ------------------------------------------------------------ |
