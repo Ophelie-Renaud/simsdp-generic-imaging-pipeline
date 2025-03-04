@@ -200,6 +200,10 @@ def plot_3d_comparison(file_key,simu_sota_path, simu_path, measure_path, df_inst
   # Sauvegarde du premier frame en PDF
   pio.write_image(fig, f"3D_comparison_{file_key}.pdf", format="pdf", engine="kaleido") # Use write_image instead
   print(f"Graphique enregistré : 3D_comparison_{file_key}.pdf")
+  
+  # Sauvegarde du premier frame en png
+  pio.write_image(fig, f"3D_comparison_{file_key}.png", format="png", engine="kaleido") # Use write_image instead
+  print(f"Graphique enregistré : 3D_comparison_{file_key}.png")
 
   # Sauvegarde de l'animation complète en HTML
   fig.write_html(f"3D_comparison_{file_key}.html")
