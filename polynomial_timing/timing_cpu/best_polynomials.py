@@ -89,6 +89,7 @@ def poly2Dgeneral(x, *coeffs):
 def fit(points_and_axes, dof):
     points_and_axes[1].flatten()
     return np.polyfit(points_and_axes[1].flatten(), points_and_axes[0].flatten(), dof)
+    
 def fit2D(points_and_axes, dof, num_x, num_y):
     x1data, x2data = np.meshgrid(points_and_axes[1].flatten()[0::num_y], points_and_axes[2].flatten()[0:num_y], indexing='ij')
     x1shape = x1data.shape
@@ -196,6 +197,60 @@ def compute_mse_2D(data_points, coeffs, dof):
     return rmse
 def rmse(measure, predict):
     return np.sqrt(np.mean((np.array(measure) - np.array(predict))**2))
+    
+def print_poly1D(coeffs, var_name):
+    terms = []
+    degree = len(coeffs) - 1  # Déterminer le degré du polynôme
+
+    for i, coef in enumerate(coeffs):
+        power = degree - i  # Exposant du terme
+
+        # Ignorer les coefficients nuls pour simplifier l'affichage
+        if abs(coef) < 1e-7:
+            continue
+
+        # Formatage du coefficient
+        coef_str = f"{coef:.6f}" if coef < 0 or i == 0 else f"+ {coef:.6f}"
+
+        # Construction du terme
+        if power == 0:
+            terms.append(f"{coef_str}")  # Constante
+        elif power == 1:
+            terms.append(f"{coef_str} * {var_name}")  # Terme linéaire
+        else:
+            terms.append(f"{coef_str} * {var_name}^{power}")  # Terme polynomial
+
+    # Assemblage final et affichage
+    polynomial = " ".join(terms)
+    return polynomial
+
+def print_poly2D(coeffs, var_name1,var_name2, dof):
+    terms = []
+    index = 0
+
+    for i in range(dof + 1):  # Parcourt les degrés de x
+        for j in range(i + 1):   # Parcourt les degrés de y
+            coef = coeffs[index]
+            index += 1
+
+            if abs(coef) < 1e-7:  # Ignore les coefficients trop petits
+                continue
+
+            # Formatage du coefficient
+            coef_str = f"{coef:.6f}" if coef < 0 or not terms else f"+ {coef:.6f}"
+
+            # Gestion des puissances
+            term = coef_str
+            if i - j > 0:
+                term += f" * {var_name1}^{i - j}" if (i - j) > 1 else f" * {var_name1}"
+            if j > 0:
+                term += f" * {var_name2}^{j}" if j > 1 else f" * {var_name2}"
+
+            terms.append(term)
+
+    # Assemblage final
+    polynomial = " ".join(terms) if terms else "0"
+    return polynomial
 
 # Sauvegarde des résultats dans un fichier CSV
 output_csv = os.path.join(output_folder, "best_fit_results.csv")
@@ -203,26 +258,43 @@ with open(output_csv, "w") as f:
     f.write("Filename,Best Degree,Best RMSE,Coefficients,Average\n")
 
 tests = [
-    ("addvis_timings", 1), #int NUM_VISIBILITIES (func= poly1D)
-    ("clean_timings", 2), #int GRID_SIZE, int NUM_MINOR_CYCLES (func= poly2D)
-    ("config_sequel_timings", 0), #None (func=const)
-    ("config_timings", 0), #None (func=const)
-    ("correct_to_finegrid_timings", 1), #int NUM_VISIBILITIES (func= poly1D)
-    ("dft_timings", 2), #int NUM_MINOR_CYCLES, int NUM_VISIBILITIES (func= poly2D)
-    ("dgkernel_timings", 0),#None (func=const)
-    ("fftshift_timings", 1), #int GRID_SIZE (func= poly1D)
-    ("fft_timings", 1), #int GRID_SIZE (func= poly1D)
-    ("gains_apply_timings", 1), #int NUM_VISIBILITIES (func= poly1D)
-    ("gains_reciprocal_transform_timings", 1), #int NUM_VISIBILITIES (func= poly1D)
-    ("gkernel_timings", 0), #None (func=const)
-    ("prolate_setup_timings", 1),#int GRID_SIZE (func= poly1D)
-    ("prolate_timings", 1), #int GRID_SIZE (func= poly1D)
-    ("save_output_timings", 1), #int GRID_SIZE (func= poly1D)
-    ("subtraction_imagespace_timings", 1),#int GRID_SIZE (func= poly1D)
+    ("addvis_timings", 1,["NUM_VISIBILITIES"]), #int NUM_VISIBILITIES (func= poly1D)
+    ("clean_timings", 2, ["GRID_SIZE","NUM_MINOR_CYCLES"]), #int GRID_SIZE, int NUM_MINOR_CYCLES (func= poly2D)
+    ("config_sequel_timings", 0,[]), #None (func=const)
+    ("config_timings", 0,[]), #None (func=const)
+    ("convolution_correction_actor_timings", 1,["GRID_SIZE"]), #int GRID_SIZE (func= poly1D)
+
+    ("correction_setup_timings", 1,["GRID_SIZE"]),#int GRID_SIZE (func= poly1D)
+    ("correct_to_finegrid_timings", 1,["NUM_VISIBILITIES"]), #int NUM_VISIBILITIES (func= poly1D)
+
+    ("degrid_timings", 2,["GRID_SIZE","NUM_VISIBILITIES"]), #int GRID_SIZE, int NUM_VISIBILITIES (func= poly2D)
+    ("dft_timings", 2,["NUM_MAX_SOURCES","NUM_VISIBILITIES"]), #int NUM_MINOR_CYCLES, int NUM_VISIBILITIES (func= poly2D)
+    ("dgkernel_timings", 0,[]),#None (func=const)
+
+    ("fft_shift_complex_to_complex_actor_timings", 1,["GRID_SIZE"]), #int GRID_SIZE (func= poly1D)
+    ("fft_shift_complex_to_real_actor_timings", 1,["GRID_SIZE"]), #int GRID_SIZE (func= poly1D)
+    ("fft_shift_real_to_complex_actor_timings", 1,["GRID_SIZE"]), #int GRID_SIZE (func= poly1D)
+
+    ("CUFFT_EXECUTE_FORWARD_C2C_actor_timings", 1,["GRID_SIZE"]), #int GRID_SIZE (func= poly1D)
+
+    ("gains_apply_timings", 1,["NUM_VISIBILITIES"]), #int NUM_VISIBILITIES (func= poly1D)
+    ("gkernel_timings", 0,[]), #None (func=const)
+    #("grid_timings", 2,["GRID_SIZE","NUM_VISIBILITIES"]), #int GRID_SIZE, int NUM_VISIBILITIES (func= poly2D)
+
+    ("psf_host_set_up_timings", 1,["GRID_SIZE"]),#int GRID_SIZE (func= poly1D)
+    ("reciprocal_transform_timings", 1,["NUM_VISIBILITIES"]), #int NUM_VISIBILITIES (func= poly1D)
+
+
+
+    ("s2s_timings", 2,["GRID_SIZE","NUM_VISIBILITIES"]), #int GRID_SIZE, int NUM_VISIBILITIES (func= poly2D)
+    ("save_output_timings", 1,["GRID_SIZE"]), #int GRID_SIZE (func= poly1D)
+
+    ("subtract_from_measurements_timings", 1,["NUM_VISIBILITIES"]),#int NUM_VISIBILITIES (func= poly1D)
+    ("subtraction_imagespace_timings", 1,["GRID_SIZE"]),#int GRID_SIZE (func= poly1D)
 ]
 # Parcourir les fichiers dans le dossier 'average'
 for test in tests:
-    function_name, num_axis = test
+    function_name, num_axis, name_axis = test
 
     # Construire le chemin complet du fichier
     full_path = os.path.join(input_folder, function_name+".csv")
@@ -234,6 +306,7 @@ for test in tests:
     best_dof = None
     average_mes = None
     rmse_value = 0
+    poly_str = None
 
     if num_axis== 0:
         #no parameter no fit
@@ -268,15 +341,18 @@ for test in tests:
                 coeffs = 0
                 rmse_value = 0
 
-            print("RMSE: " + str(rmse_value))
-            print(coeffs)
+            #print("RMSE: " + str(rmse_value))
+            #print(coeffs)
 
             if rmse_value < best_rmse:
                 best_rmse = rmse_value
                 best_coeffs = coeffs
                 best_dof = dof
+                
 
-        dof = best_dof
+        poly_str = "max(0,"+print_poly1D(best_coeffs,name_axis[0])+")"
+        print(poly_str)
+        #dof = best_dof
         #plot1D(points_and_axes, best_coeffs)
 
 
@@ -313,6 +389,9 @@ for test in tests:
             #dof = best_dof
 #            plot2D(points_and_axes, best_coeffs, num_x, num_y)
 
+        poly_str = "max(0,"+ print_poly2D(best_coeffs,name_axis[0],name_axis[1],best_dof)+")"
+        print(poly_str)
+
     else:
         print("Error: dimensions not 1 or 2 are currently not supported")
 
@@ -324,7 +403,7 @@ for test in tests:
     output_csv = os.path.join(output_folder, "best_fit_results.csv")
     with open(output_csv, "a") as f:
         #coeffs_str = ",".join(map(str, best_coeffs))
-        f.write(f"{function_name},{best_dof},{best_rmse},{best_coeffs},{average_mes}\n")
+        f.write(f"{function_name},{best_dof},{best_rmse},{poly_str},{average_mes}\n")
 
     print(f"Results saved to {output_csv}")
 # À la fin, toutes les fenêtres resteront ouvertes

@@ -7,7 +7,7 @@ Si tu veux executer pipeline par pipeline:
 ```bash
 cd code/
 
-rm 
+rm "CMakeCache.txt"
 cmake .
 make
 

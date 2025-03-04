@@ -46,7 +46,7 @@ If you want to make a change:
   - [x] on CPU modeling
   - [ ] on GPU modeling
 - [ ] Simulating on fixed parameter
-  - [ ] all frequency channels on 1 architecture node
-  - [ ] one frequency channel per architecture node
-- [ ] Automating moldable parameter simulation browsing
+  - [x] all frequency channels on 1 architecture node
+  - [x] one frequency channel per architecture node
+- [x] Automating moldable parameter simulation browsing
 - [ ] Executing pipeline on generated MeasurementSet and compare output quality with configured *true sky*.

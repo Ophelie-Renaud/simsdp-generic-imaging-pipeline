@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns">
-    <key attr.name="parameters" for="graph" id="parameters"/>
-    <key attr.name="variables" for="graph" id="variables"/>
-    <key attr.name="arguments" for="node" id="arguments"/>
-    <key attr.name="name" attr.type="string" for="graph"/>
-    <key attr.name="graph_desc" attr.type="string" for="node"/>
-    <key attr.name="memoryScript" attr.type="string" for="node"/>
     <graph edgedefault="directed">
         <data key="name">correct_to_finegrid</data>
         <node id="NUM_RECEIVERS" kind="cfg_in_iface"/>
@@ -17,198 +11,121 @@
         <node id="reciprocal_transform_actor" kind="actor">
             <data key="graph_desc">Code/include/gains_apply_run.h</data>
             <loop name="reciprocal_transform_actor">
-                <param direction="IN" isConfig="true"
-                    name="NUM_RECEIVERS" type="int"/>
-                <param direction="IN" isConfig="false"
-                    name="gains_in" type="PRECISION2 "/>
-                <param direction="IN" isConfig="false"
-                    name="config" type="Config "/>
-                <param direction="OUT" isConfig="false"
-                    name="gains_out" type="PRECISION2 "/>
+                <param direction="IN" isConfig="true" name="NUM_RECEIVERS" type="int"/>
+                <param direction="IN" isConfig="false" name="gains_in" type="PRECISION2 "/>
+                <param direction="IN" isConfig="false" name="config" type="Config "/>
+                <param direction="OUT" isConfig="false" name="gains_out" type="PRECISION2 "/>
             </loop>
             <data key="memoryScript">Code/Scripts/reciprocal_transform_actor_inPlace.bsh</data>
             <port kind="cfg_input" name="NUM_RECEIVERS"/>
-            <port annotation="READ_ONLY" expr="NUM_RECEIVERS"
-                kind="input" name="gains_in"/>
-            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
-            <port annotation="WRITE_ONLY" expr="NUM_RECEIVERS"
-                kind="output" name="gains_out"/>
+            <port annotation="READ_ONLY" expr="NUM_RECEIVERS" kind="input" name="gains_in"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="NUM_RECEIVERS" kind="output" name="gains_out"/>
         </node>
         <node id="gains_in" kind="src">
-            <port annotation="NONE" expr="NUM_RECEIVERS"
-                kind="output" name="gains_in"/>
+            <port annotation="NONE" expr="NUM_RECEIVERS" kind="output" name="gains_in"/>
         </node>
         <node id="measured_vis" kind="src">
-            <port annotation="NONE" expr="NUM_VISIBILITIES"
-                kind="output" name="measured_vis"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="output" name="measured_vis"/>
         </node>
         <node id="receiver_pairs" kind="src">
-            <port annotation="NONE" expr="NUM_BASELINES"
-                kind="output" name="receiver_pairs"/>
+            <port annotation="NONE" expr="NUM_BASELINES" kind="output" name="receiver_pairs"/>
         </node>
         <node id="visibilities_out" kind="snk">
-            <port annotation="NONE" expr="NUM_VISIBILITIES"
-                kind="input" name="visibilities_out"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="input" name="visibilities_out"/>
         </node>
         <node id="config" kind="src">
-            <port annotation="NONE" expr="1" kind="output" name="config"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="config"/>
         </node>
         <node id="Broadcast_config" kind="broadcast">
-            <port annotation="READ_ONLY" expr="1" kind="input" name="input"/>
-            <port annotation="WRITE_ONLY" expr="1" kind="output" name="output1"/>
-            <port annotation="WRITE_ONLY" expr="1" kind="output" name="output2"/>
-            <port annotation="WRITE_ONLY" expr="1" kind="output" name="output3"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="1.0" kind="output" name="output1"/>
+            <port annotation="WRITE_ONLY" expr="1.0" kind="output" name="output2"/>
+            <port annotation="WRITE_ONLY" expr="1.0" kind="output" name="output3"/>
         </node>
         <node id="apply_gains" kind="actor">
             <data key="graph_desc">Code/include/gains_apply_run.h</data>
             <loop name="apply_gains_only">
-                <param direction="IN" isConfig="true"
-                    name="NUM_RECEIVERS" type="int"/>
-                <param direction="IN" isConfig="true"
-                    name="NUM_BASELINES" type="int"/>
-                <param direction="IN" isConfig="true"
-                    name="NUM_VISIBILITIES" type="int"/>
-                <param direction="IN" isConfig="false"
-                    name="measured_vis" type="PRECISION2"/>
-                <param direction="IN" isConfig="false"
-                    name="gains" type="PRECISION2"/>
-                <param direction="IN" isConfig="false"
-                    name="receiver_pairs" type="int2"/>
-                <param direction="IN" isConfig="false"
-                    name="config" type="Config"/>
-                <param direction="OUT" isConfig="false"
-                    name="visibilities_out" type="PRECISION2"/>
+                <param direction="IN" isConfig="true" name="NUM_RECEIVERS" type="int"/>
+                <param direction="IN" isConfig="true" name="NUM_BASELINES" type="int"/>
+                <param direction="IN" isConfig="true" name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="false" name="measured_vis" type="PRECISION2"/>
+                <param direction="IN" isConfig="false" name="gains" type="PRECISION2"/>
+                <param direction="IN" isConfig="false" name="receiver_pairs" type="int2"/>
+                <param direction="IN" isConfig="false" name="config" type="Config"/>
+                <param direction="OUT" isConfig="false" name="visibilities_out" type="PRECISION2"/>
             </loop>
             <port kind="cfg_input" name="NUM_RECEIVERS"/>
             <port kind="cfg_input" name="NUM_BASELINES"/>
             <port kind="cfg_input" name="NUM_VISIBILITIES"/>
-            <port annotation="READ_ONLY" expr="NUM_VISIBILITIES"
-                kind="input" name="measured_vis"/>
-            <port annotation="READ_ONLY" expr="NUM_RECEIVERS"
-                kind="input" name="gains"/>
-            <port annotation="READ_ONLY" expr="NUM_BASELINES"
-                kind="input" name="receiver_pairs"/>
-            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
-            <port annotation="WRITE_ONLY" expr="NUM_VISIBILITIES"
-                kind="output" name="visibilities_out"/>
+            <port annotation="READ_ONLY" expr="NUM_VISIBILITIES" kind="input" name="measured_vis"/>
+            <port annotation="READ_ONLY" expr="NUM_RECEIVERS" kind="input" name="gains"/>
+            <port annotation="READ_ONLY" expr="NUM_BASELINES" kind="input" name="receiver_pairs"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="NUM_VISIBILITIES" kind="output" name="visibilities_out"/>
         </node>
         <node id="correct_to_finegrid" kind="actor">
             <data key="graph_desc">Code/include/degridgrid.h</data>
             <loop name="correct_to_finegrid">
-                <param direction="IN" isConfig="true"
-                    name="NUM_VISIBILITIES" type="int"/>
-                <param direction="IN" isConfig="true"
-                    name="GRID_SIZE" type="int"/>
-                <param direction="IN" isConfig="true"
-                    name="OVERSAMPLING_FACTOR" type="int"/>
-                <param direction="IN" isConfig="true"
-                    name="PERFORM_SIMPLIFICATION" type="int"/>
-                <param direction="IN" isConfig="false"
-                    name="vis_uvw_coords" type="PRECISION3"/>
-                <param direction="IN" isConfig="false"
-                    name="input_visibilities" type="PRECISION2"/>
-                <param direction="IN" isConfig="false"
-                    name="config" type="Config"/>
-                <param direction="OUT" isConfig="false"
-                    name="output_visibilities" type="PRECISION2"/>
-                <param direction="OUT" isConfig="false"
-                    name="output_finegrid_vis_coords" type="PRECISION3"/>
-                <param direction="OUT" isConfig="false"
-                    name="num_output_visibilities" type="int"/>
+                <param direction="IN" isConfig="true" name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="true" name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="true" name="OVERSAMPLING_FACTOR" type="int"/>
+                <param direction="IN" isConfig="true" name="PERFORM_SIMPLIFICATION" type="int"/>
+                <param direction="IN" isConfig="false" name="vis_uvw_coords" type="PRECISION3"/>
+                <param direction="IN" isConfig="false" name="input_visibilities" type="PRECISION2"/>
+                <param direction="IN" isConfig="false" name="config" type="Config"/>
+                <param direction="OUT" isConfig="false" name="output_visibilities" type="PRECISION2"/>
+                <param direction="OUT" isConfig="false" name="output_finegrid_vis_coords" type="PRECISION3"/>
+                <param direction="OUT" isConfig="false" name="num_output_visibilities" type="int"/>
             </loop>
             <port kind="cfg_input" name="NUM_VISIBILITIES"/>
             <port kind="cfg_input" name="OVERSAMPLING_FACTOR"/>
             <port kind="cfg_input" name="GRID_SIZE"/>
             <port kind="cfg_input" name="NUM_BASELINES"/>
             <port kind="cfg_input" name="PERFORM_SIMPLIFICATION"/>
-            <port annotation="READ_ONLY" expr="NUM_VISIBILITIES"
-                kind="input" name="vis_uvw_coords"/>
-            <port annotation="READ_ONLY" expr="NUM_VISIBILITIES"
-                kind="input" name="input_visibilities"/>
-            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
-            <port annotation="WRITE_ONLY" expr="NUM_VISIBILITIES"
-                kind="output" name="output_visibilities"/>
-            <port annotation="WRITE_ONLY" expr="NUM_VISIBILITIES"
-                kind="output" name="output_finegrid_vis_coords"/>
-            <port annotation="WRITE_ONLY" expr="1" kind="output" name="num_output_visibilities"/>
+            <port annotation="READ_ONLY" expr="NUM_VISIBILITIES" kind="input" name="vis_uvw_coords"/>
+            <port annotation="READ_ONLY" expr="NUM_VISIBILITIES" kind="input" name="input_visibilities"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="NUM_VISIBILITIES" kind="output" name="output_visibilities"/>
+            <port annotation="WRITE_ONLY" expr="NUM_VISIBILITIES" kind="output" name="output_finegrid_vis_coords"/>
+            <port annotation="WRITE_ONLY" expr="1.0" kind="output" name="num_output_visibilities"/>
         </node>
         <node id="num_output_visibilities" kind="snk">
-            <port annotation="NONE" expr="1" kind="input" name="num_output_visibilities"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="num_output_visibilities"/>
         </node>
         <node id="output_vis_coords" kind="snk">
-            <port annotation="NONE" expr="NUM_VISIBILITIES"
-                kind="input" name="output_vis_coords"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="input" name="output_vis_coords"/>
         </node>
         <node id="vis_coords" kind="src">
-            <port annotation="NONE" expr="NUM_VISIBILITIES"
-                kind="output" name="vis_coords"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="output" name="vis_coords"/>
         </node>
-        <edge kind="fifo" source="gains_in" sourceport="gains_in"
-            target="reciprocal_transform_actor"
-            targetport="gains_in" type="PRECISION2"/>
-        <edge kind="fifo" source="config" sourceport="config"
-            target="Broadcast_config" targetport="input" type="Config"/>
-        <edge kind="fifo" source="Broadcast_config"
-            sourceport="output1"
-            target="reciprocal_transform_actor"
-            targetport="config" type="Config"/>
-        <edge kind="fifo" source="reciprocal_transform_actor"
-            sourceport="gains_out" target="apply_gains"
-            targetport="gains" type="PRECISION2"/>
-        <edge kind="fifo" source="measured_vis"
-            sourceport="measured_vis" target="apply_gains"
-            targetport="measured_vis" type="PRECISION2"/>
-        <edge kind="fifo" source="receiver_pairs"
-            sourceport="receiver_pairs" target="apply_gains"
-            targetport="receiver_pairs" type="int2"/>
-        <edge kind="fifo" source="Broadcast_config"
-            sourceport="output2" target="apply_gains"
-            targetport="config" type="Config"/>
-        <edge kind="fifo" source="Broadcast_config"
-            sourceport="output3" target="correct_to_finegrid"
-            targetport="config" type="Config"/>
-        <edge kind="fifo" source="apply_gains"
-            sourceport="visibilities_out"
-            target="correct_to_finegrid"
-            targetport="input_visibilities" type="PRECISION2"/>
-        <edge kind="fifo" source="vis_coords"
-            sourceport="vis_coords" target="correct_to_finegrid"
-            targetport="vis_uvw_coords" type="PRECISION3"/>
-        <edge kind="fifo" source="correct_to_finegrid"
-            sourceport="output_visibilities"
-            target="visibilities_out"
-            targetport="visibilities_out" type="PRECISION2"/>
-        <edge kind="fifo" source="correct_to_finegrid"
-            sourceport="output_finegrid_vis_coords"
-            target="output_vis_coords"
-            targetport="output_vis_coords" type="PRECISION3"/>
-        <edge kind="fifo" source="correct_to_finegrid"
-            sourceport="num_output_visibilities"
-            target="num_output_visibilities"
-            targetport="num_output_visibilities" type="int"/>
-        <edge kind="dependency" source="NUM_RECEIVERS"
-            target="reciprocal_transform_actor" targetport="NUM_RECEIVERS"/>
+        <edge kind="fifo" source="gains_in" sourceport="gains_in" target="reciprocal_transform_actor" targetport="gains_in" type="PRECISION2"/>
+        <edge kind="fifo" source="config" sourceport="config" target="Broadcast_config" targetport="input" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config" sourceport="output1" target="reciprocal_transform_actor" targetport="config" type="Config"/>
+        <edge kind="fifo" source="reciprocal_transform_actor" sourceport="gains_out" target="apply_gains" targetport="gains" type="PRECISION2"/>
+        <edge kind="fifo" source="measured_vis" sourceport="measured_vis" target="apply_gains" targetport="measured_vis" type="PRECISION2"/>
+        <edge kind="fifo" source="receiver_pairs" sourceport="receiver_pairs" target="apply_gains" targetport="receiver_pairs" type="int2"/>
+        <edge kind="fifo" source="Broadcast_config" sourceport="output2" target="apply_gains" targetport="config" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config" sourceport="output3" target="correct_to_finegrid" targetport="config" type="Config"/>
+        <edge kind="fifo" source="apply_gains" sourceport="visibilities_out" target="correct_to_finegrid" targetport="input_visibilities" type="PRECISION2"/>
+        <edge kind="fifo" source="vis_coords" sourceport="vis_coords" target="correct_to_finegrid" targetport="vis_uvw_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="correct_to_finegrid" sourceport="output_visibilities" target="visibilities_out" targetport="visibilities_out" type="PRECISION2"/>
+        <edge kind="fifo" source="correct_to_finegrid" sourceport="output_finegrid_vis_coords" target="output_vis_coords" targetport="output_vis_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="correct_to_finegrid" sourceport="num_output_visibilities" target="num_output_visibilities" targetport="num_output_visibilities" type="int"/>
+        <edge kind="dependency" source="NUM_RECEIVERS" target="reciprocal_transform_actor" targetport="NUM_RECEIVERS"/>
         <edge kind="dependency" source="NUM_RECEIVERS" target="gains_in"/>
         <edge kind="dependency" source="NUM_VISIBILITIES" target="measured_vis"/>
         <edge kind="dependency" source="NUM_VISIBILITIES" target="visibilities_out"/>
         <edge kind="dependency" source="NUM_BASELINES" target="receiver_pairs"/>
-        <edge kind="dependency" source="NUM_RECEIVERS"
-            target="apply_gains" targetport="NUM_RECEIVERS"/>
-        <edge kind="dependency" source="NUM_BASELINES"
-            target="apply_gains" targetport="NUM_BASELINES"/>
-        <edge kind="dependency" source="NUM_VISIBILITIES"
-            target="apply_gains" targetport="NUM_VISIBILITIES"/>
-        <edge kind="dependency" source="NUM_VISIBILITIES"
-            target="correct_to_finegrid" targetport="NUM_VISIBILITIES"/>
-        <edge kind="dependency" source="OVERSAMPLING_FACTOR"
-            target="correct_to_finegrid" targetport="OVERSAMPLING_FACTOR"/>
+        <edge kind="dependency" source="NUM_RECEIVERS" target="apply_gains" targetport="NUM_RECEIVERS"/>
+        <edge kind="dependency" source="NUM_BASELINES" target="apply_gains" targetport="NUM_BASELINES"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="apply_gains" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="correct_to_finegrid" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="OVERSAMPLING_FACTOR" target="correct_to_finegrid" targetport="OVERSAMPLING_FACTOR"/>
         <edge kind="dependency" source="NUM_VISIBILITIES" target="output_vis_coords"/>
         <edge kind="dependency" source="NUM_VISIBILITIES" target="vis_coords"/>
-        <edge kind="dependency" source="GRID_SIZE"
-            target="correct_to_finegrid" targetport="GRID_SIZE"/>
-        <edge kind="dependency" source="NUM_BASELINES"
-            target="correct_to_finegrid" targetport="NUM_BASELINES"/>
-        <edge kind="dependency" source="PERFORM_SIMPLIFICATION"
-            target="correct_to_finegrid" targetport="PERFORM_SIMPLIFICATION"/>
+        <edge kind="dependency" source="GRID_SIZE" target="correct_to_finegrid" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_BASELINES" target="correct_to_finegrid" targetport="NUM_BASELINES"/>
+        <edge kind="dependency" source="PERFORM_SIMPLIFICATION" target="correct_to_finegrid" targetport="PERFORM_SIMPLIFICATION"/>
     </graph>
 </graphml>

@@ -1,11 +1,9 @@
-import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 import numpy as np
-from scipy.interpolate import griddata
-from mpl_toolkits.mplot3d import Axes3D
-from sklearn.metrics import mean_squared_error
-import matplotlib.colors as mcolors
-import matplotlib.cm as cm
+from plotly.subplots import make_subplots
+import plotly.io as pio 
+import pandas as pd
+from sklearn.metrics import mean_squared_error 
 
 # Liste des fichiers CSV (simulation et mesure)
 simulated_sota_csv_files = {
@@ -28,165 +26,188 @@ measured_csv_files = {
     "fft": "moldable/measure/fft.csv",
 }
 
-subset_name = "DurationII"  # Colonne d'intérêt (ex: "Latency" ou "DurationII")
+instrumented = {
+    "g2g_clean": 90154,
+    "g2g": 90154,
+    "dft": 97517,#valid
+    "fft": 60122,#valid
+}
 
-def load_data(file_path):
-    """ Charge un fichier CSV et extrait les colonnes utiles """
-    df = pd.read_csv(file_path, delimiter=';')
+# Données
+num_minor_cycles = [50, 100, 150]
+grid_size = np.array([512, 1024, 1536])
+num_vis = np.array([1308160, 1962240, 2616320])
 
-    # Vérifier la présence des colonnes nécessaires
-    required_columns = {"NUM_MINOR_CYCLES", "NUM_VISIBILITIES", "GRID_SIZE", subset_name}
-    if not required_columns.issubset(df.columns):
-        print(f"Erreur : Colonnes manquantes dans {file_path}")
-        return None
+# Charger le fichier CSV
+def load_simu_csv_to_numpy(file_path):
+    df = pd.read_csv(file_path, sep=';')
+    
+    # Extraction des dimensions uniques
+    grid_sizes = sorted(df['GRID_SIZE'].unique())
+    num_cycles = sorted(df['NUM_MINOR_CYCLES'].unique())
+    num_visibilities = sorted(df['NUM_VISIBILITIES'].unique())
+    
+    # Création d'un tableau numpy pour stocker les latences
+    latency_simu = np.zeros((len(num_visibilities), len(num_cycles), len(grid_sizes)))
+    
+    # Remplissage du tableau
+    for i, vis in enumerate(num_visibilities):
+        for j, cycles in enumerate(num_cycles):
+            for k, grid in enumerate(grid_sizes):
+                value = df[(df['GRID_SIZE'] == grid) & (df['NUM_MINOR_CYCLES'] == cycles) & (df['NUM_VISIBILITIES'] == vis)]['DurationII'].values[0]
+                latency_simu[i, j, k] = value
+    
+    return latency_simu
 
-    return df
+def load_mes_csv_to_numpy(file_path):
+    df = pd.read_csv(file_path, sep=';')
+    
+    # Trier les données pour garantir un ordre cohérent
+    df = df.sort_values(by=["NUM_VISIBILITIES", "NUM_MINOR_CYCLES", "GRID_SIZE"])
+    
+    # Obtenir les dimensions uniques
+    visibilities = df["NUM_VISIBILITIES"].unique()
+    minor_cycles = df["NUM_MINOR_CYCLES"].unique()
+    grid_sizes = df["GRID_SIZE"].unique()
+
+    # Construire un tableau numpy
+    latency_measured = np.zeros((len(visibilities), len(minor_cycles), len(grid_sizes)))
+
+    # Remplir le tableau
+    for i, vis in enumerate(visibilities):
+        for j, cycle in enumerate(minor_cycles):
+            for k, grid in enumerate(grid_sizes):
+                latency_measured[i, j, k] = df[(df["NUM_VISIBILITIES"] == vis) & 
+                                                (df["NUM_MINOR_CYCLES"] == cycle) & 
+                                                (df["GRID_SIZE"] == grid)]["Latency"].values[0]
+    
+    return latency_measured
+
 
 def compute_rmse(simulated, measured):
     """ Calcule la RMSE entre les valeurs simulées et mesurées """
-    return np.sqrt(mean_squared_error(simulated, measured))
-
-def plot_3d_comparison(file_key,simu_sota_path, simu_path, measure_path):
-    """ Affiche les surfaces 3D des simulations et mesures côte à côte, et calcule la RMSE """
-    
-    # Charger les données
-    df_simu_sota = load_data(simu_sota_path)
-    df_simu = load_data(simu_path)
-    df_measure = load_data(measure_path)
-    if df_simu is None or df_measure is None:
-        return
-
-    # Extraire les colonnes
-    x_simu_sota, y_simu_sota, z_simu_sota, c_simu_sota = df_simu_sota["GRID_SIZE"], df_simu_sota["NUM_VISIBILITIES"], df_simu_sota[subset_name], df_simu_sota["NUM_MINOR_CYCLES"]
-    x_simu, y_simu, z_simu, c_simu = df_simu["GRID_SIZE"], df_simu["NUM_VISIBILITIES"], df_simu[subset_name], df_simu["NUM_MINOR_CYCLES"]
-    x_meas, y_meas, z_meas, c_meas = df_measure["GRID_SIZE"], df_measure["NUM_VISIBILITIES"], df_measure[subset_name], df_measure["NUM_MINOR_CYCLES"]
-
-    #z_simu_sota = np.array(z_simu_sota) * 1000  # Conversion sec → ms
-
-    x_min, x_max = min(x_simu_sota.min(), x_simu.min(), x_meas.min()), max(x_simu_sota.max(), x_simu.max(), x_meas.max())
-    y_min, y_max = min(y_simu_sota.min(), y_simu.min(), y_meas.min()), max(y_simu_sota.max(), y_simu.max(), y_meas.max())
-    z_min, z_max = min(z_simu_sota.min(), z_simu.min(), z_meas.min()), max(z_simu_sota.max(), z_simu.max(), z_meas.max())
-    c_min, c_max = min(c_simu_sota.min(), c_simu.min(), c_meas.min()), max(c_simu_sota.max(), c_simu.max(), c_meas.max())
-    
-    print(f"x_min: {x_min}, x_max: {x_max}")
-    print(f"y_min: {y_min}, y_max: {y_max}")
-    print(f"z_min: {z_min}, z_max: {z_max}")
-    print(f"c_min: {c_min}, c_max: {c_max}")
-
-    # Vérification des dimensions
-    if len(z_simu_sota) > len(z_meas):
-        print(f"Attention : Dimensions différentes pour {file_key} -> Ajustement en cours")
-        z_simu_sota = z_simu_sota[:len(z_meas)]  # Tronquer
-        y_simu_sota = y_simu_sota[:len(y_meas)]
-        x_simu_sota = x_simu_sota[:len(x_meas)]
-        c_simu_sota = c_simu_sota[:len(c_meas)]
-    elif len(z_simu_sota) < len(z_meas):
-        print(f"Attention : Dimensions différentes pour {file_key} -> Ajustement en cours")
-        z_meas = z_meas[:len(z_simu_sota)]  # Tronquer
-        y_meas = y_meas[:len(y_simu_sota)]
-        x_meas = x_meas[:len(x_simu_sota)]
-        c_meas = c_meas[:len(c_simu_sota)]
-            
-    rmse_sota = compute_rmse(z_simu_sota, z_meas)
-    error_sota = (rmse_sota/ np.mean(z_meas))*100
-    
-    if len(z_simu) > len(z_meas):
-        print(f"Attention : Dimensions différentes pour {file_key} -> Ajustement en cours")
-        z_simu = z_simu[:len(z_meas)]  # Tronquer
-        y_simu = y_simu[:len(y_meas)]
-        x_simu = x_simu[:len(x_meas)]
-        c_simu = c_simu[:len(c_meas)]
-        rmse = compute_rmse(z_simu, z_meas)
-    elif len(z_simu) > len(z_meas):
-        print(f"Attention : Dimensions différentes pour {file_key} -> Ajustement en cours")
-        z_meas = z_meas[:len(z_simu)]  # Tronquer
-        y_meas = y_meas[:len(y_simu)]
-        x_meas = x_meas[:len(x_simu)]
-        c_meas = c_meas[:len(c_simu)]
-        
-    rmse = compute_rmse(z_simu, z_meas)
-    error = (rmse/ np.mean(z_meas))*100
-
-    # Création des grilles pour interpolation
-    xi = np.linspace(min(x_simu), max(x_simu), 50)
-    yi = np.linspace(min(y_simu), max(y_simu), 50)
-    X, Y = np.meshgrid(xi, yi)
-
-    Z_simu_sota = griddata((x_simu_sota, y_simu_sota), z_simu_sota, (X, Y), method='cubic')
-    Z_simu = griddata((x_simu, y_simu), z_simu, (X, Y), method='cubic')
-    Z_meas = griddata((x_meas, y_meas), z_meas, (X, Y), method='cubic')
-    
-    c_value = [50, 100, 150] #, 200, 250]
-    colors = ['#3498db', '#2ecc71', '#f1c40f'] #, '#e67e22', '#e74c3c']
-    cmap = mcolors.ListedColormap(colors)
-    norm = mcolors.BoundaryNorm([45, 75, 125, 175], cmap.N)
-    #norm = mcolors.BoundaryNorm([45, 75, 125, 175, 225, 275], cmap.N)
+    simulated_flat = simulated.flatten() 
+    measured_flat = measured.flatten()
+    if len(simulated_flat)!= len(measured_flat):
+        return 0
+    return np.sqrt(mean_squared_error(simulated_flat, measured_flat))
 
 
-    # Création de la figure avec 2 sous-graphes
-    fig, axes = plt.subplots(1, 3, figsize=(22, 5), subplot_kw={'projection': '3d'})
-    
-        # Simulation
-    surf0 = axes[0].plot_surface(X, Y, Z_simu_sota, cmap=cmap, edgecolor='none', alpha=0.9)
-    title = f"Simulation S. Wang et. al. - {file_key}"
-    if rmse is not None:
-        title += f"\nRMSE = {rmse_sota:.2f}\nError = {error_sota:.2f}%"
-    axes[0].set_title(title)
-    axes[0].set_xlabel("GRID_SIZE")
-    axes[0].set_ylabel("NUM_VISIBILITIES")
-    axes[0].set_zlabel(subset_name)
-    
-    # Ajustement des limites des axes
-    axes[0].set_xlim(x_min, x_max)
-    axes[0].set_ylim(y_min, y_max)
-    axes[0].set_zlim(z_min, z_max)
-    
-    cbar = fig.colorbar(cm.ScalarMappable(cmap=cmap, norm=norm), ax=axes[0], shrink=0.5, aspect=15, ticks=c_value)
-    cbar.set_label("NUM_MINOR_CYCLES")
-    
-    # Simulation
-    surf1 = axes[1].plot_surface(X, Y, Z_simu, cmap=cmap, edgecolor='none', alpha=0.9)
-    title = f"Simulation - {file_key}"
-    if rmse is not None:
-        title += f"\nRMSE = {rmse:.2f}\nError = {error:.2f}%"
-    axes[1].set_title(title)
-    axes[1].set_xlabel("GRID_SIZE")
-    axes[1].set_ylabel("NUM_VISIBILITIES")
-    axes[1].set_zlabel(subset_name)
-    
-    # Ajustement des limites des axes
-    axes[1].set_xlim(x_min, x_max)
-    axes[1].set_ylim(y_min, y_max)
-    axes[1].set_zlim(z_min, z_max)
-    
-    cbar = fig.colorbar(cm.ScalarMappable(cmap=cmap, norm=norm), ax=axes[1], shrink=0.5, aspect=15, ticks=c_value)
-    cbar.set_label("NUM_MINOR_CYCLES")
+def plot_3d_comparison(file_key,simu_sota_path, simu_path, measure_path, df_instrumented):
 
-    # Mesure
-    surf2 = axes[2].plot_surface(X, Y, Z_meas, cmap=cmap, edgecolor='none', alpha=0.9)
-    title = f"Mesure - {file_key}"
-    axes[2].set_title(title)
-    axes[2].set_xlabel("GRID_SIZE")
-    axes[2].set_ylabel("NUM_VISIBILITIES")
-    axes[2].set_zlabel(subset_name)
-    
-    # Ajustement des limites des axes
-    axes[2].set_xlim(x_min, x_max)
-    axes[2].set_ylim(y_min, y_max)
-    axes[2].set_zlim(z_min, z_max)
-    
-    cbar = fig.colorbar(cm.ScalarMappable(cmap=cmap, norm=norm), ax=axes[2], shrink=0.5, aspect=15, ticks=c_value)
-    cbar.set_label("NUM_MINOR_CYCLES")
+  latency_instru = np.full((len(grid_size), len(num_vis), len(num_minor_cycles)), df_instrumented)  
+  print("latency_instru: " + str(latency_instru))
+  latency_simu_sota = load_simu_csv_to_numpy(simu_sota_path)
+  print("latency_simu_sota: " + str(latency_simu_sota))
+  latency_simu = load_simu_csv_to_numpy(simu_path)
+  print("latency_simu: " + str(latency_simu))
+  latency_measured = load_mes_csv_to_numpy(measure_path)
+  print("latency_measured: " + str(latency_measured))
+  
+  # Déterminer les min/max pour homogénéiser l'échelle des axes Z
+  zmin = min(np.min(latency_instru), np.min(latency_simu_sota), np.min(latency_simu), np.min(latency_measured))
+  zmax = max(np.max(latency_instru), np.max(latency_simu_sota), np.max(latency_simu), np.max(latency_measured))
+  
+  rmse_values = [compute_rmse(latency_instru,latency_measured), compute_rmse(latency_simu_sota,latency_measured), compute_rmse(latency_simu,latency_measured), compute_rmse(latency_measured,latency_measured)]
+  error_values = [(rmse_values[0]/ np.mean(latency_measured))*100, (rmse_values[1]/ np.mean(latency_measured))*100, (rmse_values[2]/ np.mean(latency_measured))*100, (rmse_values[3]/ np.mean(latency_measured))*100]
 
-    plt.tight_layout()
 
-    # Sauvegarde de la figure
-    fig.savefig(f"3D_comparison_{file_key}.png", format="png", dpi=400)
-    print(f"Graphique enregistré : 3D_comparison_{file_key}.png")
+  # Création des titres dynamiques
+  subplot_titles = [
+      f"Latency Instrumented<br>RMSE = {rmse_values[0]:.2f}<br>Error = {error_values[0]:.2f}%",
+      f"Latency Simulated SOTA<br>RMSE = {rmse_values[1]:.2f}<br>Error = {error_values[1]:.2f}%",
+      f"Latency Simulated<br>RMSE = {rmse_values[2]:.2f}<br>Error = {error_values[2]:.2f}%",
+      f"Latency Measured<br>RMSE = {rmse_values[3]:.2f}<br>Error = {error_values[3]:.2f}%"
+  ]
 
-    plt.show(block=False)
+  # Création de la figure avec deux sous-graphiques côte à côte
+  fig = make_subplots(
+      rows=1, cols=4, 
+      specs=[[{"type": "surface"}, {"type": "surface"}, {"type": "surface"}, {"type": "surface"}]], # Corrected specs
+      subplot_titles=subplot_titles,
+      horizontal_spacing=0.05
+  )
+
+  # Ajout des surfaces initiales
+  fig.add_trace(go.Surface(
+      x=grid_size, y=num_vis, z=latency_instru[0], 
+      colorscale="Inferno", cmin=zmin, cmax=zmax
+  ), row=1, col=1)
+
+  fig.add_trace(go.Surface(
+      x=grid_size, y=num_vis, z=latency_simu_sota[0], 
+      colorscale="Inferno", cmin=zmin, cmax=zmax
+  ), row=1, col=2)
+
+  fig.add_trace(go.Surface(
+      x=grid_size, y=num_vis, z=latency_simu[0], 
+      colorscale="Inferno", cmin=zmin, cmax=zmax
+  ), row=1, col=3)
+
+  fig.add_trace(go.Surface(
+      x=grid_size, y=num_vis, z=latency_measured[0], 
+      colorscale="Inferno", cmin=zmin, cmax=zmax
+  ), row=1, col=4
+  )
+
+  # Création des frames pour l'animation
+  color = "Inferno"
+  frames = []
+  for i, cycle in enumerate(num_minor_cycles):
+      frames.append(go.Frame(
+          name=f"Cycle {cycle}",
+          data=[
+              go.Surface(z=latency_instru[i], x=grid_size, y=num_vis, colorscale=color, cmin=zmin, cmax=zmax),
+              go.Surface(z=latency_simu_sota[i], x=grid_size, y=num_vis, colorscale=color, cmin=zmin, cmax=zmax),
+              go.Surface(z=latency_simu[i], x=grid_size, y=num_vis, colorscale=color, cmin=zmin, cmax=zmax),
+              go.Surface(z=latency_measured[i], x=grid_size, y=num_vis, colorscale=color, cmin=zmin, cmax=zmax)
+          ]
+      ))
+
+  # Assign frames to the figure object directly
+  fig.frames = frames
+
+  # Ajout du slider
+  sliders = [{
+      "active": 0,
+      "yanchor": "top",
+      "xanchor": "left",
+      "currentvalue": {"prefix": "Cycle: ", "font": {"size": 20}},
+      "pad": {"b": 10, "t": 50},
+      "len": 0.9,
+      "x": 0.1,
+      "y": 0,
+      "steps": [
+          {"args": [[f"Cycle {t}"], {"frame": {"duration": 500, "redraw": True}, "mode": "immediate"}],
+          "label": str(t), "method": "animate"} for t in num_minor_cycles
+      ]
+  }]
+
+  # Mise à jour du layout (remove frames from here)
+  fig.update_layout(
+      annotations=[dict(font=dict(size=10))],
+      title=file_key,
+      width=1600,  # Ajuste la largeur pour éviter le chevauchement
+      height=400,  # Ajuste la hauteur
+      margin=dict(l=0, r=0, t=100, b=40),  # Réduit les marges 
+      scene=dict(xaxis_title="Grid Size", yaxis_title="Num Vis", zaxis_title="Latency", zaxis=dict(range=[zmin, zmax])),
+      scene2=dict(xaxis_title="Grid Size", yaxis_title="Num Vis", zaxis_title="Latency", zaxis=dict(range=[zmin, zmax])),
+      scene3=dict(xaxis_title="Grid Size", yaxis_title="Num Vis", zaxis_title="Latency", zaxis=dict(range=[zmin, zmax])),
+      scene4=dict(xaxis_title="Grid Size", yaxis_title="Num Vis", zaxis_title="Latency", zaxis=dict(range=[zmin, zmax])),
+      sliders=sliders
+  )
+
+  # Sauvegarde du premier frame en PDF
+  pio.write_image(fig, f"3D_comparison_{file_key}.pdf", format="pdf", engine="kaleido") # Use write_image instead
+  print(f"Graphique enregistré : 3D_comparison_{file_key}.pdf")
+
+  # Sauvegarde de l'animation complète en HTML
+  fig.write_html(f"3D_comparison_{file_key}.html")
+  print(f"Animation enregistrée : 3D_comparison_{file_key}.html")
+
+  # Affichage
+  #fig.show()
 
 # Boucle sur chaque fichier pour comparer simulations et mesures
 for key in simulated_csv_files.keys():
-    plot_3d_comparison(key, simulated_sota_csv_files[key], simulated_csv_files[key], measured_csv_files[key])
-
+    plot_3d_comparison(key, simulated_sota_csv_files[key], simulated_csv_files[key], measured_csv_files[key],instrumented[key])

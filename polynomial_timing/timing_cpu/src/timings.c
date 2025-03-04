@@ -12,7 +12,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "libcpu_skytosky_single.h"
+//#include "libcpu_skytosky_single.h"
 /**
  * Saves execution timings to a file.
  *
@@ -182,7 +182,7 @@ void time_gridsize_setups(int NUM_SAMPLES, int GRID_SIZE){
 		prolate_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "prolate_setup_timings", prolate_timings,GRID_SIZE,0,0);
+	save_timings(NUM_SAMPLES, "correction_setup_timings", prolate_timings,GRID_SIZE,0,0);
 	free(prolate_timings);
 	free(prolate);
 }
@@ -202,7 +202,7 @@ void time_visibility_setups(int NUM_SAMPLES, int NUM_VISIBILITIES){
 	for(int j = 0; j < 5; ++j){
 		char input_vis_filename[100];
 
-		sprintf(input_vis_filename, "../data/input/GLEAM_small_visibilities_corrupted_%d.csv", j+1);
+		sprintf(input_vis_filename, "data/input/GLEAM_small_visibilities_corrupted_%d.csv", j+1);
 		config.visibility_source_file = input_vis_filename;
 		printf("allocating\n");
 		visibilities = (PRECISION2*)malloc(NUM_VISIBILITIES * (j+1) * sizeof(PRECISION2));
@@ -217,7 +217,7 @@ void time_visibility_setups(int NUM_SAMPLES, int NUM_VISIBILITIES){
 
 		char output_filename_vis[200];
 
-		sprintf(output_filename_vis, "visibility_setup_timings_%d", j+1);
+		sprintf(output_filename_vis, "visibility_host_setup_timings_%d", j+1);
 
 		save_timings(NUM_SAMPLES, output_filename_vis, visibility_timings,NUM_VISIBILITIES,0,0);
 		printf("Freeing\n");
@@ -354,7 +354,7 @@ void time_gains_application(int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUA
 	}
 
 	save_timings(NUM_SAMPLES, "gains_apply_timings", gains_apply_timings,NUM_VISIBILITIES,0,0);
-	save_timings(NUM_SAMPLES, "gains_reciprocal_transform_timings", recip_timings,NUM_VISIBILITIES,0,0);
+	save_timings(NUM_SAMPLES, "reciprocal_transform_timings", recip_timings,NUM_VISIBILITIES,0,0);
 
 	free(gains_out);
 	free(orig_vis);
@@ -366,6 +366,57 @@ void time_gains_application(int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUA
 	free(receiver_pairs);
 	free(gains_apply_timings);
 	free(recip_timings);
+}
+
+void time_substraction(int NUM_SAMPLES, int NUM_VISIBILITIES){
+
+	clock_t* substraction_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
+
+	clock_t start, end;
+	clock_t CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
+        int num_receivers = 512;
+        int num_baselines = num_receivers*(num_receivers-1)/2;
+
+	PRECISION2* measured_vis = (PRECISION2*)malloc(sizeof(PRECISION2) * NUM_VISIBILITIES);
+	for(int i = 0; i < NUM_VISIBILITIES; ++i){
+		measured_vis[i].x = (float)rand()/(float)RAND_MAX;
+		measured_vis[i].y = (float)rand()/(float)RAND_MAX;
+	}
+	PRECISION2* visibilities_in = (PRECISION2*)malloc(sizeof(PRECISION2) * NUM_VISIBILITIES);
+	for(int i = 0; i < NUM_VISIBILITIES; ++i){
+		visibilities_in[i].x = (float)rand()/(float)RAND_MAX;
+		visibilities_in[i].y = (float)rand()/(float)RAND_MAX;
+	}
+	PRECISION2* gains = (PRECISION2*)malloc(sizeof(PRECISION2) * num_receivers);
+	for(int i = 0; i < num_receivers; ++i){
+		gains[i].x = (float)rand()/(float)RAND_MAX;
+		gains[i].y = (float)rand()/(float)RAND_MAX;
+	}
+	int2* receiver_pairs = (int2*)malloc(sizeof(int2) * num_baselines);
+	for(int i = 0; i < num_baselines; ++i){
+		receiver_pairs[i].x = (float)rand()/(float)RAND_MAX;
+		receiver_pairs[i].y = (float)rand()/(float)RAND_MAX;
+	}
+	Config config;
+	config_struct_set_up(2048, 17, &config);
+
+	PRECISION2* visibilities_out = (PRECISION2*)malloc(sizeof(PRECISION2) * NUM_VISIBILITIES);
+
+	for(int i = 0; i < NUM_SAMPLES; ++i){
+		start = clock();
+		subtract_from_measurements(num_receivers,num_baselines, NUM_VISIBILITIES, measured_vis, visibilities_in, gains, receiver_pairs, &config, visibilities_out);
+		end = clock();
+		substraction_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
+	}
+
+	save_timings(NUM_SAMPLES, "subtract_from_measurements_timings", substraction_timings, NUM_VISIBILITIES,0,0);
+free(substraction_timings);
+free(measured_vis);
+free(visibilities_in);
+free(gains);
+free(receiver_pairs);
+free(visibilities_out);
+
 }
 
 void time_add_visibilities(int NUM_SAMPLES, int NUM_VISIBILITIES){
@@ -414,7 +465,7 @@ void time_prolate(int NUM_SAMPLES, int GRID_SIZE){
 		prolate_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "prolate_timings", prolate_timings, GRID_SIZE,0,0);
+	save_timings(NUM_SAMPLES, "convolution_correction_actor_timings", prolate_timings, GRID_SIZE,0,0);
 	free(prolate_timings);
 	free(dirty_image_in);
 	free(dirty_image_out);
@@ -488,7 +539,7 @@ void time_subtract_ispace(int NUM_SAMPLES, int GRID_SIZE){
 	free(out);
 }
 
-void time_fftshift(int NUM_SAMPLES, int GRID_SIZE){
+/*void time_fftshift(int NUM_SAMPLES, int GRID_SIZE){
 	clock_t* fftshift_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
 
 	clock_t start, end;
@@ -511,7 +562,7 @@ void time_fftshift(int NUM_SAMPLES, int GRID_SIZE){
 	free(fftshift_timings);
 	free(in);
 	free(out);
-}
+}*/
 
 void time_fft(int NUM_SAMPLES, int GRID_SIZE){
 	clock_t* fft_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
@@ -537,10 +588,68 @@ void time_fft(int NUM_SAMPLES, int GRID_SIZE){
 		fft_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
 
-	save_timings(NUM_SAMPLES, "fft_timings", fft_timings, GRID_SIZE,0,0);
+	save_timings(NUM_SAMPLES, "CUFFT_EXECUTE_FORWARD_C2C_actor_timings", fft_timings, GRID_SIZE,0,0);
 	free(fft_timings);
 	free(in);
 	free(out);
+}
+void time_fft_shift(int NUM_SAMPLES, int GRID_SIZE){
+  clock_t* fft_shift_complex_to_complex_actor_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
+	clock_t* fft_shift_complex_to_real_actor_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
+	clock_t* fft_shift_real_to_complex_actor_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
+
+  clock_t start, end;
+  clock_t CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
+
+	PRECISION2* uv_grid_in = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		uv_grid_in[i].x = (float)rand()/(float)RAND_MAX;
+		uv_grid_in[i].y = (float)rand()/(float)RAND_MAX;
+	}
+	Config config;
+	config_struct_set_up(2458, 17, &config);
+	PRECISION2* uv_grid_out = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		uv_grid_out[i].x = (float)rand()/(float)RAND_MAX;
+		uv_grid_out[i].y = (float)rand()/(float)RAND_MAX;
+	}
+	PRECISION* image = (PRECISION*)malloc(sizeof(PRECISION) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		image[i] = (float)rand()/(float)RAND_MAX;
+	}
+	PRECISION* dirty_image = (PRECISION*)malloc(sizeof(PRECISION) * GRID_SIZE * GRID_SIZE);
+	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+		dirty_image[i] = (float)rand()/(float)RAND_MAX;
+	}
+
+	for(int i = 0; i < NUM_SAMPLES; ++i){
+		start = clock();
+		fft_shift_complex_to_complex_actor(GRID_SIZE, uv_grid_in, &config,uv_grid_out);
+		end = clock();
+		fft_shift_complex_to_complex_actor_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
+	}
+	save_timings(NUM_SAMPLES, "fft_shift_complex_to_complex_actor_timings", fft_shift_complex_to_complex_actor_timings, GRID_SIZE,0,0);
+	for(int i = 0; i < NUM_SAMPLES; ++i){
+		start = clock();
+		fft_shift_real_to_complex_actor(GRID_SIZE, image, &config,uv_grid_out);
+		end = clock();
+		fft_shift_real_to_complex_actor_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
+	}
+	save_timings(NUM_SAMPLES, "fft_shift_real_to_complex_actor_timings", fft_shift_complex_to_complex_actor_timings, GRID_SIZE,0,0);
+
+	for(int i = 0; i < NUM_SAMPLES; ++i){
+		start = clock();
+		fft_shift_complex_to_real_actor(GRID_SIZE, uv_grid_in, &config,dirty_image);
+		end = clock();
+		fft_shift_complex_to_real_actor_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
+	}
+	save_timings(NUM_SAMPLES, "fft_shift_complex_to_real_actor_timings", fft_shift_complex_to_complex_actor_timings, GRID_SIZE,0,0);
+free(uv_grid_in);
+free(uv_grid_out);
+free(image);
+free(dirty_image);
+free(fft_shift_complex_to_complex_actor_timings);
+
 }
 
 void time_hogbom(int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES){
@@ -602,32 +711,32 @@ void time_grid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
 int oversampling_factor = 16;
 int bypass = 0;
 
-  	int* maj_iter = (int*)malloc(sizeof(int) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		maj_iter[i] = (int)rand()/(int)RAND_MAX;
+  	int* maj_iter = (int*)malloc(sizeof(int) * 1);
+	for(int i = 0; i < 1 ; ++i){
+		maj_iter[i] = rand() % 6;
 	}
-    int* num_corrected_visibilities = (int*)malloc(sizeof(int) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		num_corrected_visibilities[i] = (int)rand()/(int)RAND_MAX;
+    int* num_corrected_visibilities = (int*)malloc(sizeof(int) * 1);
+	for(int i = 0; i < 1; ++i){
+		num_corrected_visibilities[i] = (rand() % NUM_VISIBILITIES) + 1;
 	}
-         PRECISION2* kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
-         for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+         PRECISION2* kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * total_kernel_samples);
+         for (int i = 0; i < total_kernel_samples; ++i) {
     kernels[i].x = (float)rand() / (float)RAND_MAX;
     kernels[i].y = (float)rand() / (float)RAND_MAX;
 }
-             int2* kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
-	for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+             int2* kernel_supports = (int2*)malloc(sizeof(int2) * num_kernel);
+	for (int i = 0; i < num_kernel; ++i) {
     kernel_supports[i].x = (int)rand() / (int)RAND_MAX;
     kernel_supports[i].y = (int)rand() / (int)RAND_MAX;
 }
-    PRECISION3* corrected_vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * GRID_SIZE * GRID_SIZE);
-	for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+    PRECISION3* corrected_vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * NUM_VISIBILITIES);
+	for (int i = 0; i < NUM_VISIBILITIES; ++i) {
     corrected_vis_uvw_coords[i].x = (float)rand() / (float)RAND_MAX;
     corrected_vis_uvw_coords[i].y = (float)rand() / (float)RAND_MAX;
     corrected_vis_uvw_coords[i].z = (float)rand() / (float)RAND_MAX;
 }
-    PRECISION2* visibilities = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+    PRECISION2* visibilities = (PRECISION2*)malloc(sizeof(PRECISION2) * NUM_VISIBILITIES);
+	for(int i = 0; i < NUM_VISIBILITIES; ++i){
 		visibilities[i].x = (float)rand() / (float)RAND_MAX;
     visibilities[i].y = (float)rand() / (float)RAND_MAX;
 	}
@@ -641,7 +750,7 @@ int bypass = 0;
 		prev_grid[i].x = (float)rand() / (float)RAND_MAX;
     prev_grid[i].y = (float)rand() / (float)RAND_MAX;
 	}
-    PRECISION2* output_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+    PRECISION2* output_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * NUM_VISIBILITIES);
 
   	for(int i = 0; i < NUM_SAMPLES; ++i){
 		start = clock();
@@ -658,6 +767,8 @@ int bypass = 0;
     free(prev_grid);
     free(output_grid);
 	free(grid_timings);
+	free(maj_iter);
+	free(num_corrected_visibilities);
 }
 void time_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
   	clock_t* grid_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
@@ -669,13 +780,13 @@ void time_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
   int total_kernel_samples = 108800;
   int oversampling_factor=16;
 
-  	      PRECISION2* kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
-         for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+  	      PRECISION2* kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * total_kernel_samples);
+         for (int i = 0; i < total_kernel_samples; ++i) {
     kernels[i].x = (float)rand() / (float)RAND_MAX;
     kernels[i].y = (float)rand() / (float)RAND_MAX;
 }
-             int2* kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
-	for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+             int2* kernel_supports = (int2*)malloc(sizeof(int2) * num_kernel);
+	for (int i = 0; i < num_kernel; ++i) {
     kernel_supports[i].x = (int)rand() / (int)RAND_MAX;
     kernel_supports[i].y = (int)rand() / (int)RAND_MAX;
 }
@@ -685,15 +796,15 @@ PRECISION2* input_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GR
     input_grid[i].x = (float)rand() / (float)RAND_MAX;
     input_grid[i].y = (float)rand() / (float)RAND_MAX;
 }
-        PRECISION3* corrected_vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * GRID_SIZE * GRID_SIZE);
-	for (int i = 0; i < GRID_SIZE * GRID_SIZE; ++i) {
+        PRECISION3* corrected_vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * NUM_VISIBILITIES);
+	for (int i = 0; i < NUM_VISIBILITIES; ++i) {
     corrected_vis_uvw_coords[i].x = (float)rand() / (float)RAND_MAX;
     corrected_vis_uvw_coords[i].y = (float)rand() / (float)RAND_MAX;
     corrected_vis_uvw_coords[i].z = (float)rand() / (float)RAND_MAX;
 }
-    int* num_corrected_visibilities = (int*)malloc(sizeof(int) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		num_corrected_visibilities[i] = (int)rand()/(int)RAND_MAX;
+    int* num_corrected_visibilities = (int*)malloc(sizeof(int) * 1);
+	for(int i = 0; i < 1; ++i){
+		num_corrected_visibilities[i] = (rand() % NUM_VISIBILITIES) + 1;
 	}
     Config config;
 	config_struct_set_up(GRID_SIZE, 17, &config);
@@ -701,7 +812,7 @@ PRECISION2* input_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GR
 	config.weak_source_percent_img = 0;
 	config.psf_max_value = 1.f;
 
-    PRECISION2* output_visibilities = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
+    PRECISION2* output_visibilities = (PRECISION2*)malloc(sizeof(PRECISION2) * NUM_VISIBILITIES);
 
   	for(int i = 0; i < NUM_SAMPLES; ++i){
 		start = clock();
@@ -719,6 +830,7 @@ PRECISION2* input_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GR
     free(output_visibilities);
 free(grid_timings);
 }
+
 void time_s2s_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
   clock_t* degrid_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
 
@@ -731,23 +843,23 @@ void time_s2s_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
   int total_degridding_kernel_samples=108800;
   int oversampling_factor = 0;
 
-  PRECISION2* gridding_kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+  PRECISION2* gridding_kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * total_gridding_kernel_samples);
+	for(int i = 0; i < total_gridding_kernel_samples; ++i){
 		gridding_kernels[i].x = (float)rand() / (float)RAND_MAX;
     gridding_kernels[i].y = (float)rand() / (float)RAND_MAX;
 	}
-    int2* gridding_kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+    int2* gridding_kernel_supports = (int2*)malloc(sizeof(int2) * num_gridding_kernel);
+	for(int i = 0; i < num_gridding_kernel; ++i){
 		gridding_kernel_supports[i].x = (int)rand() / (int)RAND_MAX;
     gridding_kernel_supports[i].y = (int)rand() / (int)RAND_MAX;
 	}
-          PRECISION2* degridding_kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+          PRECISION2* degridding_kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * total_degridding_kernel_samples);
+	for(int i = 0; i < total_degridding_kernel_samples; ++i){
 		degridding_kernels[i].x = (float)rand() / (float)RAND_MAX;
     degridding_kernels[i].y = (float)rand() / (float)RAND_MAX;
 	}
-    int2* degridding_kernel_supports = (int2*)malloc(sizeof(int2) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+    int2* degridding_kernel_supports = (int2*)malloc(sizeof(int2) * num_degridding_kernel);
+	for(int i = 0; i < num_degridding_kernel; ++i){
 		degridding_kernel_supports[i].x = (int)rand() / (int)RAND_MAX;
     degridding_kernel_supports[i].y = (int)rand() / (int)RAND_MAX;
 	}
@@ -756,15 +868,15 @@ void time_s2s_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
 		input_grid[i].x = (float)rand() / (float)RAND_MAX;
     input_grid[i].y = (float)rand() / (float)RAND_MAX;
 	}
-        PRECISION3* corrected_vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
+        PRECISION3* corrected_vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * NUM_VISIBILITIES);
+	for(int i = 0; i < NUM_VISIBILITIES; ++i){
 		corrected_vis_uvw_coords[i].x = (float)rand() / (float)RAND_MAX;
     corrected_vis_uvw_coords[i].y = (float)rand() / (float)RAND_MAX;
     corrected_vis_uvw_coords[i].z = (float)rand() / (float)RAND_MAX;
 	}
-        int* num_corrected_visibilities = (int*)malloc(sizeof(int) * GRID_SIZE * GRID_SIZE);
-	for(int i = 0; i < GRID_SIZE * GRID_SIZE; ++i){
-		num_corrected_visibilities[i] = (int)rand()/(int)RAND_MAX;
+        int* num_corrected_visibilities = (int*)malloc(sizeof(int) * 1);
+	for(int i = 0; i < 1; ++i){
+		num_corrected_visibilities[i] = (rand() % NUM_VISIBILITIES) + 1;
 	}
         Config config;
 	config_struct_set_up(GRID_SIZE, 17, &config);
@@ -791,10 +903,53 @@ void time_s2s_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
 free(degrid_timings);
 
 }
+void time_psf_host_set_up(int NUM_SAMPLES, int GRID_SIZE){
+	clock_t* psf_host_set_up_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
 
+	clock_t start, end;
+	clock_t CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
+
+int psf_grid_size = 2458;
+
+	Config config;
+	config_struct_set_up(GRID_SIZE, 17, &config);
+	config.weak_source_percent_gc = 0;
+	config.weak_source_percent_img = 0;
+	config.psf_max_value = 1.f;
+
+	PRECISION* psf = (PRECISION*)malloc(sizeof(PRECISION) * GRID_SIZE *GRID_SIZE);
+	double* psf_max_value = (double*)malloc(sizeof(double) * 1);
+
+
+	for(int i = 0; i < NUM_SAMPLES; ++i){
+		start = clock();
+		psf_host_set_up(GRID_SIZE, psf_grid_size, &config,psf, psf_max_value);
+		end = clock();
+		psf_host_set_up_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
+	}
+
+	save_timings(NUM_SAMPLES, "psf_host_set_up_timings", psf_host_set_up_timings, GRID_SIZE, 0,0);
+
+	free(psf_host_set_up_timings);
+	free(psf);
+	free(psf_max_value);
+  }
+
+
+
+/*
+	============================================================================
+	The following functions measures and records the execution time the generic
+	imaging pipeline operations.
+
+	Timing is recorded in milliseconds and saved to the `to_average` directory
+	with names like "config_timings", "dgkernel_timings", etc.
+	============================================================================
+*/
+/*
 void time_s2s_degrid_optim(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
 
      interpolation_parameters params;
          get_sky2sky_matrix_v0(&params);
 
-}
+}*/

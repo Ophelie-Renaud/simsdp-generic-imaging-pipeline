@@ -3,27 +3,26 @@
 
 CMakeFiles/SEP_Pipeline.dir/generated/Core0.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/Core0.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/Core0.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/communication.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/dump.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/fifo.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/mac_barrier.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/preesm_gen.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/preesm_md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/convolution_correction_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/deconvolution_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/degridgrid.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/dft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gains_apply_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gridding_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/major_loop_iter.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/timings.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/top.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/communication.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/dump.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/fifo.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/mac_barrier.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/preesm_gen.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/preesm_md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/convolution_correction_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/deconvolution_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/degridgrid.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/dft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gains_apply_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gridding_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/major_loop_iter.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/timings.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/top.h
  /usr/include/alloca.h
  /usr/include/endian.h
  /usr/include/features-time64.h
@@ -238,27 +237,26 @@ CMakeFiles/SEP_Pipeline.dir/generated/Core0.c.o
 
 CMakeFiles/SEP_Pipeline.dir/generated/communication.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/communication.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/communication.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/communication.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/dump.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/fifo.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/mac_barrier.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/preesm_gen.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/preesm_md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/convolution_correction_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/deconvolution_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/degridgrid.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/dft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gains_apply_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gridding_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/major_loop_iter.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/timings.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/top.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/communication.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/dump.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/fifo.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/mac_barrier.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/preesm_gen.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/preesm_md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/convolution_correction_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/deconvolution_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/degridgrid.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/dft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gains_apply_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gridding_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/major_loop_iter.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/timings.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/top.h
  /usr/include/alloca.h
  /usr/include/endian.h
  /usr/include/features-time64.h
@@ -473,27 +471,26 @@ CMakeFiles/SEP_Pipeline.dir/generated/communication.c.o
 
 CMakeFiles/SEP_Pipeline.dir/generated/dump.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/dump.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/communication.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/dump.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/dump.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/fifo.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/mac_barrier.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/preesm_gen.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/preesm_md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/convolution_correction_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/deconvolution_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/degridgrid.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/dft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gains_apply_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gridding_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/major_loop_iter.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/timings.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/top.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/communication.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/dump.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/fifo.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/mac_barrier.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/preesm_gen.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/preesm_md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/convolution_correction_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/deconvolution_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/degridgrid.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/dft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gains_apply_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gridding_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/major_loop_iter.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/timings.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/top.h
  /usr/include/alloca.h
  /usr/include/endian.h
  /usr/include/features-time64.h
@@ -708,8 +705,7 @@ CMakeFiles/SEP_Pipeline.dir/generated/dump.c.o
 
 CMakeFiles/SEP_Pipeline.dir/generated/fifo.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/fifo.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/fifo.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/fifo.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/fifo.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/stdc-predef.h
@@ -725,8 +721,7 @@ CMakeFiles/SEP_Pipeline.dir/generated/fifo.c.o
 
 CMakeFiles/SEP_Pipeline.dir/generated/mac_barrier.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/mac_barrier.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/mac_barrier.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/mac_barrier.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/mac_barrier.h
  /usr/include/asm-generic/errno-base.h
  /usr/include/asm-generic/errno.h
  /usr/include/errno.h
@@ -745,27 +740,26 @@ CMakeFiles/SEP_Pipeline.dir/generated/mac_barrier.c.o
 
 CMakeFiles/SEP_Pipeline.dir/generated/main.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/main.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/communication.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/dump.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/fifo.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/mac_barrier.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/main.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/preesm_gen.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/preesm_md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/convolution_correction_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/deconvolution_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/degridgrid.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/dft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gains_apply_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gridding_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/major_loop_iter.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/timings.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/top.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/communication.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/dump.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/fifo.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/mac_barrier.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/preesm_gen.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/preesm_md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/convolution_correction_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/deconvolution_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/degridgrid.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/dft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gains_apply_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gridding_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/major_loop_iter.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/timings.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/top.h
  /usr/include/alloca.h
  /usr/include/endian.h
  /usr/include/execinfo.h
@@ -1003,8 +997,7 @@ CMakeFiles/SEP_Pipeline.dir/generated/main.c.o
 
 CMakeFiles/SEP_Pipeline.dir/generated/preesm_md5.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/preesm_md5.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/preesm_md5.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/generated/preesm_md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/generated/preesm_md5.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/stdc-predef.h
@@ -1034,11 +1027,10 @@ CMakeFiles/SEP_Pipeline.dir/generated/preesm_md5.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/CPU/common.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/CPU/common.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/CPU/common.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -1198,12 +1190,11 @@ CMakeFiles/SEP_Pipeline.dir/src/CPU/common.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/CPU/convolution_correction_run.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/CPU/convolution_correction_run.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/convolution_correction_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/CPU/convolution_correction_run.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/convolution_correction_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -1363,12 +1354,11 @@ CMakeFiles/SEP_Pipeline.dir/src/CPU/convolution_correction_run.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/CPU/deconvolution_run.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/CPU/deconvolution_run.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/deconvolution_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/CPU/deconvolution_run.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/deconvolution_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -1528,13 +1518,12 @@ CMakeFiles/SEP_Pipeline.dir/src/CPU/deconvolution_run.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/CPU/degridgrid.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/CPU/degridgrid.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/degridgrid.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/map.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/CPU/degridgrid.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/degridgrid.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/map.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -1694,12 +1683,11 @@ CMakeFiles/SEP_Pipeline.dir/src/CPU/degridgrid.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/CPU/dft_run.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/CPU/dft_run.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/dft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/CPU/dft_run.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/dft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -1859,12 +1847,11 @@ CMakeFiles/SEP_Pipeline.dir/src/CPU/dft_run.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/CPU/fft_run.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/CPU/fft_run.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/CPU/fft_run.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/fftw3.h
@@ -2025,12 +2012,11 @@ CMakeFiles/SEP_Pipeline.dir/src/CPU/fft_run.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/CPU/gains_apply_run.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/CPU/gains_apply_run.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gains_apply_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/CPU/gains_apply_run.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gains_apply_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -2190,12 +2176,11 @@ CMakeFiles/SEP_Pipeline.dir/src/CPU/gains_apply_run.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/CPU/gains_calibration_run.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/CPU/gains_calibration_run.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gains_calibration_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/CPU/gains_calibration_run.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gains_calibration_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/complex.h
  /usr/include/features-time64.h
  /usr/include/features.h
@@ -2361,12 +2346,11 @@ CMakeFiles/SEP_Pipeline.dir/src/CPU/gains_calibration_run.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/CPU/gridding_run.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/CPU/gridding_run.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gridding_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/CPU/gridding_run.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gridding_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -2526,8 +2510,7 @@ CMakeFiles/SEP_Pipeline.dir/src/CPU/gridding_run.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/CPU/map.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/CPU/map.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/map.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/CPU/map.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/map.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/stdc-predef.h
@@ -2557,8 +2540,7 @@ CMakeFiles/SEP_Pipeline.dir/src/CPU/map.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/fifoFunction.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/fifoFunction.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/fifoFunction.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/limits.h
@@ -2713,12 +2695,11 @@ CMakeFiles/SEP_Pipeline.dir/src/fifoFunction.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/major_loop_actor.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/major_loop_actor.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/major_loop_actor.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/major_loop_actor.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/major_loop_actor.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -2878,12 +2859,11 @@ CMakeFiles/SEP_Pipeline.dir/src/major_loop_actor.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/major_loop_iter.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/major_loop_iter.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/major_loop_iter.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/major_loop_iter.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/major_loop_iter.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -3043,11 +3023,10 @@ CMakeFiles/SEP_Pipeline.dir/src/major_loop_iter.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/md5.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/md5.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/md5.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -3207,12 +3186,11 @@ CMakeFiles/SEP_Pipeline.dir/src/md5.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/reduce_vis.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/reduce_vis.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/reduce_vis.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/reduce_vis.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/reduce_vis.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -3372,12 +3350,11 @@ CMakeFiles/SEP_Pipeline.dir/src/reduce_vis.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/splitmerge.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/splitmerge.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/splitmerge.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/splitmerge.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/splitmerge.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h
@@ -3537,21 +3514,20 @@ CMakeFiles/SEP_Pipeline.dir/src/splitmerge.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/timings.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/timings.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/convolution_correction_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/deconvolution_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/degridgrid.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/dft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fft_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gains_apply_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/gridding_run.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/major_loop_iter.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/timings.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/top.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/timings.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/convolution_correction_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/deconvolution_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/degridgrid.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/dft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fft_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gains_apply_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/gridding_run.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/major_loop_iter.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/timings.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/top.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/fftw3.h
@@ -3723,12 +3699,11 @@ CMakeFiles/SEP_Pipeline.dir/src/timings.c.o
 
 CMakeFiles/SEP_Pipeline.dir/src/top.c.o
  /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/src/top.c
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/common.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/fifoFunction.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/md5.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/preesm.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/include/top.h
- /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_g2g/src/top.c
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/common.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/fifoFunction.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/md5.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/preesm.h
+ /home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/param_code/code_fft/include/top.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/inttypes.h

@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns">
-    <key attr.name="parameters" for="graph" id="parameters"/>
-    <key attr.name="variables" for="graph" id="variables"/>
-    <key attr.name="arguments" for="node" id="arguments"/>
-    <key attr.name="name" attr.type="string" for="graph"/>
-    <key attr.name="graph_desc" attr.type="string" for="node"/>
     <graph edgedefault="directed">
         <data key="name">subtraction_run</data>
         <node id="NUM_RECEIVERS" kind="cfg_in_iface"/>
@@ -14,130 +9,81 @@
         <node id="reciprocal_transform_actor" kind="actor">
             <data key="graph_desc">Code/include/gains_apply_run.h</data>
             <loop name="reciprocal_transform_actor">
-                <param direction="IN" isConfig="true"
-                    name="NUM_RECEIVERS" type="int"/>
-                <param direction="IN" isConfig="false"
-                    name="gains_in" type="PRECISION2"/>
-                <param direction="IN" isConfig="false"
-                    name="config" type="Config"/>
-                <param direction="OUT" isConfig="false"
-                    name="gains_out" type="PRECISION2"/>
+                <param direction="IN" isConfig="true" name="NUM_RECEIVERS" type="int"/>
+                <param direction="IN" isConfig="false" name="gains_in" type="PRECISION2"/>
+                <param direction="IN" isConfig="false" name="config" type="Config"/>
+                <param direction="OUT" isConfig="false" name="gains_out" type="PRECISION2"/>
             </loop>
             <port kind="cfg_input" name="NUM_RECEIVERS"/>
-            <port annotation="NONE" expr="NUM_RECEIVERS"
-                kind="input" name="gains_in"/>
-            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
-            <port annotation="WRITE_ONLY" expr="NUM_RECEIVERS"
-                kind="output" name="gains_out"/>
+            <port annotation="NONE" expr="NUM_RECEIVERS" kind="input" name="gains_in"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="NUM_RECEIVERS" kind="output" name="gains_out"/>
         </node>
         <node id="gains_in" kind="src">
-            <port annotation="NONE" expr="NUM_RECEIVERS"
-                kind="output" name="gains_in"/>
+            <port annotation="NONE" expr="NUM_RECEIVERS" kind="output" name="gains_in"/>
         </node>
         <node id="measured_vis" kind="src">
-            <port annotation="NONE" expr="NUM_VISIBILITIES"
-                kind="output" name="measured_vis"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="output" name="measured_vis"/>
         </node>
         <node id="receiver_pairs" kind="src">
-            <port annotation="NONE" expr="NUM_BASELINES"
-                kind="output" name="receiver_pairs"/>
+            <port annotation="NONE" expr="NUM_BASELINES" kind="output" name="receiver_pairs"/>
         </node>
         <node id="visibilities_out" kind="snk">
-            <port annotation="NONE" expr="NUM_VISIBILITIES"
-                kind="input" name="visibilities_out"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="input" name="visibilities_out"/>
         </node>
         <node id="visibilities_in" kind="src">
-            <port annotation="NONE" expr="NUM_VISIBILITIES"
-                kind="output" name="visibilities_in"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="output" name="visibilities_in"/>
         </node>
         <node id="config" kind="src">
-            <port annotation="NONE" expr="1" kind="output" name="config"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="config"/>
         </node>
         <node id="Broadcast_config" kind="broadcast">
-            <port annotation="READ_ONLY" expr="1" kind="input" name="input"/>
-            <port annotation="WRITE_ONLY" expr="1" kind="output" name="output1"/>
-            <port annotation="WRITE_ONLY" expr="1" kind="output" name="output2"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="input"/>
+            <port annotation="WRITE_ONLY" expr="1.0" kind="output" name="output1"/>
+            <port annotation="WRITE_ONLY" expr="1.0" kind="output" name="output2"/>
         </node>
         <node id="subtraction" kind="actor">
             <data key="graph_desc">Code/include/gains_apply_run.h</data>
             <loop name="subtract_from_measurements">
-                <param direction="IN" isConfig="true"
-                    name="NUM_RECEIVERS" type="int"/>
-                <param direction="IN" isConfig="true"
-                    name="NUM_BASELINES" type="int"/>
-                <param direction="IN" isConfig="true"
-                    name="NUM_VISIBILITIES" type="int"/>
-                <param direction="IN" isConfig="false"
-                    name="measured_vis" type="PRECISION2"/>
-                <param direction="IN" isConfig="false"
-                    name="visibilities_in" type="PRECISION2"/>
-                <param direction="IN" isConfig="false"
-                    name="gains" type="PRECISION2"/>
-                <param direction="IN" isConfig="false"
-                    name="receiver_pairs" type="int2"/>
-                <param direction="IN" isConfig="false"
-                    name="config" type="Config"/>
-                <param direction="OUT" isConfig="false"
-                    name="visibilities_out" type="PRECISION2"/>
+                <param direction="IN" isConfig="true" name="NUM_RECEIVERS" type="int"/>
+                <param direction="IN" isConfig="true" name="NUM_BASELINES" type="int"/>
+                <param direction="IN" isConfig="true" name="NUM_VISIBILITIES" type="int"/>
+                <param direction="IN" isConfig="false" name="measured_vis" type="PRECISION2"/>
+                <param direction="IN" isConfig="false" name="visibilities_in" type="PRECISION2"/>
+                <param direction="IN" isConfig="false" name="gains" type="PRECISION2"/>
+                <param direction="IN" isConfig="false" name="receiver_pairs" type="int2"/>
+                <param direction="IN" isConfig="false" name="config" type="Config"/>
+                <param direction="OUT" isConfig="false" name="visibilities_out" type="PRECISION2"/>
             </loop>
             <port kind="cfg_input" name="NUM_RECEIVERS"/>
             <port kind="cfg_input" name="NUM_BASELINES"/>
             <port kind="cfg_input" name="NUM_VISIBILITIES"/>
             <port kind="cfg_input" name="GRID_SIZE"/>
-            <port annotation="NONE" expr="NUM_VISIBILITIES"
-                kind="input" name="measured_vis"/>
-            <port annotation="NONE" expr="NUM_VISIBILITIES"
-                kind="input" name="visibilities_in"/>
-            <port annotation="NONE" expr="NUM_RECEIVERS"
-                kind="input" name="gains"/>
-            <port annotation="NONE" expr="NUM_BASELINES"
-                kind="input" name="receiver_pairs"/>
-            <port annotation="NONE" expr="1" kind="input" name="config"/>
-            <port annotation="NONE" expr="NUM_VISIBILITIES"
-                kind="output" name="visibilities_out"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="input" name="measured_vis"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="input" name="visibilities_in"/>
+            <port annotation="NONE" expr="NUM_RECEIVERS" kind="input" name="gains"/>
+            <port annotation="NONE" expr="NUM_BASELINES" kind="input" name="receiver_pairs"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="config"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="output" name="visibilities_out"/>
         </node>
-        <edge kind="fifo" source="gains_in" sourceport="gains_in"
-            target="reciprocal_transform_actor"
-            targetport="gains_in" type="PRECISION2"/>
-        <edge kind="fifo" source="config" sourceport="config"
-            target="Broadcast_config" targetport="input" type="Config"/>
-        <edge kind="fifo" source="Broadcast_config"
-            sourceport="output1"
-            target="reciprocal_transform_actor"
-            targetport="config" type="Config"/>
-        <edge kind="fifo" source="measured_vis"
-            sourceport="measured_vis" target="subtraction"
-            targetport="measured_vis" type="PRECISION2"/>
-        <edge kind="fifo" source="subtraction"
-            sourceport="visibilities_out"
-            target="visibilities_out"
-            targetport="visibilities_out" type="PRECISION2"/>
-        <edge kind="fifo" source="visibilities_in"
-            sourceport="visibilities_in" target="subtraction"
-            targetport="visibilities_in" type="PRECISION2"/>
-        <edge kind="fifo" source="receiver_pairs"
-            sourceport="receiver_pairs" target="subtraction"
-            targetport="receiver_pairs" type="int2"/>
-        <edge kind="fifo" source="Broadcast_config"
-            sourceport="output2" target="subtraction"
-            targetport="config" type="Config"/>
-        <edge kind="fifo" source="reciprocal_transform_actor"
-            sourceport="gains_out" target="subtraction"
-            targetport="gains" type="PRECISION2"/>
-        <edge kind="dependency" source="NUM_RECEIVERS"
-            target="reciprocal_transform_actor" targetport="NUM_RECEIVERS"/>
+        <edge kind="fifo" source="gains_in" sourceport="gains_in" target="reciprocal_transform_actor" targetport="gains_in" type="PRECISION2"/>
+        <edge kind="fifo" source="config" sourceport="config" target="Broadcast_config" targetport="input" type="Config"/>
+        <edge kind="fifo" source="Broadcast_config" sourceport="output1" target="reciprocal_transform_actor" targetport="config" type="Config"/>
+        <edge kind="fifo" source="measured_vis" sourceport="measured_vis" target="subtraction" targetport="measured_vis" type="PRECISION2"/>
+        <edge kind="fifo" source="subtraction" sourceport="visibilities_out" target="visibilities_out" targetport="visibilities_out" type="PRECISION2"/>
+        <edge kind="fifo" source="visibilities_in" sourceport="visibilities_in" target="subtraction" targetport="visibilities_in" type="PRECISION2"/>
+        <edge kind="fifo" source="receiver_pairs" sourceport="receiver_pairs" target="subtraction" targetport="receiver_pairs" type="int2"/>
+        <edge kind="fifo" source="Broadcast_config" sourceport="output2" target="subtraction" targetport="config" type="Config"/>
+        <edge kind="fifo" source="reciprocal_transform_actor" sourceport="gains_out" target="subtraction" targetport="gains" type="PRECISION2"/>
+        <edge kind="dependency" source="NUM_RECEIVERS" target="reciprocal_transform_actor" targetport="NUM_RECEIVERS"/>
         <edge kind="dependency" source="NUM_RECEIVERS" target="gains_in"/>
         <edge kind="dependency" source="NUM_VISIBILITIES" target="visibilities_in"/>
         <edge kind="dependency" source="NUM_VISIBILITIES" target="measured_vis"/>
         <edge kind="dependency" source="NUM_VISIBILITIES" target="visibilities_out"/>
         <edge kind="dependency" source="NUM_BASELINES" target="receiver_pairs"/>
-        <edge kind="dependency" source="NUM_BASELINES"
-            target="subtraction" targetport="NUM_BASELINES"/>
-        <edge kind="dependency" source="NUM_VISIBILITIES"
-            target="subtraction" targetport="NUM_VISIBILITIES"/>
-        <edge kind="dependency" source="NUM_RECEIVERS"
-            target="subtraction" targetport="NUM_RECEIVERS"/>
-        <edge kind="dependency" source="GRID_SIZE"
-            target="subtraction" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_BASELINES" target="subtraction" targetport="NUM_BASELINES"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="subtraction" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="NUM_RECEIVERS" target="subtraction" targetport="NUM_RECEIVERS"/>
+        <edge kind="dependency" source="GRID_SIZE" target="subtraction" targetport="GRID_SIZE"/>
     </graph>
 </graphml>
