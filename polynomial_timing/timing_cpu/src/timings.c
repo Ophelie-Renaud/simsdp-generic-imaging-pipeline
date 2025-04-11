@@ -188,6 +188,31 @@ void time_gridsize_setups(int NUM_SAMPLES, int GRID_SIZE){
 }
 
 void time_visibility_setups(int NUM_SAMPLES, int NUM_VISIBILITIES){
+  clock_t* visibility_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
+
+	clock_t start, end;
+	clock_t CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
+
+        Config config;
+	config_struct_set_up(2048, 17, &config);
+
+       PRECISION2* visibilities = (PRECISION2*)malloc(NUM_VISIBILITIES  * sizeof(PRECISION2));
+		PRECISION3* vis_coords = (PRECISION3*)malloc(NUM_VISIBILITIES * sizeof(PRECISION3));
+
+  		for(int i = 0; i < NUM_SAMPLES; ++i){
+			start = clock();
+			visibility_host_set_up(NUM_VISIBILITIES , &config, vis_coords, visibilities);
+			end = clock();
+			visibility_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
+		}
+            save_timings(NUM_SAMPLES, "visibility_host_setup_timings", visibility_timings,NUM_VISIBILITIES,0,0);
+free(visibilities);
+		free(vis_coords);
+                free(visibility_timings);
+  }
+
+/*
+void time_visibility_setups(int NUM_SAMPLES, int NUM_VISIBILITIES){
 	clock_t* visibility_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
 
 	clock_t start, end;
@@ -226,7 +251,7 @@ void time_visibility_setups(int NUM_SAMPLES, int NUM_VISIBILITIES){
 	}
 
 	free(visibility_timings);
-}
+}*/
 
 void time_save_output(int NUM_SAMPLES, int GRID_SIZE){
 	clock_t* saveoutput_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
@@ -700,7 +725,64 @@ void time_hogbom(int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES){
 	free(in);
 	free(out);
 }
-void time_grid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
+void time_dft_gridding(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
+  clock_t* grid_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
+  clock_t start, end;
+  clock_t CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
+
+  int num_kernel = 17;
+  int total_kernel_samples = 108800;
+
+  PRECISION2* kernels = (PRECISION2*)malloc(sizeof(PRECISION2) * total_kernel_samples);
+  for (int i = 0; i < total_kernel_samples; ++i) {
+    kernels[i].x = (float)rand() / (float)RAND_MAX;
+    kernels[i].y = (float)rand() / (float)RAND_MAX;
+  }
+
+  int2* kernel_supports = (int2*)malloc(sizeof(int2) * num_kernel);
+  for (int i = 0; i < num_kernel; ++i) {
+    kernel_supports[i].x = (int)rand() / (int)RAND_MAX;
+    kernel_supports[i].y = (int)rand() / (int)RAND_MAX;
+  }
+
+  PRECISION3* vis_uvw_coords = (PRECISION3*)malloc(sizeof(PRECISION3) * NUM_VISIBILITIES);
+  for (int i = 0; i < NUM_VISIBILITIES; ++i) {
+    vis_uvw_coords[i].x = (float)rand() / (float)RAND_MAX;
+    vis_uvw_coords[i].y = (float)rand() / (float)RAND_MAX;
+    vis_uvw_coords[i].z = (float)rand() / (float)RAND_MAX;
+  }
+
+  PRECISION2* visibilities = (PRECISION2*)malloc(sizeof(PRECISION2) * NUM_VISIBILITIES);
+  for(int i = 0; i < NUM_VISIBILITIES; ++i){
+	visibilities[i].x = (float)rand() / (float)RAND_MAX;
+    visibilities[i].y = (float)rand() / (float)RAND_MAX;
+  }
+    Config config;
+	config_struct_set_up(GRID_SIZE, 17, &config);
+	config.weak_source_percent_gc = 0;
+	config.weak_source_percent_img = 0;
+	config.psf_max_value = 1.f;
+
+  PRECISION2* uv_grid = (PRECISION2*)malloc(sizeof(PRECISION2) * GRID_SIZE*GRID_SIZE);
+
+
+  for(int i = 0; i < NUM_SAMPLES; ++i){
+		start = clock();
+        gridding_actor(GRID_SIZE,NUM_VISIBILITIES,num_kernel, total_kernel_samples,kernels, kernel_supports,vis_uvw_coords,visibilities,&config,uv_grid);
+        end = clock();
+		grid_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
+  }
+
+    save_timings(NUM_SAMPLES, "dft_gridding_timings", grid_timings, GRID_SIZE, NUM_VISIBILITIES,0);
+free(grid_timings);
+free(kernels);
+free(kernel_supports);
+free(vis_uvw_coords);
+free(visibilities);
+free(uv_grid);
+
+  }
+void time_std_gridding(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES){
   	clock_t* grid_timings = (clock_t*)malloc(NUM_SAMPLES * sizeof(clock_t));
 
 	clock_t start, end;
@@ -758,7 +840,7 @@ int bypass = 0;
 		end = clock();
 		grid_timings[i] = ((double) (end - start)) / CLOCKS_PER_MS + 0.5;
 	}
-    save_timings(NUM_SAMPLES, "grid_timings", grid_timings, GRID_SIZE, NUM_VISIBILITIES,0);
+    save_timings(NUM_SAMPLES, "std_gridding_timings", grid_timings, GRID_SIZE, NUM_VISIBILITIES,0);
 
     free(kernels);
     free(kernel_supports);

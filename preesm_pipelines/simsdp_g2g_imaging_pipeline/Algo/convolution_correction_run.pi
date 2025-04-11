@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns">
-    <key attr.name="parameters" for="graph" id="parameters"/>
-    <key attr.name="variables" for="graph" id="variables"/>
-    <key attr.name="arguments" for="node" id="arguments"/>
-    <key attr.name="name" attr.type="string" for="graph"/>
-    <key attr.name="graph_desc" attr.type="string" for="node"/>
-    <key attr.name="memoryScript" attr.type="string" for="node"/>
     <graph edgedefault="directed">
         <data key="name">convolution_correction_run</data>
         <node id="GRID_SIZE" kind="cfg_in_iface"/>
@@ -13,58 +7,36 @@
         <node id="execute_convolution_correction_actor" kind="actor">
             <data key="graph_desc">Code/include/convolution_correction_run.h</data>
             <loop name="execute_convolution_correction_actor">
-                <param direction="IN" isConfig="true"
-                    name="GRID_SIZE" type="int"/>
-                <param direction="IN" isConfig="false"
-                    name="dirty_image_in" type="PRECISION"/>
-                <param direction="IN" isConfig="false"
-                    name="prolate" type="PRECISION"/>
-                <param direction="IN" isConfig="false"
-                    name="config" type="Config"/>
-                <param direction="OUT" isConfig="false"
-                    name="dirty_image_out" type="PRECISION"/>
+                <param direction="IN" isConfig="true" name="GRID_SIZE" type="int"/>
+                <param direction="IN" isConfig="false" name="dirty_image_in" type="PRECISION"/>
+                <param direction="IN" isConfig="false" name="prolate" type="PRECISION"/>
+                <param direction="IN" isConfig="false" name="config" type="Config"/>
+                <param direction="OUT" isConfig="false" name="dirty_image_out" type="PRECISION"/>
             </loop>
             <data key="memoryScript">Code/Scripts/convolution_correction_run_inPlace.bsh</data>
             <port kind="cfg_input" name="GRID_SIZE"/>
-            <port annotation="READ_ONLY"
-                expr="GRID_SIZE*GRID_SIZE" kind="input" name="dirty_image_in"/>
-            <port annotation="READ_ONLY" expr="GRID_SIZE/2"
-                kind="input" name="prolate"/>
-            <port annotation="READ_ONLY" expr="1" kind="input" name="config"/>
-            <port annotation="WRITE_ONLY"
-                expr="GRID_SIZE*GRID_SIZE" kind="output" name="dirty_image_out"/>
+            <port annotation="READ_ONLY" expr="GRID_SIZE*GRID_SIZE" kind="input" name="dirty_image_in"/>
+            <port annotation="READ_ONLY" expr="GRID_SIZE/2" kind="input" name="prolate"/>
+            <port annotation="READ_ONLY" expr="1.0" kind="input" name="config"/>
+            <port annotation="WRITE_ONLY" expr="GRID_SIZE*GRID_SIZE" kind="output" name="dirty_image_out"/>
         </node>
         <node id="dirty_image_in" kind="src">
-            <port annotation="NONE" expr="GRID_SQUARE"
-                kind="output" name="dirty_image_in"/>
+            <port annotation="NONE" expr="GRID_SQUARE" kind="output" name="dirty_image_in"/>
         </node>
         <node id="prolate" kind="src">
-            <port annotation="READ_ONLY" expr="GRID_SIZE/2"
-                kind="output" name="prolate"/>
+            <port annotation="READ_ONLY" expr="GRID_SIZE/2" kind="output" name="prolate"/>
         </node>
         <node id="dirty_image_out" kind="snk">
-            <port annotation="NONE" expr="GRID_SQUARE"
-                kind="input" name="dirty_image_out"/>
+            <port annotation="NONE" expr="GRID_SQUARE" kind="input" name="dirty_image_out"/>
         </node>
         <node id="config" kind="src">
-            <port annotation="NONE" expr="1" kind="output" name="config"/>
+            <port annotation="NONE" expr="1.0" kind="output" name="config"/>
         </node>
-        <edge kind="fifo" source="dirty_image_in"
-            sourceport="dirty_image_in"
-            target="execute_convolution_correction_actor"
-            targetport="dirty_image_in" type="PRECISION"/>
-        <edge kind="fifo" source="prolate" sourceport="prolate"
-            target="execute_convolution_correction_actor"
-            targetport="prolate" type="PRECISION"/>
-        <edge kind="fifo"
-            source="execute_convolution_correction_actor"
-            sourceport="dirty_image_out" target="dirty_image_out"
-            targetport="dirty_image_out" type="PRECISION"/>
-        <edge kind="fifo" source="config" sourceport="config"
-            target="execute_convolution_correction_actor"
-            targetport="config" type="Config"/>
-        <edge kind="dependency" source="GRID_SIZE"
-            target="execute_convolution_correction_actor" targetport="GRID_SIZE"/>
+        <edge kind="fifo" source="dirty_image_in" sourceport="dirty_image_in" target="execute_convolution_correction_actor" targetport="dirty_image_in" type="PRECISION"/>
+        <edge kind="fifo" source="prolate" sourceport="prolate" target="execute_convolution_correction_actor" targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="execute_convolution_correction_actor" sourceport="dirty_image_out" target="dirty_image_out" targetport="dirty_image_out" type="PRECISION"/>
+        <edge kind="fifo" source="config" sourceport="config" target="execute_convolution_correction_actor" targetport="config" type="Config"/>
+        <edge kind="dependency" source="GRID_SIZE" target="execute_convolution_correction_actor" targetport="GRID_SIZE"/>
         <edge kind="dependency" source="GRID_SIZE" target="prolate"/>
         <edge kind="dependency" source="GRID_SIZE" target="GRID_SQUARE"/>
         <edge kind="dependency" source="GRID_SQUARE" target="dirty_image_in"/>

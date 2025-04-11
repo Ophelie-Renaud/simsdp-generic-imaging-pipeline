@@ -129,15 +129,24 @@ int main(int argc, char *argv[]) {
         int GRID_SIZE = atoi(argv[3]);
         int NUM_MINOR_CYCLES = atoi(argv[4]);
         time_hogbom(NUM_SAMPLES, GRID_SIZE, NUM_MINOR_CYCLES);
-    }else if (strcmp(function_name, "time_grid") == 0) {
+    }else if (strcmp(function_name, "time_std_gridding") == 0) {
         if (argc != 5) {
-            fprintf(stderr, "Usage: %s time_grid <NUM_SAMPLES> <GRID_SIZE> <NUM_VISIBILITIES>\n", argv[0]);
+            fprintf(stderr, "Usage: %s time_std_gridding <NUM_SAMPLES> <GRID_SIZE> <NUM_VISIBILITIES>\n", argv[0]);
             return 1;
         }
         int NUM_SAMPLES = atoi(argv[2]);
         int GRID_SIZE = atoi(argv[3]);
         int NUM_VISIBILITIES = atoi(argv[4]);
-        time_grid(NUM_SAMPLES, GRID_SIZE, NUM_VISIBILITIES);
+        time_std_gridding(NUM_SAMPLES, GRID_SIZE, NUM_VISIBILITIES);
+    }else if (strcmp(function_name, "time_dft_gridding") == 0) {
+        if (argc != 5) {
+            fprintf(stderr, "Usage: %s time_dft_gridding <NUM_SAMPLES> <GRID_SIZE> <NUM_VISIBILITIES>\n", argv[0]);
+            return 1;
+        }
+        int NUM_SAMPLES = atoi(argv[2]);
+        int GRID_SIZE = atoi(argv[3]);
+        int NUM_VISIBILITIES = atoi(argv[4]);
+        time_dft_gridding(NUM_SAMPLES, GRID_SIZE, NUM_VISIBILITIES);
     }else if (strcmp(function_name, "time_degrid") == 0) {
         if (argc != 5) {
             fprintf(stderr, "Usage: %s time_degrid <NUM_SAMPLES> <GRID_SIZE> <NUM_VISIBILITIES>\n", argv[0]);

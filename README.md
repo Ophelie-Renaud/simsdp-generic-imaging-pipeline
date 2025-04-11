@@ -1,5 +1,7 @@
 # SimSDP - Generic Imaging Pipeline
 
+![GitHub repo size](https://img.shields.io/github/repo-size/Ophelie-Renaud/simsdp-generic-imaging-pipeline) ![GitHub last commit](https://img.shields.io/github/last-commit/Ophelie-Renaud/simsdp-generic-imaging-pipeline) ![GitHub issues](https://img.shields.io/github/issues/Ophelie-Renaud/simsdp-generic-imaging-pipeline) ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Ophelie-Renaud/simsdp-generic-imaging-pipeline/ci.yml?branch=main)
+
 SimSDP is an HPC resource allocation framework and simulation tool designed to optimize intra-node and inter-node resource allocation for scientific data processing. It combines **PREESM** for rapid prototyping and **SimGrid** for simulating inter-node communication and computation. 
 
 The primary goal of SimSDP is to simulate the **Science Data Processor (SDP)** pipeline from the Square Kilometre Array (SKA), converting visibilities into output images on massive HPC architectures, handling datasets as large as the SKA requirements (179 Po :astonished:).

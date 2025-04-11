@@ -93,28 +93,30 @@ def extract_parts(filename):
 # Définition des Tests
 # ================================
 tests = [
-    ("time_constant_setups", [NUM_SAMPLES]), #int NUM_SAMPLES
-    ("time_gridsize_setups", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
-    ("time_visibility_setups", [NUM_SAMPLES, (V0, Vf, Vs)]), #int NUM_SAMPLES, int NUM_VISIBILITIES
-    ("time_save_output", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
-    ("time_dft", [NUM_SAMPLES, (C0, Cf, Cs), (V0, Vf, Vs), V0]), #int NUM_SAMPLES, int NUM_MINOR_CYCLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
-    ("time_gains_application", [NUM_SAMPLES, (V0, Vf, Vs), V0]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
-    ("time_substraction", [NUM_SAMPLES, (V0, Vf, Vs)]), #int NUM_SAMPLES, int NUM_VISIBILITIES
-    ("time_add_visibilities", [NUM_SAMPLES, (V0, Vf, Vs)]), #int NUM_SAMPLES, int NUM_VISIBILITIES
-    ("time_prolate", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
-    ("time_finegrid", [NUM_SAMPLES, (V0, Vf, Vs), V0]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
-    ("time_subtract_ispace", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
-    ("time_fft_shift", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
-    ("time_fft", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
-    ("time_hogbom", [NUM_SAMPLES, (G0, Gf, Gs),(C0, Cf, Cs)]), # int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES
-    ("time_grid", [NUM_SAMPLES, (G0, Gf, Gs),(V0, Vf, Vs)]),
-    ("time_degrid", [NUM_SAMPLES, (G0, Gf, Gs),(V0, Vf, Vs)]),
-    ("time_s2s", [NUM_SAMPLES, (G0, Gf, Gs),(V0, Vf, Vs)]),
-    ("time_psf_host_set_up", [NUM_SAMPLES, (G0, Gf, Gs)]),
-]
+
+        ("time_psf_host_set_up", [NUM_SAMPLES, (G0, Gf, Gs)]),
+         ]
 
 #test_unit = [
-#    ("test",[NUM_SAMPLES, (1, 5, 1), (2, 6, 2)])
+#        ("time_constant_setups", [NUM_SAMPLES]), #int NUM_SAMPLES
+#     ("time_gridsize_setups", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
+#    ("time_visibility_setups", [NUM_SAMPLES, (V0, Vf, Vs)]), #int NUM_SAMPLES, int NUM_VISIBILITIES
+#     ("time_save_output", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
+#     ("time_dft", [NUM_SAMPLES, (C0, Cf, Cs), (V0, Vf, Vs), V0]), #int NUM_SAMPLES, int NUM_MINOR_CYCLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+#     ("time_gains_application", [NUM_SAMPLES, (V0, Vf, Vs), V0]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+#     ("time_substraction", [NUM_SAMPLES, (V0, Vf, Vs)]), #int NUM_SAMPLES, int NUM_VISIBILITIES
+#     ("time_add_visibilities", [NUM_SAMPLES, (V0, Vf, Vs)]), #int NUM_SAMPLES, int NUM_VISIBILITIES
+#     ("time_prolate", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
+#     ("time_finegrid", [NUM_SAMPLES, (V0, Vf, Vs), V0]), #int NUM_SAMPLES, int NUM_VISIBILITIES, int NUM_ACTUAL_VISIBILITIES
+#    ("time_subtract_ispace", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
+#     ("time_fft_shift", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
+#     ("time_fft", [NUM_SAMPLES, (G0, Gf, Gs)]), #int NUM_SAMPLES, int GRID_SIZE
+#     ("time_hogbom", [NUM_SAMPLES, (G0, Gf, Gs),(C0, Cf, Cs)]), # int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES
+#     ("time_std_gridding", [NUM_SAMPLES, (G0, Gf, Gs),(V0, Vf, Vs)]),
+#     ("time_dft_gridding", [NUM_SAMPLES, (G0, Gf, Gs),(V0, Vf, Vs)]),
+#     ("time_degrid", [NUM_SAMPLES, (G0, Gf, Gs),(V0, Vf, Vs)]),
+#     ("time_s2s", [NUM_SAMPLES, (G0, Gf, Gs),(V0, Vf, Vs)]),
+#     ("time_psf_host_set_up", [NUM_SAMPLES, (G0, Gf, Gs)]),
 #]
 
 # ================================

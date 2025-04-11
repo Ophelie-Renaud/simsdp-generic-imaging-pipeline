@@ -1,0 +1,1 @@
+/usr/bin/c++  -g CMakeFiles/read_ms.dir/main.c.o CMakeFiles/read_ms.dir/read_ms.cpp.o -o read_ms   -L/usr/local/lib  -Wl,-rpath,/usr/local/lib -lcasa_casa -lcasa_tables -lboost_system -lboost_filesystem 

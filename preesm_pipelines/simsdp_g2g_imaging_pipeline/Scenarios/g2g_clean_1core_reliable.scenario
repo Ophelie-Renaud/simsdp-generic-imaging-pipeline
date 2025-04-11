@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <flags>
+        <sizesAreInBit/>
+    </flags>
+    <files>
+        <algorithm url="/simsdp_g2g_imaging_pipeline/Algo/g2g/generic_top_g2g_coarse_to_unroll.pi"/>
+        <architecture url="/simsdp_g2g_imaging_pipeline/Archi/1CoresX86.slam"/>
+        <codegenDirectory url="/simsdp_g2g_imaging_pipeline/Code/generated"/>
+    </files>
+    <constraints excelUrl="">
+        <constraintGroup>
+            <operator name="Core0"/>
+            <task name="generic_top/iterator"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top/delta_psi/save_output"/>
+            <task name="generic_top/delta_psi/delta/g2g_degridgrid"/>
+            <task name="generic_top/delta_psi/delta/grid"/>
+            <task name="generic_top/delta_psi/delta/subtract_image_space"/>
+            <task name="generic_top/delta_psi/delta/source_list_sink"/>
+            <task name="generic_top/delta_psi/delta/psf_sink"/>
+            <task name="generic_top/delta_psi/delta/inv_conv_correction"/>
+            <task name="generic_top/delta_psi/delta/split_s2s"/>
+            <task name="generic_top/delta_psi/delta/split_uvgrid"/>
+            <task name="generic_top/delta_psi/delta/merge_estimate_grid"/>
+            <task name="generic_top/delta_psi/delta/merge_measurement_grid"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_estimation"/>
+            <task name="generic_top/delta_psi/delta/fft_run/CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_real_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/fft_run"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_complex_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_real_actor"/>
+            <task name="generic_top/delta_psi/delta/inverse_fft_run_measurements"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/reciprocal_transform_actor"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/apply_gains"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/correct_to_finegrid"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation/execute_convolution_correction_actor"/>
+            <task name="generic_top/delta_psi/delta/convolution_correction_run_estimation"/>
+            <task name="generic_top/delta_psi/delta"/>
+            <task name="generic_top/delta_psi/psi/hogbom_clean"/>
+            <task name="generic_top/delta_psi/psi/token_sink"/>
+            <task name="generic_top/delta_psi/psi"/>
+            <task name="generic_top/delta_psi"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+    </constraints>
+    <timings excelUrl="/simsdp_g2g_imaging_pipeline/Scenarios/g2g_unroll.csv">
+        <timing opname="x86_f1" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/iterator"/>
+        <timing opname="x86_f1" time="max(158.2,+ 0.000651 * GRID_SIZE^2 -0.121989 * GRID_SIZE + 49.500000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/save_output"/>
+        <timing opname="x86_f1" time="4" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+        <timing opname="x86_f1" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+        <timing opname="x86_f1" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+        <timing opname="x86_f1" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/correction_set_up"/>
+        <timing opname="x86_f1" time="15" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+        <timing opname="x86_f1" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+        <timing opname="x86_f1" time="13" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+        <timing opname="x86_f1" time="max(870,-0.000001 * GRID_SIZE^3 + 0.002915 * GRID_SIZE^2 -2.511475 * GRID_SIZE + 1594.300000)" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+        <timing opname="x86_f1" time="max(2683,-0.000709 * NUM_VISIBILITIES + 3572.300000)" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+        <timing opname="x86_f1" time="max(47.7,-724.319315 + 0.000002 * GRID_SIZE + 2.758838 * NUM_VISIBILITIES^2 -0.002946 * NUM_VISIBILITIES^3 + 0.000001 * GRID_SIZE^2 * NUM_VISIBILITIES^2)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/g2g_degridgrid"/>
+        <timing opname="x86_f1" time="max(26, 51.354+0.0076*GRID_SIZE+0.0000013599*NUM_VISIBILITIES)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/grid"/>
+        <timing opname="x86_f1" time="max(0,+ 0.000162 * GRID_SIZE^2 -0.137207 * GRID_SIZE + 40.500000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/inv_conv_correction"/>
+        <timing opname="x86_f1" time="25" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/merge_estimate_grid"/>
+        <timing opname="x86_f1" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/merge_measurement_grid"/>
+        <timing opname="x86_f1" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/psf_sink"/>
+        <timing opname="x86_f1" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/source_list_sink"/>
+        <timing opname="x86_f1" time="3" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/split_s2s"/>
+        <timing opname="x86_f1" time="8" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/split_uvgrid"/>
+        <timing opname="x86_f1" time="max(1.1,-0.000019 * GRID_SIZE^2 + 0.020231 * GRID_SIZE -5.400000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/subtract_image_space"/>
+        <timing opname="x86_f1" time="max(90.9,-322.338854 + 31.470761 * GRID_SIZE -0.265562 * NUM_MINOR_CYCLES + 0.001363 * GRID_SIZE^2 -0.000003 * GRID_SIZE * NUM_MINOR_CYCLES -1.016266 * GRID_SIZE^2 * NUM_MINOR_CYCLES -0.063035 * GRID_SIZE * NUM_MINOR_CYCLES^2 + 0.000268 * NUM_MINOR_CYCLES^3 -0.000001 * GRID_SIZE^4 + 0.003571 * GRID_SIZE * NUM_MINOR_CYCLES^3 + 0.000071 * NUM_MINOR_CYCLES^4 -0.000004 * GRID_SIZE^2 * NUM_MINOR_CYCLES^3)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/hogbom_clean"/>
+        <timing opname="x86_f1" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/token_sink"/>
+        <timing opname="x86_f1" time="max(7.1,+ 0.000019 * GRID_SIZE^2 + 0.009196 * GRID_SIZE -3.100000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="0.0000472 * GRID_SIZE * GRID_SIZE + 0.087" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/convolution_correction_run_estimation/execute_convolution_correction_actor"/>
+        <timing opname="x86_f1" time="max(365.4,+ 0.000194 * NUM_VISIBILITIES -218.700000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/correct_to_finegrid/apply_gains"/>
+        <timing opname="x86_f1" time="max(1377.0,+ 0.000034 * NUM_VISIBILITIES + 1254.400000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/correct_to_finegrid/correct_to_finegrid"/>
+        <timing opname="x86_f1" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/correct_to_finegrid/reciprocal_transform_actor"/>
+        <timing opname="x86_f1" time="max(0,+ 0.000162 * GRID_SIZE^2 -0.137207 * GRID_SIZE + 40.500000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/fft_run/CUFFT_EXECUTE_FORWARD_C2C_actor"/>
+        <timing opname="x86_f1" time="max(0,+ 0.000026 * GRID_SIZE^2 + 0.000716 * GRID_SIZE -0.200000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/fft_run/fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="max(0,+ 0.000026 * GRID_SIZE^2 + 0.000716 * GRID_SIZE -0.200000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/fft_run/fft_shift_real_to_complex_actor"/>
+        <timing opname="x86_f1" time="max(0,+ 0.000162 * GRID_SIZE^2 -0.137207 * GRID_SIZE + 40.500000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/inverse_fft_run_estimation/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="max(0,+ 0.000026 * GRID_SIZE^2 + 0.000716 * GRID_SIZE -0.200000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="max(0,+ 0.000026 * GRID_SIZE^2 + 0.000716 * GRID_SIZE -0.200000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/inverse_fft_run_estimation/fft_shift_complex_to_real_actor"/>
+        <timing opname="x86_f1" time="max(0,+ 0.000162 * GRID_SIZE^2 -0.137207 * GRID_SIZE + 40.500000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/inverse_fft_run_measurements/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+        <timing opname="x86_f1" time="max(0,+ 0.000026 * GRID_SIZE^2 + 0.000716 * GRID_SIZE -0.200000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_complex_actor"/>
+        <timing opname="x86_f1" time="max(0,+ 0.000026 * GRID_SIZE^2 + 0.000716 * GRID_SIZE -0.200000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/inverse_fft_run_measurements/fft_shift_complex_to_real_actor"/>
+        <memcpyspeed opname="x86_f1" setuptime="1" timeperunit="6.170012059298443E-11"/>
+    </timings>
+    <simuParams>
+        <mainCore>Core0</mainCore>
+        <mainComNode>shared_mem</mainComNode>
+        <averageDataSize>1000</averageDataSize>
+        <dataTypes>
+            <dataType name="double" size="64"/>
+            <dataType name="Config" size="8"/>
+            <dataType name="PRECISION" size="8"/>
+            <dataType name="int2" size="8"/>
+            <dataType name="PRECISION2" size="8"/>
+            <dataType name="PRECISION3" size="8"/>
+            <dataType name="int" size="32"/>
+        </dataTypes>
+        <specialVertexOperators>
+            <specialVertexOperator path="Core0"/>
+        </specialVertexOperators>
+    </simuParams>
+    <parameterValues/>
+    <papifyConfigs xmlUrl=""/>
+    <energyConfigs xmlUrl="">
+        <performanceObjective objectiveEPS="0.0"/>
+        <peActorsEnergy/>
+    </energyConfigs>
+</scenario>

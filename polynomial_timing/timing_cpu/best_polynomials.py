@@ -22,7 +22,7 @@ Date : 7/02/2025
 
 
 # Dossiers
-input_folder = "average"
+input_folder = "average_gretsi"
 output_folder = "polynomial_fits"
 
 # Créer le dossier de sortie s'il n'existe pas
@@ -37,6 +37,10 @@ def calculate_max_degree1D(num_points):
     """Calculer le degré maximum du polynôme basé sur le nombre de points."""
     return int(num_points - 1)
 def load_data_and_axis(filename, num_axis):
+    if not os.path.exists(filename):
+        print(f"Fichier {filename} introuvable, passage au test suivant.")
+        return None  # Retourne None pour signaler qu'il faut ignorer ce test
+
     result = np.genfromtxt(filename, delimiter=",")
     result = result[:-1]
     div_by = num_axis + 1
@@ -279,7 +283,8 @@ tests = [
 
     ("gains_apply_timings", 1,["NUM_VISIBILITIES"]), #int NUM_VISIBILITIES (func= poly1D)
     ("gkernel_timings", 0,[]), #None (func=const)
-    #("grid_timings", 2,["GRID_SIZE","NUM_VISIBILITIES"]), #int GRID_SIZE, int NUM_VISIBILITIES (func= poly2D)
+    ("dft_gridding_timings", 2,["GRID_SIZE","NUM_VISIBILITIES"]), #int GRID_SIZE, int NUM_VISIBILITIES (func= poly2D)
+    ("std_gridding_timings", 2,["GRID_SIZE","NUM_VISIBILITIES"]), #int GRID_SIZE, int NUM_VISIBILITIES (func= poly2D)
 
     ("psf_host_set_up_timings", 1,["GRID_SIZE"]),#int GRID_SIZE (func= poly1D)
     ("reciprocal_transform_timings", 1,["NUM_VISIBILITIES"]), #int NUM_VISIBILITIES (func= poly1D)
@@ -291,6 +296,7 @@ tests = [
 
     ("subtract_from_measurements_timings", 1,["NUM_VISIBILITIES"]),#int NUM_VISIBILITIES (func= poly1D)
     ("subtraction_imagespace_timings", 1,["GRID_SIZE"]),#int GRID_SIZE (func= poly1D)
+    ("visibility_host_setup_timings", 1,["NUM_VISIBILITIES"]),#int GRID_SIZE (func= poly1D)
 ]
 # Parcourir les fichiers dans le dossier 'average'
 for test in tests:
@@ -299,7 +305,10 @@ for test in tests:
     # Construire le chemin complet du fichier
     full_path = os.path.join(input_folder, function_name+".csv")
 
+
     data_points = load_data_and_axis(full_path, num_axis)
+    if data_points is None:
+        continue  # Passe au fichier suivant si celui-ci est introuvable
 
     best_rmse = float('inf')
     best_coeffs = None
@@ -307,6 +316,7 @@ for test in tests:
     average_mes = None
     rmse_value = 0
     poly_str = None
+    min_val =0
 
     if num_axis== 0:
         #no parameter no fit
@@ -320,6 +330,7 @@ for test in tests:
         points_and_axes = np.split(data_points, 2, axis=1)
 
         part_val = points_and_axes[0]
+        min_val = part_val[0]
         average_mes = np.mean(part_val)
 
         part_x = points_and_axes[1]
@@ -350,10 +361,9 @@ for test in tests:
                 best_dof = dof
                 
 
-        poly_str = "max(0,"+print_poly1D(best_coeffs,name_axis[0])+")"
+        poly_str = "max("+str(min_val.item())+","+print_poly1D(best_coeffs,name_axis[0])+")"
         print(poly_str)
-        #dof = best_dof
-        #plot1D(points_and_axes, best_coeffs)
+
 
 
     elif num_axis == 2:
@@ -361,6 +371,7 @@ for test in tests:
         points_and_axes = np.split(data_points, 3, axis=1)
 
         part_val = points_and_axes[0]
+        min_val = part_val[0]
         average_mes = np.mean(part_val)
 
         part_x = points_and_axes[1]
@@ -383,13 +394,9 @@ for test in tests:
                 best_rmse = rmse_value
                 best_coeffs = coeffs
                 best_dof = dof
-            #plot2D(points_and_axes, coeffs, num_x, num_y)
-            #if dof == max_degree :
-                #i don't why I can't the best coef
-            #dof = best_dof
-#            plot2D(points_and_axes, best_coeffs, num_x, num_y)
 
-        poly_str = "max(0,"+ print_poly2D(best_coeffs,name_axis[0],name_axis[1],best_dof)+")"
+
+        poly_str = "max("+str(min_val.item())+","+ print_poly2D(best_coeffs,name_axis[0],name_axis[1],best_dof)+")"
         print(poly_str)
 
     else:

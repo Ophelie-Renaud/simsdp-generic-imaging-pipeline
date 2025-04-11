@@ -39,7 +39,8 @@ extern "C" {
 	void time_fft(int NUM_SAMPLES, int GRID_SIZE);//
 	void time_fft_shift(int NUM_SAMPLES, int GRID_SIZE);//
 	void time_hogbom(int NUM_SAMPLES, int GRID_SIZE, int NUM_MINOR_CYCLES);//
-	void time_grid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES);//
+	void time_std_gridding(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES);//
+	void time_dft_gridding(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES);//
 	void time_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES);//
 	void time_s2s_degrid(int NUM_SAMPLES, int GRID_SIZE, int NUM_VISIBILITIES);//
 	void time_psf_host_set_up(int NUM_SAMPLES, int GRID_SIZE);

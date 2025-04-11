@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
+    <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexRemoved" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="05bfb586-8900-45a8-afaa-2a684c71c777" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.ipynb_checkpoints/SimulationAnalysis-checkpoint.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_dft.html" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_dft.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_dft.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_dft.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_dft.png" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_dft.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_fft.html" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_fft.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_fft.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_fft.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_fft.png" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_fft.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g.html" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g.png" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g_clean.html" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g_clean.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g_clean.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g_clean.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g_clean.png" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/3D_comparison_g2g_clean.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/moldable/measure/fft.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/moldable/measure/fft.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/moldable/measure/g2g.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/moldable/measure/g2g.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/moldable/measure/g2g_clean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/moldable/measure/g2g_clean.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/moldable/simu/dft.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/moldable/simu/dft.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/moldable/simu/fft.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/moldable/simu/fft.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/moldable/simu/g2g.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/moldable/simu/g2g.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/moldable/simu/g2g_clean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/moldable/simu/g2g_clean.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../experimental_result_data/moldable/simu_sota/g2g_clean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../experimental_result_data/moldable/simu_sota/g2g_clean.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../param_code/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/3.28.3/CMakeSystem.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/3.28.3/CMakeSystem.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/CMakeConfigureLog.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/SEP_Pipeline.dir/generated/Core1.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/SEP_Pipeline.dir/generated/Core1.c.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/SEP_Pipeline.dir/generated/Core2.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/SEP_Pipeline.dir/generated/Core2.c.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/SEP_Pipeline.dir/generated/Core3.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/SEP_Pipeline.dir/generated/Core3.c.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/SEP_Pipeline.dir/generated/Core4.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/SEP_Pipeline.dir/generated/Core4.c.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/SEP_Pipeline.dir/generated/Core5.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeFiles/SEP_Pipeline.dir/generated/Core5.c.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/CMakeGCC_GPU.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/clean_timings" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g/g2g.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../param_code/code_g2g/g2g.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g_clean/CMakeFiles/3.28.3/CMakeSystem.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../param_code/code_g2g_clean/CMakeFiles/3.28.3/CMakeSystem.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g_clean/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../param_code/code_g2g_clean/CMakeFiles/CMakeConfigureLog.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g_clean/CMakeFiles/SEP_Pipeline.dir/compiler_depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/../param_code/code_g2g_clean/CMakeFiles/SEP_Pipeline.dir/compiler_depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g_clean/CMakeFiles/SEP_Pipeline.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/../param_code/code_g2g_clean/CMakeFiles/SEP_Pipeline.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../param_code/code_g2g_clean/g2g_clean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../param_code/code_g2g_clean/g2g_clean.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/CMakeFiles/SEP_Pipeline.dir/main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/CMakeFiles/SEP_Pipeline.dir/main.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/CMakeFiles/SEP_Pipeline.dir/src/timings.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/CMakeFiles/SEP_Pipeline.dir/src/timings.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/SEP_Pipeline" beforeDir="false" afterPath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/SEP_Pipeline" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/best_polynomials.py" beforeDir="false" afterPath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/best_polynomials.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/include/timings.h" beforeDir="false" afterPath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/include/timings.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/polynomial_fits/best_fit_results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/polynomial_fits/best_fit_results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/src/timings.c" beforeDir="false" afterPath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/src/timings.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/timing_benchmark_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/../polynomial_timing/timing_cpu/timing_benchmark_generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preesm_pipelines/simsdp_dft_imaging_pipeline/Algo/gridding_run.pi" beforeDir="false" afterPath="$PROJECT_DIR$/../preesm_pipelines/simsdp_dft_imaging_pipeline/Algo/gridding_run.pi" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preesm_pipelines/simsdp_dft_imaging_pipeline/Algo/sep_psi.pi" beforeDir="false" afterPath="$PROJECT_DIR$/../preesm_pipelines/simsdp_dft_imaging_pipeline/Algo/sep_psi.pi" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preesm_pipelines/simsdp_dft_imaging_pipeline/Scenarios/dft_1core_reliable.scenario" beforeDir="false" afterPath="$PROJECT_DIR$/../preesm_pipelines/simsdp_dft_imaging_pipeline/Scenarios/dft_1core_reliable.scenario" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preesm_pipelines/simsdp_fft_imaging_pipeline/Scenarios/fft_1core_reliable.scenario" beforeDir="false" afterPath="$PROJECT_DIR$/../preesm_pipelines/simsdp_fft_imaging_pipeline/Scenarios/fft_1core_reliable.scenario" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preesm_pipelines/simsdp_g2g_imaging_pipeline/Algo/convolution_correction_run.pi" beforeDir="false" afterPath="$PROJECT_DIR$/../preesm_pipelines/simsdp_g2g_imaging_pipeline/Algo/convolution_correction_run.pi" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preesm_pipelines/simsdp_g2g_imaging_pipeline/Scenarios/g2g_1core_reliable.scenario" beforeDir="false" afterPath="$PROJECT_DIR$/../preesm_pipelines/simsdp_g2g_imaging_pipeline/Scenarios/g2g_1core_reliable.scenario" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preesm_pipelines/simsdp_g2g_imaging_pipeline/Scenarios/g2g_clean_1core.scenario" beforeDir="false" afterPath="$PROJECT_DIR$/../preesm_pipelines/simsdp_g2g_imaging_pipeline/Scenarios/g2g_clean_1core.scenario" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2024" />
+    <option name="minorVersion" value="3.5" />
+    <option name="productBranch" value="Classic" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2vFWQYfS7phQxgihgOGZZvMbiCz" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "CMake Application.read_ms.executor": "Run",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.west.config.association.type.startup.service": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/orenaud/Documents/CENTRAL SUPELEC REPO/simsdp-generic-imaging-pipeline/read_ms/casacore_c++",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="05bfb586-8900-45a8-afaa-2a684c71c777" name="Changes" comment="" />
+      <created>1743741286492</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743741286492</updated>
+      <workItem from="1743741288760" duration="3584000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+  </component>
+</project>

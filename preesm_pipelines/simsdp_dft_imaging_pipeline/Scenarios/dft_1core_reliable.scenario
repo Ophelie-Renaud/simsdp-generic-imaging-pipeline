@@ -53,7 +53,7 @@
     </constraints>
     <timings excelUrl="">
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/iterator"/>
-        <timing opname="x86" time=" 0.000824 * GRID_SIZE^2 -0.172770 * GRID_SIZE + 50.700000" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/save_output"/>
+        <timing opname="x86" time="max(158.2,+ 0.000651 * GRID_SIZE^2 -0.121989 * GRID_SIZE + 49.500000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/save_output"/>
         <timing opname="x86" time="4" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/config_struct_set_up"/>
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
@@ -61,9 +61,9 @@
         <timing opname="x86" time="15" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/gains_host_set_up"/>
         <timing opname="x86" time="13" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
-        <timing opname="x86" time="max(0,-0.000001 * GRID_SIZE^3 + 0.002915 * GRID_SIZE^2 -2.511475 * GRID_SIZE + 1594.300000)" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/psf_host_set_up"/>
-        <timing opname="x86" time="0.001039 * NUM_VISIBILITIES - 4.7" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
-        <timing opname="x86" time="max(0,+ 0.000005 * NUM_VISIBILITIES -3.500000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/add_visibilities"/>
+        <timing opname="x86" time="max(870,-0.000001 * GRID_SIZE^3 + 0.002915 * GRID_SIZE^2 -2.511475 * GRID_SIZE + 1594.300000)" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+        <timing opname="x86" time="max(2683,-0.000709 * NUM_VISIBILITIES + 3572.300000)" timingtype="EXECUTION_TIME" vertexname="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+        <timing opname="x86" time="max(11.1,+ 0.000005 * NUM_VISIBILITIES -3.500000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/add_visibilities"/>
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/degridding_kernel_sink"/>
         <timing opname="x86" time="1" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/image_passthrough"/>
         <timing opname="x86" time="25" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/merge_grids"/>
@@ -72,14 +72,14 @@
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/token_sink"/>
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/hogbom_clean"/>
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/token_sink"/>
-        <timing opname="x86" time="max(0,+ 0.000019 * GRID_SIZE^2 + 0.009196 * GRID_SIZE -3.100000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
-        <timing opname="x86" time="max(0,-7032.355061 + 0.002595 * NUM_MAX_SOURCES + 139.573503 * NUM_MAX_SOURCES^2 * NUM_VISIBILITIES -0.000003 * NUM_MAX_SOURCES * NUM_VISIBILITIES^2 -0.759565 * NUM_MAX_SOURCES * NUM_VISIBILITIES^3 + 0.000000 * NUM_VISIBILITIES^4 + 0.002141 * NUM_MAX_SOURCES^2 * NUM_VISIBILITIES^3 -0.000000 * NUM_MAX_SOURCES^5 * NUM_VISIBILITIES)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/dft_run/dft_actor"/>
-        <timing opname="x86" time="896" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/gridding_run/gridding_actor"/>
+        <timing opname="x86" time="max(7.1,+ 0.000019 * GRID_SIZE^2 + 0.009196 * GRID_SIZE -3.100000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+        <timing opname="x86" time="max(2262,195.72*NUM_MAX_SOURCES+0.00242*NUM_VISIBILITIES-30146.36)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/dft_run/dft_actor"/>
+        <timing opname="x86" time="max(26, 51.354+0.0076*GRID_SIZE+0.0000013599*NUM_VISIBILITIES)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/gridding_run/gridding_actor"/>
         <timing opname="x86" time="max(0,+ 0.000162 * GRID_SIZE^2 -0.137207 * GRID_SIZE + 40.500000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/ifft_run/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
         <timing opname="x86" time="max(0,+ 0.000026 * GRID_SIZE^2 + 0.000716 * GRID_SIZE -0.200000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_complex_actor"/>
         <timing opname="x86" time="max(0,+ 0.000026 * GRID_SIZE^2 + 0.000716 * GRID_SIZE -0.200000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/ifft_run/fft_shift_complex_to_real_actor"/>
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/subtraction_run/reciprocal_transform_actor"/>
-        <timing opname="x86" time="max(0,+ 0.000079 * NUM_VISIBILITIES + 34.600000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/subtraction_run/subtraction"/>
+        <timing opname="x86" time="max(0.4,+ 0.000079 * NUM_VISIBILITIES + 34.600000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/subtraction_run/subtraction"/>
         <memcpyspeed opname="x86" setuptime="1" timeperunit="6.170012059298443E-11"/>
     </timings>
     <simuParams>
