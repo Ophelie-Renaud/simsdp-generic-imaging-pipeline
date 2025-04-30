@@ -11,16 +11,45 @@ The primary goal of SimSDP is to simulate the **Science Data Processor (SDP)** p
 | Here is the estimation at the exit of antennas:<br />Data (bytes) = <span style="color:#e74c3c;">N<sub>ANT</sub></span> × (<span style="color:#e74c3c;">N<sub>ANT</sub></span> - 1) / 2 × <span style="color:#3498db;">N<sub>CHANNEL</sub></span> × <span style="color:#9b59b6;">N<sub>POL</sub></span><sup>2</sup> × <span style="color:#f1c40f;">BANDWIDTH</span> (Hz) × <span style="color:#1abc9c;">ACCUMULATION_TIME</span> (s) ×<span style="color:#2ecc71;">OBS_TIME</span> (s) × <span style="color:#e67e22;">complex_value</span> × <span style="color:#34495e;">N<sub>BYTE</sub></span><br /><br /> **SKAO** comparison:<br />(10min)= <span style="color:#e74c3c;">131 072</span> × (<span style="color:#e74c3c;">131 072</span> - 1) / 2 × <span style="color:#3498db;">10000</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) × <span style="color:#2ecc71;">600</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</span>  <br/>= <b>? Po</b><br />(12h)= <span style="color:#e74c3c;">131 072</span> × (<span style="color:#e74c3c;">131 072</span> - 1) / 2 × <span style="color:#3498db;">10000</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) × <span style="color:#2ecc71;">43200</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</span>  <br/>= <b>? Po</b><br /><br /> **LOFAR (LOw Frequency ARray)** comparison:<br />(10min)=  <span style="color:#e74c3c;">47</span> × (<span style="color:#e74c3c;">47</span> - 1) / 2 × <span style="color:#3498db;">4096</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">600</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>? To</b><br />(12h)= <span style="color:#e74c3c;">47</span> × (<span style="color:#e74c3c;">47</span> - 1) / 2 × <span style="color:#3498db;">4096</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">43200</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>? Po</b><br /><br /> **NenuFAR (New Extension in Nançay Upgrading LOFAR)** comparison:<br />(10min)=  <span style="color:#e74c3c;">96</span> × (<span style="color:#e74c3c;">96</span> - 1) / 2 × <span style="color:#3498db;">64</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">600</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>4.13 To</b><br />(12h)= <span style="color:#e74c3c;">96</span> × (<span style="color:#e74c3c;">96</span> - 1) / 2 × <span style="color:#3498db;">64</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">43200</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>496 To</b><br /> |
 | Here is the estimation after rebinning (clustering/sub-sampling in spectral, time or polarized domains): <br />Data_rebinned (bytes) = Data  / (<span style="color:#3498db;">R<sub>channel)</sub></span>  ×  <span style="color:#9b59b6;">R<sub>pol</sub></span>    ×<span style="color:#1abc9c;"> R<sub>time</sub></span> )<br/><br />**SKAO** (12h) →  ? Po (? vis)<br />**LOFAR** (12h) →  ? To, 1% of SKA<br />**NenuFAR** (12h) →  496 To (~10⁷ vis) → rebin: 62 To (~10⁶ vis) ,  5% of LOFAR |
 
+The **SDP imaging pipeline** involves three steps. First, in the **set-up phase**, the raw data (Measurement Set) is loaded, and the PSF and convolution kernels are computed. Next comes the **major cycle**, where visibilities are gridded to form a dirty image. Inside this loop is the **minor cycle**, which applies deconvolution to clean the image and then updates the model. The process iterates between major and minor cycles until the final image is produced.
 
-The aim of this project is to facilitate the comparison of algorithm describing the SDP using SimSDP.  As a dataflow-based tool, SimSDP takes into account the dataflow application graph as well as a csv file containing the execution times of the actors on each target to be simulated. Dataflow representation of  the **Generic Imaging Pipeline** with a single and multi-frequency scenarii are provided. Our goal is to simulate these pipelines on Multinode - Multicore architecture, on Multinode - MonoGPU architecture and (might be) on Multinode - MultiGPU architecture.
+
+
+```mermaid
+graph TD
+    A[Setup] --> B[Gridding/Degridding]
+    B --> D[Deconvolution]
+    D --> B
+
+    subgraph Set up
+        A[Read MS; compute PSF; Kernels]
+    end
+
+    subgraph Major cycle
+        B 
+        subgraph Minor cycle
+            D
+        end
+    end
+```
+
+The main operations involved in the **major cycle** of the imaging pipeline are based on the **Direct Fourier Transform (DFT)**, which offers the best image quality since it directly models the visibilities without interpolation. However, its computational complexity, $$O(2n_v n_g^2)$$, where $$n_v$$ is the number of visibilities (`NUM_VIS`) and $$n_g$$ the grid size  (`GRID_SIZE`), makes it prohibitively expensive for large datasets and prevents it from scaling efficiently. To reduce the computational cost, a more practical solution is to grid the visibilities onto a regular grid and use the **Fast Fourier Transform (FFT)** instead. This approximation significantly reduces complexity to $O\left(2n_g^2 \log_2 n_g^2 + n_v (n_{\mathcal{G}}^2 + n_{\mathcal{D}}^2)\right),$ where $n_{\mathcal{G}}^2$ and $n_{\mathcal{D}}^2$ refer to the gridding/degridding kernels size (`KERNEL_SIZE`). While this introduces some interpolation error, it enables scalable and efficient imaging for large-scale radio astronomy data. An alternative to FFT is **Grid-to-Grid (G2G)**  where interpolation is made on a finer grid and a diagonal matix is applied to avoid redundant computations. Yhis leads to a complexity of $$O(2 n_g ^2 \log_2 n_g ^2 +  n_v' (n_{\mathcal{G}}^2 + n_{\mathcal{D}}^2))$$ where $$n_v'$$ is compressed visibility. G2G offers a middle ground by reducing the number of operations while preserving better accuracy than standard FFT-based methods.
+
+The aim of this project are:
+
+1. **Algorithm Exploration**: To enable the exploration of algorithms describing the SDP through the dataflow-based **Generic & Modular Imaging Pipeline** :page_facing_up: [S. Wang et al.](https://hal.science/hal-04361151/file/paper_dasip24_5_wang_updated-2.pdf), with a focus on evaluating latency, memory footprint, energy consumption, and output image quality.
+2. **Parameter Exploration**: To support large-scale simulations for identifying pipeline bottlenecks by varying key parameters—such as `NUM_VIS`, `GRID_SIZE`, and `NUM_MINOR_CYCLE` (and eventually `KERNEL_SIZE`)—using the **SimSDP** simulator, which allows tuning of moldable dataflow parameters.
+3. **Architecture Exploration**: To evaluate the performance of the pipeline on various computing architectures using SimSDP, including:
+   - Multinode–Multicore systems (using visibility parallelism across cores),
+   - Multinode–Single-GPU systems,
+   - and potentially Multinode–Multi-GPU systems
+      with spectral parallelism across nodes and visibility parallelism within each node.
+4. **Turnkey Distributed Implementation**: To provide a ready-to-use distributed implementation capable of reading real distributed Measurement Sets, validated on the Ruche mesocenter and grid5000 using data from NenuFAR.
 
 <div align="center">
     <img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/project_goal.png" style="zoom:100%;" />
     <p><em>Figure 1 : The figure is a dataflow-based representation of a multi-spectral radio-interferometric imaging pipeline where each top nodes will be assigned to an HPC architecture node. The HPC architecture nodes to consider are multicore, mono-GPU and multi-GPU .</em></p>
 </div>
-
-Algorithm performance is influenced by parameters such as the *number of visibility points*, *grid size* and *number of minor cycles*. We aim to identify and evaluate the influence of these parameters on scaling and assess whether a solution is viable in the context of SKA.
-
 To achieve this, we provide tools that automatically estimate the execution time of dataflow actors for each targeted architecture and simulate algorithm performance by varying a set of parameter values automatically.
 
 
@@ -187,10 +216,10 @@ To configure **manual mode**, follow these steps:
 
 Dataflow pipelines are parameterized with moldable parameters. *(For details, see :page_facing_up: [A. Honorat, et al.](https://hal.science/hal-03752645/file/dasip22.pdf).)* This feature allows for parameter exploration, key metric simulations, and design space exploration (DSE). The moldable parameters include:
 
-- `NUM_VIS` = {10× `NUM_BASELINES`; 15× `NUM_BASELINES`; 20× `NUM_BASELINES`; 25× `NUM_BASELINES`; 30× `NUM_BASELINES`}
-  *where `NUM_BASELINES` = `NANT` × (`NANT` - 1) / 2 = 130816 (since `NANT` = 512)*
-- `GRID_SIZE` = {512; 1024; 1536; 2048; 2560}
-- `NUM_MINOR_CYCLE` = {50; 100; 150; 200; 250}
+- `NUM_VIS` = {1e4; 1e5; 1e6; 1e7; 1e8; 1e9; 1e10}
+- `GRID_SIZE` = {512;1024;1536;2048;4096;8192;16384;32768}
+- `NUM_MINOR_CYCLE` = {1;10;100;1000;10000;100000}
+- `NUM_KERNEL` = {17}
 
 ------
 

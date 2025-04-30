@@ -70,7 +70,7 @@
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/psf_sink"/>
         <timing opname="x86" time="58" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/split_vis"/>
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/token_sink"/>
-        <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/hogbom_clean"/>
+        <timing opname="x86" time="max(90.9,-322.338854 + 31.470761 * GRID_SIZE -0.265562 * NUM_MINOR_CYCLES + 0.001363 * GRID_SIZE^2 -0.000003 * GRID_SIZE * NUM_MINOR_CYCLES -1.016266 * GRID_SIZE^2 * NUM_MINOR_CYCLES -0.063035 * GRID_SIZE * NUM_MINOR_CYCLES^2 + 0.000268 * NUM_MINOR_CYCLES^3 -0.000001 * GRID_SIZE^4 + 0.003571 * GRID_SIZE * NUM_MINOR_CYCLES^3 + 0.000071 * NUM_MINOR_CYCLES^4 -0.000004 * GRID_SIZE^2 * NUM_MINOR_CYCLES^3)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/hogbom_clean"/>
         <timing opname="x86" time="0" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/psi/token_sink"/>
         <timing opname="x86" time="max(7.1,+ 0.000019 * GRID_SIZE^2 + 0.009196 * GRID_SIZE -3.100000)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/convolution_correction_run/execute_convolution_correction_actor"/>
         <timing opname="x86" time="max(2262,195.72*NUM_MAX_SOURCES+0.00242*NUM_VISIBILITIES-30146.36)" timingtype="EXECUTION_TIME" vertexname="generic_top/delta_psi/delta/dft_run/dft_actor"/>
