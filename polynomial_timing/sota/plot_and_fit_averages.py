@@ -9,12 +9,13 @@ import math
 
 def load_data_and_axis(filename, num_axis):
 	result = numpy.genfromtxt(filename, delimiter=",")
+	#result = result[:-1]
 	div_by = num_axis + 1
 	if len(result) % div_by != 0:
 		print("Error: number of axis must be divisible by number of data points",div_by, len(result), filename)
 		exit()
 
-	num_items = int(len(result) / div_by)
+	num_items = result.size // div_by
 	return result.reshape((num_items, div_by))
 
 def poly(x, coeffs):

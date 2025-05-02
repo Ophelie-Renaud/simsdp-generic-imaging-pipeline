@@ -40,11 +40,10 @@ The aim of this project are:
 1. **Algorithm Exploration**: To enable the exploration of algorithms describing the SDP through the dataflow-based **Generic & Modular Imaging Pipeline** :page_facing_up: [S. Wang et al.](https://hal.science/hal-04361151/file/paper_dasip24_5_wang_updated-2.pdf), with a focus on evaluating latency, memory footprint, energy consumption, and output image quality.
 2. **Parameter Exploration**: To support large-scale simulations for identifying pipeline bottlenecks by varying key parameters—such as `NUM_VIS`, `GRID_SIZE`, and `NUM_MINOR_CYCLE` (and eventually `KERNEL_SIZE`)—using the **SimSDP** simulator, which allows tuning of moldable dataflow parameters.
 3. **Architecture Exploration**: To evaluate the performance of the pipeline on various computing architectures using SimSDP, including:
-   - Multinode–Multicore systems (using visibility parallelism across cores),
+   - Multinode–Multicore systems (using visibility parallelism across cores and spectral parallelism across nodes),
    - Multinode–Single-GPU systems,
-   - and potentially Multinode–Multi-GPU systems
-      with spectral parallelism across nodes and visibility parallelism within each node.
-4. **Turnkey Distributed Implementation**: To provide a ready-to-use distributed implementation capable of reading real distributed Measurement Sets, validated on the Ruche mesocenter and grid5000 using data from NenuFAR.
+   - and potentially Multinode–Multi-GPU systems.
+4. **Turnkey Distributed Implementation**: To provide a ready-to-use distributed implementation capable of reading real distributed Measurement Sets, validated on the :file_cabinet: [Ruche mesocenter](https://mesocentre.pages.centralesupelec.fr/user_doc/) and :file_cabinet: [grid5000](https://www.grid5000.fr/w/Grid5000:Home) using data from 📡  [NenuFAR](https://nenufar.obs-nancay.fr/).
 
 <div align="center">
     <img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/project_goal.png" style="zoom:100%;" />
@@ -56,8 +55,9 @@ To achieve this, we provide tools that automatically estimate the execution time
 
 <div align="center">
 <img src="https://raw.githubusercontent.com/Ophelie-Renaud/simsdp-generic-imaging-pipeline/refs/heads/main/experimental_result_data/project_goal2.png" style="zoom:30%;" />
-<p><em>Figure 2 : Simplified representation of the SimSDP workflow.</em></p>
+<p><em>Figure 2 : The figure is a simplified representation of the SimSDP workflow. It takes as input 2 graphs reprensting the application and the architecture and the execution time of the computation of the application running on each component of the architecture. It simulates key metrics of the parallelisation and generates ready-to-use MPI and Pthread code. </em></p>
 </div>
+
 
 ---
 
@@ -74,9 +74,9 @@ This repository contains six main directories, categorized by the number of freq
         ├── Archi/       # HPC S-LAM Architecture models (e.g., HPC topology, node configurations)
         ├── Code/        # Source and generated code
         ├── Scenarios/   # Simulation scenarios 
-        ├── Workflows/   # Workflow descriptions of the HPC resource allocation and simulation
+        ├── Workflows/   # Workflow of the HPC resource allocation and simulation
     ├── ...
-├── param_code/ # resulting parameterized dataflow code
+├── param_code/ # generated parameterized dataflow code
 ├── experimental_result_data/ # Spreadsheet diagrams of experimental results
 ```
 
@@ -282,11 +282,13 @@ Dataflow pipelines are parameterized with moldable parameters. *(For details, se
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
     .
 
-##### Basic execution
+##### Basic execution on your laptop
 
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
     .
+This section discuss how to run the generated code from PREESM/SimSDP on your laptop. If you have run this tool the go on the folder code of your preesm project and open it with your favorite IDE (mine is CLion). Otherwise some generated code have been saved in the  :file_folder: `param_code` folder.
+
 
 1. install the requirements:
 
@@ -322,6 +324,53 @@ check: python3 -c "import astropy; print(astropy.__version__)"
       - Settings :gear:>Build, Execution, Deployment > CMake, add profile :heavy_plus_sign:, name `GIP_GPU`, CMake option `-DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc` (if you use the emulator: option `-DUSE_CUDA_EMULATOR=ON`, the emulator only allows you to check that the code is functional, execution will be slower than on a GPU).
 
 </details>
+
+---
+
+##### Execution on Ruche Mesocentre cluster
+
+1. Create an account on Ruche -- ask your boss (Other info, Ruche training [PDF](https://mesocentre.pages.centralesupelec.fr/mesocenter_training/main.pdf), [website](https://mesocentre.pages.centralesupelec.fr/user_doc/), [mesocentre paris-saclay](https://mesocentre.universite-paris-saclay.fr/)).
+
+2. Connect: `ssh renaudo@ruche.mesocentre.universite-paris-saclay.fr`
+
+3. Create a `ri_code` folder: `mkdir ri_code`
+
+4. Transfer a measurementSet on Ruche: `rsync -avh --progress 0000.ms renaudo@ruche.mesocentre.universite-paris-saclay.fr:/home/renaudo/ri_code/`
+
+5. Transfer the code on Ruche: `rsync -avh --progress code_dft/ renaudo@ruche.mesocentre.universite-paris-saclay.fr:/home/renaudo/ri_code/`
+
+6. Transfer the SLURM bash: `rsync -avh --progress slurm.sh renaudo@ruche.mesocentre.universite-paris-saclay.fr:/home/renaudo/ri_code/`
+
+7. load the modules:
+```shell
+module load intel/19.0.3/gcc-4.8.5
+module load intel-mpi/2019.3.199/intel-19.0.3.199
+```
+
+8. compile the code: `cd ri_code` > `make`
+9. Submit the job to the Scheduler: `sbatch slurm.sh` 
+10. Check job state: `squeue -u renaudo`  
+11. Check job output `cat ri.o<jobID>`  (not really relevant in our reconstruction process)
+
+Reconstruction images are generated in folder `ri_code/output/`
+
+(Optional) If you want to visualize the output:
+1. load the modules: `module load python/3.9.10/intel-20.0.4.304`
+
+2. create a python environment:
+```bash
+python -m venv ~/mon_env
+source ~/mon_env/bin/activate
+pip install --upgrade pip
+pip install numpy pandas matplotlib astropy notebook
+```
+3. Run Jupyter remotely: `jupyter notebook --no-browser --port=8888`
+
+4. Then, on your local machine, you open an SSH tunnel in another terminal: `ssh -N -L 8888:localhost:8888 renaudo@ruche.mesocentre.universite-paris-saclay.fr`
+
+5. In your browser open one of the link starting with: http://localhost:8888/ or  http://127.0.0.1:8888/ provided by Jupyter.
+
+(other option) Transfer back the output on your laptop.
 
 ---
 

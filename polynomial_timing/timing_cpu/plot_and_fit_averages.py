@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import scipy
 import math
 
-
 def load_data_and_axis(filename, num_axis):
 	result = numpy.genfromtxt(filename, delimiter=",")
 	result = result[:-1]
