@@ -329,35 +329,53 @@ check: python3 -c "import astropy; print(astropy.__version__)"
 
 ##### Execution on Ruche Mesocentre cluster
 
-1. Create an account on Ruche -- ask your boss (Other info, Ruche training [PDF](https://mesocentre.pages.centralesupelec.fr/mesocenter_training/main.pdf), [website](https://mesocentre.pages.centralesupelec.fr/user_doc/), [mesocentre paris-saclay](https://mesocentre.universite-paris-saclay.fr/)).
+1. Create an account on Ruche → ask your boss (Other info, Ruche training [PDF](https://mesocentre.pages.centralesupelec.fr/mesocenter_training/main.pdf), [website](https://mesocentre.pages.centralesupelec.fr/user_doc/), [mesocentre paris-saclay](https://mesocentre.universite-paris-saclay.fr/)).
 
 2. Connect: `ssh renaudo@ruche.mesocentre.universite-paris-saclay.fr`
 
-3. Create a `ri_code` folder: `mkdir ri_code`
+3. Create a :file_folder: `ri_code` folder: `mkdir ri_code`
 
-4. Transfer a measurementSet on Ruche: `rsync -avh --progress 0000.ms renaudo@ruche.mesocentre.universite-paris-saclay.fr:/home/renaudo/ri_code/`
+4. Transfer files on Ruche:
+   1. A measurementSet: `rsync -avh --progress 0000.ms renaudo@ruche.mesocentre.universite-paris-saclay.fr:/home/renaudo/ri_code/`
 
-5. Transfer the code on Ruche: `rsync -avh --progress code_dft/ renaudo@ruche.mesocentre.universite-paris-saclay.fr:/home/renaudo/ri_code/`
+   2. The reconstruction code: `rsync -avh --progress code_dft/ renaudo@ruche.mesocentre.universite-paris-saclay.fr:/home/renaudo/ri_code/`
 
-6. Transfer the SLURM bash: `rsync -avh --progress slurm.sh renaudo@ruche.mesocentre.universite-paris-saclay.fr:/home/renaudo/ri_code/`
+   3. The SLURM submission script: `rsync -avh --progress slurm.sh renaudo@ruche.mesocentre.universite-paris-saclay.fr:/home/renaudo/ri_code/`
 
-7. load the modules:
+5. load the modules:
 ```shell
-module load intel/19.0.3/gcc-4.8.5
+module purge
+module load gcc/8.4.0/gcc-4.8.5
+module load fftw/3.3.8/intel-19.0.3.199-intel-mpi
+module load openblas/0.3.8/gcc-8.4.0
+
 module load intel-mpi/2019.3.199/intel-19.0.3.199
 ```
 
-8. compile the code: `cd ri_code` > `make`
-9. Submit the job to the Scheduler: `sbatch slurm.sh` 
-10. Check job state: `squeue -u renaudo`  
-11. Check job output `cat ri.o<jobID>`  (not really relevant in our reconstruction process)
+8. compile the code: 
+```shell
+cd ri_code
+rm CMakeCache.txt
+rm -rf CMakeFiles/
+cmake .
+make
+```
 
-Reconstruction images are generated in folder `ri_code/output/`
+10. Submit the job to the Scheduler: `sbatch slurm.sh` 
+11. Check job state: `squeue -u renaudo`  
+12. Check job output `cat ri.o<jobID>`  (not really relevant in our reconstruction process)
 
-(Optional) If you want to visualize the output:
+Reconstruction images are generated in folder :file_folder:  `ri_code/output/`
+
+###### (Optional) If you want to visualize the output:
+
+This section describes how to visualize the output connecting a notebook to the cluster. This aim to accelerate the checking process but require a setup. If you don't need it you should transfer back the output image to your laptop it is the easier way. Otherwise follow these steps:
+
 1. load the modules: `module load python/3.9.10/intel-20.0.4.304`
 
-2. create a python environment:
+2. Transfer the notebook`rsync -avh --progress visualisation_fits_from_csv.ipynb renaudo@ruche.mesocentre.universite-paris-saclay.fr:/home/renaudo/ri_code/`
+
+3. create a python environment:
 ```bash
 python -m venv ~/mon_env
 source ~/mon_env/bin/activate
@@ -366,11 +384,25 @@ pip install numpy pandas matplotlib astropy notebook
 ```
 3. Run Jupyter remotely: `jupyter notebook --no-browser --port=8888`
 
-4. Then, on your local machine, you open an SSH tunnel in another terminal: `ssh -N -L 8888:localhost:8888 renaudo@ruche.mesocentre.universite-paris-saclay.fr`
+4. Then, on your local machine, open an SSH tunnel in another terminal: `ssh -N -L 8888:localhost:8888 renaudo@ruche.mesocentre.universite-paris-saclay.fr`
 
-5. In your browser open one of the link starting with: http://localhost:8888/ or  http://127.0.0.1:8888/ provided by Jupyter.
+5. In your browser open one of the link starting with: http://localhost:8888/ or  http://127.0.0.1:8888/ these link are provided by your Jupyter command.
 
-(other option) Transfer back the output on your laptop.
+###### Move on configuration
+
+This section describe how to change parameter configuration and target architectures:
+
+1. Edit the job: `nano slurm.sh`
+
+   - From the `<pipeline>_1core`: change the line `./SEP_Pipeline 1 1 1` by a configuration following `./SEP_Pipeline <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE>`.
+
+   - From the `<pipeline>_nnode`: change the line `./SEP_Pipeline 1 1 1 1` by a configuration following `./SEP_Pipeline <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE> <NUM_NODES>`.
+
+2 .save: `ctrl + o` > `enter` > `ctrl + x`
+
+
+
+
 
 ---
 
