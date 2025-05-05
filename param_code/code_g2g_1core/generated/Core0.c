@@ -4472,7 +4472,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(g2g_1__num_corrected_visibilities__19 + 0, num_vis_3__input__4 + 0, 4); // 1 * int
     }
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__0,
         g2g_1__gridding_kernel_supports__0, degridding_kernels_0_3__degridding_kernels__0,
@@ -4480,7 +4480,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__0, g2g_1__num_corrected_visibilities__0, g2g_1__config__0,
         output_grid__grids_0__0); // delta_0_g2g_degridgrid_0
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__1,
         g2g_1__gridding_kernel_supports__1, degridding_kernels_1_3__degridding_kernels__0,
@@ -4488,7 +4488,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__1, g2g_1__num_corrected_visibilities__1, g2g_1__config__1,
         output_grid__grids_1__0); // delta_0_g2g_degridgrid_1
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__2,
         g2g_1__gridding_kernel_supports__2, degridding_kernels_2_3__degridding_kernels__0,
@@ -4496,7 +4496,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__2, g2g_1__num_corrected_visibilities__2, g2g_1__config__2,
         output_grid__grids_2__0); // delta_0_g2g_degridgrid_2
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__3,
         g2g_1__gridding_kernel_supports__3, degridding_kernels_3_3__degridding_kernels__0,
@@ -4504,7 +4504,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__3, g2g_1__num_corrected_visibilities__3, g2g_1__config__3,
         output_grid__grids_3__0); // delta_0_g2g_degridgrid_3
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_0__maj_iter__0,
         grid_measurement_0__num_corrected_visibilities__0, grid_measured_0__kernels__0,
         grid_measured_0__kernel_supports__0, grid_measured_1__corrected_vis_uvw_coords__0,
@@ -4519,7 +4519,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__0 + 0, output_grid__input__0 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_1__maj_iter__0,
         grid_measurement_0__num_corrected_visibilities__1, grid_measured_0__kernels__1,
         grid_measured_0__kernel_supports__1, grid_measured_1__corrected_vis_uvw_coords__1,
@@ -4555,7 +4555,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__1 + 0, output_grid__input__1 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_2__maj_iter__0,
         grid_measurement_0__num_corrected_visibilities__2, grid_measured_0__kernels__2,
         grid_measured_0__kernel_supports__2, grid_measured_1__corrected_vis_uvw_coords__2,
@@ -4570,7 +4570,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__2 + 0, output_grid__input__2 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_3__maj_iter__0,
         grid_measurement_0__num_corrected_visibilities__3, grid_measured_0__kernels__3,
         grid_measured_0__kernel_supports__3, grid_measured_1__corrected_vis_uvw_coords__3,
@@ -4593,7 +4593,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(merge__grids__0 + 8388608, merge_0__grids_2__0 + 0, 67108864); // 4194304 * PRECISION2
       memcpy(merge__grids__0 + 12582912, merge_0__grids_3__0 + 0, 67108864); // 4194304 * PRECISION2
     }
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_0__maj_iter__1,
         grid_measurement_0__num_corrected_visibilities__4, grid_measured_0__kernels__4,
         grid_measured_0__kernel_supports__4, grid_measured_1__corrected_vis_uvw_coords__4,
@@ -4637,7 +4637,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__3 + 0, output_grid__input__4 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_1__maj_iter__1,
         grid_measurement_0__num_corrected_visibilities__5, grid_measured_0__kernels__5,
         grid_measured_0__kernel_supports__5, grid_measured_1__corrected_vis_uvw_coords__5,
@@ -4652,7 +4652,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__4 + 0, output_grid__input__5 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_2__maj_iter__1,
         grid_measurement_0__num_corrected_visibilities__6, grid_measured_0__kernels__6,
         grid_measured_0__kernel_supports__6, grid_measured_1__corrected_vis_uvw_coords__6,
@@ -4667,7 +4667,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__5 + 0, output_grid__input__6 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_3__maj_iter__1,
         grid_measurement_0__num_corrected_visibilities__7, grid_measured_0__kernels__7,
         grid_measured_0__kernel_supports__7, grid_measured_1__corrected_vis_uvw_coords__7,
@@ -4690,7 +4690,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(merge__grids__1 + 8388608, merge_0__grids_2__1 + 0, 67108864); // 4194304 * PRECISION2
       memcpy(merge__grids__1 + 12582912, merge_0__grids_3__1 + 0, 67108864); // 4194304 * PRECISION2
     }
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_0__maj_iter__2,
         grid_measurement_0__num_corrected_visibilities__8, grid_measured_0__kernels__8,
         grid_measured_0__kernel_supports__8, grid_measured_1__corrected_vis_uvw_coords__8,
@@ -4718,7 +4718,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__6 + 0, output_grid__input__8 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_1__maj_iter__2,
         grid_measurement_0__num_corrected_visibilities__9, grid_measured_0__kernels__9,
         grid_measured_0__kernel_supports__9, grid_measured_1__corrected_vis_uvw_coords__9,
@@ -4733,7 +4733,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__7 + 0, output_grid__input__9 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_2__maj_iter__2,
         grid_measurement_0__num_corrected_visibilities__10, grid_measured_0__kernels__10,
         grid_measured_0__kernel_supports__10, grid_measured_1__corrected_vis_uvw_coords__10,
@@ -4748,7 +4748,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__8 + 0, output_grid__input__10 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_3__maj_iter__2,
         grid_measurement_0__num_corrected_visibilities__11, grid_measured_0__kernels__11,
         grid_measured_0__kernel_supports__11, grid_measured_1__corrected_vis_uvw_coords__11,
@@ -4771,7 +4771,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(merge__grids__2 + 8388608, merge_0__grids_2__2 + 0, 67108864); // 4194304 * PRECISION2
       memcpy(merge__grids__2 + 12582912, merge_0__grids_3__2 + 0, 67108864); // 4194304 * PRECISION2
     }
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_0__maj_iter__3,
         grid_measurement_0__num_corrected_visibilities__12, grid_measured_0__kernels__12,
         grid_measured_0__kernel_supports__12, grid_measured_1__corrected_vis_uvw_coords__12,
@@ -4799,7 +4799,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__9 + 0, output_grid__input__12 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_1__maj_iter__3,
         grid_measurement_0__num_corrected_visibilities__13, grid_measured_0__kernels__13,
         grid_measured_0__kernel_supports__13, grid_measured_1__corrected_vis_uvw_coords__13,
@@ -4853,7 +4853,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__10 + 0, output_grid__input__13 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_2__maj_iter__3,
         grid_measurement_0__num_corrected_visibilities__14, grid_measured_0__kernels__14,
         grid_measured_0__kernel_supports__14, grid_measured_1__corrected_vis_uvw_coords__14,
@@ -4877,7 +4877,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(output_grid_2__input_grid__1 + 0, output_grid__input_grid__1 + 8388608, 67108864); // 4194304 * PRECISION2
       memcpy(output_grid_3__input_grid__1 + 0, output_grid__input_grid__1 + 12582912, 67108864); // 4194304 * PRECISION2
     }
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__4,
         g2g_1__gridding_kernel_supports__4, degridding_kernels_0_3__degridding_kernels__1,
@@ -4885,7 +4885,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__4, g2g_1__num_corrected_visibilities__4, g2g_1__config__4,
         output_grid__grids_0__1); // delta_1_g2g_degridgrid_0
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__5,
         g2g_1__gridding_kernel_supports__5, degridding_kernels_1_3__degridding_kernels__1,
@@ -4893,7 +4893,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__5, g2g_1__num_corrected_visibilities__5, g2g_1__config__5,
         output_grid__grids_1__1); // delta_1_g2g_degridgrid_1
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__6,
         g2g_1__gridding_kernel_supports__6, degridding_kernels_2_3__degridding_kernels__1,
@@ -4901,7 +4901,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__6, g2g_1__num_corrected_visibilities__6, g2g_1__config__6,
         output_grid__grids_2__1); // delta_1_g2g_degridgrid_2
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__7,
         g2g_1__gridding_kernel_supports__7, degridding_kernels_3_3__degridding_kernels__1,
@@ -4918,7 +4918,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__11 + 0, output_grid__input__14 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_3__maj_iter__3,
         grid_measurement_0__num_corrected_visibilities__15, grid_measured_0__kernels__15,
         grid_measured_0__kernel_supports__15, grid_measured_1__corrected_vis_uvw_coords__15,
@@ -4956,7 +4956,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(merge__grids__3 + 8388608, merge_0__grids_2__3 + 0, 67108864); // 4194304 * PRECISION2
       memcpy(merge__grids__3 + 12582912, merge_0__grids_3__3 + 0, 67108864); // 4194304 * PRECISION2
     }
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_0__maj_iter__4,
         grid_measurement_0__num_corrected_visibilities__16, grid_measured_0__kernels__16,
         grid_measured_0__kernel_supports__16, grid_measured_1__corrected_vis_uvw_coords__16,
@@ -5006,7 +5006,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__12 + 0, output_grid__input__16 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_1__maj_iter__4,
         grid_measurement_0__num_corrected_visibilities__17, grid_measured_0__kernels__17,
         grid_measured_0__kernel_supports__17, grid_measured_1__corrected_vis_uvw_coords__17,
@@ -5021,7 +5021,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__13 + 0, output_grid__input__17 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_2__maj_iter__4,
         grid_measurement_0__num_corrected_visibilities__18, grid_measured_0__kernels__18,
         grid_measured_0__kernel_supports__18, grid_measured_1__corrected_vis_uvw_coords__18,
@@ -5036,7 +5036,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(prev_1__prev_grid__14 + 0, output_grid__input__18 + 0, 67108864); // 4194304 * PRECISION2
     }
 
-    std_gridding(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
+    std_gridding(grid_size, num_vis/4/*SLICES*/, 17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/,
         16/*OVERSAMPLING_FACTOR*/, 0/*BYPASS*/, maj_iter_out_3__maj_iter__4,
         grid_measurement_0__num_corrected_visibilities__19, grid_measured_0__kernels__19,
         grid_measured_0__kernel_supports__19, grid_measured_1__corrected_vis_uvw_coords__19,
@@ -5130,7 +5130,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(output_grid_2__input_grid__2 + 0, output_grid__input_grid__2 + 8388608, 67108864); // 4194304 * PRECISION2
       memcpy(output_grid_3__input_grid__2 + 0, output_grid__input_grid__2 + 12582912, 67108864); // 4194304 * PRECISION2
     }
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__8,
         g2g_1__gridding_kernel_supports__8, degridding_kernels_0_3__degridding_kernels__2,
@@ -5138,7 +5138,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__8, g2g_1__num_corrected_visibilities__8, g2g_1__config__8,
         output_grid__grids_0__2); // delta_2_g2g_degridgrid_0
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__9,
         g2g_1__gridding_kernel_supports__9, degridding_kernels_1_3__degridding_kernels__2,
@@ -5146,7 +5146,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__9, g2g_1__num_corrected_visibilities__9, g2g_1__config__9,
         output_grid__grids_1__2); // delta_2_g2g_degridgrid_1
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__10,
         g2g_1__gridding_kernel_supports__10, degridding_kernels_2_3__degridding_kernels__2,
@@ -5154,7 +5154,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__10, g2g_1__num_corrected_visibilities__10, g2g_1__config__10,
         output_grid__grids_2__2); // delta_2_g2g_degridgrid_2
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__11,
         g2g_1__gridding_kernel_supports__11, degridding_kernels_3_3__degridding_kernels__2,
@@ -5256,7 +5256,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(output_grid_2__input_grid__3 + 0, output_grid__input_grid__3 + 8388608, 67108864); // 4194304 * PRECISION2
       memcpy(output_grid_3__input_grid__3 + 0, output_grid__input_grid__3 + 12582912, 67108864); // 4194304 * PRECISION2
     }
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__12,
         g2g_1__gridding_kernel_supports__12, degridding_kernels_0_3__degridding_kernels__3,
@@ -5264,7 +5264,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__12, g2g_1__num_corrected_visibilities__12, g2g_1__config__12,
         output_grid__grids_0__3); // delta_3_g2g_degridgrid_0
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__13,
         g2g_1__gridding_kernel_supports__13, degridding_kernels_1_3__degridding_kernels__3,
@@ -5272,7 +5272,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__13, g2g_1__num_corrected_visibilities__13, g2g_1__config__13,
         output_grid__grids_1__3); // delta_3_g2g_degridgrid_1
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__14,
         g2g_1__gridding_kernel_supports__14, degridding_kernels_2_3__degridding_kernels__3,
@@ -5280,7 +5280,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__14, g2g_1__num_corrected_visibilities__14, g2g_1__config__14,
         output_grid__grids_2__3); // delta_3_g2g_degridgrid_2
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__15,
         g2g_1__gridding_kernel_supports__15, degridding_kernels_3_3__degridding_kernels__3,
@@ -5382,7 +5382,7 @@ void* computationThread_Core0(void *arg) {
       memcpy(output_grid_2__input_grid__4 + 0, output_grid__input_grid__4 + 8388608, 67108864); // 4194304 * PRECISION2
       memcpy(output_grid_3__input_grid__4 + 0, output_grid__input_grid__4 + 12582912, 67108864); // 4194304 * PRECISION2
     }
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__16,
         g2g_1__gridding_kernel_supports__16, degridding_kernels_0_3__degridding_kernels__4,
@@ -5390,7 +5390,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__16, g2g_1__num_corrected_visibilities__16, g2g_1__config__16,
         output_grid__grids_0__4); // delta_4_g2g_degridgrid_0
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__17,
         g2g_1__gridding_kernel_supports__17, degridding_kernels_1_3__degridding_kernels__4,
@@ -5398,7 +5398,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__17, g2g_1__num_corrected_visibilities__17, g2g_1__config__17,
         output_grid__grids_1__4); // delta_4_g2g_degridgrid_1
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__18,
         g2g_1__gridding_kernel_supports__18, degridding_kernels_2_3__degridding_kernels__4,
@@ -5406,7 +5406,7 @@ void* computationThread_Core0(void *arg) {
         g2g_0__corrected_vis_uvw_coords__18, g2g_1__num_corrected_visibilities__18, g2g_1__config__18,
         output_grid__grids_2__4); // delta_4_g2g_degridgrid_2
 
-    g2g_degridgrid(grid_size, 981120/*NUM_VISIBILITIES*/, 17/*NUM_GRIDDING_KERNELS*/,
+    g2g_degridgrid(grid_size, num_vis/4/*SLICES*/, 17/*NUM_GRIDDING_KERNELS*/,
         17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_GRIDDING_KERNEL_SAMPLES*/,
         108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/, 16/*OVERSAMPLING_FACTOR*/, g2g_1__gridding_kernels__19,
         g2g_1__gridding_kernel_supports__19, degridding_kernels_3_3__degridding_kernels__4,

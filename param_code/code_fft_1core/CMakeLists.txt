@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.10.2)
+#cmake_minimum_required(VERSION 2.8.12.2)
+cmake_minimum_required(VERSION 3.10)
 
 # *******************************************
 # ************* CMake Content ***************
@@ -8,7 +9,6 @@ cmake_minimum_required(VERSION 3.10.2)
 # Programs
 #  - SEP
 #  - SEP GPU version
-
 
 
 # Add definition for relative path into project
@@ -126,25 +126,7 @@ endif()
 
 project(SEP_Pipeline C)
 
-# Set to 1 to activate debug compilation (0 for release)
-if(NOT ${CMAKE_GENERATOR} MATCHES "Visual Studio.*")
-    if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
-        MESSAGE("Generate Debug project")
-        #			set(CMAKE_BUILD_TYPE Debug)
-        #			set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Debug)
-        set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -pg -Wall ${ADDITIONAL_C_FLAGS}")
-    else()
-        MESSAGE("Generate Release project")
-        #			set(CMAKE_BUILD_TYPE Release)
-        #			set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Release)
-        set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall -O3 ${ADDITIONAL_C_FLAGS}")
-    endif()
-
-    #add libmath during non visual studio builds
-    set(CMAKE_EXTRA_LIB m)
-else()
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-endif()
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 set(LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/lib/cmake_modules/")
@@ -172,7 +154,7 @@ if (WIN32)
     file(GLOB
             PTHREADS_DLL
             ${CMAKE_PREFIX_PATH}/lib/*.dll
-            )
+    )
 
     MESSAGE("Copy Pthreads DLLs into ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
     if(NOT ${CMAKE_GENERATOR} MATCHES "Visual Studio.*")
@@ -195,15 +177,40 @@ IF(USE_OpenMP)
     ENDIF()
 ENDIF()
 
-# *******************************************
-# ************ FFTW LIBRARY *****************
-# *******************************************
+# -----------------------------------------
+# FFTW LIBRARY
+# -----------------------------------------
+message(STATUS "Building on system: ${CMAKE_SYSTEM_NAME}")
+message(STATUS "Host: ${CMAKE_HOST_SYSTEM_NAME}")
 
-#set (FFTW_INCLUDE_DIRS /usr/lib/x86_64-linux-gnu /usr/include/)
-Find_Package (FFTW)
-if(NOT FFTW_FOUND)
-    MESSAGE(FATAL_ERROR "FFTW not found !")
+execute_process(
+        COMMAND hostname
+        OUTPUT_VARIABLE HOSTNAME
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+message(STATUS "Detected hostname: ${HOSTNAME}")
+
+if(HOSTNAME MATCHES "ruche")
+    message(STATUS "Configuration pour Ruche détectée")
+    set(FFTW_ROOT "/gpfs/softs/spack/opt/spack/linux-centos7-cascadelake/intel-19.0.3.199/fftw-3.3.8-xxxx")
+    set(FFTW_INCLUDE_DIR "${FFTW_ROOT}/include")
+    set(FFTW_LIBRARY "${FFTW_ROOT}/lib/libfftw3f.so")
+else()
+    message(STATUS "Configuration locale détectée")
+    find_path(FFTW_INCLUDE_DIR fftw3.h PATHS /usr/include /usr/local/include /usr/lib/x86_64-linux-gnu/include)
+    find_library(FFTW_LIBRARY NAMES fftw3f PATHS /usr/lib /usr/local/lib /usr/lib/x86_64-linux-gnu)
 endif()
+
+if(NOT FFTW_INCLUDE_DIR OR NOT FFTW_LIBRARY)
+    message(FATAL_ERROR "FFTW not found! Set FFTW_INCLUDE_DIR and FFTW_LIBRARY manually.")
+else()
+    message(STATUS "FFTW found:")
+    message(STATUS "  Includes: ${FFTW_INCLUDE_DIR}")
+    message(STATUS "  Library: ${FFTW_LIBRARY}")
+endif()
+
+set(FFTW_INCLUDE_DIRS ${FFTW_INCLUDE_DIR})
+set(FFTW_LIBRARIES ${FFTW_LIBRARY})
 
 
 # *******************************************
@@ -219,6 +226,25 @@ if(NOT LAPACK_FOUND)
     MESSAGE(FATAL_ERROR "LAPACK not found !")
 endif()
 
+# *******************************************
+# ************** MPI LIBRARY ****************
+# *******************************************
+OPTION(USE_MPI "Enable MPI" ON)
+if(USE_MPI)
+    find_package(MPI REQUIRED)
+    if(MPI_FOUND)
+        message(STATUS "MPI found:")
+        message(STATUS "  Include dir: ${MPI_C_INCLUDE_PATH}")
+        message(STATUS "  Libraries: ${MPI_C_LIBRARIES}")
+        include_directories(${MPI_C_INCLUDE_PATH})
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${MPI_C_COMPILE_FLAGS}")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${MPI_C_LINK_FLAGS}")
+    else()
+        message(FATAL_ERROR "MPI not found!")
+    endif()
+endif()
+
+
 
 # *******************************************
 # ***** SEP_Pipeline CPU Version  ***********
@@ -231,6 +257,7 @@ file(
         ./src/CPU/*.c
         ./generated/*.c
         ./src/*.c
+        ./generated/sub/*.c
 )
 
 file(
@@ -238,13 +265,15 @@ file(
         header_files
         ./include/*.h
         ./generated/*.h
+        ./generated/sub/*.h
 )
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -g -Wall -mcmodel=large")
 #message("source_files_CPU : ${source_files_CPU}")
 
-add_executable( SEP_Pipeline ${source_files_CPU} ${header_files})
-target_link_libraries(SEP_Pipeline ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_EXTRA_LIB} fftw3 fftw3f lapack)
+add_executable( SEP_Pipeline ${source_files_CPU} ${header_files}
+        generated/main.c)
+target_link_libraries(SEP_Pipeline ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_EXTRA_LIB} fftw3 fftw3f lapack ${MPI_C_LIBRARIES} m)
 
 
 # *******************************************
@@ -261,29 +290,29 @@ if(CMAKE_CUDA_COMPILER)
     message(STATUS ">>> Found CUDA ${CUDA_VERSION_STRING} at ${CUDA_TOOLKIT_ROOT_DIR}")
 
     set(
-    CUDA_NVCC_FLAGS
-    ${CUDA_NVCC_FLAGS};
-    -std=c++11 -arch=sm_60 -Xptxas -O3 -restrict -D_FORCE_INLINES -D_DEBUG -lineinfo
+            CUDA_NVCC_FLAGS
+            ${CUDA_NVCC_FLAGS};
+            -std=c++11 -arch=sm_60 -Xptxas -O3 -restrict -D_FORCE_INLINES -D_DEBUG -lineinfo
     )
 
     file(
-        GLOB
-        source_files_GPU
-        ./src/*.c
-        ./src/GPU/*.cu
-        ./generated/*.cpp
-        ./generated/*.c
+            GLOB
+            source_files_GPU
+            ./src/*.c
+            ./src/GPU/*.cu
+            ./generated/*.cpp
+            ./generated/*.c
     )
 
     file(
-        GLOB
-        header_files
-        ./include/*.h
-        ./generated/*.h
+            GLOB
+            header_files
+            ./include/*.h
+            ./generated/*.h
     )
 
-#    message("source_files_GPU : ${source_files_GPU}")
-#    message("header_files : ${header_files}")
+    #    message("source_files_GPU : ${source_files_GPU}")
+    #    message("header_files : ${header_files}")
     cuda_add_executable(SEP_Pipeline_GPU ${source_files_GPU})
     target_link_libraries(SEP_Pipeline_GPU m cudart cusolver cufft) # math, CUDA FFT and SVD
 endif()

@@ -393,14 +393,21 @@ pip install numpy pandas matplotlib astropy notebook
 This section describe how to change parameter configuration and target architectures:
 
 1. Edit the job: `nano slurm.sh`
+   The following are the command reading transformed measurementSet as CSV:
 
    - From the `<pipeline>_1core`: change the line `./SEP_Pipeline 1 1 1` by a configuration following `./SEP_Pipeline <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE>`.
 
    - From the `<pipeline>_nnode`: change the line `./SEP_Pipeline 1 1 1 1` by a configuration following `./SEP_Pipeline <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE> <NUM_NODES>`.
 
+
+   The following is the command reading measurementSet directly:
+
+   - Requirement install casacore on Ruche [on going -- see folder read_ms/]
+   - From the `<pipeline>_nnode_ms`: change the line `./SEP_Pipeline 1 1 1 1 1.ms` by a configuration following `./SEP_Pipeline <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE> <NUM_NODES> <MS_PATH>`.
+
 2 .save: `ctrl + o` > `enter` > `ctrl + x`
 
-
+NB: In order to obtain a valid reconstructed image the `NUM_VIS` should be divisible by `NB_SLICE` which is the number of processing cores. 
 
 
 
