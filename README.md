@@ -4,12 +4,12 @@
 
 SimSDP is an HPC resource allocation framework and simulation tool designed to optimize intra-node and inter-node resource allocation for scientific data processing. It combines **PREESM** for rapid prototyping and **SimGrid** for simulating inter-node communication and computation. 
 
-The primary goal of SimSDP is to simulate the **Science Data Processor (SDP)** pipeline from the Square Kilometre Array (SKA), converting visibilities into output images on massive HPC architectures, handling datasets as large as the SKA requirements (179 Po :astonished:).
+The primary goal of SimSDP is to simulate the **Science Data Processor (SDP)** pipeline from the Square Kilometer Array (SKA), converting visibilities into output images on massive HPC architectures, handling datasets as large as the SKA requirements (7.8×43200  - 8.9×43200 To !).
 
 | 📝 **Note**                                                   |
 | ------------------------------------------------------------ |
-| Here is the estimation at the exit of antennas:<br />Data (bytes) = <span style="color:#e74c3c;">N<sub>ANT</sub></span> × (<span style="color:#e74c3c;">N<sub>ANT</sub></span> - 1) / 2 × <span style="color:#3498db;">N<sub>CHANNEL</sub></span> × <span style="color:#9b59b6;">N<sub>POL</sub></span><sup>2</sup> × <span style="color:#f1c40f;">BANDWIDTH</span> (Hz) × <span style="color:#1abc9c;">ACCUMULATION_TIME</span> (s) ×<span style="color:#2ecc71;">OBS_TIME</span> (s) × <span style="color:#e67e22;">complex_value</span> × <span style="color:#34495e;">N<sub>BYTE</sub></span><br /><br /> **SKAO** comparison:<br />(10min)= <span style="color:#e74c3c;">131 072</span> × (<span style="color:#e74c3c;">131 072</span> - 1) / 2 × <span style="color:#3498db;">10000</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) × <span style="color:#2ecc71;">600</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</span>  <br/>= <b>? Po</b><br />(12h)= <span style="color:#e74c3c;">131 072</span> × (<span style="color:#e74c3c;">131 072</span> - 1) / 2 × <span style="color:#3498db;">10000</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) × <span style="color:#2ecc71;">43200</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</span>  <br/>= <b>? Po</b><br /><br /> **LOFAR (LOw Frequency ARray)** comparison:<br />(10min)=  <span style="color:#e74c3c;">47</span> × (<span style="color:#e74c3c;">47</span> - 1) / 2 × <span style="color:#3498db;">4096</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">600</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>? To</b><br />(12h)= <span style="color:#e74c3c;">47</span> × (<span style="color:#e74c3c;">47</span> - 1) / 2 × <span style="color:#3498db;">4096</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">43200</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>? Po</b><br /><br /> **NenuFAR (New Extension in Nançay Upgrading LOFAR)** comparison:<br />(10min)=  <span style="color:#e74c3c;">96</span> × (<span style="color:#e74c3c;">96</span> - 1) / 2 × <span style="color:#3498db;">64</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">600</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>4.13 To</b><br />(12h)= <span style="color:#e74c3c;">96</span> × (<span style="color:#e74c3c;">96</span> - 1) / 2 × <span style="color:#3498db;">64</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">43200</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>496 To</b><br /> |
-| Here is the estimation after rebinning (clustering/sub-sampling in spectral, time or polarized domains): <br />Data_rebinned (bytes) = Data  / (<span style="color:#3498db;">R<sub>channel)</sub></span>  ×  <span style="color:#9b59b6;">R<sub>pol</sub></span>    ×<span style="color:#1abc9c;"> R<sub>time</sub></span> )<br/><br />**SKAO** (12h) →  ? Po (? vis)<br />**LOFAR** (12h) →  ? To, 1% of SKA<br />**NenuFAR** (12h) →  496 To (~10⁷ vis) → rebin: 62 To (~10⁶ vis) ,  5% of LOFAR |
+| Here is the estimation at the exit of antennas:<br />Data (bytes) = <span style="color:#e74c3c;">N<sub>ANT</sub></span> × (<span style="color:#e74c3c;">N<sub>ANT</sub></span> - 1) / 2 × <span style="color:#3498db;">N<sub>CHANNEL</sub></span> × <span style="color:#9b59b6;">N<sub>POL</sub></span><sup>2</sup> × <span style="color:#f1c40f;">BANDWIDTH</span> (Hz) × 1/ <span style="color:#1abc9c;">ACCUMULATION_TIME</span> (s) ×<span style="color:#2ecc71;">OBS_TIME</span> (s) × <span style="color:#e67e22;">complex_value</span> × <span style="color:#34495e;">N<sub>BYTE</sub></span><br /><br /> **SKAO** comparison:<br />(10min)= <span style="color:#e74c3c;">512</span> × (<span style="color:#e74c3c;">512</span> - 1) / 2 × <span style="color:#3498db;">10000</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) × <span style="color:#2ecc71;">600</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</span>  <br/>= <b>? Po</b><br />(12h)= <span style="color:#e74c3c;">131 072</span> × (<span style="color:#e74c3c;">131 072</span> - 1) / 2 × <span style="color:#3498db;">10000</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) × <span style="color:#2ecc71;">43200</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</span>  <br/>= <b>? Po</b><br /><br /> **LOFAR (LOw Frequency ARray)** comparison:<br />(10min)=  <span style="color:#e74c3c;">47</span> × (<span style="color:#e74c3c;">47</span> - 1) / 2 × <span style="color:#3498db;">4096</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">600</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>? To</b><br />(12h)= <span style="color:#e74c3c;">47</span> × (<span style="color:#e74c3c;">47</span> - 1) / 2 × <span style="color:#3498db;">4096</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">43200</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>? Po</b><br /><br /> **NenuFAR (New Extension in Nançay Upgrading LOFAR)** comparison:<br />(10min)=  <span style="color:#e74c3c;">96</span> × (<span style="color:#e74c3c;">96</span> - 1) / 2 × <span style="color:#3498db;">16</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">600</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>4.13 To</b><br />(12h)= <span style="color:#e74c3c;">96</span> × (<span style="color:#e74c3c;">96</span> - 1) / 2 × <span style="color:#3498db;">64</span> × <span style="color:#9b59b6;">2</span><sup>2</sup> × <span style="color:#f1c40f;">195000</span> (Hz) × <span style="color:#1abc9c;">1</span> (s) ×<span style="color:#2ecc71;">43200</span> (s) × <span style="color:#e67e22;">2</span> × <span style="color:#34495e;">4</sub></span>  = <b>496 To</b><br /> |
+| Here is the estimation after rebinning (clustering/sub-sampling in spectral, time or polarized domains): <br />Data_rebinned (bytes) = Data  / (<span style="color:#3498db;">R<sub>channel)</sub></span>  ×  <span style="color:#9b59b6;">R<sub>pol</sub></span>    ×<span style="color:#1abc9c;"> R<sub>time</sub></span> )<br/><br />**SKAO** (12h) →  ? Po (? vis)<br />**LOFAR** (12h) →  ? To, 1% of SKA<br />**NenuFAR** (6h) →  ?? To (~10⁷ vis) → rebin: 500 Go (~10⁶ vis) ,  5% of LOFAR |
 
 The **SDP imaging pipeline** involves three steps. First, in the **set-up phase**, the raw data (Measurement Set) is loaded, and the PSF and convolution kernels are computed. Next comes the **major cycle**, where visibilities are gridded to form a dirty image. Inside this loop is the **minor cycle**, which applies deconvolution to clean the image and then updates the model. The process iterates between major and minor cycles until the final image is produced.
 
@@ -403,6 +403,53 @@ This section describe how to change parameter configuration and target architect
    The following is the command reading measurementSet directly:
 
    - Requirement install casacore on Ruche [on going -- see folder read_ms/]
+
+  ```bash
+  module load gcc/11.2.0/gcc-4.8.5
+ module load cmake/3.28.3/gcc-11.2.0
+ module load boost/1.82.0/gcc-11.2.0
+ module load fftw/3.3.10/gcc-11.2.0-openmpi
+ module load hdf5/1.12.0/gcc-11.2.0-openmpi
+ module load python/3.9.10/intel-20.0.4.304
+ module load gsl/2.7/gcc-11.2.0
+ 
+ wget https://bootstrap.pypa.io/get-pip.py
+ python3 get-pip.py
+python3 -m pip install numpy
+
+
+  ```
+```bash
+mkdir -p $HOME/casacore_local/{src,build,install}
+cd $HOME/casacore_local/src
+
+git clone https://github.com/casacore/casacore.git
+cd casacore
+
+cd ~/casacore_local/src/casacore
+nano cmakelist.txt
+# set(_usefits NO)
+#set(_usewcs NO)
+#set(_usesofa NO)
+
+cd ~/casacore_local/build
+rm -rf CMakeCache.txt CMakeFiles
+
+
+cd $HOME/casacore_local/build
+
+cmake ../src/casacore -DGSL_DIR=OFF -DCMAKE_INSTALL_PREFIX=$HOME/casacore_local/install -DUSE_FFTW3=YES -DUSE_HDF5=YES -DBUILD_PYTHON=OFF -DCMAKE_BUILD_TYPE=Release
+
+cmake ../src/casacore \
+  -DCMAKE_INSTALL_PREFIX=$HOME/casacore_local/install \
+  -DUSE_FFTW3=YES \
+  -DUSE_HDF5=YES \
+  -DBUILD_PYTHON=OFF \
+  -DCMAKE_BUILD_TYPE=Release
+
+make -j4
+make install
+```
    - From the `<pipeline>_nnode_ms`: change the line `./SEP_Pipeline 1 1 1 1 1.ms` by a configuration following `./SEP_Pipeline <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE> <NUM_NODES> <MS_PATH>`.
 
 2 .save: `ctrl + o` > `enter` > `ctrl + x`
