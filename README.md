@@ -393,70 +393,23 @@ pip install numpy pandas matplotlib astropy notebook
 This section describe how to change parameter configuration and target architectures:
 
 1. Edit the job: `nano slurm.sh`
-   The following are the command reading transformed measurementSet as CSV:
-
+   The following are the command reading transformed measurementSet as **CSV** since it s not possible to use casacore from ruche directly (bypass is provided with a singularity image below, your welcome):
    - From the `<pipeline>_1core`: change the line `./SEP_Pipeline 1 1 1` by a configuration following `./SEP_Pipeline <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE>`.
-
+   
    - From the `<pipeline>_nnode`: change the line `./SEP_Pipeline 1 1 1 1` by a configuration following `./SEP_Pipeline <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE> <NUM_NODES>`.
-
-
-   The following is the command reading measurementSet directly:
-
-   - Requirement install casacore on Ruche [on going -- see folder read_ms/]
-
-  ```bash
-  module load gcc/11.2.0/gcc-4.8.5
- module load cmake/3.28.3/gcc-11.2.0
- module load boost/1.82.0/gcc-11.2.0
- module load fftw/3.3.10/gcc-11.2.0-openmpi
- module load hdf5/1.12.0/gcc-11.2.0-openmpi
- module load python/3.9.10/intel-20.0.4.304
- module load gsl/2.7/gcc-11.2.0
- 
- wget https://bootstrap.pypa.io/get-pip.py
- python3 get-pip.py
-python3 -m pip install numpy
-
-
-  ```
-```bash
-mkdir -p $HOME/casacore_local/{src,build,install}
-cd $HOME/casacore_local/src
-
-git clone https://github.com/casacore/casacore.git
-cd casacore
-
-cd ~/casacore_local/src/casacore
-nano cmakelist.txt
-# set(_usefits NO)
-#set(_usewcs NO)
-#set(_usesofa NO)
-
-cd ~/casacore_local/build
-rm -rf CMakeCache.txt CMakeFiles
-
-
-cd $HOME/casacore_local/build
-
-cmake ../src/casacore -DGSL_DIR=OFF -DCMAKE_INSTALL_PREFIX=$HOME/casacore_local/install -DUSE_FFTW3=YES -DUSE_HDF5=YES -DBUILD_PYTHON=OFF -DCMAKE_BUILD_TYPE=Release
-
-cmake ../src/casacore \
-  -DCMAKE_INSTALL_PREFIX=$HOME/casacore_local/install \
-  -DUSE_FFTW3=YES \
-  -DUSE_HDF5=YES \
-  -DBUILD_PYTHON=OFF \
-  -DCMAKE_BUILD_TYPE=Release
-
-make -j4
-make install
-```
-   - From the `<pipeline>_nnode_ms`: change the line `./SEP_Pipeline 1 1 1 1 1.ms` by a configuration following `./SEP_Pipeline <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE> <NUM_NODES> <MS_PATH>`.
 
 2 .save: `ctrl + o` > `enter` > `ctrl + x`
 
 NB: In order to obtain a valid reconstructed image the `NUM_VIS` should be divisible by `NB_SLICE` which is the number of processing cores. 
 
+###### Method with singularity
 
+1. Build **Singularity** image: `singularity build sdp_pipeline.sif Singularity.def`
+2. Run container on your laptop: `singularity run sdp_pipeline.sif <dft/fft/g2g> <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE> <NUM_NODES> <MS_PATH>`
+3. Transfer image:  `rsync -avh --progress sdp_pipeline.sif renaudo@ruche.mesocentre.universite-paris-saclay.fr:/home/renaudo/ri_code/`
+4. Load module: `module load singularity/3.5.3/gcc-11.2.0`
+5. Adjust `slurm.sh`: uncomment dedicated lines.
+6. Submit the job to the Scheduler: `sbatch slurm.sh` 
 
 ---
 

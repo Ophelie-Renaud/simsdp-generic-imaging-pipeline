@@ -1,0 +1,60 @@
+Bootstrap: library
+From: ubuntu:latest
+
+%labels
+    Maintainer orenaud
+
+%post
+    # Mettre à jour et installer les dépendances
+    apt-get update && apt-get install -y \
+        build-essential \
+        cmake \
+        gfortran \
+        g++ \
+        flex \
+        bison \
+        libblas-dev \
+        liblapack-dev \
+        libcfitsio-dev \
+        wcslib-dev \
+        libfftw3-dev \
+        libhdf5-serial-dev \
+        python3-numpy \
+        libboost-python-dev \
+        libncurses5-dev \
+        git \
+        openmpi-bin \
+        libopenmpi-dev
+
+    # Cloner et installer Casacore
+    git clone https://github.com/casacore/casacore
+    cd casacore
+    mkdir build
+    cd build
+    cmake ..
+    make
+    make install
+    
+    # compiler code
+    cd code_dft
+    cmake .
+    make
+
+    # Copier votre script SEP_Pipeline dans le conteneur
+    cp /path/to/your/SEP_Pipeline /usr/local/bin/SEP_Pipeline
+    chmod +x /usr/local/bin/SEP_Pipeline
+
+%runscript
+    # Exécuter l'un des exécutables en fonction du premier argument
+    if [ "$1" == "dft" ]; then
+        exec /usr/local/bin/dft "${@:2}"
+    elif [ "$1" == "fft" ]; then
+        exec /usr/local/bin/fft "${@:2}"
+    elif [ "$1" == "g2g" ]; then
+        exec /usr/local/bin/g2g "${@:2}"
+    else
+        echo "Usage: singularity run <image.sif> <executable_name> <args>"
+        echo "executable_name can be: dft, fft, g2g"
+        exit 1
+    fi
+
