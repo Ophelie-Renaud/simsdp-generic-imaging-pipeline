@@ -33,13 +33,14 @@
 #include <stdlib.h>
 #include <float.h>
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
 #ifndef COMMON_H_
-#define COMMON_H_  
+#define COMMON_H_
 
 
 #include <math.h>
@@ -140,7 +141,7 @@ extern "C" {
 		 int y;
 	 } int2;
 
-	#if SINGLE_PRECISION
+
 		 typedef struct  {
 			 float x;
 			 float y;
@@ -152,7 +153,7 @@ extern "C" {
 			 float z;
 		 } float3;
 
-	#else
+
 
 		 typedef struct  {
 			 double x;
@@ -164,7 +165,21 @@ extern "C" {
 			 double y;
 			 double z;
 		 } double3;
-	#endif
+#ifndef __NVCC__
+	int2 make_int2(int x,int y);
+
+#if SINGLE_PRECISION
+
+	float2 make_float2(float x, float y);
+	float3 make_float3(float x, float y, float z);
+
+#else
+
+	double2 make_double2(double x,double y);
+	double3 make_double3(double x,double y, double z);
+#endif
+#endif
+
 #endif
 
 typedef struct Complex {
@@ -268,20 +283,7 @@ void consume_loop_token(IN char *loop_token);
 
 void loop_iterator(int NB_ITERATION, OUT int *cycle_count);
 
-#ifndef __NVCC__
-	int2 make_int2(int x,int y);
 
-	#if SINGLE_PRECISION
-
-		float2 make_float2(float x, float y);
-		float3 make_float3(float x, float y, float z);
-
-	#else
-
-		double2 make_double2(double x,double y);
-		double3 make_double3(double x,double y, double z);
-	#endif
-#endif
 
 #ifdef __NVCC__
 	void check_cuda_error_aux(const char *file, unsigned line, const char *statement, cudaError_t err);
@@ -291,6 +293,7 @@ void loop_iterator(int NB_ITERATION, OUT int *cycle_count);
 	const char* cuda_get_error_enum(cufftResult error);
 #endif
 
+
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
@@ -298,5 +301,4 @@ void loop_iterator(int NB_ITERATION, OUT int *cycle_count);
 
 #ifdef __cplusplus
 }
-#endif 
-
+#endif

@@ -8,7 +8,6 @@ cmake_minimum_required(VERSION 3.10)
 #
 # Programs
 #  - SEP
-#  - SEP GPU version
 
 
 # Add definition for relative path into project
@@ -124,7 +123,7 @@ endif()
 
 
 
-project(SEP_Pipeline C)
+project(DFT_Pipeline C CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
@@ -227,6 +226,19 @@ if(NOT LAPACK_FOUND)
 endif()
 
 # *******************************************
+# ************ casacore LIBRARY **************
+# *******************************************
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+
+
+# Ajouter les répertoires d'inclusion (Casacore, Boost et Python)
+include_directories(/usr/local/include)
+
+# Ajouter le répertoire des bibliothèques (modifie ces chemins si nécessaire)
+link_directories(/usr/local/lib)
+
+# *******************************************
 # ************** MPI LIBRARY ****************
 # *******************************************
 OPTION(USE_MPI "Enable MPI" ON)
@@ -247,7 +259,7 @@ endif()
 
 
 # *******************************************
-# ***** SEP_Pipeline CPU Version  ***********
+# ***** DFT_Pipeline CPU Version  ***********
 # *******************************************
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/generated ${THREADS_PTHREADS_INCLUDE_DIR} ${FFTW_INCLUDE_DIRS})
 
@@ -269,52 +281,15 @@ file(
 )
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -g -Wall -mcmodel=large")
-#message("source_files_CPU : ${source_files_CPU}")
+add_library(casa_wrapper STATIC
+        src/casacore_wrapper.cpp
+        include/casacore_wrapper.h
+)
+target_link_libraries(casa_wrapper casa_casa casa_tables casa_ms casa_measures casa_fits casa_mirlib -lfftw3)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mcmodel=large")
 
-add_executable( SEP_Pipeline ${source_files_CPU} ${header_files}
+add_executable( DFT_Pipeline ${source_files_CPU} ${header_files}
         generated/main.c)
-target_link_libraries(SEP_Pipeline ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_EXTRA_LIB} fftw3 fftw3f lapack ${MPI_C_LIBRARIES} m)
-
-
-# *******************************************
-# ***** SEP_Pipeline GPU Version  ***********
-# *******************************************
-
-if(CMAKE_CUDA_COMPILER)
-
-    project(SEP_Pipeline_GPU CXX CUDA)
-
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -g -g -Wall ${ADDITIONAL_C_FLAGS}")
-
-    find_package(CUDA 10.1 REQUIRED)
-    message(STATUS ">>> Found CUDA ${CUDA_VERSION_STRING} at ${CUDA_TOOLKIT_ROOT_DIR}")
-
-    set(
-    CUDA_NVCC_FLAGS
-    ${CUDA_NVCC_FLAGS};
-    -std=c++11 -arch=sm_60 -Xptxas -O3 -restrict -D_FORCE_INLINES -D_DEBUG -lineinfo
-    )
-
-    file(
-        GLOB
-        source_files_GPU
-        ./src/*.c
-        ./src/GPU/*.cu
-        ./generated/*.cpp
-        ./generated/*.c
-    )
-
-    file(
-        GLOB
-        header_files
-        ./include/*.h
-        ./generated/*.h
-    )
-
-#    message("source_files_GPU : ${source_files_GPU}")
-#    message("header_files : ${header_files}")
-    cuda_add_executable(SEP_Pipeline_GPU ${source_files_GPU})
-    target_link_libraries(SEP_Pipeline_GPU m cudart cusolver cufft) # math, CUDA FFT and SVD
-endif()
+target_link_libraries(DFT_Pipeline ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_EXTRA_LIB} fftw3 fftw3f lapack ${MPI_C_LIBRARIES} m casa_wrapper)
 
 

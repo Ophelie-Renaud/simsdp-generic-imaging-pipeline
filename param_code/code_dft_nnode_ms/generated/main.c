@@ -7,8 +7,8 @@
 #include "sub/sub.h"
 int main(int argc, char *argv[]) {
   // Vérification du nombre d'arguments passés
-  if (argc != 5) {
-    printf("Usage: %s <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE> <NUM_NODE> <MS_PATH>\n", argv[0]);
+  if (argc != 7) {
+    printf("Usage: %s <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE> <NUM_NODE> <MS_PATH> <OUT_PATH>\n", argv[0]);
     return 1;
   }
   // Récupérer les paramètres passés
@@ -16,7 +16,8 @@ int main(int argc, char *argv[]) {
   int GRID_SIZE = atoi(argv[2]);
   int NUM_MINOR_CYCLE = atoi(argv[3]);
     int NUM_NODE = atoi(argv[4]);
-  char *MS_PATH = argv[5];
+  const char* MS_PATH = argv[5];
+    const char* OUT_PATH = argv[6];
 
     int nb_proc;
     int proc_nb;
@@ -46,8 +47,8 @@ int main(int argc, char *argv[]) {
     {
         if (proc_nb == i)
         {
-            printf("Le processus de rang %3d s'execute sur %s\n ", i, mpi_hostname);
-            sub(NUM_VIS, GRID_SIZE, NUM_MINOR_CYCLE, *MS_PATH);
+            printf("Le processus de rang %3d s'execute sur le node %s, sur le ms %s\n ", i, mpi_hostname,MS_PATH);
+            sub(NUM_VIS, GRID_SIZE, NUM_MINOR_CYCLE, MS_PATH,OUT_PATH);
             MPI_Barrier(MPI_COMM_WORLD);
         }
     }

@@ -4,4 +4,5 @@ polynomial_timing/Instrumented_code_g2g_cpu/Code/data/*.zip
 polynomial_timing/timing_cpu/average/
 polynomial_timing/timing_cpu/to_average/
 read_ms/*.ms
-
+**/*.ms/
+**/*.MS/

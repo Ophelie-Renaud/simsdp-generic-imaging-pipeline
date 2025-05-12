@@ -6,6 +6,7 @@
  * Code generated for processing element Core0 (ID=0).
  */
 
+
 #include "../preesm_gen.h"
 // Core Global Declaration
 extern pthread_barrier_t iter_barrier;
@@ -1537,6 +1538,9 @@ void* computationThread_Core0(void *arg) {
 	int num_vis = args->num_vis;
 	int grid_size = args->grid_size;
 	int num_minor_cycle = args->num_minor_cycle;
+	const char* ms_path = args->ms_path;
+	const char* out_path = args->out_path;
+	int num_baselines = 1540;
 
 
 #ifdef PREESM_MD5_UPDATE
@@ -1683,23 +1687,23 @@ void* computationThread_Core0(void *arg) {
     fifoPop(source_list__source_list__0, FIFO_Head_psi_end_source_list__delta_init_source_list__0, 4800, NULL, 0); // 4800 * char
     iterator(5/*ITER*/, 0/*START*/, cycle_out__input__0); // iterator_0
 
-    config_struct_set_up(grid_size, 17/*NUM_KERNELS*/, config__input__0); // setup_ri_pipeline_0_config_struct_set_up_0
+    config_struct_set_up_v2(grid_size, 17/*NUM_KERNELS*/,num_baselines,108800/*TOTAL_KERNEL_SAMPLES*/,16/*OVERSAMPLING_FACTOR*/,ms_path,out_path, config__input__0); // setup_ri_pipeline_0_config_struct_set_up_0
 
     correction_set_up(grid_size, prolate__prolate__0); // setup_ri_pipeline_0_correction_set_up_0
 
-    config_struct_set_up(grid_size, 17/*NUM_KERNELS*/, config__input__1); // setup_ri_pipeline_1_config_struct_set_up_0
+    config_struct_set_up_v2(grid_size, 17/*NUM_KERNELS*/,num_baselines,108800/*TOTAL_KERNEL_SAMPLES*/,16/*OVERSAMPLING_FACTOR*/,ms_path,out_path, config__input__1); // setup_ri_pipeline_1_config_struct_set_up_0
 
     correction_set_up(grid_size, prolate__prolate__1); // setup_ri_pipeline_1_correction_set_up_0
 
-    config_struct_set_up(grid_size, 17/*NUM_KERNELS*/, config__input__2); // setup_ri_pipeline_2_config_struct_set_up_0
+    config_struct_set_up_v2(grid_size, 17/*NUM_KERNELS*/,num_baselines,108800/*TOTAL_KERNEL_SAMPLES*/,16/*OVERSAMPLING_FACTOR*/,ms_path, out_path, config__input__2); // setup_ri_pipeline_2_config_struct_set_up_0
 
     correction_set_up(grid_size, prolate__prolate__2); // setup_ri_pipeline_2_correction_set_up_0
 
-    config_struct_set_up(grid_size, 17/*NUM_KERNELS*/, config__input__3); // setup_ri_pipeline_3_config_struct_set_up_0
+    config_struct_set_up_v2(grid_size, 17/*NUM_KERNELS*/,num_baselines,108800/*TOTAL_KERNEL_SAMPLES*/,16/*OVERSAMPLING_FACTOR*/,ms_path,out_path, config__input__3); // setup_ri_pipeline_3_config_struct_set_up_0
 
     correction_set_up(grid_size, prolate__prolate__3); // setup_ri_pipeline_3_correction_set_up_0
 
-    config_struct_set_up(grid_size, 17/*NUM_KERNELS*/, config__input__4); // setup_ri_pipeline_4_config_struct_set_up_0
+    config_struct_set_up_v2(grid_size, 17/*NUM_KERNELS*/,num_baselines,108800/*TOTAL_KERNEL_SAMPLES*/,16/*OVERSAMPLING_FACTOR*/,ms_path, out_path, config__input__4); // setup_ri_pipeline_4_config_struct_set_up_0
 
     correction_set_up(grid_size, prolate__prolate__4); // setup_ri_pipeline_4_correction_set_up_0
 
@@ -1840,19 +1844,19 @@ void* computationThread_Core0(void *arg) {
       memcpy(save_2__cycle__4 + 0, cycle_out_4__input__0 + 0, 4); // 1 * int
     }
 
-    psf_host_set_up(grid_size, 2458/*PSF_GRID_SIZE*/, setup_psf_1__config__0, psf__input__0,
+    psf_host_set_up_v2(grid_size, 2458/*PSF_GRID_SIZE*/, setup_psf_1__config__0, psf__input__0,
         psf_max_value__psf_max_value__0); // setup_ri_pipeline_0_psf_host_set_up_0
 
-    psf_host_set_up(grid_size, 2458/*PSF_GRID_SIZE*/, setup_psf_1__config__1, psf__input__1,
+    psf_host_set_up_v2(grid_size, 2458/*PSF_GRID_SIZE*/, setup_psf_1__config__1, psf__input__1,
         psf_max_value__psf_max_value__1); // setup_ri_pipeline_1_psf_host_set_up_0
 
-    psf_host_set_up(grid_size, 2458/*PSF_GRID_SIZE*/, setup_psf_1__config__2, psf__input__2,
+    psf_host_set_up_v2(grid_size, 2458/*PSF_GRID_SIZE*/, setup_psf_1__config__2, psf__input__2,
         psf_max_value__psf_max_value__2); // setup_ri_pipeline_2_psf_host_set_up_0
 
-    psf_host_set_up(grid_size, 2458/*PSF_GRID_SIZE*/, setup_psf_1__config__3, psf__input__3,
+    psf_host_set_up_v2(grid_size, 2458/*PSF_GRID_SIZE*/, setup_psf_1__config__3, psf__input__3,
         psf_max_value__psf_max_value__3); // setup_ri_pipeline_3_psf_host_set_up_0
 
-    psf_host_set_up(grid_size, 2458/*PSF_GRID_SIZE*/, setup_psf_1__config__4, psf__input__4,
+    psf_host_set_up_v2(grid_size, 2458/*PSF_GRID_SIZE*/, setup_psf_1__config__4, psf__input__4,
         psf_max_value__psf_max_value__4); // setup_ri_pipeline_4_psf_host_set_up_0
 
     token_sink(delta_0__token_in__0); // delta_0_token_sink_0
@@ -2183,13 +2187,13 @@ void* computationThread_Core0(void *arg) {
     clean_psf_host_set_up(grid_size, 0/*GAUSSIAN_CLEAN_PSF*/, setup_clean_psf_0__config__0,
         setup_clean_psf_0__dirty_psf__0, clean_psf__clean_psf__0, partial_psf_halfdims__input__0); // setup_ri_pipeline_0_clean_psf_set_up_0
 
-    degridding_kernel_host_set_up(17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/,
-        setup_degridding_kernel_2__config__0, degridding_kernel_supports__supports__0, degridding_kernels__kernels__0); // setup_ri_pipeline_0_degridding_kernel_host_set_up_0
+    kernel_host_set_up_v2(17/*NUM_DEGRIDDING_KERNELS*/, 16/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/,
+        2, degridding_kernel_supports__supports__0, degridding_kernels__kernels__0); // setup_ri_pipeline_0_degridding_kernel_host_set_up_0
 
     gains_host_set_up(512/*NUM_RECEIVERS*/, 130816/*NUM_BASELINES*/, setup_gains_3__config__0, gains__gains__0,
         receiver_pairs__receiver_pairs__0); // setup_ri_pipeline_0_gains_host_set_up_0
 
-    kernel_host_set_up(17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/, setup_gridding_kernel_5__config__0,
+    kernel_host_set_up_v2(17/*NUM_KERNELS*/, 16/*TOTAL_KERNEL_SAMPLES*/, 2,
         kernel_supports__gridding_kernel_supports__0, kernels__gridding_kernels__0); // setup_ri_pipeline_0_kernel_host_set_up_0
 
     visibility_host_set_up(num_vis, setup_vis_4__config__0, vis_uvw_coords__vis_coords__0,
@@ -2198,13 +2202,13 @@ void* computationThread_Core0(void *arg) {
     clean_psf_host_set_up(grid_size, 0/*GAUSSIAN_CLEAN_PSF*/, setup_clean_psf_0__config__1,
         setup_clean_psf_0__dirty_psf__1, clean_psf__clean_psf__1, partial_psf_halfdims__input__1); // setup_ri_pipeline_1_clean_psf_set_up_0
 
-    degridding_kernel_host_set_up(17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/,
-        setup_degridding_kernel_2__config__1, degridding_kernel_supports__supports__1, degridding_kernels__kernels__1); // setup_ri_pipeline_1_degridding_kernel_host_set_up_0
+    kernel_host_set_up_v2(17/*NUM_DEGRIDDING_KERNELS*/, 16/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/,
+        2, degridding_kernel_supports__supports__1, degridding_kernels__kernels__1); // setup_ri_pipeline_1_degridding_kernel_host_set_up_0
 
     gains_host_set_up(512/*NUM_RECEIVERS*/, 130816/*NUM_BASELINES*/, setup_gains_3__config__1, gains__gains__1,
         receiver_pairs__receiver_pairs__1); // setup_ri_pipeline_1_gains_host_set_up_0
 
-    kernel_host_set_up(17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/, setup_gridding_kernel_5__config__1,
+    kernel_host_set_up_v2(17/*NUM_KERNELS*/, 16/*TOTAL_KERNEL_SAMPLES*/, 2,
         kernel_supports__gridding_kernel_supports__1, kernels__gridding_kernels__1); // setup_ri_pipeline_1_kernel_host_set_up_0
 
     visibility_host_set_up(num_vis, setup_vis_4__config__1, vis_uvw_coords__vis_coords__1,
@@ -2213,13 +2217,13 @@ void* computationThread_Core0(void *arg) {
     clean_psf_host_set_up(grid_size, 0/*GAUSSIAN_CLEAN_PSF*/, setup_clean_psf_0__config__2,
         setup_clean_psf_0__dirty_psf__2, clean_psf__clean_psf__2, partial_psf_halfdims__input__2); // setup_ri_pipeline_2_clean_psf_set_up_0
 
-    degridding_kernel_host_set_up(17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/,
-        setup_degridding_kernel_2__config__2, degridding_kernel_supports__supports__2, degridding_kernels__kernels__2); // setup_ri_pipeline_2_degridding_kernel_host_set_up_0
+    kernel_host_set_up_v2(17/*NUM_DEGRIDDING_KERNELS*/, 16/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/,
+        2, degridding_kernel_supports__supports__2, degridding_kernels__kernels__2); // setup_ri_pipeline_2_degridding_kernel_host_set_up_0
 
     gains_host_set_up(512/*NUM_RECEIVERS*/, 130816/*NUM_BASELINES*/, setup_gains_3__config__2, gains__gains__2,
         receiver_pairs__receiver_pairs__2); // setup_ri_pipeline_2_gains_host_set_up_0
 
-    kernel_host_set_up(17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/, setup_gridding_kernel_5__config__2,
+    kernel_host_set_up_v2(17/*NUM_KERNELS*/, 16/*TOTAL_KERNEL_SAMPLES*/, 2,
         kernel_supports__gridding_kernel_supports__2, kernels__gridding_kernels__2); // setup_ri_pipeline_2_kernel_host_set_up_0
 
     visibility_host_set_up(num_vis, setup_vis_4__config__2, vis_uvw_coords__vis_coords__2,
@@ -2228,13 +2232,13 @@ void* computationThread_Core0(void *arg) {
     clean_psf_host_set_up(grid_size, 0/*GAUSSIAN_CLEAN_PSF*/, setup_clean_psf_0__config__3,
         setup_clean_psf_0__dirty_psf__3, clean_psf__clean_psf__3, partial_psf_halfdims__input__3); // setup_ri_pipeline_3_clean_psf_set_up_0
 
-    degridding_kernel_host_set_up(17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/,
-        setup_degridding_kernel_2__config__3, degridding_kernel_supports__supports__3, degridding_kernels__kernels__3); // setup_ri_pipeline_3_degridding_kernel_host_set_up_0
+    kernel_host_set_up_v2(17/*NUM_DEGRIDDING_KERNELS*/, 16/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/,
+        2, degridding_kernel_supports__supports__3, degridding_kernels__kernels__3); // setup_ri_pipeline_3_degridding_kernel_host_set_up_0
 
     gains_host_set_up(512/*NUM_RECEIVERS*/, 130816/*NUM_BASELINES*/, setup_gains_3__config__3, gains__gains__3,
         receiver_pairs__receiver_pairs__3); // setup_ri_pipeline_3_gains_host_set_up_0
 
-    kernel_host_set_up(17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/, setup_gridding_kernel_5__config__3,
+    kernel_host_set_up_v2(17/*NUM_KERNELS*/, 16/*TOTAL_KERNEL_SAMPLES*/, 2,
         kernel_supports__gridding_kernel_supports__3, kernels__gridding_kernels__3); // setup_ri_pipeline_3_kernel_host_set_up_0
 
     visibility_host_set_up(num_vis, setup_vis_4__config__3, vis_uvw_coords__vis_coords__3,
@@ -2243,13 +2247,13 @@ void* computationThread_Core0(void *arg) {
     clean_psf_host_set_up(grid_size, 0/*GAUSSIAN_CLEAN_PSF*/, setup_clean_psf_0__config__4,
         setup_clean_psf_0__dirty_psf__4, clean_psf__clean_psf__4, partial_psf_halfdims__input__4); // setup_ri_pipeline_4_clean_psf_set_up_0
 
-    degridding_kernel_host_set_up(17/*NUM_DEGRIDDING_KERNELS*/, 108800/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/,
-        setup_degridding_kernel_2__config__4, degridding_kernel_supports__supports__4, degridding_kernels__kernels__4); // setup_ri_pipeline_4_degridding_kernel_host_set_up_0
+    kernel_host_set_up_v2(17/*NUM_DEGRIDDING_KERNELS*/, 16/*TOTAL_DEGRIDDING_KERNEL_SAMPLES*/,
+        2, degridding_kernel_supports__supports__4, degridding_kernels__kernels__4); // setup_ri_pipeline_4_degridding_kernel_host_set_up_0
 
     gains_host_set_up(512/*NUM_RECEIVERS*/, 130816/*NUM_BASELINES*/, setup_gains_3__config__4, gains__gains__4,
         receiver_pairs__receiver_pairs__4); // setup_ri_pipeline_4_gains_host_set_up_0
 
-    kernel_host_set_up(17/*NUM_KERNELS*/, 108800/*TOTAL_KERNEL_SAMPLES*/, setup_gridding_kernel_5__config__4,
+    kernel_host_set_up_v2(17/*NUM_KERNELS*/, 16/*TOTAL_KERNEL_SAMPLES*/, 2,
         kernel_supports__gridding_kernel_supports__4, kernels__gridding_kernels__4); // setup_ri_pipeline_4_kernel_host_set_up_0
 
     visibility_host_set_up(num_vis, setup_vis_4__config__4, vis_uvw_coords__vis_coords__4,

@@ -21,7 +21,7 @@
 extern "C" {
 #endif
 
-#ifndef min
+/*#ifndef min
 #define min(a, b) \
    ({ __typeof__ (a) _a = (a); \
        __typeof__ (b) _b = (b); \
@@ -33,8 +33,14 @@ extern "C" {
    ({ __typeof__ (a) _a = (a); \
        __typeof__ (b) _b = (b); \
      _a > _b ? _a : _b; })
-#endif
+#endif*/
+	static inline float max(float a, float b) {
+		return (a > b) ? a : b;
+	}
 
+	static inline float min(float a, float b) {
+		return (a < b) ? a : b;
+	}
 // Probably not the best way to handle this
 #if (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
 	#ifndef __NVCC__

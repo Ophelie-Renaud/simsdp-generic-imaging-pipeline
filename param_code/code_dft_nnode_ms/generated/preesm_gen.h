@@ -103,7 +103,8 @@ extern "C" {
   int num_vis;
   int grid_size;
   int num_minor_cycle;
-  char ms_path;
+  const char* ms_path;
+  const char* out_path;
  } ThreadArgs;
 
 #define NB_DESIGN_ELTS 2

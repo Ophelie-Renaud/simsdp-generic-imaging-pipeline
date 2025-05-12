@@ -15,6 +15,7 @@ extern "C" {
 	void end_sink(int NUM_RECEIVERS, IN PRECISION2 *gains);
 
 	void config_struct_set_up(int GRID_SIZE, int NUM_KERNELS, OUT Config *config);
+	void config_struct_set_up_v2(int GRID_SIZE, int NUM_KERNELS, int NUM_BASELINES, int TOTAL_KERNEL_SAMPLES, int OVERSAMPLING_FACTOR, const char* ms_path, const char* out_path,OUT Config *config_struct) ;
 
 	void gains_host_set_up(int NUM_RECEIVERS, int NUM_BASELINES, IN Config *config, OUT PRECISION2 *gains, OUT int2 *receiver_pairs);
 
@@ -24,6 +25,7 @@ extern "C" {
 	void visibility_host_set_up(int NUM_VISIBILITIES, IN Config *config, OUT PRECISION3 *vis_uvw_coords, OUT PRECISION2 *measured_vis);
 
 	void kernel_host_set_up(int NUM_KERNELS, int TOTAL_KERNEL_SAMPLES, IN Config *config, OUT int2 *kernel_supports, OUT PRECISION2 *kernels);
+	void kernel_host_set_up_v2(int NUM_KERNELS, int OVERSAMPLING_FACTOR, int KERNEL_SUPPORT,  int2 *kernel_supports, PRECISION2 *kernels);
 
 	void degridding_kernel_host_set_up(int NUM_DEGRIDDING_KERNELS, int TOTAL_DEGRIDDING_KERNEL_SAMPLES, IN Config *config,
 			OUT int2 *degridding_kernel_supports, OUT PRECISION2 *degridding_kernels);
@@ -35,6 +37,7 @@ extern "C" {
 	double prolate_spheroidal(double nu);
 
 	void psf_host_set_up(int GRID_SIZE, int PSF_GRID_SIZE, IN Config *config, OUT PRECISION *psf, OUT double *psf_max_value);
+	void psf_host_set_up_v2(int GRID_SIZE, int PSF_GRID_SIZE, Config *config, PRECISION *psf, double *psf_max_value) ;
 
 	void config_struct_set_up_sequel(IN Config *config_in, IN double *psf_max_value, OUT Config *config_out);
 

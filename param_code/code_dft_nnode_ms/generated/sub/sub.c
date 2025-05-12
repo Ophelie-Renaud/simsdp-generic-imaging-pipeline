@@ -77,7 +77,7 @@ unsigned int launch(unsigned int core_id, pthread_t *thread, void* (*start_routi
   pthread_create(thread, &attr, start_routine, arg);
   return 0;
 }
-void sub(int num_vis, int grid_size, int num_minor_cycle, char ms_path) {
+void sub(int num_vis, int grid_size, int num_minor_cycle, const char* ms_path, const char* out_path) {
 // int main(int argc, char *argv[]) {
   // Vérification du nombre d'arguments passés
  /* if (argc != 4) {
@@ -98,6 +98,7 @@ void sub(int num_vis, int grid_size, int num_minor_cycle, char ms_path) {
   args.grid_size = GRID_SIZE;
   args.num_minor_cycle = NUM_MINOR_CYCLE;
   args.ms_path = ms_path;
+  args.out_path = out_path;
 
 #ifndef _WIN32
   signal(SIGSEGV, handler);

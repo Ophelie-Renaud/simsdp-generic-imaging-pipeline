@@ -1,4 +1,5 @@
 #include "top.h"
+#include "casacore_wrapper.h"
 #include <math.h>
 
 void end_sink(__attribute__((unused)) int NUM_RECEIVERS, __attribute__((unused)) PRECISION2 *gains)
@@ -36,9 +37,9 @@ void config_struct_set_up(int GRID_SIZE, int NUM_KERNELS, OUT Config *config_str
 	config_struct->w_scale             = pow(NUM_KERNELS - 1, 2.0) / config_struct->max_w;
 	config_struct->oversampling        = 16;
 	config_struct->uv_scale            = config_struct->cell_size * GRID_SIZE;
-	config_struct->kernel_real_file    = "data/input/kernels/new/wproj_manualconj_gridding_kernels_real_x16.csv";
-	config_struct->kernel_imag_file    = "data/input/kernels/new/wproj_manualconj_gridding_kernels_imag_x16.csv";
-	config_struct->kernel_support_file = "data/input/kernels/new/wproj_manualconj_gridding_kernel_supports_x16.csv";
+	config_struct->kernel_real_file    = "data/input/kernels/new/wproj_manualconj_degridding_kernels_real_x16.csv";
+	config_struct->kernel_imag_file    = "data/input/kernels/new/wproj_manualconj_degridding_kernels_imag_x16.csv";
+	config_struct->kernel_support_file = "data/input/kernels/new/wproj_manualconj_degridding_kernel_supports_x16.csv";
 	config_struct->degridding_kernel_real_file    = "data/input/kernels/new/wproj_manualconj_degridding_kernels_real_x16.csv";
 	config_struct->degridding_kernel_imag_file    = "data/input/kernels/new/wproj_manualconj_degridding_kernels_imag_x16.csv";
 	config_struct->degridding_kernel_support_file = "data/input/kernels/new/wproj_manualconj_degridding_kernel_supports_x16.csv";
@@ -67,11 +68,63 @@ void config_struct_set_up(int GRID_SIZE, int NUM_KERNELS, OUT Config *config_str
 	config_struct->predicted_vis_output = "predicted_visibilities.csv";
 }
 
+void config_struct_set_up_v2(int GRID_SIZE, int NUM_KERNELS, int NUM_BASELINES, int TOTAL_KERNEL_SAMPLES, int OVERSAMPLING_FACTOR, const char* ms_path, const char* out_path,OUT Config *config_struct) {
+	// load parameter
+	config_struct->num_baselines = NUM_BASELINES;
+	config_struct->num_kernels = NUM_KERNELS;
+	config_struct->total_kernel_samples = 0;
+	config_struct->grid_size = GRID_SIZE;
+	config_struct->oversampling = OVERSAMPLING_FACTOR;
+	//config_struct->oversampling = 16;
+
+	// define other constant
+	//float fov_degrees = 1;
+	//int baseline_max = 1000;
+
+	//
+	//config_struct->frequency_hz = SPEED_OF_LIGHT/0.21; // observed frequency --> osef
+
+	//config_struct->max_w = baseline_max*config_struct->frequency_hz/SPEED_OF_LIGHT;// baseline_max * freq obs /celerite mais osef en fait
+	//config_struct->max_w               = 1895.410847844;
+
+	//config_struct->w_scale = pow(NUM_KERNELS - 1, 2.0) / config_struct->max_w;
+	//config_struct->cell_size = (fov_degrees * PI) / (180.0 * GRID_SIZE);// lower than 1/2.f_max
+	//config_struct->cell_size                           = 8.52211548825356E-06;
+	//config_struct->uv_scale =  config_struct->cell_size*GRID_SIZE;
+
+	config_struct->loop_gain           = 0.1;  // 0.1 is typical
+	config_struct->weak_source_percent_gc = 0.005;//0.00005; // example: 0.05 = 5%
+	config_struct->weak_source_percent_img = 0.0002;//0.00005; // example: 0.05 = 5%
+	config_struct->psf_max_value       = 0.0;  // customize as needed, or allow override by reading psf.
+	config_struct->noise_factor          = 1.5;
+
+	// Gains - NOTE: initial gains from file logic not implemented yet
+	config_struct->default_gains_file = "data/input/TrueGainsNotRotated.csv";
+	config_struct->output_gains_file = "estimated_gains.csv";
+	config_struct->use_default_gains	= true;
+	config_struct->force_weight_to_one	= true;
+
+	// input files
+	config_struct->visibility_source_file = ms_path;
+
+
+
+	// output files
+	config_struct->output_path	= out_path;
+	config_struct->psf_image_output = "dirty_psf.csv";
+	config_struct->clean_psf_image_output = "clean_psf.csv";
+	config_struct->model_image_output = "model.csv";
+	config_struct->final_image_output = "deconvolved.csv";
+	config_struct->model_sources_output  = "sample_model_sources.csv";
+	config_struct->residual_image_output = "residual_image.csv";
+
+}
+
 
 void gains_host_set_up(int NUM_RECEIVERS, __attribute__((unused)) int NUM_BASELINES, Config *config, PRECISION2 *gains, int2 *receiver_pairs)
 {
 	if(config->use_default_gains)
-	{	
+	{
 		for(int i = 0 ; i < NUM_RECEIVERS; ++i)
 		{
 			gains[i] = (PRECISION2) {.x = (PRECISION)1.0, .y = (PRECISION)0.0};
@@ -83,7 +136,7 @@ void gains_host_set_up(int NUM_RECEIVERS, __attribute__((unused)) int NUM_BASELI
 		FILE *file_gains = fopen(config->default_gains_file , "r");
 
 		if(!file_gains)
-		{	
+		{
 			printf(">>> ERROR: Unable to LOAD GAINS FILE grid files %s , check file structure exists...\n\n", config->default_gains_file);
 			exit(EXIT_FAILURE);
 			//return false;
@@ -134,6 +187,22 @@ void calculate_receiver_pairs(int NUM_BASELINES, int NUM_RECEIVERS, int2 *receiv
 		}
 	}
 }
+void visibility_host_set_up2(int NUM_VISIBILITIES, Config* config,
+							PRECISION3* vis_uvw_coords, PRECISION2* measured_vis)
+{
+	Visibility* vis_uvw_coords_cast = (Visibility*) malloc(NUM_VISIBILITIES *sizeof(Visibility));
+	Complex* measured_vis_cast = (Complex*) malloc(NUM_VISIBILITIES *sizeof(Complex));
+	load_visibilities_from_ms(config->visibility_source_file, NUM_VISIBILITIES,
+							  config, vis_uvw_coords_cast, measured_vis_cast);
+
+	memcpy(vis_uvw_coords, vis_uvw_coords_cast, NUM_VISIBILITIES * sizeof(PRECISION3));
+	memcpy(measured_vis, measured_vis_cast, NUM_VISIBILITIES * sizeof(PRECISION2));
+
+
+	free(vis_uvw_coords_cast);
+	free(measured_vis_cast);
+}
+
 
 
 void visibility_host_set_up(int NUM_VISIBILITIES, Config *config, PRECISION3 *vis_uvw_coords, PRECISION2 *measured_vis)
@@ -145,7 +214,7 @@ void visibility_host_set_up(int NUM_VISIBILITIES, Config *config, PRECISION3 *vi
 		exit(EXIT_FAILURE);
         // return false; // unsuccessfully loaded data
     }
-    
+
     // Configure number of visibilities from file
     int num_vis = 0;
     fscanf(vis_file, "%d", &num_vis);
@@ -164,7 +233,7 @@ void visibility_host_set_up(int NUM_VISIBILITIES, Config *config, PRECISION3 *vi
         exit(EXIT_FAILURE);
         // return false;
     }
-    
+
     // Load visibility uvw coordinates into memory
     double vis_u = 0.0;
     double vis_v = 0.0;
@@ -173,6 +242,7 @@ void visibility_host_set_up(int NUM_VISIBILITIES, Config *config, PRECISION3 *vi
     double vis_imag = 0.0;
     double vis_weight = 0.0;
     double meters_to_wavelengths = config->frequency_hz / SPEED_OF_LIGHT;
+	meters_to_wavelengths = 1;
 
     // printf("meters_to_wavelengths %lf\n", meters_to_wavelengths);
 
@@ -185,19 +255,19 @@ void visibility_host_set_up(int NUM_VISIBILITIES, Config *config, PRECISION3 *vi
 // #else
             fscanf(vis_file, "%lf %lf %lf %lf %lf %lf\n", &vis_u, &vis_v,
                 &vis_w, &vis_real, &vis_imag, &vis_weight);
-//#endif  
+//#endif
 
-        if(config->right_ascension)  
-        {   
+        if(config->right_ascension)
+        {
             vis_u *= -1.0;
             vis_w *= -1.0;
         }
 
-        if(!config->force_weight_to_one) 
+        if(!config->force_weight_to_one)
         {
             vis_real *= vis_weight;
             vis_imag *= vis_weight;
-        }   
+        }
 
         //account for w values larger than max, as we don't have kernels to deal with this
 		if(ABS(vis_w) > config->max_w){
@@ -207,7 +277,7 @@ void visibility_host_set_up(int NUM_VISIBILITIES, Config *config, PRECISION3 *vi
         // *vis_uvw_coords[vis_index] = (Visibility) {
         //     .u = (PRECISION)(vis_u * meters_to_wavelengths),
         //     .v = (PRECISION)(vis_v * meters_to_wavelengths),
-        //     .w = (PRECISION)(vis_w * meters_to_wavelengths) 
+        //     .w = (PRECISION)(vis_w * meters_to_wavelengths)
         // };
         vis_uvw_coords[vis_index].x = (vis_u * meters_to_wavelengths);
         vis_uvw_coords[vis_index].y = (vis_v * meters_to_wavelengths);
@@ -215,7 +285,7 @@ void visibility_host_set_up(int NUM_VISIBILITIES, Config *config, PRECISION3 *vi
         vis_uvw_coords[vis_index].z = (vis_w * meters_to_wavelengths);
 
 		// *measured_vis[vis_index] = (Complex) {
-		// 	.real = (PRECISION)vis_real, 
+		// 	.real = (PRECISION)vis_real,
 		// 	.imaginary = (PRECISION)vis_imag
 		// };
         measured_vis[vis_index].x = vis_real;
@@ -224,7 +294,10 @@ void visibility_host_set_up(int NUM_VISIBILITIES, Config *config, PRECISION3 *vi
         // if (vis_index < 10) printf("vis_uvw_coords[%d] = %lf %lf %lf\n", vis_index, vis_uvw_coords[vis_index].x, vis_uvw_coords[vis_index].y, vis_uvw_coords[vis_index].z);
 
     }
+
     printf("UPDATE >>> Successfully loaded %d visibilities from file...\n\n", NUM_VISIBILITIES);
+
+
     // Clean up
     fclose(vis_file);
 
@@ -236,55 +309,125 @@ void visibility_host_set_up(int NUM_VISIBILITIES, Config *config, PRECISION3 *vi
     //return true;
 }
 
+// Fonction de fenêtre : approximation d'une spheroidal prolate
+float pswf(float x) {
+	if (fabs(x) > 1.0) return 0.0;
+	return powf(cosf(PI * x / 2.0f), 4); // simple approximation
+}
+// Fonction de Bessel modifiée d'ordre 0 (I0)
+float I0(float x) {
+	float sum = 1.0f;
+	float term = 1.0f;
+	for (int n = 1; n < 20; ++n) {
+		term *= (x / (2.0f * n));
+		sum += term * term;
+	}
+	return sum;
+}
+// Fonction de fenêtre : Kaiser-Bessel
+float kaiser_bessel(float x, float beta) {
+	if (fabs(x) > 1.0f) return 0.0f;
+	float t = sqrtf(1.0f - x * x);
+	return powf(I0(beta * t) / I0(beta), 2.0f); // carré pour lisser davantage
+}
+void kernel_host_set_up_v2(int NUM_KERNELS, int OVERSAMPLING_FACTOR, int KERNEL_SUPPORT,  int2 *kernel_supports, PRECISION2 *kernels) {
+	bool bessel_boolean = false;
+	int kernel_half = KERNEL_SUPPORT/2;
+	int kernel_size = 2 * kernel_half;
+
+	int kernel_1d_len = (kernel_half + 1) * OVERSAMPLING_FACTOR;
+	int kernel_2d_len = kernel_1d_len * kernel_1d_len;
+
+	int kernel_offset = 0;
+
+	for (int w = 0; w < NUM_KERNELS; ++w)
+	{
+		// Stocke le support et le décalage
+		kernel_supports[w].x = kernel_half;
+		kernel_supports[w].y = kernel_offset;
+
+		// Génère le noyau 1D
+		float* kernel_1d = malloc(sizeof(float) * kernel_1d_len);
+		for (int i = 0; i < kernel_1d_len; ++i) {
+			float x = (float)i / (float)OVERSAMPLING_FACTOR;
+			float norm_x = x / (float)(kernel_half + 1);
+			if (bessel_boolean) {
+				float beta  =3.0f; // bessel parameter to control lobe shape: large β -> thinner lobe (better concentration but increase secondary lobes), tradeoff resolution and noise
+				kernel_1d[i] = kaiser_bessel(norm_x, beta);
+			}else {
+				kernel_1d[i] = pswf(norm_x);
+			}
+
+
+		}
+
+		// Normalise le noyau 1D
+		float sum = 0.f;
+		for (int i = 0; i < kernel_1d_len; ++i) sum += kernel_1d[i];
+		for (int i = 0; i < kernel_1d_len; ++i) kernel_1d[i] /= sum;
+
+		// Produit tensoriel pour obtenir le noyau 2D
+		for (int y = 0; y < kernel_1d_len; ++y) {
+			for (int x = 0; x < kernel_1d_len; ++x) {
+				int idx = kernel_offset + y * kernel_1d_len + x;
+				float val = kernel_1d[x] * kernel_1d[y];
+				kernels[idx].x = val;
+				kernels[idx].y = 0.0f;
+			}
+		}
+
+		kernel_offset += kernel_2d_len;
+		free(kernel_1d);
+	}
+	printf("kernel_offset %d\n",kernel_offset);
+
+	printf("UPDATE >>> Image degridded successfully\n");
+}
+
 void kernel_host_set_up(int NUM_KERNELS, __attribute__((unused)) int TOTAL_KERNEL_SAMPLES, Config *config, int2 *kernel_supports, PRECISION2 *kernels)
 {
-	//Need to load kernel support file first, 
-	// host->kernel_supports = (int2*) calloc(config->num_kernels, sizeof(int2));
-	// if(host->kernel_supports == NULL)
-	// 	return false;
-
 	printf("UPDATE >>> Loading kernel support file from %s...\n\n",config->kernel_support_file);
 
 	FILE *kernel_support_file = fopen(config->kernel_support_file,"r");
 
-	if(kernel_support_file == NULL)
+	if (kernel_support_file == NULL) {
+		printf("ERROR: Unable to open kernel support file %s\n", config->kernel_support_file);
 		exit(EXIT_FAILURE);
-		// return false;
-	
+	}
+
 	int total_kernel_samples = 0;
-	
+
 	for(int plane_num = 0; plane_num < NUM_KERNELS; ++plane_num)
 	{
 		fscanf(kernel_support_file,"%d\n",&(kernel_supports[plane_num].x));
 		kernel_supports[plane_num].y = total_kernel_samples;
 		total_kernel_samples += (int)pow((kernel_supports[plane_num].x + 1) * config->oversampling, 2.0);
 	}
-	
+
 	fclose(kernel_support_file);
-	
+
 	printf("UPDATE >>> Total number of samples needed to store kernels is %d...\n\n", total_kernel_samples);
 
-	printf("kernel_supports MD5 \t: ");
-	MD5_Update(sizeof(int2) * NUM_KERNELS, kernel_supports);
+	//printf("kernel_supports MD5 \t: ");
+	//MD5_Update(sizeof(int2) * NUM_KERNELS, kernel_supports);
 
 	printf("UPDATE >>> Loading kernel files file from %s real and %s imaginary...\n\n",
 		config->kernel_real_file, config->kernel_imag_file);
 
 	//now load kernels into CPU memory
 	FILE *kernel_real_file = fopen(config->kernel_real_file, "r");
-	FILE *kernel_imag_file = fopen(config->kernel_imag_file, "r");
-	
-	if(!kernel_real_file || !kernel_imag_file)
-	{
-		if(kernel_real_file) fclose(kernel_real_file);
-		if(kernel_imag_file) fclose(kernel_imag_file);
+
+	if (kernel_real_file == NULL) {
+		printf("ERROR: Unable to open real kernel file %s\n", config->kernel_real_file);
 		exit(EXIT_FAILURE);
-		// return false; // unsuccessfully loaded data
 	}
 
-	// host->kernels = (Complex*) calloc(config->total_kernel_samples, sizeof(Complex));
-	// if(host->kernels == NULL)
-	// 	return false;
+	FILE *kernel_imag_file = fopen(config->kernel_imag_file, "r");
+	if (kernel_imag_file == NULL) {
+		printf("ERROR: Unable to open imaginary kernel file %s\n", config->kernel_imag_file);
+		exit(EXIT_FAILURE);
+	}
+
 
 	int kernel_index = 0;
 	for(int plane_num = 0; plane_num < NUM_KERNELS; ++plane_num)
@@ -292,18 +435,13 @@ void kernel_host_set_up(int NUM_KERNELS, __attribute__((unused)) int TOTAL_KERNE
 		int number_samples_in_kernel = (int) pow((kernel_supports[plane_num].x + 1) * config->oversampling, 2.0);
 
 		for(int sample_number = 0; sample_number < number_samples_in_kernel; ++sample_number)
-		{	
+		{
 			double real = 0.0;
-			double imag = 0.0; 
+			double imag = 0.0;
 
-// #if SINGLE_PRECISION
-// 				fscanf(kernel_real_file, "%f ", &real);
-// 				fscanf(kernel_imag_file, "%f ", &imag);
-// #else
-				fscanf(kernel_real_file, "%lf ", &real);
-				fscanf(kernel_imag_file, "%lf ", &imag);
-//#endif
-			// kernels[kernel_index] = (Complex) {.real = (PRECISION)real, .imaginary = (PRECISION)imag};
+			fscanf(kernel_real_file, "%lf ", &real);
+			fscanf(kernel_imag_file, "%lf ", &imag);
+
 			kernels[kernel_index].x = real;
 			kernels[kernel_index].y = imag;
 
@@ -314,8 +452,6 @@ void kernel_host_set_up(int NUM_KERNELS, __attribute__((unused)) int TOTAL_KERNE
 	fclose(kernel_real_file);
 	fclose(kernel_imag_file);
 
-	
-	//return true;
 }
 
 //basically the same function as kernel_host_set_up, just loads the stipulated degridding kernels and supports instead
@@ -449,6 +585,9 @@ double prolate_spheroidal(double nu)
         bottom += q[sq+i] * pow(delta, i);
     return (bottom == 0.0) ? 0.0 : top/bottom;
 }
+void psf_host_set_up_v2(int GRID_SIZE, int PSF_GRID_SIZE, Config *config, PRECISION *psf, double *psf_max_value) {
+	psf_host_set_up_ms( GRID_SIZE,  PSF_GRID_SIZE, config, psf, psf_max_value);
+}
 
 void psf_host_set_up(int GRID_SIZE, int PSF_GRID_SIZE, Config *config, PRECISION *psf, double *psf_max_value)
 {
@@ -458,13 +597,13 @@ void psf_host_set_up(int GRID_SIZE, int PSF_GRID_SIZE, Config *config, PRECISION
 	PRECISION* full_psf = (PRECISION*)malloc(sizeof(PRECISION) * full_psf_size_square);
 	memset(full_psf, 0, sizeof(PRECISION) * full_psf_size_square);
 	memset(psf, 0, sizeof(PRECISION) * psf_size_square);
-	
+
 	if(psf == NULL)
 		exit(EXIT_FAILURE);
 		//return false;
 
 	FILE *psf_file = fopen(config->psf_input_file, "r");
-	
+
 	if(psf_file == NULL)
 	{
 		perror("PSF: ");
@@ -525,7 +664,7 @@ float gaussian2D(float x, float y, float x_sigma, float y_sigma)
 	return exp(-(x * x) / (2 * x_sigma * x_sigma) - (y * y) / (2 * y_sigma * y_sigma)) / (2 * PI * x_sigma * y_sigma);
 }
 
-//Creates a CLEAN psf by locating the central lobe. This is done by traversing the dirty PSF in four directions (up, down, left, right) 
+//Creates a CLEAN psf by locating the central lobe. This is done by traversing the dirty PSF in four directions (up, down, left, right)
 //and terminating once the second root of the derivative is found, giving us a box
 void clean_psf_host_set_up(int GRID_SIZE, int GAUSSIAN_CLEAN_PSF, IN Config *config, IN PRECISION *dirty_psf, OUT PRECISION *clean_psf, OUT int2* partial_psf_halfdims){
 	if(dirty_psf == NULL || clean_psf == NULL){

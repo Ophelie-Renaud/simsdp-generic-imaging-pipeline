@@ -1,8 +1,13 @@
 Bootstrap: library
-From: ubuntu:latest
+From: ubuntu:22.04
 
 %labels
     Maintainer orenaud
+    
+%files
+    ./code_dft_nnode_ms /code_dft_nnode_ms
+    ./code_fft_nnode_ms /code_fft_nnode_ms
+    ./code_g2g_nnode_ms /code_g2g_nnode_ms
 
 %post
     # Mettre à jour et installer les dépendances
@@ -36,13 +41,26 @@ From: ubuntu:latest
     make install
     
     # compiler code
-    cd code_dft
+    cd /code_dft_nnode_ms
+    cmake .
+    make
+    
+    cd /code_fft_nnode_ms
+    cmake .
+    make
+    
+    cd /code_g2g_nnode_ms
     cmake .
     make
 
-    # Copier votre script SEP_Pipeline dans le conteneur
-    cp /path/to/your/SEP_Pipeline /usr/local/bin/SEP_Pipeline
-    chmod +x /usr/local/bin/SEP_Pipeline
+
+    # Copier les script dans le conteneur
+    cp code_dft_nnode_ms/DFT_Pipeline /usr/local/bin/dft
+    cp /code_fft_nnode_ms/FFT_Pipeline /usr/local/bin/fft
+    cp /code_g2g_nnode_ms/G2G_Pipeline /usr/local/bin/g2g
+    chmod +x /usr/local/bin/dft
+    chmod +x /usr/local/bin/fft
+    chmod +x /usr/local/bin/g2g
 
 %runscript
     # Exécuter l'un des exécutables en fonction du premier argument
