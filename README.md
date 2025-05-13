@@ -287,8 +287,11 @@ Dataflow pipelines are parameterized with moldable parameters. *(For details, se
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
     .
-This section discuss how to run the generated code from PREESM/SimSDP on your laptop. If you have run this tool the go on the folder code of your preesm project and open it with your favorite IDE (mine is CLion). Otherwise some generated code have been saved in the  :file_folder: `param_code` folder.
 
+
+| 📝 **Note**                                                   |
+| ------------------------------------------------------------ |
+| This section discuss how to run the basic `DFT`, `FFT` and `G2G` pipelines' generated code from **PREESM** on your laptop (basic is the one that read CSVs that correspond to *visibility*, *kernel* and *psf* computed previously). If you want to generate your file and execute your genereted code then go on the folder :file_folder: ​`code` of your *preesm project* and open it with your favorite IDE (mine is **CLion**). Otherwise some generated code have been saved in the  :file_folder: `param_code` folder. |
 
 1. install the requirements:
 
@@ -312,16 +315,133 @@ sudo apt install python3-astropy
 check: python3 -c "import astropy; print(astropy.__version__)"
 ```
 2. Download [GLEAM](https://nasext-vaader.insa-rennes.fr/ietr-vaader/preesm/assets/sep_data.zip) (or whatever dataset) and copy past the data in :file_folder: `Code/data/`. If it doesn't exist create :file_folder: `output/small/` inside `data/`.
-
 3. Run the code : `cmake .`  > `make` > `./sep` , and wait till your prompt display: `Process finished with exit code 0`(It could be long depending on the `NUM_MAJOR_CYCLE` and the `NUM_MINOR_CYCLE`).
     If you prefer CLion for as interface:
     - For the CPU version, run the CMakeList.txt, build :hammer: and Run  the code :arrow_forward:.
-    
+
     - For GPU version, configure CMake:
-    
+
       - install nvcc `sudo apt install nvidia-cuda-toolkit`, check the install `nvcc --version`.
-    
+
       - Settings :gear:>Build, Execution, Deployment > CMake, add profile :heavy_plus_sign:, name `GIP_GPU`, CMake option `-DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc` (if you use the emulator: option `-DUSE_CUDA_EMULATOR=ON`, the emulator only allows you to check that the code is functional, execution will be slower than on a GPU).
+
+
+###### Visualizing the output
+
+At this stage verify that your output folder contains files such as :"cycle_0_clean_psf.csv"
+
+```bash
+#Convert CSV files into fits files
+python3 csvtoimage_all.py output/small/ fits/ ,
+
+#install ds9
+sudo apt install saods9
+
+#Run
+ds9 *.fits -lock frame wcs -zoom to fit
+```
+
+Filter: `/path to sep/ska_sep_preesm/Code/data/fits/*fits`
+
+To reveal the contrasts:
+
+- Color > Matplotlib > turbo (recommended by Sunrise)
+- Color > Matplotlib > viridis / inferno (most popular in astro-papers)
+
+![](https://github.com/Ophelie-Renaud/Imaging/blob/main/DS9_g2g_example1.png?raw=true)
+
+</details>
+
+---
+
+##### Automating generated code execution varying parameter
+
+<details>
+    <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
+    .
+
+
+| 📝 **Note**                                                   |
+| ------------------------------------------------------------ |
+| The following instructions explains how the generated code for `DFT`, `FFT` and `G2G` pipelines from **PREESM** has been adapted for parametric execution. |
+
+1. Copy past generated code from `preesm_pipeline` in folder `param_code`.
+
+2. Apply the Following Modifications:
+
+   - 🛠 **Edit** `preesm_gen.h`, modify the argument handling and define a struct for parameters:
+
+     ```c
+      /* if (arg != NULL) {
+         printf("Warning: expecting NULL arguments\n");
+         fflush (stdout);
+       }*/
+     
+     typedef struct {
+        int num_vis;
+         int grid_size;
+        int num_minor_cycle;
+     } ThreadArgs;
+     ```
+
+   - 🛠 **Edit** `main.c`, pass parameters via command-line arguments and store them in a struct:
+
+     ```c
+       unsigned int launch(unsigned int core_id, pthread_t *thread, void* (*start_routine)(void*), void* arg) {
+       ...
+     pthread_create(thread, &attr, start_routine, arg);
+     ...
+     int main(int argc, char *argv[]) {
+     // Ensure correct number of arguments
+     if (argc != 4) {
+     printf("Usage: %s <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE>\n", argv[0]);
+     return 1;
+     }
+       // Parse command-line arguments
+       int NUM_VIS = atoi(argv[1]);
+       int GRID_SIZE = atoi(argv[2]);
+       int NUM_MINOR_CYCLE = atoi(argv[3]);
+     
+       // Store them in a struct
+       ThreadArgs args;
+       args.num_vis = NUM_VIS;
+       args.grid_size = GRID_SIZE;
+       args.num_minor_cycle = NUM_MINOR_CYCLE;
+       ...
+       if (launch(CORE_ID[i], &coreThreads[i], coreThreadComputations[i],&args)) {
+       ...
+       coreThreadComputations[_PREESM_MAIN_THREAD_](&args);
+     ```
+
+   - 🛠 **Edit** `core0.c` etc..., update functions to use the parameter struct:
+
+     ```c
+      // if (arg != NULL) {
+      //   printf("Warning: expecting NULL arguments\n");
+      //   fflush (stdout);
+      // }
+     
+     ThreadArgs* args = (ThreadArgs*) arg;  // Conversion du pointeur void* en ThreadArgs*
+     int num_vis = args->num_vis;
+     int grid_size = args->grid_size;
+     int num_minor_cycle = args->num_minor_cycle;
+     
+     // Replace all instances of hardcoded values:
+     // int /*NUM_VIS*/ → num_vis
+     // int /*GRID_SIZE*/ → grid_size
+     // int /*NUM_MINOR_CYCLE*/ → num_minor_cycle
+     ```
+
+3. :arrow_forward: ​**Run** the experiment  script : 
+
+   ```
+   chmod +x run_experiments.sh
+   ./run_experiments.sh g2g   # Run for g2g pipeline
+   ./run_experiments.sh fft   # Run for fft pipeline
+   ./run_experiments.sh dft   # Run for dft pipeline
+   ```
+
+    :boom: ​This will generate a log file with measured execution time in `g2g.csv` :arrow_right: copy the result file into: :file_folder: `experimental_result_data/moldable/measure/` .
 
 </details>
 
@@ -330,7 +450,8 @@ check: python3 -c "import astropy; print(astropy.__version__)"
 ##### Execution on Ruche Mesocentre cluster
 <details>
     <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-    .
+.
+
 1. Create an account on Ruche → ask your boss (Other info, Ruche training [PDF](https://mesocentre.pages.centralesupelec.fr/mesocenter_training/main.pdf), [website](https://mesocentre.pages.centralesupelec.fr/user_doc/), [mesocentre paris-saclay](https://mesocentre.universite-paris-saclay.fr/)).
 
 2. Connect: `ssh renaudo@ruche.mesocentre.universite-paris-saclay.fr`
@@ -404,7 +525,9 @@ This section describe how to change parameter configuration and target architect
 
 NB: In order to obtain a valid reconstructed image the `NUM_VIS` should be divisible by `NB_SLICE` which is the number of processing cores. 
 
-###### <img src="data:image/png;base64,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" width="32"/>Method with singularity
+###### Method with singularity <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN8AAADiCAMAAAD5w+JtAAAA/1BMVEX///8dMV8goNq8vcCLwT/zkx+5ur0Am9gaL17zkRPzjgAAIFYAmtjzkhnP0NL++vn5+/jt7e7S5vWGvjKUxVbK4bL0nUSt0+wUK1wAHVUAI1iEvi6IwDgAGVMKJln1q20AFFH1+PzIycvp6eorO2Tk7virrrm8vsbc3d7U5sJVrd7e7NLm8N2+2qGIwOU/ptzC3PCOwkmr0IF+hJdQWnmXm6llbYWGi51yeI797uX50bXzmj773sz86uClzXW21pTw9ut2ueKkp7M+Sm6dyuldZX/3uoz4w5v1pl6eymmAvOSx04xFUHDa6fUyQGfO47oAAEv0o1UADU72tID5zKqwQIwLAAARGklEQVR4nO2de1va2hLGoUoJBAIULwEkAipQrbdykdY7iJdutbun/f6f5SQgFZKZWbNWErDn9P1rP7sx4efMmttawUjkr/7qr/4PVK3uPD1Vnf/KLvqjBKjq09H6wfXuYTw10gf7f2WP88srF58vV/c+/cmk1ScbzOaKx+PvJoqP+FaWl5c3NvL5Umlj5eLy+x9IuXN0sPsuNQXm4Ztow6Y8frj8eLXoj8xW9ejb4bu4lw3mm0Aur1x+/APsuHNziKBRfBPIh9WrRQNQsuFSOJuI740j7qzvCuDEfCPE/MUbdNQP1++EcCw+B7F0fHm1aKAZrR9y4Lh8tvIbF3uLhpqoekMEFEU+x4grHxdN5qh6w3JMab63QShHJ8fnED4s1kvZ606NzyG8+LQwuiNZOnk+h/DzYrLFzm5Klk6Fz46l+dUF4N1I206Vb3m59DBvJ33aVcJT5LObqf254qkZT51vvibcUTSeHz67Lp3XKlxXpvPDZ5vwYh6BtPpNIWz+VsoH33L+OHwfVfNNu+VNpVLxw8PDJ+cmF6VSKZ/fkAbc2AjbRz/Ik9lY1wfrR0871erv21ztfdy//LyStzHlKEv/hIq3LuObzpzi+ubDDnG/q4/7D8tSliw9hLgID/h48fjhtyMK7VWfVi+O+YwboS3C6jV36cXf7a7z2F6U3btcKeWZgMvh9BRVZmSJpyThXvTp8rjEM2L+e+BwNh6vWUi9u1GBG2vvgmfEUvDV2g7LdPHdI3+Pye4fcwhLl8FQ/dbOIYPu3bcn/0/Krq6U5g7IwIvHD9Qdc0bZ7wzCQBMhwzlT1wHROcquLgsJAwSsio23G4BnTiu7L0yIgQFWRc4ZP/QZVSBdfRYRBrQGhXkvflAV30VBeyuCUBpMmhBULfHDD0E8BVL2UrAKSwEk+m80Xiok4421t0z7aMl3qXYjKKlDWHnTyl7QJiz5LLaPSLz4bpjGG2t/gzLhxvGVn5s/0UvvICAGUnvHJOCDj1vTmSG1HhgDqasHKo7mfWQJMnTGQ4ubHpGLUD2IkrHlMMB6TCgyUZSu1G76RODNI7JMa59w0Y0VpVtSi2/eeJHIKmHBvFIlSiT2+eNFIt8pQIV97KO3hReJfCQAj6WHhkRPtBg8GxBfg/nPsjcjUsPhYvBsF8UBS5IeStVlKni5ptGod1rd4bA90bDbbXX6jVpzK8e9CxFkJD2UiJ2SeS9n1E+Gg21TL+hFy5yVVdQLhaK2PRie9GtbjJvto4ByZQy+PytVtTT7vWhR1y1T07QoJi2qaaal60WzfVJvCmz5Dw4o0Ung86Q4u+bcqneLlaJJgLk5Hcpy5bnbqW1l0NteYGtQptBGgwu3Y8jVh8WCySWbxTSL5fKgV2/CjNkVrJvgJ8EPqHfusn7e6EULJttuIKSlFwatBuSsn1ADrnBDzC7qnpzQWWsXLV9wL4g2Y7Rb9yKiQbTE3NxFcwMnthjtsj/TzTCaeuWx737EBdrv8gyIxpYb4Y/memW1VYerOHQ/5OoYMyBrXoge/xAvvkbUCpguGi00PI9BC7UNjgGx1B4XJfZqrxCYZ/6Wtg0Emc8IYJ5hQKxvEHrn1qAYPF7U6gGPymILkFGlYcHzUPBzTSvolTeS7nXPCN4ric9wYeZLCTaIjCBygleaBqd5JIaKRxWI+USFSzMaivVg97R1hYVQQRGzgwVPOrPnnsPBi1ZqyBORLL9xQfMdwHyisrodfF4YSdOwJ2J1qGBYiJhPEFw6hXDwotYJ+kwkxNApAsntcXqXqFkOJbbYqhj4Ux9gAx5TnxSJLgLzDUNafFFtQDx1DzYgtSWIRBeB+Rp6SHjRIu6eEcyAG8QoDRtLkHiRdmjm05vUcxEDEkUo7J6C4FkLK7hEzTb9i4WPOeOn754Q89G5rxdSbrBrsw7NB4/s8RQIu6egdMmFhhe1SPd0vicAjqBXyPWIe9J9UV3FPTVNM01nakglFvORxotELsE+CavRkOgpaGu78tFFs4rRQbvdHmxHizpel+ueyYRb8KxpA9kug5O7IDlE5N3T1E6Ml64gZ9R7AwRRK4vn9nCKQAZp1yrRpVmRxhvMLquscRKFGn9R9HS0CjsoPMqG8b7RT6jLJndN82405Prb3lVcqIv54DYJ7nLh7XaRe7Zk/bMMNuSZvntoynFPpM+FMwSSHQQPGEiW1tozcqNcT5+5ldll4GFbgtAChLPDteAB/P2Tl4+NNOS2GtvTvgDb2a0smOLBBagUPXOy2YHgi2y1XxezFuXteoIRFFqAO+DySwl2HJqyYyXUP0dqVSa3wwYvboEHY6AeAs5+opm1UZS0nyAs9ieZAhhbg/oENxHeC8HJi3Coq9D70U1PfTwk1p65u/xgDQpMYcDwkhLtGDXkq09tG5uJje84CqNWi4kX+QwtQG8Tj5x3Ef0WFfjs8rNFxY6GswZ18ncwLXBQ6A0w8Ja7cMvIUJpNFM0OsVHQr9jRk4sHL0BvgAHn8nFBcaYQP19MqGt93DVOdGIu6BbcBHrm9GD4FJ+W2FLtbjXd7KAnXob/CjrbacE9hNs/4PAp3JDOyNYvU4RFs4eMN3PUXNCtf8AS9Mp1FVydiYP0s5/RrqUP+mCokTkCBpageXcABflEe34R39MlU0eNyBU4JnQfyoYP6zKOu/T9Dnc1q7KNr0SGwB7QvQ0Bzl44p5Xk+3cAUde7DfxIlkDgtz24EwTY3LIOmwWyb6uZZWQlMgTtlLlPo8Hpj/NyUVDjXU2PtiSywpSgHt69UQ2nP85ZyFoADvpCaBW6KoTgFNQ1Q4P5WEdZZScUFKFZGcpHU7AFdA2x4eELKw0pDbBRmWVpG8IJcHZEAb/swLp91VeK98qyTuQiDXhcyzWCgWe7vPsHa0BbxShj9PmqPZBvtoAB+Rjly0iBb3Bq5bZExgd3IVybLGB5xjutazcRwR88M4t8E8J8swWaL75Ioxw0n23CHreiAflcHfyu8y3cLqXYfJFO8IBRvc3sIq5Kea9cZ12P1gFJvBvdCgHQeuTF0ewqpIC/5KcVwtlW6/ENfY9yJ4RDTEXWHsucFMbh67LgBMVctTUMfBFqZbWWwqOmAUn2LnXitICaxGcoIpHz+01AX2auqb0HtCTLF8n1igHXMoxd6l/JhFfJWT7j/RIgaT77RsNg3/AwB8I0f5eMeZXg8Cm9iNpoB0oo3ii7TQB8sVm+JsT3XnEi0nisBPcOkngffhPgS5/Omn0L5FMe2xnDQlCRRtNFn+IHgy8H8vkIzs1WVA+GUHhM6zQN8K3NXgPz+Zos5/qDQBai6XmBbFYZiC9x77oICi9L7E3GHFhnZBrDcgA1jUWHuXMovCQ2XVfVQEAuX+1fJMo1e//x3fxW6GVyBqWH5B2Lj9titqwy5su5E78LUadT/FeQ75frKjABshPEtqZp6LXV/rPiu9RjCTZzwfSXPHNdBSdAZgA1Ks5xRtzYmfqjjxmbIMDcQ3zpL66r4ATIDKAnThQpkieO+ur9L33kCQyf6Zj7l53zE0Cjo89eIP3IUF6F+EtWjs6h5edOf7ZAPl6AMV76vgrZjSoP2TSdui0YXhI/PdeBAZQXYE4mh9AqpAVVX1Oi+X6C4cUdPrEAygowrztIBWpoqXLWScwHLb9Y8txzHRhgWAtw+oxPkRisb6kuQIt4+BfIPWNJ76+5CvK9ZyzAzvQZSdNE+7XcthogeVgLbG7TP4ArYT5Gi/Q4s660ShdZtKr2I98CXAPd8xa40gD5xBmw6S4wrWgftLrqPhrV4SLu6a5eRp8TNqCQz3sCRis8Ak6aUd3IpuqzX9zlh7SAjAwB7f6Z+sBTFA9VWyWqvgbdMwEtPyTDCx10Cz4/Yepmy5j6NdaelTtBtDVBej9vczQWPEMT9YDoAS3NKlvDk4bR3GoanYH67oRWwPvbW/7ywzKgKIKSm9OmVSgX9HLZT49LvGcF1tae2dLvq2H70Sk+Jz7e47N/L+JVLdi6e2cTE8E9PD3llX5/TFrEO/7Q5NN2z6/I5UiGIGvQ0F4On4jYYYGTn7f3mwjOEGSECfHt4hcRL1GDtRnunpiDUhEmdPeEXoecKAZFF9w9MQelDKjwdrGciPeswM4WKV7GQhwUN6BqS8AX8bYSWLtQ7olGUDRFqLasfDy89oSTA5bcx0IcFDVgeN/NMJa2jTsbOBe0lySBhzSBqAHDdk+tjBcXmPmg1u9VSA2KGDCEc2czoiaO0K5fDJy8zFgEMSAcQkN2T+p4DxI83ftiHiERBixiqn5LS1rWI14ZwpW1ILo4gpsIGxB4Vi1U97QGRGsNN0ax9JpwHob453tgpUt/d4GMitTpQXAoHwPnum5hNQwQYoI7JOFVuUtZAk7tRGk9JcSA3r0IIzz3NOmvJkK8ExtMzAo1oLsPa0m/+86VPiCnPkjqi6XTrO0gLEW4Y+hJtBzKl2JaVof8nFjs5Kw+R5gBl5ZcKz7XaAWPaFZEL7D8xMyHzF08QlegN8tnai3LRgyKUbPELyAhmZ1s/GaFGhAehhonA1MPIpaanFfksNQgLl1ehRQx+CymWe8+l3U/dtTMgjkEvq3cLXTxxRJ05TktrIihxvVVo9971G1Ihe8LM4uV7W6ddZpvEzWfd0saVw0FJKeFmS2j32qblXKhaJnO33UQgTlohYrZ7RjMkzZY5vMcaKUFb3YiMcajXLPRaQ23LUu3VbSsl6+qm5LzpzuK9r8Vt7udhsQpTHi7aBRcOKn9VXiOgApRlNP5oysnve7wcTB4ft4e6/l5MGh3e51+wyD+jgUoLLE7uUHuTkSOkACcViaTG6uq/Cb4WQKLLeK+yC200fV7LFRdZ/C8c4QnE1zGwj10QYDnOB67cpkWmgQXA3iOO6e8dzqCT6T5WoM+dJ4m8OiZGSbCQ+cOSKw9bLtdLCLL24DKYVBBFF7ac9aTLcJDl96rvd2ipK9JHE9t8Y1FJIklP69/SAovymLShcusqCXo7/0PvjL3JB61XSQWMq+fAM4hT5ydwoP4l9iikvmmRcUYZxGqfikNV3fU0oulk8qxZSIKL3Qf/fKD8k1fsWWiqgiwFp4JfyUo32QPzGhRdUyoJjwnA0tMuW5xSwwYhgkzdwLj+Q2dr6LT4IjQCDrZfz0lA4uDp1qWeYXPm34DBuukZ2siOrvqDLBAFAPaqQL5i5LyOrsX0gWLZwMK+QIjtOkEC2/knAGX9+I1OCLkzvkwZb7+YNAFj8cEtNch6+/0Ijr/GRN7Zjh4ziu6LEIbUc2I53enSWIGMY0XVGKYVYauRacJlyRHm5nzu7Uky3SxwNI6ILqbcCHWmjke45ezWz6cXVIHUZQhovtBiJH+4+CZ86+3azE+nJ0XEv5LakKMROhitH/AaNqYs7bMnJ/9ut08TSftJceHs31zzXdDRCvHjDJuyhHoUm1UqWZsd3TEiyYzvik/p5YWfxFCpGM+WbCxEmnuDrQvSS3CAPmSP/g7tL6k5KN++dLJ2/lNXJV9VJkvGQs1brqlakJFvkTy5zzH5Y7UTKjGl1ybq/HGynHLNb98icTdvI03VvO9NKE8XyK5GXJKJ2TIEsryJeaWFGDlJAnl+NILWXh+CGX4bLq51CsiyRDy+RJvhM5RlU3I5EsnkvcL98wZNZdYiCy+RDJ2u7iYiWnLYNQ0Yr50MnH/dTH5TqRMsyYyooDP7nd/3L09071qhEgdu8D57DVnwy002/HkOCrGiPA5bOnNr2/ZcjPKNY0aCOnhS4/QTjd//QGGm1V1AjmN+ZvP5krYZMnY2ubd2R9jN48y1a2mjVmbzJjGfKfJ5Ona/ebtr7PzzNsMlfLKjs63jsfa51/+Z7D+6q/+6v9X/wV6yzIurDsJEgAAAABJRU5ErkJggg==" width="32"/>
+
+Requirement: stable Internet connection.
 
 1. Build **Singularity** image: `sudo singularity build sdp_pipeline.sif Singularity.def`
 2. Run container on your laptop: `singularity run sdp_pipeline.sif <dft/fft/g2g> <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE> <NUM_NODES> <MS_PATH>`
@@ -412,118 +535,6 @@ NB: In order to obtain a valid reconstructed image the `NUM_VIS` should be divis
 4. Load module: `module load singularity/3.5.3/gcc-11.2.0`
 5. Adjust `slurm.sh`: uncomment dedicated lines.
 6. Submit the job to the Scheduler: `sbatch slurm.sh` 
-</details>
-
----
-
-##### Automating generated code execution varying parameter
-
-<details>
-    <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-    .
-
-| 📝 **Note**                                                   |
-| ------------------------------------------------------------ |
-| The **ongoing work** consists in scripting generated code execution varying parameter value (considering that the scheduling will not vary). Once the parameterized code is setting up the only command require is step 3. <br /><br />The steps include: <br />✅ Provide a script to compile generated code and store result (execution time) in log files<br />✅ Identify the generated code change in order to pass argument to facilitate parameter variation <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (1 node) <br />⬜ Provide parametrized code for g2g,dft,fft pipeline (6 nodes) |
-
-1. Copy past generated code from `preesm_pipeline` in folder `param_code`.
-2. Apply the Following Modifications:
-     - 🛠 **Edit** `preesm_gen.h`, modify the argument handling and define a struct for parameters:
-        ```c
-         /* if (arg != NULL) {
-            printf("Warning: expecting NULL arguments\n");
-            fflush (stdout);
-          }*/
-        
-        typedef struct {
-           int num_vis;
-            int grid_size;
-           int num_minor_cycle;
-       } ThreadArgs;
-       ```
-     - 🛠 **Edit** `main.c`, pass parameters via command-line arguments and store them in a struct:
-     	```c
-         unsigned int launch(unsigned int core_id, pthread_t *thread, void* (*start_routine)(void*), void* arg) {
-         ...
-       pthread_create(thread, &attr, start_routine, arg);
-       ...
-       int main(int argc, char *argv[]) {
-     	// Ensure correct number of arguments
-     	if (argc != 4) {
-     	printf("Usage: %s <NUM_VIS> <GRID_SIZE> <NUM_MINOR_CYCLE>\n", argv[0]);
-     	return 1;
-     	}
-         // Parse command-line arguments
-         int NUM_VIS = atoi(argv[1]);
-         int GRID_SIZE = atoi(argv[2]);
-         int NUM_MINOR_CYCLE = atoi(argv[3]);
-       
-         // Store them in a struct
-         ThreadArgs args;
-         args.num_vis = NUM_VIS;
-         args.grid_size = GRID_SIZE;
-         args.num_minor_cycle = NUM_MINOR_CYCLE;
-         ...
-         if (launch(CORE_ID[i], &coreThreads[i], coreThreadComputations[i],&args)) {
-         ...
-         coreThreadComputations[_PREESM_MAIN_THREAD_](&args);
-       ```
-     - 🛠 **Edit** `core0.c` etc..., update functions to use the parameter struct:
-         ```c
-          // if (arg != NULL) {
-          //   printf("Warning: expecting NULL arguments\n");
-          //   fflush (stdout);
-          // }
-     	
-         ThreadArgs* args = (ThreadArgs*) arg;  // Conversion du pointeur void* en ThreadArgs*
-         int num_vis = args->num_vis;
-         int grid_size = args->grid_size;
-         int num_minor_cycle = args->num_minor_cycle;
-         
-         // Replace all instances of hardcoded values:
-         // int /*NUM_VIS*/ → num_vis
-         // int /*GRID_SIZE*/ → grid_size
-         // int /*NUM_MINOR_CYCLE*/ → num_minor_cycle
-         ```
-3. :arrow_forward: ​**Run** the experiment  script : 
-     ```
-     chmod +x run_experiments.sh
-     ./run_experiments.sh g2g   # Run for g2g pipeline
-     ./run_experiments.sh fft   # Run for fft pipeline
-     ./run_experiments.sh dft   # Run for dft pipeline
-     ```
-      :boom: ​This will generate a log file with measured execution time in `g2g.csv` :arrow_right: copy the result file into: :file_folder: `experimental_result_data/moldable/measure/` .
-
-</details>
-
----
-
-##### Visualizing the outut
-
-<details>
-    <summary style="cursor: pointer; color: #007bff;"> Click here to reveal the section </summary>
-    .
-
-At this stage verify that your output folder contains files such as :"cycle_0_clean_psf.csv"
-
-```bash
-#Convert CSV files into fits files
-python3 csvtoimage_all.py output/small/ fits/ ,
-
-#install ds9
-sudo apt install saods9
-
-#Run
-ds9 *.fits -lock frame wcs -zoom to fit
-```
-Filter: `/path to sep/ska_sep_preesm/Code/data/fits/*fits`
-
-To reveal the contrasts:
-
-- Color > Matplotlib > turbo (recommended by Sunrise)
-- Color > Matplotlib > viridis / inferno (most popular in astro-papers)
-
-![](https://github.com/Ophelie-Renaud/Imaging/blob/main/DS9_g2g_example1.png?raw=true)
 </details>
 
 </details>

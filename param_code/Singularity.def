@@ -29,7 +29,8 @@ From: ubuntu:22.04
         libncurses5-dev \
         git \
         openmpi-bin \
-        libopenmpi-dev
+        libopenmpi-dev \
+        libreadline-dev
 
     # Cloner et installer Casacore
     git clone https://github.com/casacore/casacore
