@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <flags>
+        <sizesAreInBit/>
+    </flags>
+    <files>
+        <algorithm url="/simsdp_dft_imaging_pipeline/Algo/dft/top_delta.pi"/>
+        <architecture url="/simsdp_dft_imaging_pipeline/Archi/1CoresX86.slam"/>
+        <codegenDirectory url="/simsdp_dft_imaging_pipeline/Code/generated"/>
+    </files>
+    <constraints excelUrl="">
+        <constraintGroup>
+            <operator name="Core0"/>
+            <task name="top_delta/sink_0"/>
+            <task name="top_delta/sink_1"/>
+            <task name="top_delta/src_0"/>
+            <task name="top_delta/src_1"/>
+            <task name="top_delta/src_2"/>
+            <task name="top_delta/src_3"/>
+            <task name="top_delta/src_4"/>
+            <task name="top_delta/src_5"/>
+            <task name="top_delta/src_7"/>
+            <task name="top_delta/src_6"/>
+            <task name="top_delta/src_8"/>
+            <task name="top_delta/src_9"/>
+            <task name="top_delta/src_10"/>
+            <task name="top_delta/src_11"/>
+            <task name="top_delta/src_12"/>
+            <task name="top_delta/src_13"/>
+            <task name="top_delta/src_14"/>
+            <task name="top_delta/delta/token_sink"/>
+            <task name="top_delta/delta/psf_sink"/>
+            <task name="top_delta/delta/image_passthrough"/>
+            <task name="top_delta/delta/degridding_kernel_sink"/>
+            <task name="top_delta/delta/add_visibilities"/>
+            <task name="top_delta/delta/merge_grids"/>
+            <task name="top_delta/delta/split_vis"/>
+            <task name="top_delta/delta/dft_run/dft_actor"/>
+            <task name="top_delta/delta/dft_run"/>
+            <task name="top_delta/delta/subtraction_run/reciprocal_transform_actor"/>
+            <task name="top_delta/delta/subtraction_run/subtraction"/>
+            <task name="top_delta/delta/subtraction_run"/>
+            <task name="top_delta/delta/gridding_run/gridding_actor"/>
+            <task name="top_delta/delta/gridding_run"/>
+            <task name="top_delta/delta/ifft_run/fft_shift_complex_to_complex_actor"/>
+            <task name="top_delta/delta/ifft_run/CUFFT_EXECUTE_INVERSE_C2C_actor"/>
+            <task name="top_delta/delta/ifft_run/fft_shift_complex_to_real_actor"/>
+            <task name="top_delta/delta/ifft_run"/>
+            <task name="top_delta/delta/convolution_correction_run/execute_convolution_correction_actor"/>
+            <task name="top_delta/delta/convolution_correction_run"/>
+            <task name="top_delta/delta"/>
+            <task name="top_delta"/>
+        </constraintGroup>
+    </constraints>
+    <timings excelUrl="">
+        <memcpyspeed opname="x86" setuptime="1" timeperunit="0.001"/>
+    </timings>
+    <simuParams>
+        <mainCore>Core0</mainCore>
+        <mainComNode>shared_mem</mainComNode>
+        <averageDataSize>1000</averageDataSize>
+        <dataTypes>
+            <dataType name="PRECISION" size="8"/>
+            <dataType name="PRECISION2" size="8"/>
+            <dataType name="PRECISION3" size="8"/>
+            <dataType name="int" size="32"/>
+            <dataType name="int2" size="8"/>
+            <dataType name="Config" size="8"/>
+        </dataTypes>
+        <specialVertexOperators>
+            <specialVertexOperator path="Core0"/>
+        </specialVertexOperators>
+    </simuParams>
+    <parameterValues/>
+    <papifyConfigs xmlUrl=""/>
+    <energyConfigs xmlUrl="">
+        <performanceObjective objectiveEPS="0.0"/>
+        <peActorsEnergy/>
+    </energyConfigs>
+</scenario>

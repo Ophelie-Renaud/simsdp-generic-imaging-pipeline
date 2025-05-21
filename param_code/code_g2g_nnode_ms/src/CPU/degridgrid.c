@@ -279,7 +279,13 @@ void g2g_degridgrid(int GRID_SIZE, int NUM_VISIBILITIES, int NUM_GRIDDING_KERNEL
 			degridded_visibility.x = input_grid[idx].x;
 			degridded_visibility.y = input_grid[idx].y;
 		} else {
-			printf("Warning: input_grid is NULL or idx is out of bounds, setting default values.\n");
+			/*printf("Warning: entering fallback case\n");
+			if (!input_grid) {
+				printf("  Cause: input_grid is NULL\n");
+			} else {
+				printf("  input_grid address: %p\n", (void *)input_grid);
+				printf("  &input_grid[idx]: %p (idx = %d)\n", (void *)&input_grid[idx], idx);
+			}*/
 			degridded_visibility.x = 0;
 			degridded_visibility.y = 0;
 		}

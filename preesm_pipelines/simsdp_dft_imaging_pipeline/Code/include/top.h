@@ -13,6 +13,17 @@ extern "C" {
 	#include "preesm.h"
 
 	void end_sink(int NUM_RECEIVERS, IN PRECISION2 *gains);
+	void sink(IN Config *in);
+	void sink(IN PRECISION *in);
+	void sink(IN PRECISION2 *in);
+	void sink(IN PRECISION3 *in);
+	void sink(IN int2 *in);
+	void src(OUT Config *out);
+	void src(OUT PRECISION *out);
+	void src(OUT PRECISION2 *out);
+	void src(OUT PRECISION3 *out);
+	void src(OUT int2 *out);
+	void src(OUT int *out);
 
 	void config_struct_set_up(int GRID_SIZE, int NUM_KERNELS, OUT Config *config);
 	void config_struct_set_up_fake(int GRID_SIZE, int NUM_KERNELS, IN Config *in, OUT Config *config);

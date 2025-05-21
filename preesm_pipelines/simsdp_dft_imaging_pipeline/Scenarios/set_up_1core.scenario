@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <flags>
+        <sizesAreInBit/>
+    </flags>
+    <files>
+        <algorithm url="/simsdp_dft_imaging_pipeline/Algo/dft/top_setup.pi"/>
+        <architecture url="/simsdp_dft_imaging_pipeline/Archi/1CoresX86.slam"/>
+        <codegenDirectory url="/simsdp_dft_imaging_pipeline/Code/generated"/>
+    </files>
+    <constraints excelUrl="">
+        <constraintGroup>
+            <operator name="Core0"/>
+            <task name="generic_top/sink_0"/>
+            <task name="generic_top/sink_1"/>
+            <task name="generic_top/sink_2"/>
+            <task name="generic_top/sink_3"/>
+            <task name="generic_top/sink_4"/>
+            <task name="generic_top/sink_6"/>
+            <task name="generic_top/sink_5"/>
+            <task name="generic_top/sink_7"/>
+            <task name="generic_top/sink_8"/>
+            <task name="generic_top/sink_9"/>
+            <task name="generic_top/sink_10"/>
+            <task name="generic_top/sink_11"/>
+            <task name="generic_top/sink_12"/>
+            <task name="generic_top/setup_ri_pipeline/clean_psf_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/visibility_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up_sequel"/>
+            <task name="generic_top/setup_ri_pipeline/gains_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/correction_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/psf_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/config_struct_set_up"/>
+            <task name="generic_top/setup_ri_pipeline/degridding_kernel_host_set_up"/>
+            <task name="generic_top/setup_ri_pipeline"/>
+            <task name="generic_top"/>
+        </constraintGroup>
+    </constraints>
+    <timings excelUrl="">
+        <memcpyspeed opname="x86" setuptime="1" timeperunit="0.001"/>
+    </timings>
+    <simuParams>
+        <mainCore>Core0</mainCore>
+        <mainComNode>shared_mem</mainComNode>
+        <averageDataSize>1000</averageDataSize>
+        <dataTypes>
+            <dataType name="Config" size="8"/>
+            <dataType name="PRECISION" size="8"/>
+            <dataType name="int2" size="8"/>
+            <dataType name="PRECISION2" size="8"/>
+            <dataType name="PRECISION3" size="8"/>
+            <dataType name="double" size="64"/>
+        </dataTypes>
+        <specialVertexOperators>
+            <specialVertexOperator path="Core0"/>
+        </specialVertexOperators>
+    </simuParams>
+    <parameterValues/>
+    <papifyConfigs xmlUrl=""/>
+    <energyConfigs xmlUrl="">
+        <performanceObjective objectiveEPS="0.0"/>
+        <peActorsEnergy/>
+    </energyConfigs>
+</scenario>

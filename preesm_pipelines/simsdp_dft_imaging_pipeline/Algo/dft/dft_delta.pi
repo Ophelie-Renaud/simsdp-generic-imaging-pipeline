@@ -172,7 +172,6 @@
             <data key="graph_desc">Code/include/gridding_run.h</data>
             <loop name="add_visibilities">
                 <param direction="IN" isConfig="true" name="NUM_VISIBILITIES" type="int"/>
-                <param direction="IN" isConfig="false" name="v1" type="PRECISION2"/>
                 <param direction="IN" isConfig="false" name="v2" type="PRECISION2"/>
                 <param direction="OUT" isConfig="false" name="output" type="PRECISION2"/>
             </loop>

@@ -19,6 +19,7 @@ extern "C" {
     PRECISION2 complex_mult_CPU(const PRECISION2 z1, const PRECISION2 z2);
 
     void add_visibilities(int NUM_VISIBILITIES, IN PRECISION2* v1, IN PRECISION2* v2, OUT PRECISION2* output);
+    void add_visibilities(int NUM_VISIBILITIES,  IN PRECISION2* v2, OUT PRECISION2* output);
 
 
 #ifdef __NVCC__

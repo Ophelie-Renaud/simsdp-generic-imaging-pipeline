@@ -288,7 +288,7 @@ add_library(casa_wrapper STATIC
 target_link_libraries(casa_wrapper casa_casa casa_tables casa_ms casa_measures casa_fits casa_mirlib -lfftw3)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mcmodel=large")
 
-add_executable( FFT_Pipeline ${source_files_CPU} ${header_files}
+add_executable(FFT_Pipeline ${source_files_CPU} ${header_files}
         generated/main.c)
 target_link_libraries(FFT_Pipeline ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_EXTRA_LIB} fftw3 fftw3f lapack ${MPI_C_LIBRARIES} m casa_wrapper)
 
