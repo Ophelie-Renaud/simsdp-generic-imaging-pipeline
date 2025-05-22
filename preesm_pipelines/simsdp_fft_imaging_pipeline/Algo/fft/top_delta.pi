@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+    <graph edgedefault="directed">
+        <data key="name">top_delta</data>
+        <node expr="32768.0" id="GRID_SIZE" kind="param"/>
+        <node expr="200.0" id="MAX_SOURCES" kind="param"/>
+        <node expr="130816.0" id="NUM_BASELINES" kind="param"/>
+        <node expr="17.0" id="NUM_KERNELS" kind="param"/>
+        <node expr="512.0" id="NUM_RECEIVERS" kind="param"/>
+        <node expr="981120.0" id="NUM_VISIBILITIES" kind="param"/>
+        <node expr="16.0" id="OVERSAMPLING_FACTOR" kind="param"/>
+        <node expr="4.0" id="SLICES" kind="param"/>
+        <node expr="108800.0" id="TOTAL_KERNEL_SAMPLES" kind="param"/>
+        <node id="delta" kind="actor">
+            <data key="graph_desc">Algo/fft_delta.pi</data>
+            <port kind="cfg_input" name="NUM_GRIDDING_KERNELS"/>
+            <port kind="cfg_input" name="TOTAL_GRIDDING_KERNEL_SAMPLES"/>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port kind="cfg_input" name="NUM_RECEIVERS"/>
+            <port kind="cfg_input" name="NUM_BASELINES"/>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port kind="cfg_input" name="MAX_SOURCES"/>
+            <port kind="cfg_input" name="NUM_DEGRIDDING_KERNELS"/>
+            <port kind="cfg_input" name="OVERSAMPLING_FACTOR"/>
+            <port kind="cfg_input" name="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+            <port kind="cfg_input" name="SLICES"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="image_estimate"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="input" name="measured_vis"/>
+            <port annotation="NONE" expr="MAX_SOURCES" kind="input" name="source_list"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="num_sources_in"/>
+            <port annotation="NONE" expr="NUM_GRIDDING_KERNELS" kind="input" name="gridding_kernel_supports"/>
+            <port annotation="NONE" expr="TOTAL_GRIDDING_KERNEL_SAMPLES" kind="input" name="gridding_kernels"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="input" name="vis_coords"/>
+            <port annotation="NONE" expr="NUM_RECEIVERS" kind="input" name="gains"/>
+            <port annotation="NONE" expr="NUM_BASELINES" kind="input" name="receiver_pairs"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="config"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="psf"/>
+            <port annotation="NONE" expr="GRID_SIZE/2" kind="input" name="prolate"/>
+            <port annotation="NONE" expr="1.0" kind="input" name="cycle"/>
+            <port annotation="NONE" expr="NUM_DEGRIDDING_KERNELS" kind="input" name="degridding_kernel_supports"/>
+            <port annotation="NONE" expr="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="input" name="degridding_kernels"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="output" name="delta_image"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="output" name="image_out"/>
+        </node>
+        <node id="sink_0" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="sink">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="in"/>
+        </node>
+        <node id="sink_1" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="sink">
+                <param direction="IN" isConfig="false" name="in" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="input" name="in"/>
+        </node>
+        <node id="src_0" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="output" name="out"/>
+        </node>
+        <node id="src_1" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="output" name="out"/>
+        </node>
+        <node id="src_2" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="PRECISION3"/>
+            </loop>
+            <port kind="cfg_input" name="MAX_SOURCES"/>
+            <port annotation="NONE" expr="MAX_SOURCES" kind="output" name="out"/>
+        </node>
+        <node id="src_3" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1.0" kind="output" name="out"/>
+        </node>
+        <node id="src_4" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="int2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_GRIDDING_KERNELS"/>
+            <port annotation="NONE" expr="NUM_GRIDDING_KERNELS" kind="output" name="out"/>
+        </node>
+        <node id="src_5" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="TOTAL_GRIDDING_KERNEL_SAMPLES"/>
+            <port annotation="NONE" expr="TOTAL_GRIDDING_KERNEL_SAMPLES" kind="output" name="out"/>
+        </node>
+        <node id="src_7" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_RECEIVERS"/>
+            <port annotation="NONE" expr="NUM_RECEIVERS" kind="output" name="out"/>
+        </node>
+        <node id="src_6" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="PRECISION3"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_VISIBILITIES"/>
+            <port annotation="NONE" expr="NUM_VISIBILITIES" kind="output" name="out"/>
+        </node>
+        <node id="src_8" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="int2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_BASELINES"/>
+            <port annotation="NONE" expr="NUM_BASELINES" kind="output" name="out"/>
+        </node>
+        <node id="src_9" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="Config"/>
+            </loop>
+            <port annotation="NONE" expr="1.0" kind="output" name="out"/>
+        </node>
+        <node id="src_10" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE*GRID_SIZE" kind="output" name="out"/>
+        </node>
+        <node id="src_11" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="PRECISION"/>
+            </loop>
+            <port kind="cfg_input" name="GRID_SIZE"/>
+            <port annotation="NONE" expr="GRID_SIZE/2" kind="output" name="out"/>
+        </node>
+        <node id="src_12" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="int"/>
+            </loop>
+            <port annotation="NONE" expr="1.0" kind="output" name="out"/>
+        </node>
+        <node id="src_13" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="int2"/>
+            </loop>
+            <port kind="cfg_input" name="NUM_DEGRIDDING_KERNELS"/>
+            <port annotation="NONE" expr="NUM_DEGRIDDING_KERNELS" kind="output" name="out"/>
+        </node>
+        <node id="src_14" kind="actor">
+            <data key="graph_desc">Code/include/top.h</data>
+            <loop name="src">
+                <param direction="OUT" isConfig="false" name="out" type="PRECISION2"/>
+            </loop>
+            <port kind="cfg_input" name="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+            <port annotation="NONE" expr="TOTAL_DEGRIDDING_KERNEL_SAMPLES" kind="output" name="out"/>
+        </node>
+        <edge kind="fifo" source="delta" sourceport="delta_image" target="sink_0" targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="delta" sourceport="image_out" target="sink_1" targetport="in" type="PRECISION"/>
+        <edge kind="fifo" source="src_0" sourceport="out" target="delta" targetport="image_estimate" type="PRECISION"/>
+        <edge kind="fifo" source="src_1" sourceport="out" target="delta" targetport="measured_vis" type="PRECISION2"/>
+        <edge kind="fifo" source="src_2" sourceport="out" target="delta" targetport="source_list" type="PRECISION3"/>
+        <edge kind="fifo" source="src_3" sourceport="out" target="delta" targetport="num_sources_in" type="int"/>
+        <edge kind="fifo" source="src_4" sourceport="out" target="delta" targetport="gridding_kernel_supports" type="int2"/>
+        <edge kind="fifo" source="src_5" sourceport="out" target="delta" targetport="gridding_kernels" type="PRECISION2"/>
+        <edge kind="fifo" source="src_7" sourceport="out" target="delta" targetport="gains" type="PRECISION2"/>
+        <edge kind="fifo" source="src_6" sourceport="out" target="delta" targetport="vis_coords" type="PRECISION3"/>
+        <edge kind="fifo" source="src_8" sourceport="out" target="delta" targetport="receiver_pairs" type="int2"/>
+        <edge kind="fifo" source="src_9" sourceport="out" target="delta" targetport="config" type="Config"/>
+        <edge kind="fifo" source="src_10" sourceport="out" target="delta" targetport="psf" type="PRECISION"/>
+        <edge kind="fifo" source="src_11" sourceport="out" target="delta" targetport="prolate" type="PRECISION"/>
+        <edge kind="fifo" source="src_12" sourceport="out" target="delta" targetport="cycle" type="int"/>
+        <edge kind="fifo" source="src_13" sourceport="out" target="delta" targetport="degridding_kernel_supports" type="int2"/>
+        <edge kind="fifo" source="src_14" sourceport="out" target="delta" targetport="degridding_kernels" type="PRECISION2"/>
+        <edge kind="dependency" source="GRID_SIZE" target="delta" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="delta" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="MAX_SOURCES" target="delta" targetport="MAX_SOURCES"/>
+        <edge kind="dependency" source="NUM_KERNELS" target="delta" targetport="NUM_GRIDDING_KERNELS"/>
+        <edge kind="dependency" source="TOTAL_KERNEL_SAMPLES" target="delta" targetport="TOTAL_GRIDDING_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="NUM_RECEIVERS" target="delta" targetport="NUM_RECEIVERS"/>
+        <edge kind="dependency" source="NUM_BASELINES" target="delta" targetport="NUM_BASELINES"/>
+        <edge kind="dependency" source="NUM_KERNELS" target="delta" targetport="NUM_DEGRIDDING_KERNELS"/>
+        <edge kind="dependency" source="TOTAL_KERNEL_SAMPLES" target="delta" targetport="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="OVERSAMPLING_FACTOR" target="delta" targetport="OVERSAMPLING_FACTOR"/>
+        <edge kind="dependency" source="SLICES" target="delta" targetport="SLICES"/>
+        <edge kind="dependency" source="GRID_SIZE" target="sink_0" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE" target="sink_1" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE" target="src_0" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="src_1" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="GRID_SIZE" target="src_10" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="GRID_SIZE" target="src_11" targetport="GRID_SIZE"/>
+        <edge kind="dependency" source="NUM_KERNELS" target="src_13" targetport="NUM_DEGRIDDING_KERNELS"/>
+        <edge kind="dependency" source="TOTAL_KERNEL_SAMPLES" target="src_14" targetport="TOTAL_DEGRIDDING_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="MAX_SOURCES" target="src_2" targetport="MAX_SOURCES"/>
+        <edge kind="dependency" source="NUM_KERNELS" target="src_4" targetport="NUM_GRIDDING_KERNELS"/>
+        <edge kind="dependency" source="TOTAL_KERNEL_SAMPLES" target="src_5" targetport="TOTAL_GRIDDING_KERNEL_SAMPLES"/>
+        <edge kind="dependency" source="NUM_VISIBILITIES" target="src_6" targetport="NUM_VISIBILITIES"/>
+        <edge kind="dependency" source="NUM_RECEIVERS" target="src_7" targetport="NUM_RECEIVERS"/>
+        <edge kind="dependency" source="NUM_BASELINES" target="src_8" targetport="NUM_BASELINES"/>
+    </graph>
+</graphml>
